@@ -10,7 +10,7 @@ namespace Cloudburst.Cores.States.Bombardier
 {
     public class FireRocket : BaseSkillState
     {
-        public static GameObject projectilePrefab = ProjectileCore.bombardierBombProjectile;
+        public static GameObject projectilePrefab = Resources.Load<GameObject>("prefabs/projectiles/RedAffixMissileProjectile");
         public static GameObject effectPrefab = EntityStates.Commando.CommandoWeapon.FireRocket.effectPrefab;
 
         public static DamageType damageType = DamageType.Generic;
@@ -100,7 +100,7 @@ namespace Cloudburst.Cores.States.Bombardier
 
         public virtual GameObject GrabProjectile()
         {
-            return ProjectileCore.bombardierBombProjectile;
+            return ProjectileCore.bombardierBombProjectile; //Resources.Load<GameObject>("prefabs/projectiles/RedAffixMissileProjectile");
         }
 
         public virtual void ModifyProjectileInfo(FireProjectileInfo info)

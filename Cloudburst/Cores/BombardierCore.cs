@@ -135,7 +135,7 @@ namespace Cloudburst.Cores
 
             characterPrefab.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
 
-            // create the model here, we're gonna replace commando's model with our own
+            /* create the model here, we're gonna replace commando's model with our own
             GameObject model = CreateModel(characterPrefab);
 
             GameObject gameObject = new GameObject("ModelBase");
@@ -351,7 +351,7 @@ namespace Cloudburst.Cores
             aimAnimator.yawRangeMax = 44f;
             aimAnimator.pitchGiveupRange = 30f;
             aimAnimator.yawGiveupRange = 10f;
-            aimAnimator.giveupDuration = 8f;
+            aimAnimator.giveupDuration = 8f;*/
 
             API.RegisterNewBody(characterPrefab);
         }
@@ -387,7 +387,7 @@ namespace Cloudburst.Cores
 
         private void SetCharacterBody()
         {
-            On.RoR2.BulletAttack.ProcessHit += BulletAttack_ProcessHit;
+            //On.RoR2.BulletAttack.ProcessHit += BulletAttack_ProcessHit;
             //characterBody.baseAcceleration = 70f;
             //characterBody.baseArmor = 20; //Base armor this character has, set to 20 if this character is melee 
             characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -418,11 +418,10 @@ namespace Cloudburst.Cores
             characterBody.levelRegen = 0.2f; //Regen gained when leveling up. 
 
             LanguageAPI.Add(characterBody.subtitleNameToken, "Stranded Fuse Lighter");
-            LanguageAPI.Add(characterBody.baseNameToken, "Bombardier");
+            LanguageAPI.Add(characterBody.baseNameToken, "Bomber");
 
             //fuck you moffein no credit
-            //eat my ass    
-            characterBody.portraitIcon = AssetsCore.mainAssetBundle.LoadAsset<Texture>("Assets/Cloudburst/Survivors/Bombardier/icon.png"); ; //The portrait icon, shows up in multiplayer and the death UI
+            //characterBody.portraitIcon = AssetsCore.mainAssetBundle.LoadAsset<Texture>("Assets/Cloudburst/Survivors/Bombardier/icon.png"); ; //The portrait icon, shows up in multiplayer and the death UI
             //characterBody.preferredPodPrefab = Resources.Load<GameObject>("prefabs/networkedobjects/robocratepod");
         }
 

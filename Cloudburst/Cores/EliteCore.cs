@@ -340,7 +340,9 @@ namespace Cloudburst.Cores
             {
                 var renderer = mdlWarbanner.GetComponent<Renderer>();
 
-                renderer.material = Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material;
+                var mat = UnityEngine.Object.Instantiate<Material>(Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material);
+
+                renderer.material = mat; //Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material;
                 renderer.sharedMaterial.SetColor("_TintColor", new Color(0.3764706f, 0.84313726f, 0.8980392f)); ;
 
                 //GRAVEYARD OF PREVIOUS COLORS
