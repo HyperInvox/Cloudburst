@@ -1,0 +1,230 @@
+ManifestFileVersion: 0
+CRC: 3105856762
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 5c1c78c604a8697ca04baea298dd9b73
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: a98f4fd97ca51c96520634f065c86f1f
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 54
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 108
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: aaabc320440a02340b0239f0cf1745a2, type: 3}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 136
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 319
+  Script: {instanceID: 0}
+Assets:
+- Assets/Cloudburst/Icons/Engineer/Impact_Grenades.png
+- Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnimator.controller
+- Assets/Cloudburst/Items/Earrings/Magicians_earings.fbx
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Sprint.anim
+- Assets/Cloudburst/Items/MechanicalTrinket/hitchhiker.fbx
+- Assets/Cloudburst/Teaser/tex/Materials/Ice_Tool_Tex.mat
+- Assets/Cloudburst/Items/Earrings/magicicon.png
+- Assets/Cloudburst/Items/Lemdog/LemDog_TexIcon.png
+- Assets/Cloudburst/Survivors/Wyatt/specialicon.png
+- Assets/Cloudburst/Items/Icon.mat
+- Assets/Cloudburst/Teaser/tex/Materials/T_Executor_V2_Color.mat
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Utility.anim
+- Assets/Cloudburst/Survivors/Bombardier/Materials/Materials/T_Bombardier_Emissive2.mat
+- Assets/Cloudburst/Items/Cloak/MDLCloak.prefab
+- Assets/Cloudburst/Teaser/tex/Materials/Dormant_Fungus_Tex.mat
+- Assets/Cloudburst/Teaser/tex/Dormant_Fungus_Tex.png
+- Assets/Cloudburst/Items/FabinhoruDagger/Cloaking4.fbx
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Jump.anim
+- Assets/Cloudburst/Survivors/Bombardier/Materials/T_BombardierM2_color.mat
+- Assets/Cloudburst/Teaser/tex/HottestSauceT2.png
+- Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color.mat
+- Assets/Cloudburst/Items/FabinhoruDagger/Materials/fab_dagger.mat
+- Assets/Cloudburst/Teaser/tex/Materials/LampBoss.mat
+- Assets/Cloudburst/Items/Cloak/Japes_cloak.fbx
+- Assets/Cloudburst/Items/Lemdog/LemDog_Tex.png
+- Assets/Cloudburst/Survivors/Wyatt/Materials/texHandDiffuse.mat
+- Assets/Cloudburst/Materials/LampBoss.mat
+- Assets/Cloudburst/Items/Lemdog/MDLLemDog.prefab
+- Assets/Cloudburst/EliteIcons/rallyingIcon.png
+- Assets/Cloudburst/Teaser/tex/Materials/axetexture.mat
+- Assets/Cloudburst/Materials/DiaryTexture.mat
+- Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnimatorMenu.controller
+- Assets/Cloudburst/Survivors/Bombardier/satchel.blend
+- Assets/Cloudburst/Items/Earrings/MDLEarrings.prefab
+- Assets/Cloudburst/Survivors/Wyatt/primaryicon.png
+- Assets/Cloudburst/Survivors/Bombardier/animExampleSurvivor.controller
+- Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_M.mat
+- Assets/Cloudburst/MDLTeaser.prefab
+- Assets/Cloudburst/Teaser/tex/Materials/DiaryTexture.mat
+- Assets/Cloudburst/Survivors/Bombardier/Animations/CharSelectIdle.anim
+- Assets/Cloudburst/brickwall.png
+- Assets/Cloudburst/Enemies/matExampleSurvivor.mat
+- Assets/Cloudburst/Survivors/Bombardier/T_Bombardier_Color.png
+- Assets/Cloudburst/Survivors/Bombardier/Flan/ExecutionerModelMenu.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Ascending.anim
+- Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnims.fbx
+- Assets/Cloudburst/Materials/T_Executor_Emissive.mat
+- Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 1.mat
+- Assets/Cloudburst/Survivors/Bombardier/Flan/ExecutionerMaskUpper.mask
+- Assets/Cloudburst/Items/MechanicalTrinket/MDLMechanicalTrinket.prefab
+- Assets/Cloudburst/Items/UESKeycard/textures/keycard_metal.png
+- Assets/Cloudburst/Enemies/texExampleSurvivor.png
+- Assets/Cloudburst/Materials/texTrimSheetMetalVibrant.mat
+- Assets/Cloudburst/Items/UESKeycard/textures/keycard_texture_red.png
+- Assets/Cloudburst/Teaser/tex/Ice_Tool_Tex.png
+- Assets/Cloudburst/Teaser/tex/axetexture.png
+- Assets/Cloudburst/Teaser/tex/DiaryTexture.png
+- Assets/Cloudburst/Items/Lemdog/Materials/LemDog_TexEmission.mat
+- Assets/Cloudburst/Teaser/tex/texTrimSheetMetalVibrant.png
+- Assets/Cloudburst/Teaser/tex/texTrimSheetMetalNormal.png
+- Assets/Cloudburst/Survivors/Wyatt/WyattMaid.prefab
+- Assets/Cloudburst/Survivors/Wyatt/specialicon2.png
+- Assets/Cloudburst/Items/Grinder/icon.png
+- Assets/Cloudburst/Items/Cloak/JapeIcon.png
+- Assets/Cloudburst/Items/Earrings/Materials/Magicians_earrings.mat
+- Assets/Cloudburst/Items/Earrings/Magicians_earrings.png
+- Assets/Cloudburst/Enemies/DeployedLamp/LampDelpoyed.fbx
+- Assets/Cloudburst/Teaser/TEASER 1.fbx
+- Assets/Cloudburst/Items/MechanicalTrinket/Materials/Icon.mat
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Falling.anim
+- Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking.jpg
+- Assets/Cloudburst/Survivors/ExampleSurvivorGestureMask.mask
+- Assets/Cloudburst/Items/FabinhoruDagger/New Animator Controller.controller
+- Assets/Cloudburst/Survivors/Wyatt/utilityicon2.png
+- Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_M.jpg
+- Assets/Cloudburst/Survivors/Bombardier/ExecAnimsupdate(Updated)2.blend
+- Assets/Cloudburst/Items/UESKeycard/Materials/keycard_gloss.mat
+- Assets/Cloudburst/Materials/Dormant_Fungus_Tex.mat
+- Assets/Cloudburst/Survivors/Bombardier/Animations/WalkLFT.anim
+- Assets/Cloudburst/Items/mdlExampleSurvivor.prefab
+- Assets/Cloudburst/Materials/axetexture.mat
+- Assets/Cloudburst/Teaser/tex/LampBoss.png
+- Assets/Cloudburst/Survivors/Bombardier/Flan/ExecutionerMaskFlinch.mask
+- Assets/Cloudburst/Survivors/Bombardier/Animations/bombsAnims 1.blend
+- Assets/Cloudburst/Survivors/Bombardier/T_BombardierM2_color.png
+- Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_n.jpg
+- Assets/Cloudburst/Items/UESKeycard/MDLKeycard.prefab
+- Assets/Cloudburst/Survivors/Wyatt/texHandDiffuse.png
+- Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/T_Executor_V2_Color.mat
+- Assets/Cloudburst/Items/FabinhoruDagger/icon.png
+- Assets/Cloudburst/Items/FabinhoruDagger/fab_dagger.fbx
+- Assets/Cloudburst/Items/Grinder/MDLGrinder.prefab
+- Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_r.mat
+- Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalNormal.mat
+- Assets/Cloudburst/Survivors/Wyatt/mdlHANDWinch (1).fbx
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Idle.anim
+- Assets/Cloudburst/Items/Cloak/Materials/japes_cloak.mat
+- Assets/Cloudburst/Items/UESKeycard/textures/keycard_transparency.png
+- Assets/Cloudburst/Teaser/TEASER.fbx
+- Assets/Cloudburst/Teaser/tex/Materials/Materials/texMetalTrimDiffuse.mat
+- Assets/Cloudburst/logo.png
+- Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Emissive2.png
+- Assets/Cloudburst/Survivors/Wyatt/WinchMesh.asset
+- Assets/Cloudburst/Enemies/Boss/LampBoss.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/Executioner_Emissive.mat
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Special2.anim
+- Assets/Cloudburst/Enemies/DeployedLamp/LampDeployedEmis.png
+- Assets/Cloudburst/Teaser/tex/Materials/T_Executor_Emissive.mat
+- Assets/Cloudburst/Survivors/Wyatt/passive.png
+- Assets/Cloudburst/Items/UESKeycard/keycard.fbx
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Special1.anim
+- Assets/Cloudburst/Teaser/tex/Detritive_Trematode_Tex.png
+- Assets/Cloudburst/Survivors/Wyatt/utilityicon.png
+- Assets/Cloudburst/Items/UESKeycard/Materials/keycard_texture_red.mat
+- Assets/Cloudburst/Items/FabinhoruDagger/MDLDagger.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Primary.anim
+- Assets/Cloudburst/Items/FabinhoruDagger/fab_dagger.png
+- Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_r.jpg
+- Assets/Cloudburst/Items/Cloak/japes_cloak.png
+- Assets/Cloudburst/Survivors/Wyatt/mdlHANDWinchAvatar.asset
+- Assets/Cloudburst/Materials/Ice_Tool_Tex.mat
+- Assets/Cloudburst/Enemies/Boss/LampBossEmis.png
+- Assets/Cloudburst/Survivors/Bombardier/Animations/WalkBWD.anim
+- Assets/Cloudburst/Items/Lemdog/Materials/LemDog_TexIcon.mat
+- Assets/Cloudburst/Items/Lemdog/Materials/LemDog_Tex.mat
+- Assets/Cloudburst/Items/UESKeycard/source/keycard.fbx
+- Assets/Cloudburst/Survivors/Bombardier/icon.png
+- Assets/Cloudburst/Enemies/DeployedLamp/LampDeployed.png
+- Assets/Cloudburst/Teaser/tex/T_Executor_Emissive.png
+- Assets/Cloudburst/Items/Grinder/texExtractor.png
+- Assets/Cloudburst/Materials/brickwall.mat
+- Assets/Cloudburst/Survivors/Bombardier/Animations/WalkFWD.anim
+- Assets/Cloudburst/Survivors/Bombardier/bombsAnims.blend
+- Assets/Cloudburst/Items/MechanicalTrinket/icon.png
+- Assets/Cloudburst/Items/UESKeycard/textures/keycard_gloss.png
+- Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Emissive2.mat
+- Assets/Cloudburst/Survivors/Bombardier/Flan/Executioner_Emissive.png
+- Assets/Cloudburst/Items/Grinder/Materials/texExtractor.mat
+- Assets/Cloudburst/Survivors/Wyatt/WinchGhost.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnimsupdate(Updated)2.blend
+- Assets/Cloudburst/Teaser/tex/Materials/Detritive_Trematode_Tex.mat
+- Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/axetexture.mat
+- Assets/Cloudburst/Enemies/Boss/LampBoss.png
+- Assets/Cloudburst/Items/UESKeycard/textures/keycard_normals.png
+- Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking.mat
+- Assets/Cloudburst/Survivors/Bombardier/Animations/WalkRHT.anim
+- Assets/Cloudburst/Items/Lemdog/LemDog_TexEmission.png
+- Assets/Cloudburst/Teaser/TEASER 2.fbx
+- Assets/Cloudburst/Teaser/tex/Materials/texMetalTrimDiffuse.png
+- Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalVibrant.mat
+- Assets/Cloudburst/Items/Lemdog/LemDog.fbx
+- Assets/Cloudburst/Teaser/MDLTeaser.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Flan/bombsAnims.blend
+- Assets/Cloudburst/Items/LightningEye/MDLLightningEye.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Animations/Secondary.anim
+- Assets/Cloudburst/Teaser/tex/T_Executor_V2_Color.png
+- Assets/Cloudburst/Survivors/Bombardier/mdlBombardier.prefab
+- Assets/Cloudburst/Icons/Engineer/TR75_Immolator_Turret_2.png
+- Assets/Cloudburst/Survivors/Wyatt/secondaryicon.png
+- Assets/Cloudburst/Items/UESKeycard/Materials/keycard_normals.mat
+- Assets/Cloudburst/Icons/REX/texTreebotHarvester.png
+- Assets/Cloudburst/Survivors/Bombardier/Flan/BROJUSTFUCKINGWORK.prefab
+- Assets/Cloudburst/Items/Grinder/Extractor.blend
+- Assets/Cloudburst/Materials/T_Executor_V2_Color.mat
+- Assets/Cloudburst/cloudburstlogo.png
+- Assets/Cloudburst/Materials/texTrimSheetMetalNormal.mat
+- Assets/Cloudburst/Survivors/Bombardier/Flan/T_Bombardier_Color 3.mat
+- Assets/Cloudburst/Survivors/Bombardier/mdlSatchel.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Animations/CharSelect.anim
+- Assets/Cloudburst/Survivors/Bombardier/Flan/axetexture.png
+- Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 2.mat
+Dependencies: []
