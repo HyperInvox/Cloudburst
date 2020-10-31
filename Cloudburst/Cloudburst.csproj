@@ -138,7 +138,7 @@
     <Compile Include="API\ComponentHelpers.cs" />
     <Compile Include="API\LogCore.cs" />
     <Compile Include="Cores\MushrumCore.cs" />
-    <Compile Include="Cores\Class2.cs" />
+    <Compile Include="Cores\PrefabCore.cs" />
     <Compile Include="Cores\Components\BombardierPassiveController.cs" />
     <Compile Include="Cores\Components\RocketJumpOnImpact.cs" />
     <Compile Include="Cores\States\MegaMushrum\Implant.cs" />
