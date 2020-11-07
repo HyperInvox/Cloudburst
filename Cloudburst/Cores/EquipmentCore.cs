@@ -129,7 +129,7 @@ namespace Cloudburst.Cores
                 pickupToken = "EQUIPMENT_UNSTABLEQUANTUMREACTOR_PICKUP",
                 unlockableName = "",
             });
-            RegisterNewEquip(new EquipmentDef()
+            /*RegisterNewEquip(new EquipmentDef()
             {
                 addressToken = "",
                 appearsInMultiPlayer = true,
@@ -168,7 +168,7 @@ namespace Cloudburst.Cores
                 pickupModelPath = pickUpModelPath,
                 pickupToken = "EQUIPMENT_MIRV_PICKUP",
                 unlockableName = "",
-            });
+            });*/
 
             On.RoR2.EquipmentSlot.PerformEquipmentAction += EquipmentSlot_PerformEquipmentAction;
 

@@ -55,6 +55,9 @@
     <Reference Include="Facepunch.Steamworks">
       <HintPath>libs\Facepunch.Steamworks.dll</HintPath>
     </Reference>
+    <Reference Include="HGCSharpUtils">
+      <HintPath>libs\HGCSharpUtils.dll</HintPath>
+    </Reference>
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>libs\MMHOOK_Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -137,17 +140,20 @@
     <Compile Include="API\API.cs" />
     <Compile Include="API\ComponentHelpers.cs" />
     <Compile Include="API\LogCore.cs" />
+    <Compile Include="Cores\Components\SproutingProjectileZone.cs" />
     <Compile Include="Cores\MushrumCore.cs" />
     <Compile Include="Cores\PrefabCore.cs" />
     <Compile Include="Cores\Components\BombardierPassiveController.cs" />
     <Compile Include="Cores\Components\RocketJumpOnImpact.cs" />
+    <Compile Include="Cores\States\Bombardier\ThrowNuke.cs" />
+    <Compile Include="Cores\States\Bombardier\ThrowTesla.cs" />
     <Compile Include="Cores\States\MegaMushrum\Implant.cs" />
     <Compile Include="Cores\States\MegaMushrum\Planted.cs" />
     <Compile Include="Cores\States\MegaMushrum\Planting.cs" />
     <Compile Include="Cores\States\MegaMushrum\Smashin.cs" />
     <Compile Include="Cores\States\MegaMushrum\SporeGrenade.cs" />
     <Compile Include="Cores\States\MegaMushrum\Unplant.cs" />
-    <Compile Include="FUCKACCESSMODIFIERS.cs" />
+    <Compile Include="NOMOREACCESSMODIFIERS.cs" />
     <Compile Include="Cloudburst.cs" />
     <Compile Include="Cores\AchievementCore.cs" />
     <Compile Include="Cores\AncientWispCore.cs" />

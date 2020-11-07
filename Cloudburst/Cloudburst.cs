@@ -65,15 +65,15 @@ namespace Cloudburst
         /// </summary>
         public static event Action onFixedUpdate;
 
-
         #region Cores
-        //Cupport cores; Cannot be disabled.
+        //Support cores; Cannot be disabled.
         private AssetsCore assetCore;
         private OrbCore orbCore;
         private BuffCore buffCore;
         private DoTCore dotCore;
         private EffectCore effectCore;
         private DebuggingCore debugCore;
+        private PrefabCore prefabCore;
         //private ShitpostCore lolCore;
 
         //Content Cores; Can be disabled
@@ -81,6 +81,7 @@ namespace Cloudburst
         private EquipmentCore equipCore;
         private WyattCore wyattCore;
         private EliteCore eliteCore;
+        private MegaMushrum mushrum;
         //private WyattCore han_dCore;
         private EngineerCore engineerCore;
         private QOLCore qol;
@@ -115,6 +116,7 @@ namespace Cloudburst
         public static ConfigEntry<bool> EnableUnlockAll;
         public static ConfigEntry<bool> Enabled;
         #endregion
+
         public Cloudburst()
         {
             LogCore.logger = Logger;
@@ -167,6 +169,7 @@ namespace Cloudburst
                 buffCore = new BuffCore();
                 effectCore = new EffectCore();
                 dotCore = new DoTCore();
+                prefabCore = new PrefabCore();
                 projectileCore = new ProjectileCore();
                 achiveCore = new AchievementCore();
 
@@ -224,6 +227,7 @@ namespace Cloudburst
                 //and thus
                 //we reach the end
                 qol = new QOLCore();
+                mushrum = new MegaMushrum();
                 // ancientWisp = new AncientWispCore();
                 bombManCore = new BombardierCore();
 #if DEBUG

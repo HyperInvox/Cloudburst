@@ -1,5 +1,6 @@
 ﻿using BepInEx;
 using Cloudburst.Cores.Components;
+using Moonstorm.Cores.Components;
 using R2API;
 using RoR2;
 using RoR2.Projectile;
@@ -24,9 +25,12 @@ namespace Cloudburst.Cores
         public static GameObject stickyProjectile;
         private GameObject stickyGhost;
 
+        public static GameObject indicator;
+
         private GameObject winchGhost;
         public static GameObject winch;
 
+        public static GameObject orbitalOrb;
 
         public static GameObject wyattMaidBubble;
 
@@ -41,9 +45,12 @@ namespace Cloudburst.Cores
 
             CreateBombardierProjectiles();
             CreateWyattMaidBubble();
+            CreateOrbitalOrbs();
             CreateWinchGhost();
             CreateWinchProjectile();
             CreateMiscProjectiles();
+            CreateSproutingMushroom();
+            CreateDelaySproutingMushroom();     
         }
 
         #region Misc   
@@ -61,7 +68,48 @@ namespace Cloudburst.Cores
             else LogCore.LogF("FATAL ERROR:" + MIRVProjectile.name + " failed to register!");
         }
         #endregion
+        #region Mega Mushrum
+        protected private void CreateDelaySproutingMushroom()
+        {
+            mushrumDelaySproutingMushroom = Resources.Load<GameObject>("prefabs/projectiles/SporeGrenadeProjectile").InstantiateClone("MegaMushrumDelaySproutingMushroom", true);
+            if (API.RegisterNewProjectile(MIRVProjectile))
+            {
+                mushrumDelaySproutingMushroom.GetComponent<ProjectileImpactExplosion>().childrenProjectilePrefab = mushrumSproutingMushroom;
+            }
+        }
+        protected private void CreateSproutingMushroom()
+        {
+            mushrumSproutingMushroom = Resources.Load<GameObject>("prefabs/projectiles/SporeGrenadeProjectileDotZone").InstantiateClone("MegaMushrumSproutingMushroom", true);
+            if (API.RegisterNewProjectile(mushrumSproutingMushroom)) //&& API.RegisterNewProjectile(MIRVClusterProjectile))
+            {
+                var collider = mushrumSproutingMushroom.AddComponent<SphereCollider>();
+                collider.isTrigger = true;
+                mushrumSproutingMushroom.AddComponent<SproutingProjectileZone>();
 
+                Transform container = mushrumSproutingMushroom.transform.Find("FX/ScaledOnImpact");
+                Transform fx = mushrumSproutingMushroom.transform.Find("FX");
+
+
+                foreach (Transform child in container)
+                {
+                    if (child.name != "IndicatorSphere")
+                    {
+                        //child.gameObject.SetActive(false); 
+                        Object.Destroy(child.gameObject);
+                    }
+                    else
+                    {
+                        indicator = child.gameObject.InstantiateClone("GenericIndicator", false);
+                    }
+                }
+                Object.Destroy(container.gameObject);
+                Object.Destroy(fx.gameObject);
+
+                var newChild = Object.Instantiate<GameObject>(indicator);
+                newChild.transform.SetParent(mushrumSproutingMushroom.transform);
+            }
+        }
+        #endregion
         #region Bombardier
         protected private void CreateBombardierProjectiles() {
             CreateBombardierRocketProjectile();
@@ -136,6 +184,64 @@ namespace Cloudburst.Cores
                 //GameObject.Destroy(stickyProjectile.GetComponent<ProjectileTargetComponent>());
             }
             else LogCore.LogF("FATAL ERROR:" + stickyProjectile.name + " failed to register!");
+        }
+
+        protected private void CreateOrbitalOrbs() {
+            orbitalOrb = Resources.Load<GameObject>("prefabs/projectiles/RedAffixMissileProjectile").InstantiateClone("OrbitalOrb", true);
+
+            //MonoBehaviour.Destroy(orbitalOrb.GetComponent<BoxCollider>());
+
+            //var collider = orbitalOrb.AddComponent<SphereCollider>();
+            orbitalOrb.GetComponent<BoxCollider>().isTrigger = false;
+            var orb = orbitalOrb.AddComponent<ProjectileProximityBeamController>();
+            var explosion = orbitalOrb.AddComponent<ProjectileImpactExplosion>();
+            var impact = orbitalOrb.GetComponent<ProjectileSingleTargetImpact>();
+            var missile = orbitalOrb.GetComponent<MissileController>();
+
+            missile.giveupTimer = float.MaxValue;
+            missile.maxSeekDistance = float.MaxValue;
+            missile.deathTimer = float.MaxValue;
+
+            LogCore.LogI(-(float.MaxValue * 2));
+            //missile.maxVelocity = float.MaxValue;
+
+            impact.impactEffect = EffectCore.orbitalImpact;
+
+            //MonoBehaviour.Destroy(impact);
+
+            explosion.impactEffect = EffectCore.orbitalImpact;
+            explosion.offsetForLifetimeExpiredSound = 0; 
+            explosion.destroyOnEnemy = true;
+            explosion.destroyOnWorld = true;
+            explosion.timerAfterImpact = false;
+            explosion.falloffModel = BlastAttack.FalloffModel.None;
+            explosion.lifetime = float.MaxValue;
+            explosion.lifetimeAfterImpact = 0;
+            explosion.lifetimeRandomOffset = 0;
+            explosion.blastRadius = 8;
+            explosion.blastDamageCoefficient = 1;
+            explosion.blastProcCoefficient = 1;
+            explosion.blastAttackerFiltering = AttackerFiltering.Default;
+
+            explosion.childrenCount = 0;
+            explosion.transformSpace = ProjectileImpactExplosion.TransformSpace.World;
+
+            //collider.radius = 0.2f;
+
+            orb.attackFireCount = 6;
+            orb.attackInterval = 1;
+            orb.listClearInterval = 0.1f;
+            orb.attackRange = 25;
+            orb.minAngleFilter = 0;
+            orb.maxAngleFilter = 180;
+            orb.procCoefficient = 0.5f;
+            orb.damageCoefficient = 1;
+            orb.bounces = 0;
+            orb.inheritDamageType = false;
+            orb.lightningType = RoR2.Orbs.LightningOrb.LightningType.Tesla;
+
+            API.RegisterNewProjectile(orbitalOrb);
+            //Resources.Load<GameObject>("prefabs/effects/impacteffects/ParentSlamEffect");
         }
 
         protected private void CreateBombardierRocketProjectile() {
@@ -244,7 +350,7 @@ namespace Cloudburst.Cores
 
                 void TeamFilter() {
                     var teamFilter = buffWardObject.AddComponent<TeamFilter>();
-                    teamFilter.SetTeamServer("Player");
+                    teamFilter.teamIndex = TeamIndex.Player;
                 }
                 void BuffWard() {
                     //buffward

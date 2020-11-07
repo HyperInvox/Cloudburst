@@ -65,7 +65,7 @@ namespace Cloudburst.Cores.States.Wyatt
                     base.characterDirection.forward = base.characterMotor.velocity.normalized;
                     float distance = Util.SphereVolumeToRadius(target.volume);
 
-                    if (stopwatch > 5)
+                    if (stopwatch > 4)
                     {
                         LogCore.LogI(stopwatch);
                         this.activatorSkillSlot.AddOneStock();
@@ -85,7 +85,7 @@ namespace Cloudburst.Cores.States.Wyatt
                             teamIndex = base.GetTeam(),
                             baseDamage = 5 * this.damageStat,
                             attackerFiltering = default,
-                            bonusForce = new Vector3(0, -6000, 0),
+                            bonusForce = new Vector3(0, -3000, 0),
                             damageType = DamageType.Stun1s | DamageTypeCore.spiked,
                             crit = RollCrit(),
                             damageColorIndex = DamageColorIndex.Default,
@@ -104,6 +104,7 @@ namespace Cloudburst.Cores.States.Wyatt
                         EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact.prefab"), effectData, true);
 
                         base.characterMotor.velocity = Vector3.up * 20f;
+                        //characterMotor.ApplyForce(-(GetAimRay().direction * (-characterMotor.mass * 10)), true, false);
                         stage = ActionStage.HitTarget;
 
 

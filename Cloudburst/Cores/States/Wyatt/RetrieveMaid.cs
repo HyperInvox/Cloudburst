@@ -26,7 +26,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.FixedUpdate();
             if (fixedAge >= baseDuration && isAuthority)
             {
-                skillLocator.special.SetBaseSkill(WyattCore.instance.throwPrimary);
+                skillLocator.special.SetSkillOverride(this, WyattCore.instance.throwPrimary, GenericSkill.SkillOverridePriority.Contextual);
                 //skillLocator.special.SetPropertyValue("cooldownRemaining", (Single)3);
                 //skillLocator.special.cooldownRemaining
                 outer.SetNextStateToMain(); 

@@ -16,7 +16,7 @@ public static class API
     /// GameObject must be non-null and have a ProjectileController component
     /// returns false if GameObject is null or is missing the component        
     /// </summary>
-    /// <param name="projectileObject"></param>
+    /// <param name="projectileObject">The projectile to register to the projectile catalog.</param>
     /// <returns></returns>
     public static bool RegisterNewProjectile(GameObject projectileObject)
     {
@@ -33,8 +33,8 @@ public static class API
     /// Adds a GameObject to the body catalog and returns true
     /// GameObject must be non-null and have a CharacterBody component
     /// returns false if GameObject is null or is missing the component
-    /// /// </summary>
-    /// <param name="bodyObject"></param>
+    /// </summary>
+    /// <param name="bodyObject">The body to register to the body catalog.</param>
     /// <returns></returns>
     public static bool RegisterNewBody(GameObject bodyObject)
     {
@@ -52,7 +52,7 @@ public static class API
     /// GameObject must be non-null and have a CharacterMaster component
     /// returns false if GameObject is null or is missing the component
     /// </summary>
-    /// <param name="master"></param>
+    /// <param name="master">The master to register to the master catalog.</param>
     /// <returns></returns>
     public static bool RegisterNewMaster(GameObject master)
     {
@@ -182,7 +182,7 @@ public static class API
             body.ApplyForce(upliftForce);
         //}
 
-    }    
+    }
     #endregion
     #region Skills
     /// <summary>
@@ -191,8 +191,12 @@ public static class API
     /// <param name="survivor"></param>
     public static void CreateEmptySkills(GameObject survivor)
     {
-        DestroyGenericSkillComponents(survivor);
-        CreateEmptySkillFamily(survivor);
+        if (survivor)
+        {
+            DestroyGenericSkillComponents(survivor);
+            CreateEmptySkillFamily(survivor);
+        }
+        else LogCore.LogF("Tried to create empty skills on a null GameObject!");
     }
     /// <summary>
     /// Destroys generic skill components attached to the survivor object

@@ -8,6 +8,8 @@ namespace Cloudburst.Cores
     {
         public static EffectCore instance;
 
+        public static GameObject unknownEffect;
+        public static GameObject orbitalImpact;
         public static GameObject HANDRetrivalOrb;
         public static GameObject coinImpactEffect;
         public EffectCore() => Effects();
@@ -29,6 +31,35 @@ namespace Cloudburst.Cores
         protected void CreateNewEffects() {
             MakeHANDOrbEffect();
             CreateCoinImpactEffect();
+            CreateOrbitalImpact();
+            CreateUnknownEliteEffect();
+        }
+
+        private void CreateOrbitalImpact() {
+            orbitalImpact = Resources.Load<GameObject>("prefabs/effects/impacteffects/ParentSlamEffect").InstantiateClone("OrbitalImpactEffect", false);
+
+            var particleParent = orbitalImpact.transform.Find("Particles");
+            var debris = particleParent.Find("Debris, 3D");
+            var debris2 = particleParent.Find("Debris");
+            var sphere = particleParent.Find("Nova Sphere");
+
+            debris.gameObject.SetActive(false);
+            debris2.gameObject.SetActive(false);
+            sphere.gameObject.SetActive(false);
+
+            EffectAPI.AddEffect(orbitalImpact);
+        }
+
+        private void CreateUnknownEliteEffect()
+        {
+            unknownEffect = Resources.Load<GameObject>("prefabs/PoisonAffixEffect").InstantiateClone("AAAAA", false);
+            //var fire = Resources.Load<GameObject>("prefabs/projectileghosts/RedAffixMissileGhost");
+            //var flames = Object.Instantiate<GameObject>(fire.transform.Find("Particles (1)/Flames").gameObject);
+
+            //LogCore.LogI(flames);
+            //flames.transform.SetParent(fire.transform);
+            //flames.transform.SetParent(unknownEffect.transform);
+
         }
 
         private void CreateCoinImpactEffect() {

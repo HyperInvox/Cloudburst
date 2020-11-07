@@ -9,7 +9,7 @@ namespace Cloudburst.Cores.Components
         private List<GameObject> bombs;
         public void Awake()
         {
-            //click and she's gone!
+            //click and she's gone
             
             bombs = new List<GameObject>();
         }

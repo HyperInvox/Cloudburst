@@ -45,7 +45,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.FixedUpdate();
             if (fixedAge >= baseDuration && isAuthority)
             {
-                skillLocator.special.SetBaseSkill(WyattCore.instance.retrievePrimary);
+                skillLocator.special.SetSkillOverride(this, WyattCore.instance.retrievePrimary, GenericSkill.SkillOverridePriority.Contextual);
                 outer.SetNextStateToMain();
             };
         }

@@ -124,7 +124,7 @@ namespace Cloudburst.Cores
             directorCard.spawnCard = characterSpawnCard;
             directorCard.spawnDistance = DirectorCore.MonsterSpawnDistance.Standard;
 
-            directorCardHolder.Card = directorCard;
+            directorCardHolder.Card = directorCard; 
             directorCardHolder.InteractableCategory = DirectorAPI.InteractableCategory.None;
             directorCardHolder.MonsterCategory = DirectorAPI.MonsterCategory.Champions;
 
@@ -135,7 +135,7 @@ namespace Cloudburst.Cores
                     list.Add(directorCardHolder);
                 }
             };
-        }
+        }   
 
         private void BuildBody()
         {
@@ -143,7 +143,7 @@ namespace Cloudburst.Cores
             if (characterBody)
             {
                 LanguageAPI.Add("MEGAMUSHRUM_BODY_NAME", "Mega Mushrum");
-                characterBody.baseAcceleration = 14f;
+                characterBody.baseAcceleration = 70f;
                 characterBody.baseArmor = 0; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
                 characterBody.baseCrit = 0;  //Base crit, usually one
@@ -173,6 +173,7 @@ namespace Cloudburst.Cores
                 characterBody.levelRegen = 0f; //Regen gained when leveling up. 
                                                //characterBody.portraitIcon = portrait; //The portrait icon, shows up in multiplayer and the death UI
                                                //characterBody.preferredPodPrefab = Resources.Load<GameObject>("prefabs/networkedobjects/robocratepod"); //The pod prefab this survivor spawns in. Options: Resources.Load<GameObject>("prefabs/networkedobjects/robocratepod"); Resources.Load<GameObject>("prefabs/networkedobjects/survivorpod"); 
+                FixSetStateOnHurt();
             }
         }
 
@@ -191,6 +192,18 @@ namespace Cloudburst.Cores
 
             }
         }
+
+        private void FixSetStateOnHurt()
+        {
+            SetStateOnHurt hurtState = megaMushrum.AddOrGetComponent<SetStateOnHurt>(); //AddOrGetComponent is because 
+
+            hurtState.canBeFrozen = true; //If this gameobject can be frozen. Set to true if this is a survivor
+            hurtState.canBeHitStunned = false; //If this gameobject can be stunned by being hit. Set to false if this is a survivor.
+            hurtState.canBeStunned = false; //If this gameobject is able to be stunned. Set to false if this is a survivor
+            hurtState.hitThreshold = 5f; //The hit threshold, set to 5 if this is a survivor.
+        }
+
+
         private void RebuildSkillDrivers()
         {
             API.DestroySkillDrivers(megaMushrumMaster);

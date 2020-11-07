@@ -11,7 +11,7 @@ namespace Cloudburst.Cores.States.MegaMushrum
         public static float healFraction = EntityStates.MiniMushroom.Plant.healFraction;
         public static float baseMaxDuration = EntityStates.MiniMushroom.Plant.baseMaxDuration;
         public static float baseMinDuration = EntityStates.MiniMushroom.Plant.baseMinDuration;
-        public static float mushroomRadius = 30;
+        public static float mushroomRadius = 60;
         public static string healSoundLoop = EntityStates.MiniMushroom.Plant.healSoundLoop;
         public static string healSoundStop = EntityStates.MiniMushroom.Plant.healSoundStop;
         private float maxDuration;
@@ -21,6 +21,8 @@ namespace Cloudburst.Cores.States.MegaMushrum
         private float castTimer;
 
         private float sunTime;
+
+        private float meleeCharacterSuck;
 
         public static float baseDuration = 15f;
         private float duration;
@@ -70,12 +72,40 @@ namespace Cloudburst.Cores.States.MegaMushrum
         {
             base.FixedUpdate();
             castTimer += Time.fixedDeltaTime;
+            meleeCharacterSuck += Time.fixedDeltaTime;
 
             if (castTimer >= sunTime)
             {
                 PlacePillar();
                 castTimer -= sunTime;
             }
+            if (meleeCharacterSuck >= 2) {
+                new BlastAttack
+                {
+                    attacker = gameObject,
+                    attackerFiltering = AttackerFiltering.NeverHit,
+                    baseDamage = 5f * characterBody.damage,
+                    baseForce = 2500,
+                    crit = RollCrit(),
+                    damageColorIndex = DamageColorIndex.Default,
+                    damageType = DamageType.Generic,
+                    falloffModel = BlastAttack.FalloffModel.None,
+                    inflictor = base.gameObject,
+                    losType = BlastAttack.LoSType.NearestHit,
+                    position = transform.position,
+                    procChainMask = default,
+                    procCoefficient = 1,
+                    radius = 20,
+                    teamIndex = GetTeam(),
+                }.Fire();
+                EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/omnieffect/OmniExplosionVFXTreebot"), new EffectData
+                {
+                    origin = base.transform.position,
+                    scale = 20
+                }, true);
+                meleeCharacterSuck = 0;
+            }
+
             if (base.isAuthority)
             {
                 if (base.fixedAge > this.maxDuration || (base.fixedAge > this.minDuration) || base.inputBank.moveVector.sqrMagnitude > 0.1f)

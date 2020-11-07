@@ -612,14 +612,16 @@ namespace Cloudburst.Cores
             utilitySkillDef.skillNameToken = "BOMBARDIER_UTILITY_NAME";
             utilitySkillDef.icon = null;
             utilitySkillDef.keywordTokens = new string[] {
-                 //"KEYWORD_FORCEFUL",
+                 "KEYWORD_WHIFF",
             };
 
             LanguageAPI.Add("KEYWORD_FORCEFUL", "<style=cKeywordName>Forceful</style><style=cSub>This skill applies the Forceful debuff, which doubles force applied to enemies.</style>");
+            LanguageAPI.Add("KEYWORD_WHIFF", "<style=cKeywordName>Whiffing</style><style=cSub>This skill does 200% more damage when you are in mid-air.</style>");
+
             //LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Forceful</style>. Pull enemies towards you for <style=cIsDamage>500%</style> damage and <style=cIsUtility>boost yourself upwards</style>.");
             //LanguageAPI.Add(utilitySkillDef.skillNameToken, "Plan B");
 
-            LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Stunning</style>. <style=cIsDamage>Forceful</style>. Fire a powerful rocket that does <style=cIsDamage>500%</style> damage and <style=cIsDamage>explodes in a large radius on contact</style>.");
+            LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Stunning</style>. <style=cIsDamage>Whiffing</style>. Fire a powerful rocket that does <style=cIsDamage>500%</style> damage and <style=cIsDamage>explodes in a large radius on contact</style>.");
             LanguageAPI.Add(utilitySkillDef.skillNameToken, "Concussive Payload");
 
             LoadoutAPI.AddSkillDef(utilitySkillDef);
@@ -636,12 +638,13 @@ namespace Cloudburst.Cores
         private void CreateSpecial() {
             LoadoutAPI.AddSkill(typeof(Mortar));
             LoadoutAPI.AddSkill(typeof(GrandSlam));
+            LoadoutAPI.AddSkill(typeof(ThrowTesla));
 
-            SkillDef specialSkillDef = ScriptableObject.CreateInstance<BombardierTrackingSkillDef>();
-            specialSkillDef.activationState = new SerializableEntityStateType(typeof(FireRocketInThrees));
+            SkillDef specialSkillDef = ScriptableObject.CreateInstance<SkillDef>();
+            specialSkillDef.activationState = new SerializableEntityStateType(typeof(ThrowTesla));
             specialSkillDef.activationStateMachineName = "Weapon";
             specialSkillDef.baseMaxStock = 1;
-            specialSkillDef.baseRechargeInterval = 6;
+            specialSkillDef.baseRechargeInterval = 10;
             specialSkillDef.beginSkillCooldownOnSkillEnd = true;
             specialSkillDef.canceledFromSprinting = false;
             specialSkillDef.fullRestockOnAssign = true;
@@ -656,12 +659,12 @@ namespace Cloudburst.Cores
             specialSkillDef.stockToConsume = 1;
             specialSkillDef.skillDescriptionToken = "BOMBARDIER_SPECIAL_DESC";
             specialSkillDef.skillName = "GrandSlam";
-            specialSkillDef.keywordTokens = new string[] { "KEYWORD_HEAVY" };
+            specialSkillDef.keywordTokens = new string[] {  };
             specialSkillDef.skillNameToken = "BOMBARDIER_SPECIAL_NAME";
             specialSkillDef.icon = null;
 
-            LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "<style=cIsDamage>Heavy</style>. Slam downwards, dealing <style=cIsDamage>630%</style> damage on contact.");
-            LanguageAPI.Add(specialSkillDef.skillNameToken, "Grand Slam");
+            LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "This content is filler.");
+            LanguageAPI.Add(specialSkillDef.skillNameToken, "FILLER");
 
             LoadoutAPI.AddSkillDef(specialSkillDef);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;

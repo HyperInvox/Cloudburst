@@ -20,17 +20,22 @@ namespace Cloudburst.Cores.Components {
             mainSkinnedMeshRenderer = Reflection.GetFieldValue<SkinnedMeshRenderer>(characterModel, "mainSkinnedMeshRenderer");
             if (!this.goldAffixEffect)
             {
-                goldAffixEffect = Instantiate<GameObject>(CommonAssets.goldAffix, base.transform);
-                ParticleSystem.ShapeModule shape = goldAffixEffect.GetComponent<ParticleSystem>().shape;
+                goldAffixEffect = Instantiate<GameObject>(EffectCore.unknownEffect, base.transform);
 
+                ParticleSystem[] sys = goldAffixEffect.GetComponentsInChildren<ParticleSystem>();
 
+                for (int i = 0; i < sys.Length; i++) {
+                    var shap = sys[i].shape;
+                    shap.shapeType = ParticleSystemShapeType.SkinnedMeshRenderer;
+                    shap.skinnedMeshRenderer = mainSkinnedMeshRenderer;
+                    return;
+                }
+                //ParticleSystem.ShapeModule shape = goldAffixEffect.GetComponents<ParticleSystem>().shape;
 
                 if (mainSkinnedMeshRenderer)
                 {
                     isGoldEffectEnabled = true;
-                    shape.shapeType = ParticleSystemShapeType.SkinnedMeshRenderer;
-                    shape.skinnedMeshRenderer = mainSkinnedMeshRenderer;
-                    return;
+
                 }
             }
             else {

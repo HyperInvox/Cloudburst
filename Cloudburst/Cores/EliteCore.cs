@@ -46,7 +46,7 @@ namespace Cloudburst.Cores
 
             //Void();
             War();
-            Lunar();
+            //Lunar();
             //Tar();
 
             On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
@@ -116,7 +116,10 @@ namespace Cloudburst.Cores
             {
                 Inventory inv = self.inventory;
                 self.AddItemBehavior<AffixWarBehavior>(self.HasBuff(warIndex) ? 1 : 0);
-
+                if (self.HasBuff(this.warIndex))
+                {
+                    self.gameObject.AddOrGetComponent<EnableGoldAffixEffect>().EnableGoldAffix();
+                }
                 /*if (self.HasBuff(tarIndex))
                 {
                     Transform modelBaseTransform = self.modelLocator.modelBaseTransform;

@@ -31,10 +31,11 @@ namespace Cloudburst.Cores.States.Bombardier
 
         public override FireProjectileInfo GetInfo(Ray aimRay)
         {
+            var damage = base.isGrounded ? 7 * damageStat : 5 * damageStat;
             FireProjectileInfo info = new FireProjectileInfo()
             {
                 crit = RollCrit(),
-                damage = 5 * damageStat,
+                damage = damage,
                 damageColorIndex = RoR2.DamageColorIndex.Default,
                 damageTypeOverride = DamageType.Stun1s,
                 force = -2500,

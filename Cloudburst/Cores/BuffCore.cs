@@ -95,7 +95,7 @@ namespace Cloudburst.Cores
             RegisterBuff(new BuffDef()
             {
                 buffIndex = BuffIndex.Count,
-                canStack = true,
+                canStack = false,
                 isDebuff = false,
                 eliteIndex = EliteIndex.None,
                 iconPath = "Textures/BuffIcons/texBuffBodyArmorIcon",
@@ -172,6 +172,8 @@ namespace Cloudburst.Cores
             orig(self);
             if (self)
             {
+                //Reflection.SetPropertyValue<float>(self, "maxHealth", characterBody.maxHealth * 100f);
+
                 var attackSpeed = self.attackSpeed;
                 var armor = self.armor;
                 var moveSpeed = self.moveSpeed;

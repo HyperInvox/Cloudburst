@@ -8,7 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Cloudburst.Cores.States.Commando {
+namespace Cloudburst.Cores.States.Commando
+{
     public class CommandoGrenade : AimThrowableBase
     {
         private float duration = 1;
@@ -51,4 +52,4 @@ namespace Cloudburst.Cores.States.Commando {
             return InterruptPriority.PrioritySkill;
         }
     }
-}
+}   

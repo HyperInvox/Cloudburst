@@ -5,6 +5,7 @@ using RoR2.Navigation;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.States.Wyatt
 {
@@ -42,8 +43,13 @@ namespace Cloudburst.Cores.States.Wyatt
             base.FixedUpdate();
             timer += Time.deltaTime;
 
-            base.characterMotor.rootMotion += base.inputBank.aimDirection * (7 * 35 * Time.fixedDeltaTime);
-            ShockEnemies();
+            var a = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
+            base.characterMotor.rootMotion += a * (7 * 35 * Time.fixedDeltaTime);
+
+            if (NetworkServer.active)
+            {
+                ShockEnemies();
+            }
 
             if (fixedAge >= baseDuration && isAuthority)
             {

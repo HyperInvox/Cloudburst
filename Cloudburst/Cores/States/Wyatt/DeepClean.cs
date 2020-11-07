@@ -5,6 +5,7 @@ using RoR2.Navigation;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.States.Wyatt
 {
@@ -47,7 +48,13 @@ namespace Cloudburst.Cores.States.Wyatt
 
             if (base.isAuthority)
             {
+                var a = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
+                //base.inputBank.aimDirection
                 base.characterMotor.rootMotion += base.inputBank.aimDirection * (7 * 35 * Time.fixedDeltaTime);
+
+            }
+
+            if (NetworkServer.active) {
                 ShockEnemies();
             }
 
@@ -94,7 +101,7 @@ namespace Cloudburst.Cores.States.Wyatt
                             };
             lightningOrb2.procChainMask = default;
             lightningOrb2.procCoefficient = 1;
-            lightningOrb2.lightningType = LightningOrb.LightningType.Ukulele;
+            lightningOrb2.lightningType = LightningOrb.LightningType.Tesla;
             lightningOrb2.damageColorIndex = DamageColorIndex.Default;
             lightningOrb2.range += 10;
             lightningOrb2.damageType = (DamageTypeCore.pullEnemies | DamageType.Stun1s);

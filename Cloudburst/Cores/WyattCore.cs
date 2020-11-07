@@ -44,12 +44,14 @@ namespace Cloudburst.Cores.HAND
         {
             LogCore.LogI("Initializing Core: " + base.ToString());
 
+            //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
+
             if (instance == null)
             {
                 instance = this;
             }
             CreateWYATT();
-            On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
+            //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
 
 #if RELEASE
             LogW("You're on a debug build. If you see this after downloading from the thunderstore, panic!");

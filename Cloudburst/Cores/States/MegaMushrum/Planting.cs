@@ -9,7 +9,7 @@ namespace Cloudburst.Cores.States.MegaMushrum
     {
         public static float explosionDelay = 2f;
 
-        public static int explosionCount = 30;
+        public static int explosionCount = 15;
 
         public static GameObject delayPrefab = PrefabCore.pillar;
 
@@ -91,15 +91,14 @@ namespace Cloudburst.Cores.States.MegaMushrum
 
                     Quaternion rotation = Util.QuaternionSafeLookRotation(raycastHit.normal);
 
-                    
 
-                    ProjectileManager.instance.FireProjectile(ProjectileCore.mushrumDelaySproutingMushroom, hitPoint, rotation, base.gameObject, this.damageStat * SporeGrenades.damageCoefficient, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null);
+                    ProjectileManager.instance.FireProjectile(ProjectileCore.mushrumDelaySproutingMushroom, hitPoint, Util.QuaternionSafeLookRotation(Vector3.up * 20), base.gameObject, this.damageStat * SporeGrenades.damageCoefficient, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null);
 
                 }
             }
             //Make sure that our aimray isn't aiming at nothing
             /*Vector3 vector = Vector3.zero;
-            Ray aimRay = GetAimRay();
+            Ray ai  mRay = GetAimRay();
             aimRay.origin += Random.insideUnitSphere * randomRadius;
             RaycastHit raycastHit;
             if (Physics.Raycast(aimRay, out raycastHit, (float)LayerIndex.world.mask))
