@@ -20,7 +20,7 @@ namespace Cloudburst.Cores.Components {
             mainSkinnedMeshRenderer = Reflection.GetFieldValue<SkinnedMeshRenderer>(characterModel, "mainSkinnedMeshRenderer");
             if (!this.goldAffixEffect)
             {
-                goldAffixEffect = Instantiate<GameObject>(EffectCore.unknownEffect, base.transform);
+                goldAffixEffect = Instantiate<GameObject>(CommonAssets.goldAffix, base.transform);
 
                 ParticleSystem[] sys = goldAffixEffect.GetComponentsInChildren<ParticleSystem>();
 

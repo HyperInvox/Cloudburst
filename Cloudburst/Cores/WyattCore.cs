@@ -365,15 +365,7 @@ namespace Cloudburst.Cores.HAND
                 LoadoutAPI.SkinDefInfo defaultSkinInfo = default(LoadoutAPI.SkinDefInfo);
                 defaultSkinInfo.BaseSkins = Array.Empty<SkinDef>();
                 defaultSkinInfo.GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>();
-                defaultSkinInfo.Icon = LoadoutAPI.CreateSkinIcon(
-                    //top - FILLED
-                    new Color(215f / 255f, 83f / 255f, 65f / 255f),
-                    //right - FILLED
-                    new Color(137f / 255f, 207f / 255f, 240f / 255f),
-                    //bottom - FILLED
-                    new Color(70f / 255, 130f / 255f, 180f / 255f),
-                    //left - FILLED
-                    new Color(253f / 255f, 118f / 255f, 26f / 255f));
+                defaultSkinInfo.Icon = LoadoutAPI.CreateSkinIcon(new Color(0f, 156f / 255f, 188f / 255f), new Color(186f / 255f, 128f / 255f, 52f / 255f), new Color(58f / 255f, 49f / 255f, 24f / 255f), new Color(2f / 255f, 29f / 255f, 55f / 255f));
 
                 defaultSkinInfo.MeshReplacements = new SkinDef.MeshReplacement[] {
                     new SkinDef.MeshReplacement {

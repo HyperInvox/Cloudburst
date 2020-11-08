@@ -51,7 +51,41 @@ namespace Cloudburst.Cores
 
             On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             //On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
+            On.RoR2.CharacterBody.FixedUpdate += CharacterBody_FixedUpdate;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
+        }
+
+        private void CharacterBody_FixedUpdate(On.RoR2.CharacterBody.orig_FixedUpdate orig, CharacterBody self)
+        {
+            if (self.HasBuff(warIndex) && !self.GetComponent<DestroyEffectOnBuffEnd>())
+            {
+                var modelLocator = self.modelLocator;
+                if (modelLocator)
+                {
+                    var modelTransform = self.modelLocator.modelTransform;
+                    if (modelTransform)
+                    {
+                        var model = self.modelLocator.modelTransform.GetComponent<RoR2.CharacterModel>();
+                        if (model)
+                        {
+                            LogCore.LogI("hhi");
+                            var tracker = self.gameObject.AddComponent<DestroyEffectOnBuffEnd>();
+                            tracker.body = self;
+                            tracker.buff = warIndex;
+
+                            TemporaryOverlay overlay = self.modelLocator.modelTransform.gameObject.AddComponent<RoR2.TemporaryOverlay>();
+                            overlay.duration = float.PositiveInfinity;
+                            overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                            overlay.animateShaderAlpha = true;
+                            overlay.destroyComponentOnEnd = true;
+                            overlay.originalMaterial = AssetsCore.mainAssetBundle.LoadAsset<Material>("Ramp War");
+                            overlay.AddToCharacerModel(model);
+                            tracker.effect = overlay;
+                        }
+                    }
+                }
+            }
+            orig(self);
         }
 
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
@@ -116,10 +150,10 @@ namespace Cloudburst.Cores
             {
                 Inventory inv = self.inventory;
                 self.AddItemBehavior<AffixWarBehavior>(self.HasBuff(warIndex) ? 1 : 0);
-                if (self.HasBuff(this.warIndex))
+                /*if (self.HasBuff(this.warIndex))
                 {
                     self.gameObject.AddOrGetComponent<EnableGoldAffixEffect>().EnableGoldAffix();
-                }
+                }*
                 /*if (self.HasBuff(tarIndex))
                 {
                     Transform modelBaseTransform = self.modelLocator.modelBaseTransform;
@@ -304,7 +338,7 @@ namespace Cloudburst.Cores
             {
                 name = "Enrolled",
                 modifierToken = "ELITE_MODIFIER_WAR",
-                color = warColor,
+                //color = warColor,
                 //eliteEquipmentIndex = voidEquip
             };
 
@@ -346,7 +380,7 @@ namespace Cloudburst.Cores
                 var mat = UnityEngine.Object.Instantiate<Material>(Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material);
 
                 renderer.material = mat; //Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material;
-                renderer.sharedMaterial.SetColor("_TintColor", new Color(0.3764706f, 0.84313726f, 0.8980392f)); ;
+                renderer.sharedMaterial.SetColor("_TintColor", buffDef.buffColor); // new Color(0.3764706f, 0.84313726f, 0.8980392f)); ;
 
                 //GRAVEYARD OF PREVIOUS COLORS
                 //renderer.sharedMaterial.SetColor("_TintColor", new Color(255 / 255, 192 / 255, 203)); ;
@@ -449,6 +483,17 @@ namespace Cloudburst.Cores
             if (warWard)
             {
                 Destroy(warWard);
+            }
+        }
+    }
+    public class DestroyEffectOnBuffEnd : MonoBehaviour {
+        public BuffIndex buff;
+        public CharacterBody body;
+        public TemporaryOverlay effect;
+        public void FixedUpdate() {
+            if (!body || !body.HasBuff(buff)) {
+                Destroy(effect);
+                Destroy(this);
             }
         }
     }

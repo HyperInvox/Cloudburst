@@ -254,7 +254,7 @@
   <ItemGroup>
     <EmbeddedResource Include="assetburst" />
     <EmbeddedResource Include="examplesurvivorbundle" />
-    <EmbeddedResource Include="hand_assets" />
+    <EmbeddedResource Include="OLD_hand_assets" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

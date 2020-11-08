@@ -61,15 +61,7 @@ namespace Cloudburst.Cores
                     ResourcesAPI.AddProvider(provider);
                 }
             }
-            if (HANDAssetBundle == null)
-            {
-                using (var assetStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Cloudburst.hand_assets"))
-                {
-                    HANDAssetBundle = AssetBundle.LoadFromStream(assetStream);
-                    HANDProvider = new AssetBundleResourcesProvider("@EngimaHANDREBOOTED", HANDAssetBundle);
-                    ResourcesAPI.AddProvider(HANDProvider);
-                }
-            }
+
             if (bombAssetBundle == null)
             {
                 using (var assetStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Cloudburst.examplesurvivorbundle"))
@@ -97,21 +89,6 @@ namespace Cloudburst.Cores
             wyattUtilityAlt = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/utilityicon2.png");
             wyattSpecial = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon.png");
             wyattSpecial2 = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon2.png");
-
-
-            //HAN-D
-            winchIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Winch.png");
-            portraitIcon = HANDAssetBundle.LoadAsset<Texture2D>("Assets/Import/HAND_ICONS/Portrait.png");
-            droneIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Drone.png");
-            forcedReassemblyIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Forced_Reassembly.png");
-            overclockBuffIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/OverclockBuff.png");
-            passiveIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Passive.png");
-            hurtIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Hurt.png");
-            overclockIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Overclock.png");
-            explungeIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Explunge.png");
-            passiveDroneBuffIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/PassiveDrone.png");
-            unethicalReassemblyIcon = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Unethical_Reassembly.png");
-            passive = HANDAssetBundle.LoadAsset<Sprite>("Assets/Import/HAND_ICONS/Passive.png");
         }
     }
 }

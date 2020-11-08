@@ -86,7 +86,8 @@ public static class API
     /// Creates a valid projectile from a GameObject 
     /// </summary>
     /// <param name="projectile"></param>
-    public static void CreateValidProjectile(GameObject projectile, float lifeTime, float velocity, bool updateAfterFiring) {
+    public static void CreateValidProjectile(GameObject projectile, float lifeTime, float velocity, bool updateAfterFiring)
+    {
         var networkIdentity = projectile.AddComponent<NetworkIdentity>();
         var teamFilter = projectile.AddComponent<TeamFilter>();
         var projectileController = projectile.AddComponent<ProjectileController>();
@@ -169,17 +170,17 @@ public static class API
     {
         var dir = (body.transform.position - explosionPosition);
         float wearoff = 1 - (dir.magnitude / explosionRadius);
-        
+
         Vector3 baseForce = dir.normalized * explosionForce * wearoff;
         //baseForce.z = 0;
         body.ApplyForce(baseForce);
 
         //if (upliftModifier != 0)
         //{
-            float upliftWearoff = 1 - upliftModifier / explosionRadius;
-            Vector3 upliftForce = Vector2.up * explosionForce * upliftWearoff;
-            //upliftForce.z = 0;
-            body.ApplyForce(upliftForce);
+        float upliftWearoff = 1 - upliftModifier / explosionRadius;
+        Vector3 upliftForce = Vector2.up * explosionForce * upliftWearoff;
+        //upliftForce.z = 0;
+        body.ApplyForce(upliftForce);
         //}
 
     }
