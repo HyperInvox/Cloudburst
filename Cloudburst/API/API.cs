@@ -278,5 +278,24 @@ public static class API
         copier.skillNameToken = beingCopiedFrom.skillNameToken;
         copier.stockToConsume = beingCopiedFrom.stockToConsume;
     }
+
+    public static CharacterModel GetCharacterModelFromCharacterBody(CharacterBody body)
+    {
+        var modelLocator = body.modelLocator;
+        if (modelLocator)
+        {
+            var modelTransform = body.modelLocator.modelTransform;
+            if (modelTransform)
+            {
+                var model = modelTransform.GetComponent<CharacterModel>();
+                if (model)
+                {
+                    return model;
+                }
+            }
+
+        }
+        return null;
+    }
     #endregion
 }

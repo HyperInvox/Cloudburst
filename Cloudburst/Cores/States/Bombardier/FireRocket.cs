@@ -100,7 +100,7 @@ namespace Cloudburst.Cores.States.Bombardier
 
         public virtual GameObject GrabProjectile()
         {
-            return ProjectileCore.orbitalOrb; //bombardierBombProjectile; //Resources.Load<GameObject>("prefabs/projectiles/RedAffixMissileProjectile");
+            return ProjectileCore.bombardierBombProjectile; //Resources.Load<GameObject>("prefabs/projectiles/RedAffixMissileProjectile");
         }
 
         public virtual void ModifyProjectileInfo(FireProjectileInfo info)

@@ -53,12 +53,12 @@ namespace Cloudburst.Cores
         private void CreateUnknownEliteEffect()
         {
             unknownEffect = Resources.Load<GameObject>("prefabs/PoisonAffixEffect").InstantiateClone("AAAAA", false);
-            //var fire = Resources.Load<GameObject>("prefabs/projectileghosts/RedAffixMissileGhost");
-            //var flames = Object.Instantiate<GameObject>(fire.transform.Find("Particles (1)/Flames").gameObject);
+            var fire = Resources.Load<GameObject>("prefabs/projectileghosts/RedAffixMissileGhost");
+            var flames = Object.Instantiate<GameObject>(fire.transform.Find("Particles (1)/Flames").gameObject);
 
             //LogCore.LogI(flames);
             //flames.transform.SetParent(fire.transform);
-            //flames.transform.SetParent(unknownEffect.transform);
+            flames.transform.SetParent(unknownEffect.transform);
 
         }
 

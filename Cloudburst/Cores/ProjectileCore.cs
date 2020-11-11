@@ -34,6 +34,10 @@ namespace Cloudburst.Cores
 
         public static GameObject wyattMaidBubble;
 
+        public static GameObject electricPillar;
+        public static GameObject electricPillarGhost;
+        public static GameObject eliteElectricProjectile;
+
         public ProjectileCore() => CreateProjectiles();
 
 
@@ -50,7 +54,12 @@ namespace Cloudburst.Cores
             CreateWinchProjectile();
             CreateMiscProjectiles();
             CreateSproutingMushroom();
-            CreateDelaySproutingMushroom();     
+            CreateDelaySproutingMushroom();
+
+            CreateElectricPillarGhost();
+            CreateElectricPillar();
+            CreateElectricProjectile(); ;
+            
         }
 
         #region Misc   
@@ -67,6 +76,35 @@ namespace Cloudburst.Cores
             }
             else LogCore.LogF("FATAL ERROR:" + MIRVProjectile.name + " failed to register!");
         }
+        #endregion
+        #region Elite
+
+        protected void CreateElectricPillarGhost() {
+            electricPillarGhost = Resources.Load<GameObject>("prefabs/projectileghosts/BrotherFirePillarGhost").InstantiateClone("OverchargedPillarGhost", false);
+            //var temptile = Resources.Load<GameObject>("prefabs/projectileghosts/ElectricOrbGhost");
+            //var mat = temptile.transform.Find("Helix/Trail").GetComponent<Renderer>().material;
+            var mat = AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Materials/Ramp Foil.mat");
+
+            electricPillarGhost.transform.Find("Scale/Glow, Looping").GetComponent<Renderer>().material = mat;
+            electricPillarGhost.transform.Find("Scale/Glow, Initial").gameObject.SetActive(false);
+            electricPillarGhost.transform.Find("Scale/Fire, Directional").GetComponent<Renderer>().material = mat;
+            electricPillarGhost.transform.Find("Scale/Rock Particles, Fast").gameObject.SetActive(false);
+        }
+
+        protected void CreateElectricPillar() {
+            electricPillar = Resources.Load<GameObject>("prefabs/projectiles/BrotherFirePillar").InstantiateClone("OverchargedPillar", true);
+            electricPillar.GetComponent<ProjectileController>().ghostPrefab = electricPillarGhost;
+        }
+
+        protected void CreateElectricProjectile() {
+            eliteElectricProjectile = Resources.Load<GameObject>("prefabs/projectiles/ElectricOrbProjectile").InstantiateClone("OverchargedProjectile", true);
+            var impact = eliteElectricProjectile.GetComponent<ProjectileImpactExplosion>();
+            impact.childrenCount = 1;
+            impact.childrenProjectilePrefab = electricPillar;
+            impact.minAngleOffset = new Vector3(0, 0, 0);
+            impact.maxAngleOffset = new Vector3(0, 0, 0);
+        }
+
         #endregion
         #region Mega Mushrum
         protected private void CreateDelaySproutingMushroom()

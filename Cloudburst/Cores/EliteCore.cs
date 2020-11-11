@@ -7,6 +7,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using static RoR2.CombatDirector;
+using RoR2.Projectile;
 
 namespace Cloudburst.Cores
 {
@@ -53,11 +54,30 @@ namespace Cloudburst.Cores
             //On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.FixedUpdate += CharacterBody_FixedUpdate;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
+            //On.RoR2.CharacterModel.InstanceUpdate += CharacterModel_InstanceUpdate;
+        }
+
+        private void CharacterModel_InstanceUpdate(On.RoR2.CharacterModel.orig_InstanceUpdate orig, CharacterModel self)
+        {
+            if (self.body) {
+                var body = self.body;
+                if (body.HasBuff(warIndex)) {
+                    foreach (Transform transform in self.transform) {
+                        Renderer render = transform.gameObject.GetComponent<Renderer>();
+                        if (render) {
+                            for (int i = 0; i < render.materials.Length; i++) {
+                                render.materials[i] = AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Orange.mat");
+                            }
+                        }                       
+                    }
+                }
+            }
+            orig(self);
         }
 
         private void CharacterBody_FixedUpdate(On.RoR2.CharacterBody.orig_FixedUpdate orig, CharacterBody self)
         {
-            if (self.HasBuff(warIndex) && !self.GetComponent<DestroyEffectOnBuffEnd>())
+            /*if (self.HasBuff(warIndex) && !self.GetComponent<DestroyEffectOnBuffEnd>())
             {
                 var modelLocator = self.modelLocator;
                 if (modelLocator)
@@ -65,7 +85,7 @@ namespace Cloudburst.Cores
                     var modelTransform = self.modelLocator.modelTransform;
                     if (modelTransform)
                     {
-                        var model = self.modelLocator.modelTransform.GetComponent<RoR2.CharacterModel>();
+                        var model = self.modelLocator.modelTransform.GetComponent<CharacterModel>();
                         if (model)
                         {
                             LogCore.LogI("hhi");
@@ -78,14 +98,74 @@ namespace Cloudburst.Cores
                             overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                             overlay.animateShaderAlpha = true;
                             overlay.destroyComponentOnEnd = true;
-                            overlay.originalMaterial = AssetsCore.mainAssetBundle.LoadAsset<Material>("Ramp War");
+                            overlay.originalMaterial = AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Ruby.mat"); //AssetsCore.mainAssetBundle.LoadAsset<Material>("Ramp War");
                             overlay.AddToCharacerModel(model);
                             tracker.effect = overlay;
                         }
                     }
                 }
+            }*/
+            if (self && self.inventory) {
+                var elite = EliteCatalog.GetEquipmentEliteIndex(self.inventory.GetEquipmentIndex());
+                var model = API.GetCharacterModelFromCharacterBody(self);
+
+                //LogCore.LogI(elite);
+                //spawn_ai beetle 1 6 0 2
+                if (elite == this.warElite && !self.gameObject.GetComponent<DestroyEffectOnBuffEnd>() && model)
+                {
+                    //LogCore.LogI("war elite");
+                    var tracker = self.gameObject.AddComponent<DestroyEffectOnBuffEnd>();
+                    tracker.body = self;
+                    tracker.buff = warIndex;    
+
+                    TemporaryOverlay overlay = model.gameObject.AddComponent<RoR2.TemporaryOverlay>();
+                    overlay.duration = float.PositiveInfinity;
+                    overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                    overlay.animateShaderAlpha = true;
+                    overlay.destroyComponentOnEnd = true;
+                    overlay.originalMaterial = AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Ruby.mat"); //AssetsCore.mainAssetBundle.LoadAsset<Material>("Ramp War");
+                    overlay.AddToCharacerModel(model);
+                    tracker.effect = overlay;
+                }
+
+                if (self.HasBuff(warFriendlyBuffIndex) && !self.gameObject.GetComponent<DestroyEffectOnBuffEnd>() && model)
+                {
+                    LogCore.LogI("friendly war elite");
+                    var tracker = self.gameObject.AddComponent<DestroyEffectOnBuffEnd>();
+                    tracker.body = self;
+                    tracker.buff = warFriendlyBuffIndex;
+
+                    TemporaryOverlay overlay = model.gameObject.AddComponent<RoR2.TemporaryOverlay>();
+                    overlay.duration = float.PositiveInfinity;
+                    overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                    overlay.animateShaderAlpha = true;
+                    overlay.destroyComponentOnEnd = true;
+                    overlay.originalMaterial = AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Ruby2.mat"); //AssetsCore.mainAssetBundle.LoadAsset<Material>("Ramp War");
+                    overlay.AddToCharacerModel(model);
+                    tracker.effect = overlay;
+                }
+
             }
             orig(self);
+            /*if (NetworkServer.active && self.HasBuff(BuffIndex.AffixBlue))
+            {
+                if (!self.HasBuff(BuffIndex.AffixPoison))
+                {
+                    self.poisonballTimer = self.poisonballTimer + Time.deltaTime;
+                    //Reflection.SetFieldValue<float>(self, "poisonballTimer", Reflection.GetFieldValue<float>(self, "poisonballTimer") + Time.deltaTime);
+                }
+                //bool flag3 = (!self.HasBuff(BuffIndex.AffixPoison) && Reflection.GetFieldValue<float>(self, "poisonballTimer") >= 6f) || (self.HasBuff(BuffIndex.AffixPoison) && Reflection.GetFieldValue<float>(self, "poisonballTimer") == 0f);
+                if ((!self.HasBuff(BuffIndex.AffixPoison) && self.poisonballTimer >= 6f || (self.HasBuff(BuffIndex.AffixPoison) && self.poisonballTimer == 0f)))
+                {
+                    Reflection.SetFieldValue<float>(self, "poisonballTimer", 0f);
+                    Vector3 up = Vector3.up;
+                    Vector3 normalized = Vector3.ProjectOnPlane(self.transform.forward, up).normalized;
+                    Vector3 point = Vector3.RotateTowards(up, normalized, 0.43633232f, float.PositiveInfinity);
+                    Vector3 forward = Quate
+                    rnion.AngleAxis(0f, up) * point;
+                    ProjectileManager.instance.FireProjectile(ProjectileCore.eliteElectricProjectile, self.corePosition, Util.QuaternionSafeLookRotation(forward), self.gameObject, self.damage, 0f, Util.CheckRoll(self.crit, self.master), DamageColorIndex.Default, null, -1f);
+                }
+            }*/
         }
 
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
@@ -153,7 +233,7 @@ namespace Cloudburst.Cores
                 /*if (self.HasBuff(this.warIndex))
                 {
                     self.gameObject.AddOrGetComponent<EnableGoldAffixEffect>().EnableGoldAffix();
-                }*
+                }*/
                 /*if (self.HasBuff(tarIndex))
                 {
                     Transform modelBaseTransform = self.modelLocator.modelBaseTransform;
@@ -309,7 +389,7 @@ namespace Cloudburst.Cores
             {
                 name = "AffixOrange",
                 cooldown = 10f,
-                pickupModelPath = "",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Affixes/PickupAffixOrange.prefab",
                 pickupIconPath = "",
                 nameToken = "EQUIPMENT_AFFIXORANGE_NAME",
                 pickupToken = "EQUIPMENT_AFFIXORANGE_PICKUP",
@@ -356,9 +436,9 @@ namespace Cloudburst.Cores
             equipmentDef.passiveBuff = warIndex;
             buffDef.eliteIndex = warElite;
 
-            LanguageAPI.Add(eliteDef.modifierToken, "Warmongering {0}");
-            LanguageAPI.Add(equipmentDef.nameToken, "War'S Embrace");
-            LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of War");
+            LanguageAPI.Add(eliteDef.modifierToken, "Ruby {0}");
+            LanguageAPI.Add(equipmentDef.nameToken, "Ruby Corruption");
+            LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of Corruption");
             LanguageAPI.Add(equipmentDef.descriptionToken, "");
 
             warBubble = Resources.Load<GameObject>("Prefabs/NetworkedObjects/AffixHauntedWard").InstantiateClone("AffixWarWard", true);
@@ -379,8 +459,10 @@ namespace Cloudburst.Cores
 
                 var mat = UnityEngine.Object.Instantiate<Material>(Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material);
 
-                renderer.material = mat; //Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material;
-                renderer.sharedMaterial.SetColor("_TintColor", buffDef.buffColor); // new Color(0.3764706f, 0.84313726f, 0.8980392f)); ;
+                //Ramp War
+                renderer.material = mat;//AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Materials/Ramp War.mat");
+                //AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Ruby.mat"); ; //Resources.Load<GameObject>("prefabs/networkedobjects/teleporters/Teleporter1").transform.Find("TeleporterBaseMesh/BuiltInEffects/ChargingEffect/RadiusScaler/ClearAreaIndicator").GetComponent<Renderer>().material;
+                renderer.sharedMaterial.SetColor("_TintColor", new Color(0.3764706f, 0.84313726f, 0.8980392f)); //buffDef.buffColor); // new Color(0.3764706f, 0.84313726f, 0.8980392f)); ;
 
                 //GRAVEYARD OF PREVIOUS COLORS
                 //renderer.sharedMaterial.SetColor("_TintColor", new Color(255 / 255, 192 / 255, 203)); ;
