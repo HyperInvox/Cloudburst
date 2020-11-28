@@ -185,15 +185,8 @@ namespace Cloudburst.Cores
                 if (self.HasBuff(overclockIndex))
                 {
                     //BaseLogger.Log(attackSpeed.ToString());   
-                    self.SetPropertyValue("attackSpeed", attackSpeed += .5f);
-                    self.SetPropertyValue("moveSpeed", moveSpeed += .4f);
-
-                }
-                if (self.HasBuff(overclockIndex))
-                {
-                    //BaseLogger.Log(attackSpeed.ToString());   
-                    self.SetPropertyValue("attackSpeed", attackSpeed += .5f);
-                    self.SetPropertyValue("moveSpeed", moveSpeed += .4f);
+                    self.SetPropertyValue("attackSpeed", attackSpeed * .5f );
+                    self.SetPropertyValue("moveSpeed", moveSpeed * .4f);
 
                 }
                 if (self.HasBuff(skinIndex)) // && controller)
@@ -202,7 +195,7 @@ namespace Cloudburst.Cores
                     if (self.inventory) {
                         count = self.inventory.GetItemCount(ItemCore.instance.barrierOnLevelIndex);
                     }
-                    self.SetPropertyValue("armor", armor += 5f + (count * 5));
+                    self.SetPropertyValue("armor", armor * (5f + (count * 5)));
                 }
                 if (self.HasBuff(antiGravIndex))
                 {
@@ -210,16 +203,32 @@ namespace Cloudburst.Cores
                     {
                         self.characterMotor.useGravity = false;
                     }
-                    self.SetPropertyValue("attackSpeed", attackSpeed -= .5f);
-                    self.SetPropertyValue("moveSpeed", moveSpeed -= 1f);
+                    self.SetPropertyValue("attackSpeed", attackSpeed -= (.5f * attackSpeed));
+                    self.SetPropertyValue("moveSpeed", moveSpeed -= (1f * moveSpeed)        );
                 }
                 if (self.HasBuff(antiGravFriendlyIndex)) {
-                    self.SetPropertyValue("moveSpeed", moveSpeed += 6f);
+                    ICharacterGravityParameterProvider component = self.GetComponent<ICharacterGravityParameterProvider>();
+                    if (component != null)
+                    {
+                        CharacterGravityParameters gravityParameters = component.gravityParameters;
+                        gravityParameters.environmentalAntiGravityGranterCount++;
+                        //LogCore.LogI("GRAVITY PARAMS: " + gravityParameters.channeledAntiGravityGranterCount);
+                        component.gravityParameters = gravityParameters;
+                    }
+                    ICharacterFlightParameterProvider component2 = self.GetComponent<ICharacterFlightParameterProvider>();
+                    if (component2 != null)
+                    {
+                        CharacterFlightParameters flightParameters = component2.flightParameters;
+                        flightParameters.channeledFlightGranterCount++;
+                        //LogCore.LogI(flightParameters.channeledFlightGranterCount);
+                        component2.flightParameters = flightParameters;
+                    }
+                    self.SetPropertyValue("moveSpeed", moveSpeed * 6f);
                 }
                 if (self.HasBuff(wyattCombatIndex)) {
                     for (int i = 0; i < self.GetBuffCount(wyattCombatIndex); i++) {
-                        self.SetPropertyValue("moveSpeed", moveSpeed += 1f);
-                        self.SetPropertyValue("regen", regen += .1f);
+                        self.SetPropertyValue("moveSpeed", moveSpeed * 1f);
+                        self.SetPropertyValue("regen", regen * .1f);
                     }
                 }
                 if (self.HasBuff(droneIndex)) // && controller)

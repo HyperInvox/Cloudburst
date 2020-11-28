@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2759376579
+CRC: 4218016799
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d753c9c7e8d30fe6ae9fd2d4af533c79
+    Hash: 45e58394a9cc809c177dff0d0b881e31
   TypeTreeHash:
     serializedVersion: 2
     Hash: a98f4fd97ca51c96520634f065c86f1f
@@ -84,6 +84,7 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/HottestSauceT2.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/fab_dagger.mat
+- Assets/Cloudburst/Materials/8597.mat
 - Assets/Cloudburst/Teaser/tex/Materials/LampBoss.mat
 - Assets/Cloudburst/Items/Cloak/Japes_cloak.fbx
 - Assets/Cloudburst/Items/Lemdog/LemDog_Tex.png
@@ -260,6 +261,7 @@ Assets:
 - Assets/Cloudburst/Items/Grinder/Extractor.blend
 - Assets/Cloudburst/Materials/T_Executor_V2_Color.mat
 - Assets/Cloudburst/cloudburstlogo.png
+- Assets/Cloudburst/Shaders/8597.jpg
 - Assets/Cloudburst/Materials/texTrimSheetMetalNormal.mat
 - Assets/Cloudburst/Survivors/Bombardier/Flan/T_Bombardier_Color 3.mat
 - Assets/Cloudburst/Survivors/Bombardier/mdlSatchel.prefab

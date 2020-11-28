@@ -90,18 +90,19 @@ namespace Cloudburst.Cores.States.Wyatt
                             crit = RollCrit(),
                             damageColorIndex = DamageColorIndex.Default,
                             falloffModel = BlastAttack.FalloffModel.None,
-                            impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/ImpactLightning").GetComponent<EffectIndex>(),
+                            //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
                             procCoefficient = 1f,
-                            radius = 5
+                            radius = 5  
                         }.Fire();
                         EffectData effectData = new EffectData
                         {
                             rotation = Quaternion.identity,
-                            scale = 1f,
-                            start = base.transform.position,
-                            origin = base.transform.position
+                            scale = 20f,
+                            //start = base.transform.position,
+                            origin = target.transform.position
                         };
-                        EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact.prefab"), effectData, true);
+                        EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact"), effectData, true);
+                        EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/ExplosionSolarFlare"), effectData, true);
 
                         base.characterMotor.velocity = Vector3.up * 20f;
                         //characterMotor.ApplyForce(-(GetAimRay().direction * (-characterMotor.mass * 10)), true, false);

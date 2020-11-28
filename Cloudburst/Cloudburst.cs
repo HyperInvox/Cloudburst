@@ -227,9 +227,9 @@ namespace Cloudburst
                 //and thus
                 //we reach the end
                 qol = new QOLCore();
-                mushrum = new MegaMushrum();
+                // mushrum = new MegaMushrum();
                 // ancientWisp = new AncientWispCore();
-                bombManCore = new BombardierCore();
+                // bombManCore = new BombardierCore();
 #if DEBUG
                 //unlock!
                 debugCore = new DebuggingCore();
