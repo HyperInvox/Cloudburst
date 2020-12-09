@@ -15,6 +15,14 @@ namespace Cloudburst.Cores.States.Wyatt
             if (base.isAuthority)
             {
                 Ray aimRay = base.GetAimRay();
+                EffectData effectData = new EffectData
+                {
+                    rotation = base.transform.rotation,
+                    scale = 20f,
+                    //start = base.transform.position,
+                    origin = base.transform.position,
+                };
+                EffectManager.SimpleMuzzleFlash(Resources.Load<GameObject>("prefabs/effects/muzzleflashes/MuzzleflashWinch"), base.gameObject, "WinchHole", true);
                 FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                 {
                     crit = base.RollCrit(),

@@ -81,7 +81,7 @@ namespace Cloudburst
         private EquipmentCore equipCore;
         private WyattCore wyattCore;
         private EliteCore eliteCore;
-        private MegaMushrum mushrum;
+        //private MegaMushrum mushrum;
         //private WyattCore han_dCore;
         private EngineerCore engineerCore;
         private QOLCore qol;
@@ -92,7 +92,7 @@ namespace Cloudburst
         //private A rchaicWispCore archwispCore;
         private RexCore rexCore;
         private HuntressCore wipCore;
-        private BombardierCore bombManCore;
+        //private BombardierCore bombManCore;
         private AchievementCore achiveCore;
         private ProjectileCore projectileCore;
         private DamageTypeCore damageTypeCore;
@@ -247,14 +247,21 @@ namespace Cloudburst
             if (arg1.name == "title")
             {
                 var menu = GameObject.Find("MainMenu");
-                LogCore.LogI(menu.name);
-
-
+                //LogCore.LogI(menu.name)
                 var title = menu.transform.Find("MENU: Title/TitleMenu/SafeZone/ImagePanel (JUICED)/LogoImage");
-
                 title.GetComponent<Image>().sprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/cloudburstlogo.png");
+                //LogCore.LogI(title.name);
 
-                LogCore.LogI(title.name);
+                //var rock = GameObject.Find("HOLDER: Title Background/Rocks/RockModular2(3)");
+                var broom = Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Broom"));
+
+                broom.transform.Find("BroomRig/Handle/GyroBall").AddComponent<Spinner>();
+                broom.transform.Find("BroomRig/Handle/GyroRing").AddComponent<Spinner>();
+
+                var transform = broom.transform;
+                transform.position = new Vector3(81, 4, 62);
+                transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+                transform.rotation = Quaternion.Euler(new Vector3(340, 340, 70));
             }
         }
 

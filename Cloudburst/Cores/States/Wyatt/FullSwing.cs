@@ -115,7 +115,7 @@ namespace Cloudburst.Cores.States.Wyatt
                     Util.PlaySound("Play_MULT_shift_hit", base.gameObject);
                     this.hasSwung = true;
                     script.AddCombo(1);
-                    LogCore.LogD(script.count);
+                    //LogCore.LogD(script.count);
                     EffectManager.SimpleMuzzleFlash(swingEffectPrefab, base.gameObject, "SwingCenter", true);
                     //if (droneComponent && characterBody.HasBuff(Main.overclock)) {
                     //    droneComponent.ConsumeDroneStackAuthority(2);

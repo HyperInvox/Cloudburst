@@ -90,16 +90,40 @@ namespace Cloudburst.Cores
                         rigid.AddForce(normalized * 700, ForceMode.Impulse);
                     }
                 }
+                if (spikedType)
+                {
+                    //self.body.RemoveBuff(BuffCore.instance.antiGravIndex);
+                    var force = new Vector3(0, -15000, 0);
+                    //var force = new Vector3(0, -2, 0);
+                    if (rigid)
+                    {
+                        //force *= rigid.mass;
+                        //force /= 2;
+                        rigid.AddForce(force);
+                    }
+
+                    if (motor)
+                    {
+                        //motor.useGravity = true;
+                        //force *= motor.mass;
+                        //force /= 2;
+                        //force * motor.mass /= 2;  
+                        motor.ApplyForce(force, true, true);
+                    }
+
+                    //bing bing WA-FUCKING-HOO 
+                }
+                if (motor)
+                {
+
+                }
             }
             if (self.body.HasBuff(BuffCore.instance.antiGravIndex) && falldmgType)
             {
                 damageInfo.damage *= 2;
                 //real good feeling.
             }
-            if (spikedType && rigid) {
-                //bing bing WA-FUCKING-HOO 
-                rigid.AddForce(new UnityEngine.Vector3(0, -15000, 0));
-            }
+
 
             orig(self, damageInfo);
         }

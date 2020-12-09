@@ -44,12 +44,12 @@ namespace Cloudburst.Cores.Components
 
             if (motor)
             {
-                LogCore.LogI(Language.GetString(motor.body.baseNameToken) + " is entering the bubble. Adding to the list.");
+               // LogCore.LogI(Language.GetString(motor.body.baseNameToken) + " is entering the bubble. Adding to the list.");
                 characterMotors.Add(motor);
             }
             if (rigidBody && !rememberNOPROJECTILES)
             {
-                LogCore.LogI(rigidBody.gameObject.name + " is entering the bubble. Adding to the list.");
+                //LogCore.LogI(rigidBody.gameObject.name + " is entering the bubble. Adding to the list.");
                 rigidBodies.Add(rigidBody);
             }
 
@@ -70,12 +70,12 @@ namespace Cloudburst.Cores.Components
 
             if (motor)
             {
-                LogCore.LogI(Language.GetString(motor.body.baseNameToken) + " is leaving the bubble. Removing from the list.");
+                //LogCore.LogI(Language.GetString(motor.body.baseNameToken) + " is leaving the bubble. Removing from the list.");
                 characterMotors.Remove(motor);
             }
             if (rigidBody && !rememberNOPROJECTILES)
             {
-                LogCore.LogI(rigidBody.gameObject.name + " is leaving the bubble. Removing from the list.");
+                //LogCore.LogI(rigidBody.gameObject.name + " is leaving the bubble. Removing from the list.");
                 rigidBodies.Remove(rigidBody);
             }
         }
@@ -84,10 +84,10 @@ namespace Cloudburst.Cores.Components
             stopwatch += Time.deltaTime;
 
             if (stopwatch >= 3) {
-                EffectManager.SpawnEffect(Resources.Load<GameObject>("Prefabs/Effects/ImpactEffects/LightningStrikeImpact"), new EffectData
+                EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                 {
                     origin = transform.position,
-                    scale = 15
+                    scale = 5
                 }, true);
                 for (int i = 0; i < this.characterMotors.Count; i++)
                 {
@@ -99,11 +99,17 @@ namespace Cloudburst.Cores.Components
                         index = body.teamComponent.teamIndex;
                     }
 
-
                     if (motor && index == TeamIndex.Monster)
                     {
-                        motor.ApplyForce(new Vector3(0, !motor.isFlying ? 1000 : -1000, 0), true, true);
+                        motor.ApplyForce(new Vector3(0, !motor.isFlying ? 2500 : -2500, 0), true, true);
+                        //Why won't you come home?
+                        /*EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
+                        {
+                            origin = motor.transform.position,
+                            scale = 5
+                        }, true);*/
                     }
+
                     //wait
                     //else
                     //{
@@ -114,17 +120,23 @@ namespace Cloudburst.Cores.Components
                 {
                     var rigid = this.rigidBodies[i];
                     var body = rigid.gameObject.GetComponent<CharacterBody>();
-
+                    
                     TeamIndex index = TeamIndex.None;
                     if (body && body.teamComponent)
                     {
                         index = body.teamComponent.teamIndex;
                     }
 
-                    if (rigid && index == TeamIndex.Monster)
+                    if (rigid && index == TeamIndex.Monster && !body.characterMotor)
                     {
-                        rigid.rigid.AddForce(new Vector3(0, -2000, 0), ForceMode.Impulse);
-                    }
+                        rigid.rigid.AddForce(new Vector3(0, -2500, 0), ForceMode.Impulse);
+                        /*EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
+                        {
+                            origin = rigid.transform.position,
+                            scale = 1
+                        }, true);*/
+
+                    }   
                     else
                     {
                         this.rigidBodies.Remove(rigid);

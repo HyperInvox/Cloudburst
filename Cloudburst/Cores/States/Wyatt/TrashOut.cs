@@ -47,7 +47,7 @@ namespace Cloudburst.Cores.States.Wyatt
                     stage = ActionStage.FoundTarget;
                 }
 
-                LogCore.LogI("Stage: " + stage.ToString());
+                //LogCore.LogI("Stage: " + stage.ToString());
             }
         }
         public override void FixedUpdate()
@@ -67,7 +67,7 @@ namespace Cloudburst.Cores.States.Wyatt
 
                     if (stopwatch > 4)
                     {
-                        LogCore.LogI(stopwatch);
+                        //LogCore.LogI(stopwatch);
                         this.activatorSkillSlot.AddOneStock();
                         LogCore.LogI("Can't reach target, skill refunded!");
                         this.outer.SetNextStateToMain();
@@ -109,7 +109,7 @@ namespace Cloudburst.Cores.States.Wyatt
                         stage = ActionStage.HitTarget;
 
 
-                        LogCore.LogI("Stage: " + stage.ToString());
+                        //LogCore.LogI("Stage: " + stage.ToString());
 
                         this.outer.SetNextStateToMain();
                     }

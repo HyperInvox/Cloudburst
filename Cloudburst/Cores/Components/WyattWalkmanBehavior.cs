@@ -44,53 +44,31 @@ namespace Cloudburst.Cores.Components.Wyatt
             }
         }
 
-        public void TriggerBehaviorAuthority()
+        public void TriggerBehaviorAuthority(float stacks)
         {
             if (NetworkServer.active)
             {
-                TriggerBehaviorInternal();
+                TriggerBehaviorInternal(stacks);
                 return;
             }
-            CmdTriggerBehaviorInternal();
+            CmdTriggerBehaviorInternal(stacks);
         }
 
         [Command]
-        private void CmdTriggerBehaviorInternal()
+        private void CmdTriggerBehaviorInternal(float stacks)
         {
-            TriggerBehaviorInternal();
+            TriggerBehaviorInternal(stacks);
         }
 
         [Server]
-        private void TriggerBehaviorInternal()
+        private void TriggerBehaviorInternal(float stacks)
         {
-            if (characterBody && characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) < 10)
+            var cap = 9 + stacks;
+            if (characterBody && characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) < cap && !characterBody.outOfCombat)
             {
                 characterBody.AddBuff(BuffCore.instance.wyattCombatIndex);
             }
-        }
-
-
-        public void UntriggerAuthority()
-        {
-            if (NetworkServer.active)
-            {
-                UntriggerInternal();
-                return;
-            }
-            CmdUntriggerInternal();
-        }
-
-        [Command]
-        private void CmdUntriggerInternal()
-        {
-            UntriggerInternal();
-        }
-
-        [Server]
-        private void UntriggerInternal()
-        {
-            for (int i = 0; i < characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex); i++)
-            {
+            else if (characterBody.outOfCombat) {
                 characterBody.RemoveBuff(BuffCore.instance.wyattCombatIndex);
             }
         }

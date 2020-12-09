@@ -370,9 +370,9 @@ namespace Cloudburst.Cores
             var speen = mdl.AddComponent<Spinner>();
 
             //removed cause it did nothing useful lmao
-            //var noGravForce = wyattMaidBubble.AddComponent<AntiGravityForce>();
-            //noGravForce.antiGravityCoefficient = 0.1f;
-            //noGravForce.rb = wyattMaidBubble.GetComponent<Rigidbody>();
+            var noGravForce = wyattMaidBubble.AddComponent<AntiGravityForce>();
+            noGravForce.antiGravityCoefficient = 0.1f;
+            noGravForce.rb = wyattMaidBubble.GetComponent<Rigidbody>();
 
             SetupBuffward();
             SetupSlowProjectiles();
@@ -380,7 +380,7 @@ namespace Cloudburst.Cores
 
             //projectileSlowObject.gameObject.SetActive(false);
 
-            var noGravZone = antiGravDummy.AddComponent<FliteredNoGravZone>();
+            //var noGravZone = antiGravDummy.AddComponent<FliteredNoGravZone>();
             
             void SetupBuffward() {
                 TeamFilter();

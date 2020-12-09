@@ -2,6 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!43 &4300000
 Mesh:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -16,7 +17,7 @@ Mesh:
     firstVertex: 0
     vertexCount: 312
     localAABB:
-      m_Center: {x: -0.2656894, y: -2.235174E-08, z: -0.06677149}
+      m_Center: {x: -0.2656894, y: -0.00000002235174, z: -0.06677149}
       m_Extent: {x: 1.41056, y: 0.1583712, z: 0.3797627}
   m_Shapes:
     vertices: []
@@ -25,33 +26,33 @@ Mesh:
     fullWeights: []
   m_BindPose:
   - e00: -0.003571282
-    e01: -2.328307E-09
+    e01: -0.000000002328307
     e02: 0.9999937
-    e03: 2.275539E-07
+    e03: 0.0000002275539
     e10: 0.9999938
-    e11: -8.754436E-08
+    e11: -0.00000008754436
     e12: 0.003571283
     e13: 1.544194
-    e20: 8.753547E-08
+    e20: 0.00000008753547
     e21: 1
-    e22: 2.640937E-09
-    e23: 8.559307E-11
+    e22: 0.000000002640937
+    e23: 8.559307e-11
     e30: 0
     e31: 0
     e32: 0
     e33: 1
-  - e00: 6.123234E-17
+  - e00: 6.123234e-17
     e01: 1
-    e02: -6.123234E-17
-    e03: -7.06799E-17
+    e02: -6.123234e-17
+    e03: -7.06799e-17
     e10: -1
-    e11: 6.123234E-17
-    e12: 6.123234E-17
+    e11: 6.123234e-17
+    e12: 6.123234e-17
     e13: 1.15429
-    e20: 6.123234E-17
-    e21: 6.123234E-17
+    e20: 6.123234e-17
+    e21: 6.123234e-17
     e22: 1
-    e23: -7.06799E-17
+    e23: -7.06799e-17
     e30: 0
     e31: 0
     e32: 0
@@ -131,63 +132,63 @@ Mesh:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_UV:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Normals:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Tangents:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Weights:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_NormalSigns:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_TangentSigns:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_FloatColors:
       m_NumItems: 0
       m_Range: 0
       m_Start: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_BoneIndices:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_Triangles:
       m_NumItems: 0
-      m_Data:
+      m_Data: 
       m_BitSize: 0
     m_UVInfo: 0
   m_LocalAABB:
-    m_Center: {x: -0.2656894, y: -2.235174E-08, z: -0.06677149}
+    m_Center: {x: -0.2656894, y: -0.00000002235174, z: -0.06677149}
     m_Extent: {x: 1.41056, y: 0.1583712, z: 0.3797627}
   m_MeshUsageFlags: 1
-  m_BakedConvexCollisionMesh:
-  m_BakedTriangleCollisionMesh:
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
   m_MeshMetrics[1]: 1
   m_MeshOptimized: 1
   m_StreamData:
     offset: 0
     size: 0
-    path:
+    path: 

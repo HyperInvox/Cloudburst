@@ -22,7 +22,7 @@ namespace RoR2
                             characterBody.AddBuff(BuffCore.instance.antiGravFriendlyIndex);
                         }
 
-                        ICharacterGravityParameterProvider component = other.GetComponent<ICharacterGravityParameterProvider>();
+                        /*ICharacterGravityParameterProvider component = other.GetComponent<ICharacterGravityParameterProvider>();
                         if (component != null)
                         {
                             CharacterGravityParameters gravityParameters = component.gravityParameters;
@@ -37,7 +37,7 @@ namespace RoR2
                             flightParameters.channeledFlightGranterCount++;
                             //LogCore.LogI(flightParameters.channeledFlightGranterCount);
                             component2.flightParameters = flightParameters;
-                        }
+                        }*/
                     }
                 }
             }
@@ -55,9 +55,9 @@ namespace RoR2
                         //is this not getting called?
                         //clients can't get the buff
                         //but the owner of the bubble can
-                        if (NetworkServer.active &&characterBody.HasBuff(BuffCore.instance.antiGravFriendlyIndex)) { characterBody.RemoveBuff(BuffCore.instance.antiGravFriendlyIndex); }
+                        if (NetworkServer.active && characterBody.HasBuff(BuffCore.instance.antiGravFriendlyIndex)) { characterBody.RemoveBuff(BuffCore.instance.antiGravFriendlyIndex); }
 
-                        ICharacterFlightParameterProvider component = other.GetComponent<ICharacterFlightParameterProvider>();
+                        /*ICharacterFlightParameterProvider component = other.GetComponent<ICharacterFlightParameterProvider>();
                         if (component != null)
                         {
                             CharacterFlightParameters flightParameters = component.flightParameters;
@@ -72,7 +72,7 @@ namespace RoR2
                             gravityParameters.environmentalAntiGravityGranterCount--;
                             //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
                             component2.gravityParameters = gravityParameters;
-                        }
+                        }*/
                     }
                 }
             }
@@ -90,7 +90,7 @@ namespace RoR2
                         if (team.teamIndex == TeamIndex.Player)
                         {
                             if (characterBody.HasBuff(BuffCore.instance.antiGravFriendlyIndex)) { characterBody.RemoveBuff(BuffCore.instance.antiGravFriendlyIndex); }
-                            ICharacterFlightParameterProvider component = other.GetComponent<ICharacterFlightParameterProvider>();
+                            /*ICharacterFlightParameterProvider component = other.GetComponent<ICharacterFlightParameterProvider>();
                             if (component != null)
                             {
 
@@ -106,7 +106,7 @@ namespace RoR2
                                 gravityParameters.environmentalAntiGravityGranterCount--;
                                 //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
                                 component2.gravityParameters = gravityParameters;
-                            }
+                            }*/
                         }
                     }
                 }

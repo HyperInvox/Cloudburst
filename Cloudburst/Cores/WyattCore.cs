@@ -309,7 +309,7 @@ namespace Cloudburst.Cores.HAND
             //no 
             //credit
             //fuck you moffein
-            //characterBody.portraitIcon = AssetsCore.portraitIcon; //The portrait icon, shows up in multiplayer and the death UI
+            characterBody.portraitIcon = AssetsCore.mainAssetBundle.LoadAsset<Texture>("WyattPortrait"); //The portrait icon, shows up in multiplayer and the death UI
             characterBody.preferredPodPrefab = Resources.Load<GameObject>("prefabs/networkedobjects/robocratepod");
         }
         #endregion
@@ -844,7 +844,7 @@ namespace Cloudburst.Cores.HAND
         #region Misc
         private void CreateTokens()
         {
-            LanguageAPI.Add("WYATT_BODY_NAME", "Wyatt");
+            LanguageAPI.Add("WYATT_BODY_NAME", "Custodian");
             LanguageAPI.Add("WYATT_BODY_SUBTITLE", "Lean, Mean, Cleaning Machine");
 
         }

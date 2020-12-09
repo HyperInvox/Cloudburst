@@ -137,9 +137,9 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
-    <Compile Include="API\API.cs" />
-    <Compile Include="API\ComponentHelpers.cs" />
-    <Compile Include="API\LogCore.cs" />
+    <Compile Include="Util\API.cs" />
+    <Compile Include="Util\ComponentHelpers.cs" />
+    <Compile Include="Util\LogCore.cs" />
     <Compile Include="Cores\Components\SproutingProjectileZone.cs" />
     <Compile Include="Cores\MushrumCore.cs" />
     <Compile Include="Cores\PrefabCore.cs" />

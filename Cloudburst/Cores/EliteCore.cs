@@ -130,7 +130,7 @@ namespace Cloudburst.Cores
 
                 if (self.HasBuff(warFriendlyBuffIndex) && !self.gameObject.GetComponent<DestroyEffectOnBuffEnd>() && model)
                 {
-                    LogCore.LogI("friendly war elite");
+                    //LogCore.LogI("friendly war elite");
                     var tracker = self.gameObject.AddComponent<DestroyEffectOnBuffEnd>();
                     tracker.body = self;
                     tracker.buff = warFriendlyBuffIndex;

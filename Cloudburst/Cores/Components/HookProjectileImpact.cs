@@ -360,7 +360,7 @@ namespace Cloudburst.Cores.Components
         }
 
         public override void PreStartClient()
-        {
+        { 
             if (!this.___victimNetId.IsEmpty())
             {
                 this.victim = ClientScene.FindLocalObject(this.___victimNetId);

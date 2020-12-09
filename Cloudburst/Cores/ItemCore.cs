@@ -98,6 +98,15 @@ namespace Cloudburst.Cores
 
             instance = this;
 
+            foreach (var item in AssetsCore.mainAssetBundle.LoadAllAssets<GameObject>()) {
+                if (item.name.Contains("MDL")) { 
+                    LogCore.LogI("Item model found! " + item.name);
+                    var display = item.AddComponent<ItemDisplay>();
+                    display.rendererInfos = API.ItemDisplaySetup(item);
+                }
+
+            } 
+
             RegisterTokens();
             ItemTag[] itemChampionOnKillTags = new ItemTag[2]
             {
@@ -328,7 +337,7 @@ namespace Cloudburst.Cores
             {
                 canRemove = true,
                 descriptionToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC",
-                hidden = false,
+                hidden = false, 
                 loreToken = "",
                 name = "ExtendedEnemyBuffDuration",
                 nameToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME",
@@ -360,6 +369,7 @@ namespace Cloudburst.Cores
                 unlockableName = ""
             });
 
+            
             //chipIndex
             Hook();
         }
@@ -441,10 +451,14 @@ namespace Cloudburst.Cores
                 itemDef.loreToken = string.Format(CultureInfo.InvariantCulture, "ITEM_{0}_LORE", upperName);
             }
             var customItem = new CustomItem(itemDef, new ItemDisplayRule[0]);
+
+
+
             switch (itemDef.name)
             {
                 case "ItemChampionOnKill":
                     itemChampionOnKillIndex = ItemAPI.Add(customItem);
+                    
                     break;
                 case "LargerTeleporterRadius":
                     largerTeleporterRadiusIndex = ItemAPI.Add(customItem);
@@ -452,7 +466,7 @@ namespace Cloudburst.Cores
                 case "CrippleOnHit":
                     crippleOnHitIndex = ItemAPI.Add(customItem);
                     break;
-                case "CloakOnInteraction":
+                case "CloakOnInteraction":  
                     cloakOnInteractionIndex = ItemAPI.Add(customItem);
                     break;
                 case "ItemOnLevelUp2":
@@ -835,26 +849,23 @@ namespace Cloudburst.Cores
 
         public void FixedUpdate()
         {
-            if (!body.outOfCombat)
+            timer += Time.deltaTime;
+            if (timer >= 3)
             {
-                timer += Time.deltaTime;
-                if (timer >= 3)
+                if (body.hasAuthority)
                 {
-                    if (body.hasAuthority)
-                    {
-                        behavior.TriggerBehaviorAuthority();
-                    }
-                    timer = 0;
+                    behavior.TriggerBehaviorAuthority(stack);
                 }
+                timer = 0;
             }
-            else
+            /*else
             {
                 if (body.hasAuthority)
                 {
                     behavior.UntriggerAuthority();
                 }
                 timer = 0;
-            }
+            }*/
         }
     }
     public class DormantFungusBehavior : CharacterBody.ItemBehavior
@@ -930,7 +941,7 @@ namespace Cloudburst.Cores
         {
             if (counter == 10)
             {
-                LogCore.LogD("Fired!");
+                //LogCore.LogD("Fired!");
 
                 EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/LightningStakeNova"), new EffectData()
                 {

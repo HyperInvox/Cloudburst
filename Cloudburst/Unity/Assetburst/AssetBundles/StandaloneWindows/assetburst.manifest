@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4218016799
+CRC: 901214165
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 45e58394a9cc809c177dff0d0b881e31
+    Hash: 973a0a7c65688f5d6a3818ea2a7253ea
   TypeTreeHash:
     serializedVersion: 2
     Hash: a98f4fd97ca51c96520634f065c86f1f
@@ -76,6 +76,7 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/Materials/Dormant_Fungus_Tex.mat
 - Assets/Cloudburst/753network/Crystallize/Orange.mat
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Foil.mat
+- Assets/Cloudburst/T_Wyatt_Color.mat
 - Assets/Cloudburst/Teaser/tex/Dormant_Fungus_Tex.png
 - Assets/Cloudburst/Items/FabinhoruDagger/Cloaking4.fbx
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Gold.mat
@@ -101,7 +102,6 @@ Assets:
 - Assets/Cloudburst/753network/Crystallize/Pink HDR.mat
 - Assets/Cloudburst/Survivors/Bombardier/animExampleSurvivor.controller
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_M.mat
-- Assets/Cloudburst/MDLTeaser.prefab
 - Assets/Cloudburst/Teaser/tex/Materials/DiaryTexture.mat
 - Assets/Cloudburst/753network/Crystallize/Ramp Foil.png
 - Assets/Cloudburst/753network/Crystallize/Foil HDR.mat
@@ -132,6 +132,7 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/texTrimSheetMetalNormal.png
 - Assets/Cloudburst/753network/Crystallize/hand.fbx
 - Assets/Cloudburst/Survivors/Wyatt/WyattMaid.prefab
+- Assets/Cloudburst/Broom.prefab
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Orange.mat
 - Assets/Cloudburst/Survivors/Wyatt/specialicon2.png
 - Assets/Cloudburst/Items/Grinder/icon.png
@@ -147,6 +148,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Falling.anim
 - Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking.jpg
 - Assets/Cloudburst/Shaders/Aura.shader
+- Assets/Cloudburst/Materials/wyattRIGGED_BROOM(1).blend
 - Assets/Cloudburst/Survivors/ExampleSurvivorGestureMask.mask
 - Assets/Cloudburst/753network/Crystallize/Ruby2.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/New Animator Controller.controller
@@ -209,6 +211,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/mdlHANDWinchAvatar.asset
 - Assets/Cloudburst/Materials/Ice_Tool_Tex.mat
 - Assets/Cloudburst/Shaders/Metal.shader
+- Assets/Cloudburst/Survivors/Wyatt/WyattPortrait.png
 - Assets/Cloudburst/Enemies/Boss/LampBossEmis.png
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkBWD.anim
 - Assets/Cloudburst/Items/Lemdog/Materials/LemDog_TexIcon.mat
@@ -222,6 +225,7 @@ Assets:
 - Assets/Cloudburst/753network/Crystallize/Ramp Pink.png
 - Assets/Cloudburst/Items/Grinder/texExtractor.png
 - Assets/Cloudburst/Materials/brickwall.mat
+- Assets/Cloudburst/T_Wyatt_Color.png
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkFWD.anim
 - Assets/Cloudburst/Survivors/Bombardier/bombsAnims.blend
 - Assets/Cloudburst/Items/MechanicalTrinket/icon.png
@@ -245,11 +249,9 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/Materials/texMetalTrimDiffuse.png
 - Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalVibrant.mat
 - Assets/Cloudburst/Items/Lemdog/LemDog.fbx
-- Assets/Cloudburst/Teaser/MDLTeaser.prefab
 - Assets/Cloudburst/753network/Crystallize/Ramp Orange.png
 - Assets/Cloudburst/Survivors/Bombardier/Flan/bombsAnims.blend
 - Assets/Cloudburst/753network/Crystallize/Ramp Ruby.png
-- Assets/Cloudburst/Items/LightningEye/MDLLightningEye.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Secondary.anim
 - Assets/Cloudburst/Teaser/tex/T_Executor_V2_Color.png
 - Assets/Cloudburst/Survivors/Bombardier/mdlBombardier.prefab
