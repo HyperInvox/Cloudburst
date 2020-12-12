@@ -269,7 +269,7 @@ namespace Cloudburst.Cores
 
             Harvest.customName = "Harvest";
             Harvest.skillSlot = SkillSlot.Utility;
-            //Offspring.requiredSkill = 
+            //Offspring.requiredSkill =
             Harvest.requireSkillReady = true;
             Harvest.requireEquipmentReady = false;
             Harvest.moveTargetType = TargetType.CurrentEnemy;

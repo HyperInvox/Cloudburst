@@ -210,8 +210,11 @@ namespace Cloudburst.Cores.HAND
         {
             if (!wyattBody)
             {
-                this.wyattBody = Resources.Load<GameObject>("prefabs/characterbodies/HANDBody").InstantiateClone("WyattBody", true);
-                API.RegisterNewBody(wyattBody);
+                PrefabBuilder builder = new PrefabBuilder();
+                builder.prefabName = "WyattBody";
+                builder.model = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattBody");
+                wyattBody = builder.CreatePrefab();
+
             }
         }
         #endregion
@@ -330,7 +333,7 @@ namespace Cloudburst.Cores.HAND
 
         private void FixSkin()
         {
-            GameObject model = wyattBody.GetComponentInChildren<ModelLocator>().modelTransform.gameObject;
+            /*GameObject model = wyattBody.GetComponentInChildren<ModelLocator>().modelTransform.gameObject;
             CharacterModel characterModel = model.GetComponent<CharacterModel>();
 
             SkinnedMeshRenderer FixRenderInfo()
@@ -392,7 +395,7 @@ namespace Cloudburst.Cores.HAND
                 };
             }
 
-            CreateSkinInfo(FixRenderInfo());
+            CreateSkinInfo(FixRenderInfo());*/
         }
 
 
@@ -500,9 +503,12 @@ namespace Cloudburst.Cores.HAND
 
             LoadoutAPI.AddSkill(typeof(FullSwing));
             LoadoutAPI.AddSkill(typeof(FullSwing2));
+            LoadoutAPI.AddSkill(typeof(Cleanup));
+            LoadoutAPI.AddSkill(typeof(WyattBaseMeleeAttack));
+
             SkillDef primarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
 
-            primarySkillDef.activationState = new SerializableEntityStateType(typeof(FullSwing));
+            primarySkillDef.activationState = new SerializableEntityStateType(typeof(WyattBaseMeleeAttack));
             primarySkillDef.activationStateMachineName = "Weapon";
             primarySkillDef.baseMaxStock = 1;
             primarySkillDef.baseRechargeInterval = 0f;

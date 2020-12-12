@@ -21,17 +21,14 @@ namespace Cloudburst.Cores.HAND.Components
         private readonly BullseyeSearch search = new BullseyeSearch();
         private void Awake()
         {
+            this.characterBody = base.GetComponent<CharacterBody>();
+            this.inputBank = base.GetComponent<InputBankTest>();
+            this.teamComponent = base.GetComponent<TeamComponent>();
             this.indicator = new Indicator(base.gameObject, GetIndicator()); //Resources.Load<GameObject>("Prefabs/EngiShieldRetractIndicator"));
         }
 
         public virtual GameObject GetIndicator() {
             return indicatorPrefab;
-        }
-
-        private void Start() {
-            this.characterBody = base.GetComponent<CharacterBody>();
-            this.inputBank = base.GetComponent<InputBankTest>();
-            this.teamComponent = base.GetComponent<TeamComponent>();
         }
 
         public HurtBox GetTrackingTarget()
@@ -51,11 +48,20 @@ namespace Cloudburst.Cores.HAND.Components
 
         private void FixedUpdate()
         {
+            if (characterBody.skillLocator.secondary.stock <= 0)
+            {
+                OnDisable();
+            }
+            else if (!this.indicator.active)
+            {
+                OnEnable();
+            }
+
             this.trackerUpdateStopwatch += Time.fixedDeltaTime;
             if (this.trackerUpdateStopwatch >= 1f / this.trackerUpdateFrequency)
             {
                 this.trackerUpdateStopwatch -= 1f / this.trackerUpdateFrequency;
-                HurtBox hurtBox = this.trackingTarget;
+//                HurtBox hurtBox = this.trackingTarget;
                 Ray aimRay = new Ray(this.inputBank.aimOrigin, this.inputBank.aimDirection);
                 this.SearchForTarget(aimRay);
                 this.indicator.targetTransform = (this.trackingTarget ? this.trackingTarget.transform : null);
