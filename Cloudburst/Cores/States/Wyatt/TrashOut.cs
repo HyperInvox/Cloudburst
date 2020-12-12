@@ -7,13 +7,14 @@ namespace Cloudburst.Cores.States.Wyatt
 {
     class TrashOut : BaseSkillState
     {
-        enum ActionStage {
+        enum ActionStage
+        {
             StartUp,
             NoTarget,
             FoundTarget,
             HitTarget
         }
-        
+
         private ActionStage stage;
         private HANDDroneTracker tracker;
         private HurtBox target;
@@ -25,7 +26,8 @@ namespace Cloudburst.Cores.States.Wyatt
             base.OnEnter();
             tracker = base.gameObject.GetComponent<HANDDroneTracker>();
 
-            if (base.isAuthority) {
+            if (base.isAuthority)
+            {
                 stage = ActionStage.StartUp;
                 target = tracker.GetTrackingTarget();
 
@@ -34,7 +36,8 @@ namespace Cloudburst.Cores.States.Wyatt
                     characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 }
 
-                if (!isGrounded) {
+                if (!isGrounded)
+                {
                     //we good
                 }
                 else
@@ -43,7 +46,8 @@ namespace Cloudburst.Cores.States.Wyatt
                     base.SmallHop(base.characterMotor, 10f);
                 }
 
-                if (target && target.healthComponent && target.healthComponent.alive) {
+                if (target && target.healthComponent && target.healthComponent.alive)
+                {
                     stage = ActionStage.FoundTarget;
                 }
 
@@ -92,7 +96,7 @@ namespace Cloudburst.Cores.States.Wyatt
                             falloffModel = BlastAttack.FalloffModel.None,
                             //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
                             procCoefficient = 1f,
-                            radius = 5  
+                            radius = 5
                         }.Fire();
                         EffectData effectData = new EffectData
                         {
@@ -119,7 +123,8 @@ namespace Cloudburst.Cores.States.Wyatt
                     outer.SetNextStateToMain();
                 }
             }
-            else {
+            else
+            {
                 LogCore.LogE("Something is seriously fucked. Stage: " + stage.ToString());
                 this.outer.SetNextStateToMain();
 

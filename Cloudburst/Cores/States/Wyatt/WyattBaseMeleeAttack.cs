@@ -7,10 +7,10 @@ using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.States.Wyatt
 {
-    class WyattBaseMeleeAttack : BasicMeleeAttack//, SteppedSkillDef.IStepSetter
+    class WyattBaseMeleeAttack : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
 
-        //public int step = 0;
+        public int step = 0;
         public static float recoilAmplitude = 0.5f;
         public static float baseDurationBeforeInterruptable = 0.5f;
         public float bloom = 1f;
@@ -21,13 +21,13 @@ namespace Cloudburst.Cores.States.Wyatt
         private string animationStateName;*/
         private float durationBeforeInterruptable;
 
-        /*private bool isComboFinisher
+        private bool isComboFinisher
         {
             get
             {
                 return this.step == 2;
             }
-        }*/
+        }
 
         public override bool allowExitFire
         {
@@ -37,10 +37,7 @@ namespace Cloudburst.Cores.States.Wyatt
             }
         }
 
-        //void SteppedSkillDef.IStepSetter.SetStep(int i)
-        //{
-        //    this.step = i;
-        //}
+
 
         public override void OnEnter()
         {
@@ -49,6 +46,19 @@ namespace Cloudburst.Cores.States.Wyatt
             this.duration = this.baseDuration / base.attackSpeedStat;
             this.hitPauseDuration = 0.1f;
             this.damageCoefficient = 2f;
+
+            swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/handslamtrail");
+            hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
+
+            if (isComboFinisher) {
+                //LogCore.LogF("finisher");
+                this.hitBoxGroupName = "TempHitboxLarge";
+                //this.baseDuration = 1f;
+                //this.duration = this.baseDuration / base.attackSpeedStat;
+                this.hitPauseDuration = 0.2f;
+                this.damageCoefficient = 4f;
+            }
+            //else { LogCore.LogW("not finisher"); }
 
             base.OnEnter();
             base.characterDirection.forward = base.GetAimRay().direction;
@@ -63,6 +73,14 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void AuthorityModifyOverlapAttack(OverlapAttack overlapAttack)
         {
             base.AuthorityModifyOverlapAttack(overlapAttack);
+            if (this.isComboFinisher)
+            {
+                overlapAttack.damageType = DamageTypeCore.spiked | DamageType.Generic;
+            }
+            else
+            {
+                overlapAttack.damageType = DamageType.Generic | DamageTypeCore.antiGrav;
+            }
         }
 
         public override void PlayAnimation()
@@ -106,7 +124,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.BeginMeleeAttackEffect();
         }
 
-        /*public override void OnSerialize(NetworkWriter writer)
+        public override void OnSerialize(NetworkWriter writer)
         {
             base.OnSerialize(writer);
             writer.Write((byte)this.step);
@@ -116,7 +134,7 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             base.OnDeserialize(reader);
             this.step = (int)reader.ReadByte();
-        }*/
+        }
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
@@ -127,6 +145,10 @@ namespace Cloudburst.Cores.States.Wyatt
             return InterruptPriority.PrioritySkill;
         }
 
+        void SteppedSkillDef.IStepSetter.SetStep(int i)
+        {
+            this.step = i;
+        }
     }
 }
 

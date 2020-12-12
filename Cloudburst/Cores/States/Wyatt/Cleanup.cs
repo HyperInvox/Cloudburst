@@ -15,13 +15,7 @@ namespace Cloudburst.Cores.States.HAND
         public static float baseDurationBeforeInterruptable = 0.5f;
         public float bloom = 1f;
 
-        private string animationStateName;
-
-        public float damageMultiplier   = 1;
         private float durationBeforeInterruptable;
-        private float minDamageCoef = 1.5f;
-        private float maxDamageCoef = 2.5f;
-
         public override bool allowExitFire
         {
             get
@@ -68,7 +62,7 @@ namespace Cloudburst.Cores.States.HAND
 
         public override void BeginMeleeAttackEffect()
         {
-            this.swingEffectMuzzleString = this.animationStateName;
+            //this.swingEffectMuzzleString = this.animationStateName;
             base.BeginMeleeAttackEffect();
         }
 

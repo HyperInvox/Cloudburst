@@ -133,10 +133,35 @@ namespace Cloudburst.Cores
                 buffColor = new Color(0.6784314f, 0.6117647f, 0.4117647f)
             });
 
+            On.RoR2.CharacterMotor.OnMovementHit += CharacterMotor_OnMovementHit;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
             On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
+            On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
             On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround;
+            //On.RoR2.Projectile.ProjectileManager.FireProjectile_FireProjectileInfo += ProjectileManager_FireProjectile_FireProjectileInfo;
+        }
+
+        private void CharacterMotor_OnMovementHit(On.RoR2.CharacterMotor.orig_OnMovementHit orig, CharacterMotor self, Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref KinematicCharacterController.HitStabilityReport hitStabilityReport)
+        {
+
+            //var provider = SurfaceDefProvider.GetObjectSurfaceDef(hitCollider, hitPoint);
+
+            //LogCore.LogI(self.lastVelocity);
+            orig(self, hitCollider, hitNormal, hitPoint, ref hitStabilityReport);
+
+        }
+
+        private void ProjectileManager_FireProjectile_FireProjectileInfo(On.RoR2.Projectile.ProjectileManager.orig_FireProjectile_FireProjectileInfo orig, RoR2.Projectile.ProjectileManager self, RoR2.Projectile.FireProjectileInfo fireProjectileInfo)
+        {
+            LogCore.LogI(fireProjectileInfo.projectilePrefab.name);
+            orig(self, fireProjectileInfo);
+        }
+
+        private void CharacterMotor_OnDeathStart(On.RoR2.CharacterMotor.orig_OnDeathStart orig, CharacterMotor self)
+        {
+            self.useGravity = true;
+            orig(self);
         }
 
         private void CharacterMotor_OnHitGround(On.RoR2.CharacterMotor.orig_OnHitGround orig, CharacterMotor self, CharacterMotor.HitGroundInfo hitGroundInfo)
@@ -144,7 +169,35 @@ namespace Cloudburst.Cores
             orig(self, hitGroundInfo);
             if (self.body && self.body.HasBuff(this.antiGravIndex)) {
                 self.useGravity = false;
+                if (self.lastVelocity.y < -20)
+                {
+                    EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleGuardGroundSlam"), new EffectData
+                    {
+                        scale = 10,
+                        rotation = Quaternion.identity,
+                        origin = hitGroundInfo.position,
+                    }, true);
+                    new BlastAttack
+                    {
+                        position = hitGroundInfo.position,
+                        //baseForce = 3000,
+                        attacker = null,
+                        inflictor = null,
+                        teamIndex = TeamIndex.Player,
+                        baseDamage = 0.1f * self.body.maxHealth,
+                        attackerFiltering = default,
+                        //bonusForce = new Vector3(0, -3000, 0),
+                        damageType = DamageType.Stun1s, //| DamageTypeCore.spiked,
+                        crit = false,
+                        damageColorIndex = DamageColorIndex.Default,
+                        falloffModel = BlastAttack.FalloffModel.None,
+                        //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
+                        procCoefficient = 0,
+                        radius = 10
+                    }.Fire();
+                }
             }
+
         }
 
         private void CharacterBody_AddBuff(On.RoR2.CharacterBody.orig_AddBuff orig, CharacterBody self, BuffIndex buffType)
@@ -242,8 +295,8 @@ namespace Cloudburst.Cores
                 if (self.HasBuff(wyattCombatIndex)) {
                     var buffCount = self.GetBuffCount(wyattCombatIndex);
                     for (int i = 0; i < buffCount; i++) {
-                        self.SetPropertyValue("moveSpeed", moveSpeed * (1f + (buffCount * 0.1f)));
-                        self.SetPropertyValue("regen", regen * (1f + (buffCount * 0.1f)));
+                        self.SetPropertyValue("moveSpeed", moveSpeed * (1f + (buffCount * 0.19f)));
+                        self.SetPropertyValue("regen", regen * (1f + (buffCount * 0.19f)));
                     }
                 }
                 if (self.HasBuff(droneIndex)) // && controller)

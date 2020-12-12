@@ -506,7 +506,7 @@ namespace Cloudburst.Cores.HAND
             LoadoutAPI.AddSkill(typeof(Cleanup));
             LoadoutAPI.AddSkill(typeof(WyattBaseMeleeAttack));
 
-            SkillDef primarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
+            SteppedSkillDef primarySkillDef = ScriptableObject.CreateInstance<SteppedSkillDef>();
 
             primarySkillDef.activationState = new SerializableEntityStateType(typeof(WyattBaseMeleeAttack));
             primarySkillDef.activationStateMachineName = "Weapon";
@@ -557,6 +557,8 @@ namespace Cloudburst.Cores.HAND
             LoadoutAPI.AddSkill(typeof(HomeRun));
             LoadoutAPI.AddSkill(typeof(AnimationTest));
             LoadoutAPI.AddSkill(typeof(TrashOut));
+            LoadoutAPI.AddSkill(typeof(TrashOut2));
+            //LoadoutAPI.AddSkill(typeof(TrashOut3));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<HANDDroneSkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(TrashOut));
