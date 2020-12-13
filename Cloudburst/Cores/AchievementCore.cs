@@ -29,6 +29,7 @@ namespace Cloudburst.Cores
             UnlockablesAPI.AddUnlockable<GrabOrDie>(true);
             UnlockablesAPI.AddUnlockable<Paradox>(true);
             UnlockablesAPI.AddUnlockable<HitLevelCap>(false);
+            UnlockablesAPI.AddUnlockable<WyattMasteryAchievement>(true);
         }
         protected void AddTokens() {
             LanguageAPI.Add("CLOUDBURST_GRABORDIE_ACHIEVEMENT_NAME", "Grab or Die!");
@@ -42,6 +43,10 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_NAME", "One with the Planet");
             LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_UNLOCKABLE_NAME", "One with the Planet");
             LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_DESC", "In a single run, reach the maximum level");
+
+            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "Wyatt: Mastery");
+            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "Wyatt: Mastery");
+            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As Wyatt, beat the game or obliterate on Monsoon.");
         }
 
         public static string GetUnlockableString(string name) {
@@ -59,6 +64,9 @@ namespace Cloudburst.Cores
                     break;
                 case "HitLevelCap":
                     idToReturn = "CLOUDBURST_HITLEVELCAP_REWARD_ID";
+                    break;
+                case "WyattMastery":
+                    idToReturn = "CLOUDBURST_WYATT_MONSOONUNLOCKABLE_REWARD_ID";
                     break;
             }
             return idToReturn;

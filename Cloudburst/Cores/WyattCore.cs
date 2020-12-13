@@ -212,9 +212,11 @@ namespace Cloudburst.Cores.HAND
             {
                 PrefabBuilder builder = new PrefabBuilder();
                 builder.prefabName = "WyattBody";
+                builder.masteryAchievementUnlockable = AchievementCore.GetUnlockableString("WyattMastery");
                 builder.model = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattBody");
                 builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(API.HexToColor("00A86B"), API.HexToColor("E56717"), API.HexToColor("D9DDDC"), API.HexToColor("43464B"));
-                    
+                builder.masterySkinIcon = LoadoutAPI.CreateSkinIcon(API.HexToColor("00A86B"), API.HexToColor("E56717"), API.HexToColor("D9DDDC"), API.HexToColor("43464B"));
+
                 wyattBody = builder.CreatePrefab();
 
             }

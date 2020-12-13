@@ -379,13 +379,11 @@ public class PrefabBuilder
                 BaseSkins = Array.Empty<SkinDef>(),
                 MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
                 ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
-                UnlockableName = ""
+                UnlockableName = masteryAchievementUnlockable
             };
 
             SkinDef skinDefault = LoadoutAPI.CreateNewSkinDef(skinDefInfo);
             SkinDef mastery = LoadoutAPI.CreateNewSkinDef(masteryInfo);
-
-
 
             SkinDef[] skinDefs = new SkinDef[2]
             {
