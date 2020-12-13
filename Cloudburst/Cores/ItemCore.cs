@@ -18,16 +18,16 @@ namespace Cloudburst.Cores
         //Give Items Models
         //Give items icons
         //These values are set by RegisterItem(ItemIndex, ItemDef).
-        protected internal ItemIndex itemChampionOnKillIndex; //model and icon
+        protected internal ItemIndex itemChampionOnKillIndex; //model and icon (I LOVE YOU ROB)
         protected internal ItemIndex largerTeleporterRadiusIndex; //model and icon
         protected internal ItemIndex crippleOnHitIndex; //model and icon
         protected internal ItemIndex cloakOnInteractionIndex; //model and icon
-        protected internal ItemIndex itemOnLevelUpIndex;
-        protected internal ItemIndex randomDebuffOnHitIndex;
-        protected internal ItemIndex moneyOnInteractionIndex;
-        protected internal ItemIndex barrierOnCritIndex;
-        protected internal ItemIndex barrierOnLevelIndex;
-        protected internal ItemIndex experienceOnHitIndex;
+        protected internal ItemIndex itemOnLevelUpIndex; //rob if he wants to do texturing
+        protected internal ItemIndex randomDebuffOnHitIndex; //model and icon
+        protected internal ItemIndex moneyOnInteractionIndex; //rob
+        protected internal ItemIndex barrierOnCritIndex; //rob
+        protected internal ItemIndex barrierOnLevelIndex; //jello
+        protected internal ItemIndex experienceOnHitIndex; //rob
         protected internal ItemIndex lemdogIndex; //model and icon
         protected internal ItemIndex extendEnemyBuffDurationIndex; //model and icon
         //protected internal ItemIndex damageOnDamagedIndex;
@@ -202,7 +202,7 @@ namespace Cloudburst.Cores
                 name = "ItemOnLevelUp2",
                 nameToken = "ITEM_ITEMONLEVELUP_NAME",
                 //pickupIconPath = pickUpIconPath,
-                //pickupModelPath = pickUpModelPath,
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/CarePackageRequester/MDLCarePackageRequester.prefab",
                 pickupToken = "ITEM_ITEMONLEVELUP_PICKUP",
                 tags = itemOnLevelUpTags,
                 tier = ItemTier.Tier3,

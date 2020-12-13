@@ -1024,6 +1024,7 @@ Transform:
   - {fileID: 2246543974277228772}
   - {fileID: 2246543974277228798}
   - {fileID: 2246543974277228738}
+  - {fileID: 9101741938226446547}
   m_Father: {fileID: 2246543974277228838}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
@@ -1889,6 +1890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2246543974277228838}
   - component: {fileID: 2246543974284150528}
+  - component: {fileID: 2372727862415581368}
   m_Layer: 0
   m_Name: wyattRIGGED_BROOMfixed
   m_TagString: Untagged
@@ -1935,6 +1937,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2372727862415581368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2246543974276871430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformPairs:
+  - name: WinchHole
+    transform: {fileID: 9101741938226446547}
 --- !u!1 &2246543974276871456
 GameObject:
   m_ObjectHideFlags: 0
@@ -3471,6 +3488,36 @@ CapsuleCollider:
   m_Height: 200
   m_Direction: 1
   m_Center: {x: 0, y: 62.79198, z: 9.432615}
+--- !u!1 &4720195958151909706
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9101741938226446547}
+  m_Layer: 0
+  m_Name: WinchHole
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9101741938226446547
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4720195958151909706}
+  m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0.584, y: -1.4200001, z: -1.0799999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2246543974277228768}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5207181172977536114
 GameObject:
   m_ObjectHideFlags: 0
@@ -3583,95 +3630,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   transformPairs:
-  - name: Root
-    transform: {fileID: 0}
-  - name: Pelvis
-    transform: {fileID: 0}
-  - name: L_Hip
-    transform: {fileID: 0}
-  - name: L_Knee
-    transform: {fileID: 0}
-  - name: L_Ankle
-    transform: {fileID: 0}
-  - name: L_Foot
-    transform: {fileID: 0}
-  - name: R_Hip
-    transform: {fileID: 0}
-  - name: R_Knee
-    transform: {fileID: 0}
-  - name: R_Ankle
-    transform: {fileID: 0}
-  - name: R_Foot
-    transform: {fileID: 0}
-  - name: Tail1
-    transform: {fileID: 0}
-  - name: Tail2
-    transform: {fileID: 0}
-  - name: Tail3
-    transform: {fileID: 0}
-  - name: Tail4
-    transform: {fileID: 0}
-  - name: Tail5
-    transform: {fileID: 0}
-  - name: Tail6
-    transform: {fileID: 0}
-  - name: Tail7
-    transform: {fileID: 0}
-  - name: Tail8
-    transform: {fileID: 0}
-  - name: Tail9
-    transform: {fileID: 0}
-  - name: Tail10
-    transform: {fileID: 0}
-  - name: Spine1
-    transform: {fileID: 0}
-  - name: Spine2
-    transform: {fileID: 0}
-  - name: L_Clavicle
-    transform: {fileID: 0}
-  - name: L_Shoulder
-    transform: {fileID: 0}
-  - name: L_Elbow
-    transform: {fileID: 0}
-  - name: L_Hand
-    transform: {fileID: 0}
-  - name: Neck
-    transform: {fileID: 0}
-  - name: Head
-    transform: {fileID: 0}
-  - name: Jaw
-    transform: {fileID: 0}
-  - name: Nose
-    transform: {fileID: 0}
-  - name: L_Ear
-    transform: {fileID: 0}
-  - name: R_Ear
-    transform: {fileID: 0}
-  - name: R_Clavicle
-    transform: {fileID: 0}
-  - name: R_Shoulder
-    transform: {fileID: 0}
-  - name: R_Elbow
-    transform: {fileID: 0}
-  - name: R_Hand
-    transform: {fileID: 0}
-  - name: Weapon
-    transform: {fileID: 0}
-  - name: Arrow
-    transform: {fileID: 0}
-  - name: L_Bow
-    transform: {fileID: 0}
-  - name: R_Bow
-    transform: {fileID: 0}
-  - name: Winch
-    transform: {fileID: 0}
-  - name: FootL
-    transform: {fileID: 0}
-  - name: FootR
-    transform: {fileID: 0}
-  - name: HandL
-    transform: {fileID: 0}
-  - name: HandR
-    transform: {fileID: 0}
-  - name: Muzzle
-    transform: {fileID: 0}
+  - name: WinchHole
+    transform: {fileID: 9101741938226446547}

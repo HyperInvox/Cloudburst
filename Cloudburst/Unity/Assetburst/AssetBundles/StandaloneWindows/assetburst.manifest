@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1611764645
+CRC: 2986837562
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: bf17665595bd947ab4098ed24b63ecde
+    Hash: b4b56e600019b162d386a7c3502dcccf
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -118,6 +118,7 @@ Assets:
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Junk/ExampleSurvivorMesh.mesh
 - Assets/Cloudburst/753network/Crystallize/Ramp Foil.png
 - Assets/Cloudburst/753network/Crystallize/Foil HDR.mat
+- Assets/Cloudburst/Items/CarePackageRequester/MDLCarePackageRequester.prefab
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Materials/matExampleSurvivor.mat
 - Assets/Cloudburst/Shaders/Toonlit.shader
 - Assets/Cloudburst/Survivors/Bombardier/Animations/CharSelectIdle.anim
@@ -133,11 +134,13 @@ Assets:
 - Assets/Cloudburst/753network/Crystallize/Ramp Rainbow.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 1.mat
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecutionerMaskUpper.mask
+- Assets/Cloudburst/Items/CarePackageRequester/3D_Printer.png
 - Assets/Cloudburst/Items/MechanicalTrinket/MDLMechanicalTrinket.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Materials/icon.mat
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Blue.mat
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_metal.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorIdle.anim
+- Assets/Cloudburst/Items/CarePackageRequester/carepackage.fbx
 - Assets/Cloudburst/Enemies/texExampleSurvivor.png
 - Assets/Cloudburst/Materials/texTrimSheetMetalVibrant.mat
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_texture_red.png
@@ -270,6 +273,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/axetexture.mat
 - Assets/Cloudburst/Enemies/Boss/LampBoss.png
 - Assets/Cloudburst/Shaders/toonramp.png
+- Assets/Cloudburst/Items/CarePackageRequester/Materials/3D_Printer.mat
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_normals.png
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkRHT.anim

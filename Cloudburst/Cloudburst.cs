@@ -185,6 +185,8 @@ namespace Cloudburst
                 {
                     equipCore = new EquipmentCore();
                 }
+
+
                 if (EnableElites.Value)
                 {
                     eliteCore = new EliteCore();

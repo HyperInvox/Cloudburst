@@ -134,6 +134,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achievements\WyattMasteryAchievement.cs" />
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />

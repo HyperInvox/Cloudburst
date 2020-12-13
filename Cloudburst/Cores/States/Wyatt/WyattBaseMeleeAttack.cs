@@ -7,6 +7,9 @@ using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.States.Wyatt
 {
+    //TODO:
+    //Fix the combo finisher being weird.
+
     class WyattBaseMeleeAttack : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
 

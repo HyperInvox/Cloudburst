@@ -213,6 +213,8 @@ namespace Cloudburst.Cores.HAND
                 PrefabBuilder builder = new PrefabBuilder();
                 builder.prefabName = "WyattBody";
                 builder.model = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattBody");
+                builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(API.HexToColor("00A86B"), API.HexToColor("E56717"), API.HexToColor("D9DDDC"), API.HexToColor("43464B"));
+                    
                 wyattBody = builder.CreatePrefab();
 
             }
@@ -421,8 +423,6 @@ namespace Cloudburst.Cores.HAND
             var skillSlot = wyattBody.AddComponent<GenericSkill>();
 
             var armorDef = ScriptableObject.CreateInstance<SkillDef>();
-            var regenDef = ScriptableObject.CreateInstance<SkillDef>();
-            var speedDef = ScriptableObject.CreateInstance<SkillDef>();
 
             armorDef.activationState = new SerializableEntityStateType(typeof(Uninitialized));
             armorDef.activationStateMachineName = "Weapon";
@@ -440,47 +440,23 @@ namespace Cloudburst.Cores.HAND
             armorDef.requiredStock = 1;
             armorDef.shootDelay = 0.1f;
             armorDef.stockToConsume = 0;
-            armorDef.skillDescriptionToken = "WYATT_PASSIVE_DESCRIPTION";
+            armorDef.skillDescriptionToken = "FILLMEOUTDADDY";
             armorDef.skillName = "Armor";
-            armorDef.skillNameToken = "WYATT_PASSIVE_NAME";
+            armorDef.skillNameToken = "UWU";
             armorDef.icon = AssetsCore.overclockIcon;
             armorDef.keywordTokens = Array.Empty<string>();
-            armorDef.skillDescriptionToken = "WYATT_PASSIVE_DESCRIPTION";
+            armorDef.skillDescriptionToken = "OWO WHAT's";
             armorDef.icon = AssetsCore.overclockIcon;
             armorDef.skillNameToken = "WYATT_PASSIVE_NAME";
-
-            API.CopySkillDefSettings(armorDef, regenDef);
-            API.CopySkillDefSettings(armorDef, speedDef);
-
-            regenDef.skillName = "Regen";
-            regenDef.icon = null;
-            regenDef.skillNameToken = "WYATT_PASSIVE_ALT_NAME";
-            regenDef.skillDescriptionToken = "WYATT_PASSIVE_ALT_DESCRIPTION";
-
-            speedDef.skillName = "Speed";
-            speedDef.icon = null;
-            speedDef.skillNameToken = "WYATT_PASSIVE_ALT2_NAME";
-            speedDef.skillDescriptionToken = "WYATT_PASSIVE_ALT2_DESCRIPTION";
 
             passiveFamily.variants = new SkillFamily.Variant[1] {
                 new SkillFamily.Variant {
                     skillDef = armorDef,
                     unlockableName = ""
                 },
-                /*new SkillFamily.Variant {
-                    skillDef = regenDef,
-                    unlockableName = ""
-                },
-                new SkillFamily.Variant {
-                    skillDef = speedDef,
-                    unlockableName = ""
-                }
-
             };
 
             LoadoutAPI.AddSkillDef(armorDef);
-            LoadoutAPI.AddSkillDef(regenDef);
-            LoadoutAPI.AddSkillDef(speedDef);
             LoadoutAPI.AddSkillFamily(passiveFamily);
 
             skillSlot.SetFieldValue("_skillFamily", passiveFamily);
@@ -679,14 +655,14 @@ namespace Cloudburst.Cores.HAND
                 viewableNode = new ViewablesCatalog.Node(utilitySkillDef.skillNameToken, false, null)
             };
 
-            SkillFamily.Variant variant = new SkillFamily.Variant();
+            /*SkillFamily.Variant variant = new SkillFamily.Variant();
 
             variant.skillDef = utilitySkillDef2;
             variant.unlockableName = "";
 
             int prevLength = utilitySkillFamily.variants.Length;
             Array.Resize<SkillFamily.Variant>(ref utilitySkillFamily.variants, prevLength + 1);
-            utilitySkillFamily.variants[prevLength] = variant;
+            utilitySkillFamily.variants[prevLength] = variant;*/
         }
 
         private void CreateSpecial()

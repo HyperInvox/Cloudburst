@@ -2,6 +2,7 @@
 using KinematicCharacterController;
 using R2API;
 using RoR2;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,8 @@ using UnityEngine.Networking;
 /// <summary>
 /// Assists in the creation of survivors.
 /// </summary>
+/// 
+
 public class PrefabBuilder
 {
     /// <summary>
@@ -28,6 +31,11 @@ public class PrefabBuilder
     public GameObject modelBase = new GameObject("ModelBase");
     public GameObject camPivot = new GameObject("CameraPivot");
     public GameObject aimOrigin = new GameObject("AimOrigin");
+
+    public Sprite defaultSkinIcon;
+    public Sprite masterySkinIcon;
+
+    public string masteryAchievementUnlockable;
 
     /// <summary>
     /// Create a survivor prefab from a model. Don't register the prefab that it outputs, because the method already does that for you.
@@ -50,9 +58,9 @@ public class PrefabBuilder
 
         void SetupModelBase()
         {
-            Object.Destroy(prefab.transform.Find("ModelBase").gameObject);
-            UnityEngine.Object.Destroy(prefab.transform.Find("CameraPivot").gameObject);
-            UnityEngine.Object.Destroy(prefab.transform.Find("AimOrigin").gameObject);
+            Cloudburst.Cloudburst.Destroy(prefab.transform.Find("ModelBase").gameObject);
+            Cloudburst.Cloudburst.Destroy(prefab.transform.Find("CameraPivot").gameObject);
+            Cloudburst.Cloudburst.Destroy(prefab.transform.Find("AimOrigin").gameObject);
 
             modelBase.transform.parent = prefab.transform;
             modelBase.transform.localPosition = new Vector3(0f, -0.81f, 0f);
@@ -88,6 +96,7 @@ public class PrefabBuilder
         CharacterMotor motor = prefab.GetComponent<CharacterMotor>();
         CameraTargetParams camParams = prefab.GetComponent<CameraTargetParams>();
         ModelLocator locator = prefab.GetComponent<ModelLocator>();
+        CharacterModel charModel = transform.AddComponent<CharacterModel>();
         ChildLocator childLoc = model.GetComponent<ChildLocator>();
 
         TeamComponent teamComponent = null;
@@ -112,6 +121,7 @@ public class PrefabBuilder
         SetupCameraParams();
         SetupModelLocator();
         SetupModel();
+        SetupSkins();
         SetupTeamComponent();
         SetupHealthComponent();
         SetupInteractors();
@@ -233,7 +243,6 @@ public class PrefabBuilder
 
         void SetupModel()
         {
-            CharacterModel charModel = transform.AddComponent<CharacterModel>();
             charModel.body = body;
             charModel.baseRendererInfos = new CharacterModel.RendererInfo[]
             {
@@ -325,6 +334,66 @@ public class PrefabBuilder
                     hitBoxGroup.hitBoxes = new HitBox[] { hitBox };
                 }
             }
+        }
+        
+        void SetupSkins()
+        {
+            //LanguageAPI.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
+
+            var obj = transform.gameObject;
+            var mdl = obj.GetComponent<CharacterModel>();
+            var  skinController = obj.AddComponent<ModelSkinController>();
+
+            LoadoutAPI.SkinDefInfo skinDefInfo = new LoadoutAPI.SkinDefInfo
+            {
+                Name = "DEFAULT_SKIN",
+                NameToken = "DEFAULT_SKIN",
+                Icon = defaultSkinIcon,
+                RootObject = obj,
+                RendererInfos = mdl.baseRendererInfos,
+                GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>(),
+                MeshReplacements = Array.Empty<SkinDef.MeshReplacement>(),
+                BaseSkins = Array.Empty<SkinDef>(),
+                MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
+                ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
+                UnlockableName = ""
+            };
+
+            Material commandoMat = Resources.Load<GameObject>("Prefabs/CharacterBodies/BrotherGlassBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial;
+
+            CharacterModel.RendererInfo[] rendererInfos = skinDefInfo.RendererInfos;
+            CharacterModel.RendererInfo[] array = new CharacterModel.RendererInfo[rendererInfos.Length];
+            rendererInfos.CopyTo(array, 0);
+
+            array[0].defaultMaterial = commandoMat;
+
+            LoadoutAPI.SkinDefInfo masteryInfo = new LoadoutAPI.SkinDefInfo
+            {
+                Name = "DEFAULT_SKIN",
+                NameToken = "DEFAULT_SKIN",
+                Icon = defaultSkinIcon,
+                RootObject = obj,
+                RendererInfos = array,
+                GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>(),
+                MeshReplacements = Array.Empty<SkinDef.MeshReplacement>(),
+                BaseSkins = Array.Empty<SkinDef>(),
+                MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
+                ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
+                UnlockableName = ""
+            };
+
+            SkinDef skinDefault = LoadoutAPI.CreateNewSkinDef(skinDefInfo);
+            SkinDef mastery = LoadoutAPI.CreateNewSkinDef(masteryInfo);
+
+
+
+            SkinDef[] skinDefs = new SkinDef[2]
+            {
+                skinDefault,
+                mastery
+            };
+
+            skinController.skins = skinDefs;
         }
 
         //transform.Find("wyattRIGGED_BROOMfixed/BroomRig/Handle/GyroBall").gameObject.AddComponent<Spinner>();
