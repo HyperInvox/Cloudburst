@@ -12,7 +12,6 @@ using UnityEngine.Networking;
 /// Assists in the creation of survivors.
 /// </summary>
 /// 
-
 public class PrefabBuilder
 {
     /// <summary>
