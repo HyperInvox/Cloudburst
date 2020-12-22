@@ -34,6 +34,7 @@ namespace Cloudburst.Cores.Components
             LogCore.LogI(controller.___ownerNetId);
             LogCore.LogI(controller.owner);
             controller.owner.GetComponent<MAIDManager>().DeployMAIDAuthority(base.gameObject);
+            CharacterCameraParams.
         }
 
         public void OnTriggerEnter(Collider collider)
@@ -87,7 +88,7 @@ namespace Cloudburst.Cores.Components
                 EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                 {
                     origin = transform.position,
-                    scale = 5
+                    scale = 2.5f
                 }, true);
                 for (int i = 0; i < this.characterMotors.Count; i++)
                 {
@@ -101,7 +102,7 @@ namespace Cloudburst.Cores.Components
 
                     if (motor && index == TeamIndex.Monster)
                     {
-                        motor.ApplyForce(new Vector3(0, !motor.isFlying ? 2500 : -2500, 0), true, true);
+                        motor.ApplyForce(new Vector3(0, !motor.isFlying ? 500 : -500, 0), true, true);
                         //Why won't you come home?
                         /*EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                         {

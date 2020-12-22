@@ -216,11 +216,16 @@ namespace Cloudburst.Cores.HAND
                 builder.model = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattBody");
                 builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(API.HexToColor("00A86B"), API.HexToColor("E56717"), API.HexToColor("D9DDDC"), API.HexToColor("43464B"));
                 builder.masterySkinIcon = LoadoutAPI.CreateSkinIcon(API.HexToColor("00A86B"), API.HexToColor("E56717"), API.HexToColor("D9DDDC"), API.HexToColor("43464B"));
+                builder.masterySkinDelegate = material;
 
                 wyattBody = builder.CreatePrefab();
+                Material material() {
+                    return Resources.Load<GameObject>("Prefabs/CharacterBodies/BrotherGlassBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial;
 
+                }
             }
         }
+        
         #endregion
         #region Components
         private void SetComponents()
@@ -243,6 +248,10 @@ namespace Cloudburst.Cores.HAND
             sfxLocator.fallDamageSound = "Play_MULT_shift_hit";
             sfxLocator.landingSound = "play_char_land";
 
+            var indicator = Resources.Load<GameObject>("Prefabs/EngiShieldRetractIndicator").transform.Find("Holder").GetComponent<SpriteRenderer>(); //
+            indicator.sprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("texWyattIndicator");
+            indicator.color = API.HexToColor("00A86B");
+
             tracker.maxTrackingAngle = 20;
             tracker.maxTrackingDistance = 55;
             tracker.trackerUpdateFrequency = 5;
@@ -255,7 +264,7 @@ namespace Cloudburst.Cores.HAND
         private void FixSetStateOnHurt()
         {
             SetStateOnHurt hurtState = wyattBody.AddOrGetComponent<SetStateOnHurt>(); //AddOrGetComponent is because 
-
+            
             hurtState.canBeFrozen = true; //If this gameobject can be frozen. Set to true if this is a survivor
             hurtState.canBeHitStunned = false; //If this gameobject can be stunned by being hit. Set to false if this is a survivor.
             hurtState.canBeStunned = false; //If this gameobject is able to be stunned. Set to false if this is a survivor
@@ -862,7 +871,7 @@ namespace Cloudburst.Cores.HAND
             desc = desc + "< ! > *NEVER RELEASES*" + Environment.NewLine + Environment.NewLine;
 
             LanguageAPI.Add("WYATT_DESCRIPTION", desc);
-            LanguageAPI.Add("WYATT_OUTRO_FLAVOR", "...and so he left, unsure of his next task.");
+            LanguageAPI.Add("WYATT_OUTRO_FLAVOR", "...and so he left, a job well done.");
 
             SurvivorDef def = new SurvivorDef()
             {

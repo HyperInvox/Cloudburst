@@ -1026,7 +1026,7 @@ Transform:
   - {fileID: 2246543974277228738}
   - {fileID: 9101741938226446547}
   m_Father: {fileID: 2246543974277228838}
-  m_RootOrder: 0
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 90}
 --- !u!1 &2246543974276871362
 GameObject:
@@ -1642,7 +1642,7 @@ Transform:
   m_LocalScale: {x: 1.0442251, y: 1.0442251, z: 0.96546715}
   m_Children: []
   m_Father: {fileID: 2246543974277228838}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &2246543974288439748
 SkinnedMeshRenderer:
@@ -1909,14 +1909,14 @@ Transform:
   m_LocalPosition: {x: 8.2, y: 126.4, z: 8}
   m_LocalScale: {x: 25, y: 25, z: 25}
   m_Children:
-  - {fileID: 2246543974277228768}
+  - {fileID: 2246543974277228796}
   - {fileID: 2246543974277228782}
   - {fileID: 2246543974277228790}
   - {fileID: 2246543974277228792}
   - {fileID: 2246543974277228794}
-  - {fileID: 2246543974277228796}
+  - {fileID: 2246543974277228768}
   m_Father: {fileID: 6075336710190861625}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2246543974284150528
 Animator:
@@ -3428,7 +3428,7 @@ Transform:
   m_LocalScale: {x: 400, y: 185, z: 345}
   m_Children: []
   m_Father: {fileID: 6075336710190861625}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4949558454856481389
 BoxCollider:
@@ -3472,7 +3472,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6075336710190861625}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &9032968658311523540
 CapsuleCollider:
@@ -3560,8 +3560,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 2.394916, y: 1, z: 1.7201905}
-  m_Center: {x: 0.0038249493, y: 0, z: 0.3600951}
+  m_Size: {x: 2.394916, y: 1.5486445, z: 1.878607}
+  m_Center: {x: 0.0038249493, y: -0.03798292, z: 0.43930298}
 --- !u!1 &6075336710191223129
 GameObject:
   m_ObjectHideFlags: 0
@@ -3591,9 +3591,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
+  - {fileID: 2246543974277228838}
   - {fileID: 4929277803898197131}
   - {fileID: 6915625715344960922}
-  - {fileID: 2246543974277228838}
   - {fileID: 6164576545805966274}
   m_Father: {fileID: 0}
   m_RootOrder: 0

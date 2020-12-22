@@ -36,7 +36,7 @@ namespace Cloudburst.Cores
         //protected internal ItemIndex geigerCounterIndex;
         //protected internal ItemIndex heartIndex;
         //protected internal ItemIndex chipIndex;
-        protected internal ItemIndex wyattWalkmanIndex;
+        //protected internal ItemIndex wyattWalkmanIndex;
 
         public List<ItemIndex> bossitemList = new List<ItemIndex>{
             ItemIndex.NovaOnLowHealth,
@@ -348,26 +348,21 @@ namespace Cloudburst.Cores
                 tier = ItemTier.Tier2,
                 unlockableName = ""
             });
-            ItemTag[] walkmanTags = new ItemTag[2]
+            /*ItemTag[] walkmanTags = new ItemTag[4]
             {
                     ItemTag.Utility,
-                    ItemTag.WorldUnique
+                    ItemTag.WorldUnique,
+                    ItemTag.AIBlacklist,
+                    ItemTag.BrotherBlacklist,
             };
             RegisterItem(new ItemDef
             {
                 canRemove = false,
-                //descriptionToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC",
                 hidden = false,
-                loreToken = "",
                 name = "WyattWalkman",
-                //nameToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME",
-                //pickupIconPath = "@Cloudburst:Assets/Items/Lemdog/LemDog_TexIcon.png",
-                //pickupModelPath = "@Cloudburst:Assets/Items/Lemdog/MDLLemDog.prefab",
-                //pickupToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP",
                 tags = walkmanTags,
                 tier = ItemTier.Tier3,
-                unlockableName = ""
-            });
+            });*/
 
             
             //chipIndex
@@ -494,8 +489,9 @@ namespace Cloudburst.Cores
                     extendEnemyBuffDurationIndex = ItemAPI.Add(customItem);
                     break;
                 case "WyattWalkman":
-                    wyattWalkmanIndex = ItemAPI.Add(customItem);
-                    break;
+                    throw new System.Exception("Custodian's walkman should not be registered.");
+                    //wyattWalkmanIndex = ItemAPI.Add(customItem);
+                    //break;
                 default:
                     LogCore.LogF(itemDef.name + " is unregistered! Item will not spawn!");
                     break;
@@ -566,11 +562,11 @@ namespace Cloudburst.Cores
                 {
                     var inventory = self.inventory;
 
-                    var wyattCount = inventory.GetItemCount(wyattWalkmanIndex);
+                    //var wyattCount = inventory.GetItemCount(wyattWalkmanIndex);
 
-                    if (wyattCount > 0) {
-                        self.AddItemBehavior<WyattItemWalkmanBehavior>(wyattCount);
-                    }
+                    //if (wyattCount > 0) {
+                    //    self.AddItemBehavior<WyattItemWalkmanBehavior>(wyattCount);
+                    //}
                 }
             }
             orig(self);

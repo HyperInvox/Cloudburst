@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.Components.Wyatt
 {
-    public class WyattWalkmanBehavior : NetworkBehaviour {
+    public class WyattWalkmanBehavior : NetworkBehaviour, IOnDamageInflictedServerReceiver {
         private CharacterBody characterBody;
 
         private void Awake()
@@ -16,7 +16,7 @@ namespace Cloudburst.Cores.Components.Wyatt
 
         private void Start()
         {
-            GiveHeadphonesAuthority();
+            //GiveHeadphonesAuthority();
         }
 
         public void GiveHeadphonesAuthority()
@@ -71,6 +71,11 @@ namespace Cloudburst.Cores.Components.Wyatt
             else if (characterBody.outOfCombat) {
                 characterBody.RemoveBuff(BuffCore.instance.wyattCombatIndex);
             }
+        }
+
+        public void OnDamageInflictedServer(DamageReport damageReport)
+        {
+            TriggerBehaviorAuthority(1);
         }
     }
 }

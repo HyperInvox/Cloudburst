@@ -187,7 +187,7 @@ namespace Cloudburst.Cores
                         baseDamage = 0.1f * self.body.maxHealth,
                         attackerFiltering = default,
                         //bonusForce = new Vector3(0, -3000, 0),
-                        damageType = DamageType.Stun1s, //| DamageTypeCore.spiked,
+                        damageType = DamageType.Stun1s | DamageType.NonLethal, //| DamageTypeCore.spiked,
                         crit = false,
                         damageColorIndex = DamageColorIndex.Default,
                         falloffModel = BlastAttack.FalloffModel.None,

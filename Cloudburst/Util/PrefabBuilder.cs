@@ -34,6 +34,10 @@ public class PrefabBuilder
     public Sprite defaultSkinIcon;
     public Sprite masterySkinIcon;
 
+    public delegate Material MasterySkinMaterial();
+
+    public MasterySkinMaterial masterySkinDelegate;
+
     public string masteryAchievementUnlockable;
 
     /// <summary>
@@ -333,38 +337,37 @@ public class PrefabBuilder
                     hitBoxGroup.hitBoxes = new HitBox[] { hitBox };
                 }
             }
-        }
+            }
         
-        void SetupSkins()
-        {
-            //LanguageAPI.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
-
-            var obj = transform.gameObject;
-            var mdl = obj.GetComponent<CharacterModel>();
-            var  skinController = obj.AddComponent<ModelSkinController>();
-
-            LoadoutAPI.SkinDefInfo skinDefInfo = new LoadoutAPI.SkinDefInfo
+            void SetupSkins()
             {
-                Name = "DEFAULT_SKIN",
-                NameToken = "DEFAULT_SKIN",
-                Icon = defaultSkinIcon,
-                RootObject = obj,
-                RendererInfos = mdl.baseRendererInfos,
-                GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>(),
-                MeshReplacements = Array.Empty<SkinDef.MeshReplacement>(),
-                BaseSkins = Array.Empty<SkinDef>(),
-                MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
-                ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
-                UnlockableName = ""
+                //LanguageAPI.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
+
+                var obj = transform.gameObject;
+                var mdl = obj.GetComponent<CharacterModel>();
+                var  skinController = obj.AddComponent<ModelSkinController>();
+
+                LoadoutAPI.SkinDefInfo skinDefInfo = new LoadoutAPI.SkinDefInfo
+                {
+                    Name = "DEFAULT_SKIN",
+                    NameToken = "DEFAULT_SKIN",
+                    Icon = defaultSkinIcon,
+                    RootObject = obj,
+                    RendererInfos = mdl.baseRendererInfos,
+                    GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>(),
+                    MeshReplacements = Array.Empty<SkinDef.MeshReplacement>(),
+                    BaseSkins = Array.Empty<SkinDef>(),
+                    MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
+                    ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
+                    UnlockableName = ""
             };
 
-            Material commandoMat = Resources.Load<GameObject>("Prefabs/CharacterBodies/BrotherGlassBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial;
 
             CharacterModel.RendererInfo[] rendererInfos = skinDefInfo.RendererInfos;
             CharacterModel.RendererInfo[] array = new CharacterModel.RendererInfo[rendererInfos.Length];
             rendererInfos.CopyTo(array, 0);
 
-            array[0].defaultMaterial = commandoMat;
+            array[0].defaultMaterial = masterySkinDelegate.Invoke();
 
             LoadoutAPI.SkinDefInfo masteryInfo = new LoadoutAPI.SkinDefInfo
             {
@@ -393,12 +396,27 @@ public class PrefabBuilder
             skinController.skins = skinDefs;
         }
 
-        //transform.Find("wyattRIGGED_BROOMfixed/BroomRig/Handle/GyroBall").gameObject.AddComponent<Spinner>();
-        //transform.Find("wyattRIGGED_BROOMfixed/BroomRig/Handle/GyroRing").gameObject.AddComponent<Spinner>();
-
-
         API.RegisterNewBody(prefab);
 
         return prefab;
+    }
+    public SkinDef.GameObjectActivation[] GetActivations(GameObject[] allObjects, params GameObject[] activatedObjects)
+    {
+
+        List<SkinDef.GameObjectActivation> GameObjectActivations = new List<SkinDef.GameObjectActivation>();
+
+        for (int i = 0; i < allObjects.Length; i++)
+        {
+
+            bool activate = activatedObjects.Contains(allObjects[i]);
+
+            GameObjectActivations.Add(new SkinDef.GameObjectActivation
+            {
+                gameObject = allObjects[i],
+                shouldActivate = activate
+            });
+        }
+
+        return GameObjectActivations.ToArray();
     }
 }

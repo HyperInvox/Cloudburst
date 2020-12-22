@@ -356,7 +356,13 @@ namespace Cloudburst.Cores
             var origVisuals = activatedWard.transform.Find("Visuals+Collider/Sphere");
             var origRenderer = origVisuals.GetComponent<Renderer>();
 
-            var mdl = wyattMaidBubble.transform.Find("mdlWyattMaid");
+            //var mdl = wyattMaidBubble.transform.Find("mdlWyattMaid");
+            var counterBalance = wyattMaidBubble.transform.Find("CounterBalance");
+            var fakeActorCollider = wyattMaidBubble.transform.Find("FakeActorCollider");
+
+            counterBalance.gameObject.layer = LayerIndex.noCollision.intVal;
+            fakeActorCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
+
             var antiGravDummy = wyattMaidBubble.transform.Find("TimeBubble/BuffWard/ScaleWithRadius/PlayerAntiGrav");
             var buffWardObject = wyattMaidBubble.transform.Find("TimeBubble/BuffWard");
             var projectileSlowObject = wyattMaidBubble.transform.Find("TimeBubble/BuffWard/ScaleWithRadius/SlowDownProjectiles");
@@ -367,11 +373,22 @@ namespace Cloudburst.Cores
 
             wyattMaidBubble.AddComponent<MAID>();
 
-            var speen = mdl.AddComponent<Spinner>();
+            var torque = wyattMaidBubble.AddComponent<ApplyTorqueOnStart>();
+            torque.localTorque = new Vector3(6000, 6000, 6000);
+            torque.randomize = true;
+
+
+            //var simp = wyattMaidBubble.GetComponent<ProjectileSimple>();
+            //simp.velocity = 160;
+            //simp.oscillateMagnitude = 20;
+
+
+            //var speen = mdl.AddComponent<Spinner>();
+            //var speen = mdl.AddComponent<Spinner>();
 
             //removed cause it did nothing useful lmao
             var noGravForce = wyattMaidBubble.AddComponent<AntiGravityForce>();
-            noGravForce.antiGravityCoefficient = 0.1f;
+            noGravForce.antiGravityCoefficient = 0f;
             noGravForce.rb = wyattMaidBubble.GetComponent<Rigidbody>();
 
             SetupBuffward();

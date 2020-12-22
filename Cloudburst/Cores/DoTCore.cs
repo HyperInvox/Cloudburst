@@ -26,12 +26,22 @@ namespace Cloudburst.Cores
 
             LogCore.LogI("Initializing Core: " + base.ToString());
 
-            clean = RegisterDoT(1, 0.5f, DamageColorIndex.WeakPoint, BuffCore.instance.cleanIndex);
+            var lmao = new DotAPI.CustomDotBehaviour(CleanBehaviour);
+            var lol = new DotAPI.CustomDotVisual(CleanVisuals);
+            clean = RegisterDotDef(1, 0.5f, DamageColorIndex.WeakPoint, BuffCore.instance.cleanIndex, lmao, lol);
+        }
+
+        void CleanBehaviour(DotController controller, DotController.DotStack stacks) {
+
+        }
+
+        void CleanVisuals(DotController controller) {
+
         }
 
         protected internal DotIndex RegisterDoT(float interval, float damageCoeff, DamageColorIndex colorIndex, BuffIndex assocatedBuff)
         {
-            return DotAPI.RegisterDotDef(interval, damageCoeff, colorIndex, assocatedBuff);
+            return RegisterDotDef(interval, damageCoeff, colorIndex, assocatedBuff);
         }
     }
 }
