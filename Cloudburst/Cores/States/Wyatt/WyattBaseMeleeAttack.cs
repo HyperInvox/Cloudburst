@@ -14,8 +14,8 @@ namespace Cloudburst.Cores.States.Wyatt
     {
 
         public int step = 0;
-        public static float recoilAmplitude = 0.5f;
-        public static float baseDurationBeforeInterruptable = 0.5f;
+        public static float recoilAmplitude = 0.7f;
+        public static float baseDurationBeforeInterruptable = 0.55f;
         public float bloom = 1f;
         /*public static float comboFinisherBaseDuration = 0.5f;
         public static float comboFinisherhitPauseDuration = 0.15f;
@@ -45,7 +45,8 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void OnEnter()
         {
             this.hitBoxGroupName = "TempHitbox";
-            this.baseDuration = 1f;
+            this.mecanimHitboxActiveParameter = "BroomSwing.Hitbox";
+            this.baseDuration = 0.69f;
             this.duration = this.baseDuration / base.attackSpeedStat;
             this.hitPauseDuration = 0.1f;
             this.damageCoefficient = 2f;
@@ -112,6 +113,8 @@ namespace Cloudburst.Cores.States.Wyatt
             {
                 base.PlayCrossfade("UpperBody, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
             }*/
+
+            base.PlayCrossfade("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration, 0.05f);
         }
 
         public override void OnMeleeHitAuthority()

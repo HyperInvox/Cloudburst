@@ -49,6 +49,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 if (target && target.healthComponent && target.healthComponent.alive)
                 {
                     stage = ActionStage.FoundTarget;
+                    base.PlayAnimation("Fullbody, Override", "kick");
                 }
 
                 //LogCore.LogI("Stage: " + stage.ToString());
@@ -80,6 +81,8 @@ namespace Cloudburst.Cores.States.Wyatt
 
                     if (Vector3.Distance(base.transform.position, target.transform.position) < distance + 5f && target)
                     {
+
+                        base.PlayCrossfade("Fullbody, Override", "BufferEmpty",0.5f);
                         new BlastAttack
                         {
                             position = target.transform.position,

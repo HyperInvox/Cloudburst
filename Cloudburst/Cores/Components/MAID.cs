@@ -34,7 +34,7 @@ namespace Cloudburst.Cores.Components
             LogCore.LogI(controller.___ownerNetId);
             LogCore.LogI(controller.owner);
             controller.owner.GetComponent<MAIDManager>().DeployMAIDAuthority(base.gameObject);
-            CharacterCameraParams.
+            //CharacterCameraParams.
         }
 
         public void OnTriggerEnter(Collider collider)
