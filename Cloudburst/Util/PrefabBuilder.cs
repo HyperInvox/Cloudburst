@@ -327,6 +327,10 @@ public class PrefabBuilder
         
         void SetupHitbox()
         {
+            //hope this isn't going in henry. kinda ugly
+            //althought I guess it is very retard friendly for new people
+            //o shit it also mess with our aiming melee thing we wanted to do
+            // so shit's gotta go sorry
             foreach (Transform child in transform)
             {
                 if (child.name.Contains("Hitbox"))
@@ -353,7 +357,7 @@ public class PrefabBuilder
                     NameToken = "DEFAULT_SKIN",
                     Icon = defaultSkinIcon,
                     RootObject = obj,
-                    RendererInfos = mdl.baseRendererInfos,
+                    RendererInfos = mdl.baseRendererInfos, 
                     GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>(),
                     MeshReplacements = Array.Empty<SkinDef.MeshReplacement>(),
                     BaseSkins = Array.Empty<SkinDef>(),
