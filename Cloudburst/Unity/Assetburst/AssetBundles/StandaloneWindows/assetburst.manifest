@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2934537150
+CRC: 1450999173
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c703524009310b568f3f2d7ab8a42490
+    Hash: a4db93631f81636d9b8aaa061b35ec67
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -286,7 +286,6 @@ Assets:
 - Assets/Cloudburst/Enemies/Boss/LampBoss.png
 - Assets/Cloudburst/Shaders/toonramp.png
 - Assets/Cloudburst/Items/CarePackageRequester/Materials/3D_Printer.mat
-- Assets/Cloudburst/Survivors/Wyatt/fbx/bodypitch2.anim
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_normals.png
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkRHT.anim

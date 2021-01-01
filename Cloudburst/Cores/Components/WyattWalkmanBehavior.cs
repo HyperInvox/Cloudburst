@@ -14,7 +14,7 @@ namespace Cloudburst.Cores.Components.Wyatt
             this.characterBody = base.GetComponent<CharacterBody>();
         }
 
-        private void Start()
+        /*private void Start()
         {
             //GiveHeadphonesAuthority();
         }
@@ -38,11 +38,11 @@ namespace Cloudburst.Cores.Components.Wyatt
         [Server]
         private void GiveHeadphonesInternal()
         {
-            //if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(ItemCore.instance.wyattWalkmanIndex) == 0)
-            //{
-            //    characterBody.inventory.GiveItem(ItemCore.instance.wyattWalkmanIndex, 1);
-            //}
-        }
+            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(ItemCore.instance.wyattWalkmanIndex) == 0)
+            {
+                characterBody.inventory.GiveItem(ItemCore.instance.wyattWalkmanIndex, 1);
+            }
+        }*/
 
         public void TriggerBehaviorAuthority(float stacks)
         {
@@ -75,7 +75,7 @@ namespace Cloudburst.Cores.Components.Wyatt
 
         public void OnDamageInflictedServer(DamageReport damageReport)
         {
-            TriggerBehaviorAuthority(1); 
+            TriggerBehaviorAuthority(1);
         }
     }
 }

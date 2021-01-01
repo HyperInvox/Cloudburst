@@ -54,7 +54,8 @@ namespace Cloudburst.Cores.States.Wyatt
             swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/handslamtrail");
             hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
 
-            if (isComboFinisher) {
+            if (isComboFinisher)
+            {
                 //LogCore.LogF("finisher");
                 this.hitBoxGroupName = "TempHitboxLarge";
                 //this.baseDuration = 1f;

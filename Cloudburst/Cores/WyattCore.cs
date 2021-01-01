@@ -53,7 +53,7 @@ namespace Cloudburst.Cores.HAND
             CreateWYATT();
             //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
 
-#if RELEASE
+#if Release
             LogW("You're on a debug build. If you see this after downloading from the thunderstore, panic!");
             
             On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
@@ -74,14 +74,16 @@ namespace Cloudburst.Cores.HAND
         }
 
         private void SlowDownProjectiles_OnTriggerEnter(On.RoR2.Projectile.SlowDownProjectiles.orig_OnTriggerEnter orig, SlowDownProjectiles self, Collider other)
-        {   
+        {
             bool shouldOrigSelf = true;
             //LogCore.LogI(other.gameObject.name);
             //var sphere = other as SphereCollider;
-            if (other.gameObject.name == "WyattWinch(Clone)") {
+            if (other.gameObject.name == "WyattWinch(Clone)")
+            {
                 shouldOrigSelf = false;
             }
-            if (shouldOrigSelf) {
+            if (shouldOrigSelf)
+            {
                 orig(self, other);
             }
         }
@@ -219,13 +221,14 @@ namespace Cloudburst.Cores.HAND
                 builder.masterySkinDelegate = material;
 
                 wyattBody = builder.CreatePrefab();
-                Material material() {
+                Material material()
+                {
                     return Resources.Load<GameObject>("Prefabs/CharacterBodies/BrotherGlassBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial;
 
                 }
             }
         }
-        
+
         #endregion
         #region Components
         private void SetComponents()
@@ -264,7 +267,7 @@ namespace Cloudburst.Cores.HAND
         private void FixSetStateOnHurt()
         {
             SetStateOnHurt hurtState = wyattBody.AddOrGetComponent<SetStateOnHurt>(); //AddOrGetComponent is because 
-            
+
             hurtState.canBeFrozen = true; //If this gameobject can be frozen. Set to true if this is a survivor
             hurtState.canBeHitStunned = false; //If this gameobject can be stunned by being hit. Set to false if this is a survivor.
             hurtState.canBeStunned = false; //If this gameobject is able to be stunned. Set to false if this is a survivor
