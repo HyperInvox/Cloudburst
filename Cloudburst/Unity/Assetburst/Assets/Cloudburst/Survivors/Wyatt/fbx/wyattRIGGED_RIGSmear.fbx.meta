@@ -253,6 +253,10 @@ ModelImporter:
     7400042: Walk.RHT
     7400044: Walk.BWD
     7400046: Walk.LFT
+    7400048: Armature|Walk.FWD
+    7400050: Armature|Walk.RHT
+    7400052: Armature|Walk.BWD
+    7400054: Armature|Walk.LFT
     9500000: //RootNode
     13700000: Brom
     13700002: Wyatt
@@ -286,8 +290,8 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
-      takeName: Idle
+      name: Armature|Idle
+      takeName: Armature|Idle
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -314,8 +318,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Walk.FWD
-      takeName: Walk.FWD
+      name: Armature|Walk.FWD
+      takeName: Armature|Walk.FWD
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -342,8 +346,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Walk.RHT
-      takeName: Walk.RHT
+      name: Armature|Walk.RHT
+      takeName: Armature|Walk.RHT
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -370,8 +374,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Walk.BWD
-      takeName: Walk.BWD
+      name: Armature|Walk.BWD
+      takeName: Armature|Walk.BWD
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -398,8 +402,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Walk.LFT
-      takeName: Walk.LFT
+      name: Armature|Walk.LFT
+      takeName: Armature|Walk.LFT
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -426,8 +430,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: RotateThingys
-      takeName: RotateThingys
+      name: Armature|RotateThingys
+      takeName: Armature|RotateThingys
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -454,8 +458,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: bodyPitch
-      takeName: bodyPitch
+      name: Armature|bodyPitch
+      takeName: Armature|bodyPitch
       firstFrame: 0
       lastFrame: 20
       wrapMode: 0
@@ -464,7 +468,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -482,8 +486,8 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: BroomSwing
-      takeName: BroomSwing
+      name: Armature|BroomSwing
+      takeName: Armature|BroomSwing
       firstFrame: 0
       lastFrame: 16
       wrapMode: 0
@@ -503,15 +507,49 @@ ModelImporter:
       heightFromFeet: 0
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
+      curves:
+      - name: BroomSwing.Hitbox
+        curve:
+          serializedVersion: 2
+          curve:
+          - serializedVersion: 3
+            time: 0
+            value: 0
+            inSlope: Infinity
+            outSlope: Infinity
+            tangentMode: 103
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.41180876
+            value: 0.9934082
+            inSlope: Infinity
+            outSlope: Infinity
+            tangentMode: 103
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          - serializedVersion: 3
+            time: 0.8205689
+            value: 0
+            inSlope: 0
+            outSlope: 0
+            tangentMode: 0
+            weightedMode: 0
+            inWeight: 0
+            outWeight: 0
+          preInfinity: 3
+          postInfinity: 3
+          rotationOrder: 4
       events: []
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: kick
-      takeName: kick
+      name: Armature|kick
+      takeName: Armature|kick
       firstFrame: 0
       lastFrame: 45
       wrapMode: 0
@@ -561,7 +599,7 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.0028
+    previousCalculatedGlobalScale: 0.01
     hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
