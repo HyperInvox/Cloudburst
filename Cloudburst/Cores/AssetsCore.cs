@@ -66,7 +66,7 @@ namespace Cloudburst.Cores
             {
                 using (var assetStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Cloudburst.examplesurvivorbundle"))
                 {
-                    bombAssetBundle= AssetBundle.LoadFromStream(assetStream);
+                    bombAssetBundle = AssetBundle.LoadFromStream(assetStream);
                     bombProvider = new AssetBundleResourcesProvider("@Bombardier", bombAssetBundle);
                     ResourcesAPI.AddProvider(bombProvider);
                 }

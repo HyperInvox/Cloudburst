@@ -14,7 +14,7 @@ namespace Cloudburst.Cores.Components.Wyatt
             this.characterBody = base.GetComponent<CharacterBody>();
         }
 
-        private void Start()
+        /*private void Start()
         {
             //GiveHeadphonesAuthority();
         }
@@ -42,7 +42,7 @@ namespace Cloudburst.Cores.Components.Wyatt
             {
                 characterBody.inventory.GiveItem(ItemCore.instance.wyattWalkmanIndex, 1);
             }
-        }
+        }*/
 
         public void TriggerBehaviorAuthority(float stacks)
         {

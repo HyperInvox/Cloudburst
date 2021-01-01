@@ -286,7 +286,7 @@ public class PrefabBuilder
         }
 
         void SetupHurtbox()
-        { 
+        {
             hb.gameObject.layer = LayerIndex.entityPrecise.intVal;
 
             hb.healthComponent = health;
@@ -311,7 +311,7 @@ public class PrefabBuilder
         //TODO
         //ragdoll.bones = null;
         //ragdoll.componentsToDisableOnRagdoll = null;
-       
+
         void SetupAimAnimator()
         {
             aimer.inputBank = prefab.GetComponent<InputBankTest>();
@@ -324,7 +324,7 @@ public class PrefabBuilder
             aimer.yawGiveupRange = 10f;
             aimer.giveupDuration = 3f;
         }
-        
+
         void SetupHitbox()
         {
             foreach (Transform child in transform)
@@ -337,29 +337,29 @@ public class PrefabBuilder
                     hitBoxGroup.hitBoxes = new HitBox[] { hitBox };
                 }
             }
-            }
-        
-            void SetupSkins()
+        }
+
+        void SetupSkins()
+        {
+            //LanguageAPI.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
+
+            var obj = transform.gameObject;
+            var mdl = obj.GetComponent<CharacterModel>();
+            var skinController = obj.AddComponent<ModelSkinController>();
+
+            LoadoutAPI.SkinDefInfo skinDefInfo = new LoadoutAPI.SkinDefInfo
             {
-                //LanguageAPI.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
-
-                var obj = transform.gameObject;
-                var mdl = obj.GetComponent<CharacterModel>();
-                var  skinController = obj.AddComponent<ModelSkinController>();
-
-                LoadoutAPI.SkinDefInfo skinDefInfo = new LoadoutAPI.SkinDefInfo
-                {
-                    Name = "DEFAULT_SKIN",
-                    NameToken = "DEFAULT_SKIN",
-                    Icon = defaultSkinIcon,
-                    RootObject = obj,
-                    RendererInfos = mdl.baseRendererInfos,
-                    GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>(),
-                    MeshReplacements = Array.Empty<SkinDef.MeshReplacement>(),
-                    BaseSkins = Array.Empty<SkinDef>(),
-                    MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
-                    ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
-                    UnlockableName = ""
+                Name = "DEFAULT_SKIN",
+                NameToken = "DEFAULT_SKIN",
+                Icon = defaultSkinIcon,
+                RootObject = obj,
+                RendererInfos = mdl.baseRendererInfos,
+                GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>(),
+                MeshReplacements = Array.Empty<SkinDef.MeshReplacement>(),
+                BaseSkins = Array.Empty<SkinDef>(),
+                MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
+                ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
+                UnlockableName = ""
             };
 
 
