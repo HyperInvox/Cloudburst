@@ -213,7 +213,7 @@ namespace Cloudburst.Cores
         }
         private void RebuildSkillDrivers()
         {
-            API.DestroySkillDrivers(clayManMaster);
+            CloudUtils.DestroySkillDrivers(clayManMaster);
 
             AISkillDriver Swing = clayManMaster.AddComponent<AISkillDriver>();
             AISkillDriver Chase = clayManMaster.AddComponent<AISkillDriver>();
@@ -345,7 +345,7 @@ namespace Cloudburst.Cores
         }
         private void RebuildSkills()
         {
-            API.DestroyGenericSkillComponents(clayMan);
+            CloudUtils.DestroyGenericSkillComponents(clayMan);
             CreateSkillFamilies();
             CreatePrimary();
             CreateSecondary();

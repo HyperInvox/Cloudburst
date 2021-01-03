@@ -102,7 +102,7 @@ namespace Cloudburst.Cores
                 if (item.name.Contains("MDL")) { 
                     LogCore.LogI("Item model found! " + item.name);
                     var display = item.AddComponent<ItemDisplay>();
-                    display.rendererInfos = API.ItemDisplaySetup(item);
+                    display.rendererInfos = CloudUtils.GatherRenderInfos(item);
                 }
 
             } 
@@ -850,7 +850,6 @@ namespace Cloudburst.Cores
             {
                 if (body.hasAuthority)
                 {
-                    behavior.TriggerBehaviorAuthority(stack);
                 }
                 timer = 0;
             }

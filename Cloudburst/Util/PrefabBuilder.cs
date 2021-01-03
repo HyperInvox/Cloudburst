@@ -251,7 +251,7 @@ public class PrefabBuilder
             {
                 new CharacterModel.RendererInfo
                 {
-                    defaultMaterial = model.GetComponentInChildren<SkinnedMeshRenderer>().material,
+                    defaultMaterial = transform.GetComponentInChildren<SkinnedMeshRenderer>().material,
                     renderer = model.GetComponentInChildren<SkinnedMeshRenderer>(),
                     defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                     ignoreOverlays = false
@@ -396,7 +396,7 @@ public class PrefabBuilder
             skinController.skins = skinDefs;
         }
 
-        API.RegisterNewBody(prefab);
+        CloudUtils.RegisterNewBody(prefab);
 
         return prefab;
     }

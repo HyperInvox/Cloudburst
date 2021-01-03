@@ -75,7 +75,7 @@ namespace Cloudburst.Cores
 
         protected void Skills() {
 
-            API.CreateEmptySkills(body);
+            CloudUtils.CreateEmptySkills(body);
             CreatePrimary();
             CreateSecondary();
             CreateUtility();
@@ -286,7 +286,7 @@ namespace Cloudburst.Cores
 
             masterComp.bodyPrefab = Resources.Load<GameObject>("prefabs/characterbodies/AncientWispBody");
             
-            API.DestroySkillDrivers(master);
+            CloudUtils.DestroySkillDrivers(master);
 
             //var follow = master.AddComponent<AISkillDriver>();
 

@@ -62,7 +62,7 @@ namespace Cloudburst.Cores
             var skillNameToken = origDef.skillNameToken;
             var skillDescriptionToken = origDef.skillDescriptionToken;
 
-            API.CopySkillDefSettings(toolbotDef, def);
+            CloudUtils.CopySkillDefSettings(toolbotDef, def);
 
             def.icon = icon;
             def.skillNameToken = skillNameToken;

@@ -49,7 +49,7 @@ namespace Cloudburst.Cores
 
         private void CreateAltPrimaryProjectile() {
             projectileGameObject = Resources.Load<GameObject>("prefabs/projectiles/EngiGrenadeProjectile").InstantiateClone("EngiGrenadeImpactProjectile", true);
-            API.RegisterNewProjectile(projectileGameObject);
+            CloudUtils.RegisterNewProjectile(projectileGameObject);
             ProjectileImpactExplosion impact = projectileGameObject.GetComponent<ProjectileImpactExplosion>();
             impact.destroyOnWorld = true;
             UnityEngine.Object.Destroy(projectileGameObject.GetComponent<ProjectileStickOnImpact>());
@@ -134,9 +134,9 @@ namespace Cloudburst.Cores
 
         protected void RegisterNewTurret() {
             flameTurret = Resources.Load<GameObject>("prefabs/characterbodies/EngiWalkerTurretBody").InstantiateClone("EngiFlameTurretBody", true);
-            API.RegisterNewBody(flameTurret);
+            CloudUtils.RegisterNewBody(flameTurret);
             flameTurretMaster = Resources.Load<GameObject>("prefabs/charactermasters/EngiWalkerTurretMaster").InstantiateClone("EngiFlameTurretMaster", true);
-            API.RegisterNewMaster(flameTurretMaster);
+            CloudUtils.RegisterNewMaster(flameTurretMaster);
 
             flameTurretMaster.GetComponent<CharacterMaster>().bodyPrefab = flameTurret;
             FlameTurrets();
@@ -146,7 +146,7 @@ namespace Cloudburst.Cores
             SkillDef origDef = Resources.Load<SkillDef>("skilldefs/engibody/EngiBodyPlaceWalkerTurret");
             var newDef = ScriptableObject.CreateInstance<SkillDef>();
 
-            API.CopySkillDefSettings(origDef, newDef);
+            CloudUtils.CopySkillDefSettings(origDef, newDef);
 
             LoadoutAPI.AddSkill(typeof(PlaceFlameTurret));
             LoadoutAPI.AddSkillDef(newDef);
@@ -182,7 +182,7 @@ namespace Cloudburst.Cores
             SkillDef origDef = Resources.Load<SkillDef>("skilldefs/engibody/EngiBodyFireGrenade");
             var newDef = ScriptableObject.CreateInstance<SkillDef>();
 
-            API.CopySkillDefSettings(origDef, newDef);
+            CloudUtils.CopySkillDefSettings(origDef, newDef);
 
             LoadoutAPI.AddSkill(typeof(FireVolley));
             LoadoutAPI.AddSkillDef(newDef);

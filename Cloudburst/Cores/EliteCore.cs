@@ -107,7 +107,7 @@ namespace Cloudburst.Cores
             }*/
             if (self && self.inventory) {
                 var elite = EliteCatalog.GetEquipmentEliteIndex(self.inventory.GetEquipmentIndex());
-                var model = API.GetCharacterModelFromCharacterBody(self);
+                var model = CloudUtils.GetCharacterModelFromCharacterBody(self);
 
                 //LogCore.LogI(elite);
                 //spawn_ai beetle 1 6 0 2

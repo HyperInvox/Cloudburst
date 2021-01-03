@@ -353,7 +353,7 @@ namespace Cloudburst.Cores
             aimAnimator.yawGiveupRange = 10f;
             aimAnimator.giveupDuration = 8f;*/
 
-            API.RegisterNewBody(characterPrefab);
+            CloudUtils.RegisterNewBody(characterPrefab);
         }
 
 
@@ -433,7 +433,7 @@ namespace Cloudburst.Cores
 
         private void CreateSkills()
         {
-            API.CreateEmptySkills(characterPrefab);
+            CloudUtils.CreateEmptySkills(characterPrefab);
 
             skillLocator = characterPrefab.GetComponent<SkillLocator>();
             characterBody = characterPrefab.GetComponent<CharacterBody>();

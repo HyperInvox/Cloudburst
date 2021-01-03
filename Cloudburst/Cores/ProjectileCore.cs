@@ -71,7 +71,7 @@ namespace Cloudburst.Cores
         {
             MIRVProjectile = Resources.Load<GameObject>("prefabs/projectiles/CryoCanisterBombletsProjectile").InstantiateClone("MIRVEquipmentProjectile", true);
             MIRVClusterProjectile = Resources.Load<GameObject>("prefabs/projectiles/CryoCanisterBombletsProjectile").InstantiateClone("MIRVClusterEquipmentProjectile", true);
-            if (API.RegisterNewProjectile(MIRVProjectile) && API.RegisterNewProjectile(MIRVClusterProjectile))
+            if (CloudUtils.RegisterNewProjectile(MIRVProjectile) && CloudUtils.RegisterNewProjectile(MIRVClusterProjectile))
             {
             }
             else LogCore.LogF("FATAL ERROR:" + MIRVProjectile.name + " failed to register!");
@@ -110,7 +110,7 @@ namespace Cloudburst.Cores
         protected private void CreateDelaySproutingMushroom()
         {
             mushrumDelaySproutingMushroom = Resources.Load<GameObject>("prefabs/projectiles/SporeGrenadeProjectile").InstantiateClone("MegaMushrumDelaySproutingMushroom", true);
-            if (API.RegisterNewProjectile(MIRVProjectile))
+            if (CloudUtils.RegisterNewProjectile(MIRVProjectile))
             {
                 mushrumDelaySproutingMushroom.GetComponent<ProjectileImpactExplosion>().childrenProjectilePrefab = mushrumSproutingMushroom;
             }
@@ -118,7 +118,7 @@ namespace Cloudburst.Cores
         protected private void CreateSproutingMushroom()
         {
             mushrumSproutingMushroom = Resources.Load<GameObject>("prefabs/projectiles/SporeGrenadeProjectileDotZone").InstantiateClone("MegaMushrumSproutingMushroom", true);
-            if (API.RegisterNewProjectile(mushrumSproutingMushroom)) //&& API.RegisterNewProjectile(MIRVClusterProjectile))
+            if (CloudUtils.RegisterNewProjectile(mushrumSproutingMushroom)) //&& API.RegisterNewProjectile(MIRVClusterProjectile))
             {
                 var collider = mushrumSproutingMushroom.AddComponent<SphereCollider>();
                 collider.isTrigger = true;
@@ -192,7 +192,7 @@ namespace Cloudburst.Cores
         protected private void CreateStickyProjectile()
         {
             stickyProjectile = Resources.Load<GameObject>("prefabs/projectiles/EngiMine").InstantiateClone("MIRVEquipmentProjectile", true);
-            if (API.RegisterNewProjectile(stickyProjectile))
+            if (CloudUtils.RegisterNewProjectile(stickyProjectile))
             {
                 stickyProjectile.AddComponent<BombardierStickyBombProjectile>();
                 stickyProjectile.GetComponent<ProjectileController>().ghostPrefab = stickyGhost;
@@ -278,13 +278,13 @@ namespace Cloudburst.Cores
             orb.inheritDamageType = false;
             orb.lightningType = RoR2.Orbs.LightningOrb.LightningType.Tesla;
 
-            API.RegisterNewProjectile(orbitalOrb);
+            CloudUtils.RegisterNewProjectile(orbitalOrb);
             //Resources.Load<GameObject>("prefabs/effects/impacteffects/ParentSlamEffect");
         }
 
         protected private void CreateBombardierRocketProjectile() {
             bombardierBombProjectile = Resources.Load<GameObject>("prefabs/projectiles/PaladinRocket").InstantiateClone("BombardierRocketProjectile", true);
-            var registered = API.RegisterNewProjectile(bombardierBombProjectile);
+            var registered = CloudUtils.RegisterNewProjectile(bombardierBombProjectile);
             if (registered)
             {
                 var impact = bombardierBombProjectile.GetComponent<ProjectileImpactExplosion>();
@@ -301,7 +301,7 @@ namespace Cloudburst.Cores
         protected private void CreateWinchProjectile()
         {
             winch = Resources.Load<GameObject>("prefabs/projectiles/PaladinRocket").InstantiateClone("WyattWinch", true);
-            var registered = API.RegisterNewProjectile(winch);
+            var registered = CloudUtils.RegisterNewProjectile(winch);
             if (registered)
             {
                 var impact = winch.GetComponent<ProjectileImpactExplosion>();
@@ -317,7 +317,7 @@ namespace Cloudburst.Cores
         protected private void CreateBombardierBetterRocketProjectile()
         {
             bombardierFireBombProjectile = Resources.Load<GameObject>("prefabs/projectiles/PaladinRocket").InstantiateClone("BombardierFireRocketProjectile", true);
-            var registered = API.RegisterNewProjectile(bombardierFireBombProjectile);
+            var registered = CloudUtils.RegisterNewProjectile(bombardierFireBombProjectile);
             if (registered)
             {
                 var impact = bombardierFireBombProjectile.GetComponent<ProjectileImpactExplosion>();
@@ -348,7 +348,7 @@ namespace Cloudburst.Cores
         {
             wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
 
-            API.CreateValidProjectile(wyattMaidBubble, float.MaxValue, 0, true);
+            CloudUtils.CreateValidProjectile(wyattMaidBubble, float.MaxValue, 0, true);
 
             //game objects
             var activatedWard = Resources.Load<GameObject>("prefabs/networkedobjects/TimeBubbleWard");
@@ -440,7 +440,7 @@ namespace Cloudburst.Cores
             }
 
             PrefabAPI.RegisterNetworkPrefab(wyattMaidBubble);
-            API.RegisterNewProjectile(wyattMaidBubble);
+            CloudUtils.RegisterNewProjectile(wyattMaidBubble);
             //var registered = API.RegisterNewProjectile(wyattMaidBubble);
             //if (registered)
             //{
@@ -472,7 +472,7 @@ namespace Cloudburst.Cores
         private protected void CreateBombardierPayloadProjectile()
         {
             bombardierSeekerBombProjectile = Resources.Load<GameObject>("prefabs/projectiles/MissileProjectile").InstantiateClone("BombardierSeekerRocketProjectile", true);
-            var registered = API.RegisterNewProjectile(bombardierFireBombProjectile);
+            var registered = CloudUtils.RegisterNewProjectile(bombardierFireBombProjectile);
             if (registered)
             {
                 var controller = bombardierSeekerBombProjectile.GetComponent<ProjectileController>();

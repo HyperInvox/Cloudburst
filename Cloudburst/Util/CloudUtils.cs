@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public static class API
+public static class CloudUtils
 {
     #region Catalog Helpers
     /// <summary>
@@ -212,11 +212,11 @@ public static class API
     }
 
     /// <summary>
-    /// Sets up the ItemDisplay shit for items so they like Hotpoo Quality Models
+    /// Sets up an array full of render infos so they like hopoo models
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
-    public static CharacterModel.RendererInfo[] ItemDisplaySetup(GameObject obj)
+    public static CharacterModel.RendererInfo[] GatherRenderInfos(GameObject obj)
     {
         MeshRenderer[] meshes = obj.GetComponentsInChildren<MeshRenderer>();
         CharacterModel.RendererInfo[] renderInfos = new CharacterModel.RendererInfo[meshes.Length];
@@ -234,6 +234,61 @@ public static class API
 
         return renderInfos;
 
+    }
+
+    /// <summary>
+    /// Safely removes a buff from the target character body
+    /// </summary>
+    /// <param name="buffToRemove">The buff you want to safely remove</param>
+    /// <param name="body">The body you safely want to remove a buff from.</param>
+    public static void SafeRemoveBuff(BuffIndex buffToRemove, CharacterBody body)
+    {
+        if (body && body.HasBuff(buffToRemove))
+        {
+            body.RemoveBuff(buffToRemove);
+        }
+    }
+    /// <summary>
+    /// Safely removes buffs from the target character body
+    /// </summary>
+    /// <param name="buffToRemove">The buff you want to safely remove</param>
+    /// <param name="body">The body you safely want to remove buffs from.</param>
+    public static void SafeRemoveBuffs(BuffIndex buffToRemove, CharacterBody body, int stacksToRemove)
+    {
+        if (body)
+        {
+            int stacks = body.GetBuffCount(buffToRemove);
+            if (stacks > stacksToRemove)
+            {
+                for (int i = 0; i < stacksToRemove; i++)
+                {
+                    body.RemoveBuff(buffToRemove);
+                }
+            }
+            else
+            {
+                LogCore.LogI($"Cannot remove {buffToRemove} from " + Language.GetString(body.baseNameToken) + " because the amount of buffs that you want to remove is larger than the buffs " + Language.GetString(body.baseNameToken) + " has!");
+                //insert your own log here, i'm not your dad. do it yourself
+            }
+        }
+    }
+
+    /// <summary>
+    /// Safely removes ALL of target buff from the target character body
+    /// </summary>
+    /// <param name="buffToRemove">The buff you want to safely remove all of</param>
+    /// <param name="body">The body you safely want to remove buffs from.</param>
+    public static void SafeRemoveAllOfBuff(BuffIndex buffToRemove, CharacterBody body)
+    {
+        if (body)
+        {
+            int stacks = body.GetBuffCount(buffToRemove);
+            for (int i = 0; i < stacks; i++)
+            {
+                body.RemoveBuff(buffToRemove);
+            }
+
+        }
     }
 
     /// <summary>

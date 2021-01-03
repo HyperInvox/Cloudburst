@@ -94,7 +94,7 @@ namespace Cloudburst.Cores.HAND
         private void CreateSunderPrefab()
         {
             sunder = Resources.Load<GameObject>("prefabs/projectiles/Sunder").InstantiateClone("WYATTSunder", true);
-            API.RegisterNewProjectile(sunder);
+            CloudUtils.RegisterNewProjectile(sunder);
             UnityEngine.Object.Destroy(sunder.GetComponent<ProjectileOverlapAttack>());
 
             var overlap = sunder.AddComponent<ShockwaveProjectileComponent>();
@@ -176,7 +176,7 @@ namespace Cloudburst.Cores.HAND
             projectileDamage.damageColorIndex = DamageColorIndex.Default;
             projectileDamage.damageType = DamageType.BypassArmor | DamageType.Stun1s;
 
-            API.RegisterNewProjectile(winch);
+            CloudUtils.RegisterNewProjectile(winch);
             /*ProjectileProximityBeamController beamController = winch.AddComponent<ProjectileProximityBeamController>();
 
             ProjectileDamage damage = winch.GetComponent<ProjectileDamage>();
@@ -216,8 +216,8 @@ namespace Cloudburst.Cores.HAND
                 builder.prefabName = "WyattBody";
                 builder.masteryAchievementUnlockable = AchievementCore.GetUnlockableString("WyattMastery");
                 builder.model = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyatt");
-                builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(API.HexToColor("00A86B"), API.HexToColor("E56717"), API.HexToColor("D9DDDC"), API.HexToColor("43464B"));
-                builder.masterySkinIcon = LoadoutAPI.CreateSkinIcon(API.HexToColor("00A86B"), API.HexToColor("E56717"), API.HexToColor("D9DDDC"), API.HexToColor("43464B"));
+                builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+                builder.masterySkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
                 builder.masterySkinDelegate = material;
 
                 wyattBody = builder.CreatePrefab();
@@ -253,7 +253,7 @@ namespace Cloudburst.Cores.HAND
 
             var indicator = Resources.Load<GameObject>("Prefabs/EngiShieldRetractIndicator").transform.Find("Holder").GetComponent<SpriteRenderer>(); //
             indicator.sprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("texWyattIndicator");
-            indicator.color = API.HexToColor("00A86B");
+            indicator.color = CloudUtils.HexToColor("00A86B");
 
             tracker.maxTrackingAngle = 20;
             tracker.maxTrackingDistance = 55;
@@ -336,7 +336,7 @@ namespace Cloudburst.Cores.HAND
 
         private void SetSkills()
         {
-            API.CreateEmptySkills(wyattBody);
+            CloudUtils.CreateEmptySkills(wyattBody);
             FixSkin();
             RegisterDamageTypes();
             CreatePassives();

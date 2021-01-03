@@ -40,8 +40,8 @@ namespace Cloudburst.Cores
 
             skillLocator = megaMushrum.GetComponent<SkillLocator>();
 
-            API.RegisterNewBody(megaMushrum);
-            API.RegisterNewMaster(megaMushrumMaster);
+            CloudUtils.RegisterNewBody(megaMushrum);
+            CloudUtils.RegisterNewMaster(megaMushrumMaster);
 
             megaMushrumMaster.GetComponent<CharacterMaster>().bodyPrefab = megaMushrum;
 
@@ -206,7 +206,7 @@ namespace Cloudburst.Cores
 
         private void RebuildSkillDrivers()
         {
-            API.DestroySkillDrivers(megaMushrumMaster);
+            CloudUtils.DestroySkillDrivers(megaMushrumMaster);
 
             AISkillDriver SporeGrenade = megaMushrumMaster.AddComponent<AISkillDriver>();
             AISkillDriver SuicideBomb = megaMushrumMaster.AddComponent<AISkillDriver>();
@@ -375,7 +375,7 @@ namespace Cloudburst.Cores
 
         private void RebuildSkills()
         {
-            API.CreateEmptySkills(megaMushrum);
+            CloudUtils.CreateEmptySkills(megaMushrum);
             CreatePrimary();
             CreateSecondary();
             CreateUtility();

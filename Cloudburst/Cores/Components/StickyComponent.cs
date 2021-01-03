@@ -92,7 +92,7 @@ namespace Cloudburst.Cores.Components
                 {
                     if (cb.characterMotor && cb.Equals(gameObject.GetComponent<ProjectileController>().owner.GetComponent<CharacterBody>()))
                     {
-                        API.AddExplosionForce(cb.characterMotor, cb.characterMotor.mass * 15, transform.position, 15, 5);
+                        CloudUtils.AddExplosionForce(cb.characterMotor, cb.characterMotor.mass * 15, transform.position, 15, 5);
 
                     }
                     /*if (cb.Equals(controller.owner.GetComponent<CharacterBody>())) {

@@ -6,76 +6,54 @@ using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.Components.Wyatt
 {
-    public class WyattWalkmanBehavior : NetworkBehaviour, IOnDamageInflictedServerReceiver {
+    public class WyattWalkmanBehavior : NetworkBehaviour, IOnDamageDealtServerReceiver {
         private CharacterBody characterBody;
 
+        private float stopwatch = 0;
         private void Awake()
         {
             this.characterBody = base.GetComponent<CharacterBody>();
         }
 
-        /*private void Start()
-        {
-            //GiveHeadphonesAuthority();
-        }
 
-        public void GiveHeadphonesAuthority()
-        {
-            if (NetworkServer.active)
-            {
-                GiveHeadphonesInternal();
-                return;
+        public void FixedUpdate() {
+            if (NetworkServer.active) {
+                //fixedupdate but only on server
+                ServerFixedUpdate();
+                    
             }
-            CmdGiveHeadphonesInternal();
         }
 
-        [Command]
-        private void CmdGiveHeadphonesInternal()
+        private void ServerFixedUpdate()
         {
-            GiveHeadphonesInternal();
-        }
-
-        [Server]
-        private void GiveHeadphonesInternal()
-        {
-            if (characterBody && characterBody.inventory && characterBody.inventory.GetItemCount(ItemCore.instance.wyattWalkmanIndex) == 0)
+            stopwatch += Time.deltaTime;
+            if (stopwatch >= 3)
             {
-                characterBody.inventory.GiveItem(ItemCore.instance.wyattWalkmanIndex, 1);
+                stopwatch = 0;
+                if (characterBody)
+                {
+                    if (characterBody.HasBuff(BuffCore.instance.wyattCombatIndex))
+                    {
+                        characterBody.RemoveBuff(BuffCore.instance.wyattCombatIndex);
+                    }
+                }
             }
-        }*/
-
-        public void TriggerBehaviorAuthority(float stacks)
-        {
-            if (NetworkServer.active)
-            {
-                TriggerBehaviorInternal(stacks);
-                return;
-            }
-            CmdTriggerBehaviorInternal(stacks);
-        }
-
-        [Command]
-        private void CmdTriggerBehaviorInternal(float stacks)
-        {
-            TriggerBehaviorInternal(stacks);
         }
 
         [Server]
         private void TriggerBehaviorInternal(float stacks)
         {
             var cap = 9 + stacks;
-            if (characterBody && characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) < cap && !characterBody.outOfCombat)
+            if (characterBody && characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) < cap)
             {
                 characterBody.AddBuff(BuffCore.instance.wyattCombatIndex);
-            }
-            else if (characterBody.outOfCombat) {
-                characterBody.RemoveBuff(BuffCore.instance.wyattCombatIndex);
+                //characterBody.AddTimedBuff(BuffCore.instance.wyattCombatIndex, 3);
             }
         }
 
-        public void OnDamageInflictedServer(DamageReport damageReport)
+        public void OnDamageDealtServer(DamageReport damageReport)
         {
-            TriggerBehaviorAuthority(1);
+            TriggerBehaviorInternal(1);
         }
     }
 }

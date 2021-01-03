@@ -92,7 +92,7 @@ namespace Cloudburst.Cores
 
             //collectorObject.AddComponent<DestroyOnTimer>().duration = 15;
 
-            API.RegisterNewProjectile(collectorObject);
+            CloudUtils.RegisterNewProjectile(collectorObject);
             CreatePounder.projectilePrefab = collectorObject;
         }
     }
