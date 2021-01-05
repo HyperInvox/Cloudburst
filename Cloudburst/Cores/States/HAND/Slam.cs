@@ -1,4 +1,4 @@
-﻿using Cloudburst.Cores.HAND.Components;
+﻿/*using Cloudburst.Cores.HAND.Components;
 using EntityStates;
 using RoR2;
 using System;
@@ -40,7 +40,7 @@ namespace Cloudburst.Cores.States.HAND
         private bool scaleHitPauseDurationAndVelocityWithAttackSpeed = true;
         #endregion
         private DroneComponent drone;
-        private OverclockComponent overclock;
+        //private OverclockComponent overclock;
         private Animator modelAnimator;
         public float charge;
         public override void OnEnter()
@@ -49,14 +49,14 @@ namespace Cloudburst.Cores.States.HAND
             this.duration = baseDuration / base.attackSpeedStat;
             modelAnimator = GetModelAnimator();
             drone = base.GetComponent<DroneComponent>();
-            overclock = base.GetComponent<OverclockComponent>();
+            //overclock = base.GetComponent<OverclockComponent>();
             this.attack = new OverlapAttack()
             {
                 attacker = base.gameObject,
                 attackerFiltering = AttackerFiltering.Default,
                 damage = damageCoefficient * damageStat,
                 damageColorIndex = DamageColorIndex.Default,
-                damageType = overclock.GetDamageType(),
+               // damageType = overclock.GetDamageType(),
                 forceVector = new Vector3(0, 0, 0),
                 hitEffectPrefab = hitEffectPrefab,
                 impactSound = RoR2.Audio.NetworkSoundEventIndex.Invalid,
@@ -101,7 +101,7 @@ namespace Cloudburst.Cores.States.HAND
                     hasSwung = true;
                     /*if (drone && characterBody.HasBuff(BuffCore.instance.overclockIndex)) {
                         drone.ConsumeDroneStackAuthority(2);
-                    }*/
+                    }
 
                     GameObject effect = fullyCharged ? overclockRumbleEffectPrefab : rumbleEffectPrefab;
                     BlastAttack attack = new BlastAttack()
@@ -213,3 +213,4 @@ namespace Cloudburst.Cores.States.HAND
         }
     }
 }
+*/

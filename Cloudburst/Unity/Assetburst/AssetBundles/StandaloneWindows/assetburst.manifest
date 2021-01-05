@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1450999173
+CRC: 2617658124
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a4db93631f81636d9b8aaa061b35ec67
+    Hash: 5ad841d4244b770286f8339932c2384c
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -106,6 +106,7 @@ Assets:
 - Assets/Cloudburst/Materials/LampBoss.mat
 - Assets/Cloudburst/Items/Lemdog/MDLLemDog.prefab
 - Assets/Cloudburst/EliteIcons/rallyingIcon.png
+- Assets/Cloudburst/BuffIcons/WyattVelocity.png
 - Assets/Cloudburst/Teaser/tex/Materials/axetexture.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/PassiveIcon.png
 - Assets/Cloudburst/Materials/DiaryTexture.mat
@@ -230,6 +231,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/Executioner_Emissive.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorIdleIn.anim
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattUpperBody.mask
+- Assets/Cloudburst/Survivors/Wyatt/Materials/texWyattIndicator.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Special2.anim
 - Assets/Cloudburst/Enemies/DeployedLamp/LampDeployedEmis.png
 - Assets/Cloudburst/Teaser/tex/Materials/T_Executor_Emissive.mat
@@ -266,6 +268,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear.fbx
 - Assets/Cloudburst/753network/Crystallize/Ramp Pink.png
 - Assets/Cloudburst/Items/Grinder/texExtractor.png
+- Assets/Cloudburst/Survivors/Wyatt/vroomba.obj
 - Assets/Cloudburst/Survivors/Wyatt/Materials/passive.mat
 - Assets/Cloudburst/Materials/brickwall.mat
 - Assets/Cloudburst/T_Wyatt_Color.png
@@ -289,6 +292,7 @@ Assets:
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_normals.png
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkRHT.anim
+- Assets/Cloudburst/Survivors/Wyatt/LoaderPylon.prefab
 - Assets/Cloudburst/Items/Lemdog/LemDog_TexEmission.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/wyattBodyPitch.anim
 - Assets/Cloudburst/Teaser/TEASER 2.fbx

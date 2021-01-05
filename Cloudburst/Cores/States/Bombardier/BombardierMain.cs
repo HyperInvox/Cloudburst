@@ -1,4 +1,4 @@
-﻿using EntityStates;
+﻿/*using EntityStates;
 using RoR2;
 using UnityEngine;
 
@@ -53,3 +53,4 @@ namespace Cloudburst.Cores.States.Bombardier
         }
     }
 }
+*/

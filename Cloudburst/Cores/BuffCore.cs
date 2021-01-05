@@ -10,13 +10,6 @@ namespace Cloudburst.Cores
     {
         public static BuffCore instance;
 
-        protected internal BuffIndex scrapIndex;
-        protected internal BuffIndex overclockIndex;
-        protected internal BuffIndex droneIndex;
-        protected internal BuffIndex surgeIndex;
-        protected internal BuffIndex cleanIndex;
-        protected internal BuffIndex bombardierForceIndex;
-        protected internal BuffIndex baboomChargeIndex;
         protected internal BuffIndex skinIndex;
         protected internal BuffIndex antiGravIndex;
         protected internal BuffIndex antiGravFriendlyIndex;
@@ -31,7 +24,7 @@ namespace Cloudburst.Cores
 
             instance = this;
 
-            RegisterBuff(new BuffDef
+            /*RegisterBuff(new BuffDef
             {
                 buffIndex = BuffIndex.Count,
                 //buffColor = Color.yellow,
@@ -91,7 +84,7 @@ namespace Cloudburst.Cores
                 iconPath = "Textures/BuffIcons/texMovespeedBuffIcon",
                 name = "BaboonCharge",
                 buffColor = new Color(0.8392157f, 0.7882353f, 0.22745098f)
-            });
+            });*/
             RegisterBuff(new BuffDef()
             {
                 buffIndex = BuffIndex.Count,
@@ -118,7 +111,7 @@ namespace Cloudburst.Cores
                 canStack = true,
                 isDebuff = false,
                 eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texBuffTeslaIcon",
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/WyattVelocity.png",
                 name = "WyattCombat",
                 buffColor = new Color(1f, 0.7882353f, 0.05490196f)
             });
@@ -261,15 +254,6 @@ namespace Cloudburst.Cores
                 var regen = self.regen;
                 var crit = self.crit;
 
-                var controller = self.gameObject.GetComponent<HANDPassiveController>();
-
-                if (self.HasBuff(overclockIndex))
-                {
-                    //BaseLogger.Log(attackSpeed.ToString());   
-                    self.SetPropertyValue("attackSpeed", attackSpeed * (1 + .5f ));
-                    self.SetPropertyValue("moveSpeed", moveSpeed * (1 + .4f));
-
-                }
                 if (self.HasBuff(skinIndex)) // && controller)
                 {
                     var count = 0;
@@ -299,28 +283,6 @@ namespace Cloudburst.Cores
                         self.SetPropertyValue("regen", regen * (1f + (buffCount * 0.19f)));
                     }
                 }
-                if (self.HasBuff(droneIndex)) // && controller)
-                {
-
-                    var currentPassive = controller.GetBonus();
-                    //Debug.Log(currentPassive);
-                    for (int i = 0; i < self.GetBuffCount(droneIndex); i++)
-                    {
-                        switch (currentPassive)
-                        {
-                            //space nazis
-                            case HANDPassiveController.Passive.Armor:
-                                self.SetPropertyValue("armor", armor += 10f);
-                                break;
-                            case HANDPassiveController.Passive.Regen:
-                                self.SetPropertyValue("regen", regen += .2f);
-                                break;
-                            case HANDPassiveController.Passive.SPEED:
-                                self.SetPropertyValue("moveSpeed", moveSpeed += 1f);
-                                break;
-                        }
-                    }
-                }
             }
         }
 
@@ -329,27 +291,6 @@ namespace Cloudburst.Cores
             var customBuff = new CustomBuff(buffDef);
             switch (buffDef.name)
             {
-                case "Drone":
-                    droneIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "Overclock":
-                    overclockIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "Surge":
-                    surgeIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "Sparkle":
-                    cleanIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "Scrap":
-                    scrapIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "BombardierForce":
-                    bombardierForceIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "BaboonCharge":
-                    baboomChargeIndex = BuffAPI.Add(customBuff);
-                    break;
                 case "SkinStack":
                     skinIndex = BuffAPI.Add(customBuff);
                     break;

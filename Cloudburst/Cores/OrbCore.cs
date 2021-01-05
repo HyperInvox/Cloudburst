@@ -38,7 +38,7 @@ namespace Cloudburst.Cores
             base.OnArrival();
             if (attacker && target)
             {
-                DotController.InflictDot(target.healthComponent.gameObject, attacker, DoTCore.instance.clean, 8);
+                //DotController.InflictDot(target.healthComponent.gameObject, attacker, DoTCore.instance.clean, 8);
                 EffectManager.SimpleEffect(Resources.Load<GameObject>("prefabs/effects/HANDHeal"), attacker.transform.position, attacker.transform.rotation, true);
             }
         }

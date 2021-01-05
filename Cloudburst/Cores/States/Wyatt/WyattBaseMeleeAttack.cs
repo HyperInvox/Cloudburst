@@ -51,8 +51,9 @@ namespace Cloudburst.Cores.States.Wyatt
             this.hitPauseDuration = 0.1f;
             this.damageCoefficient = 2f;
 
-            swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/handslamtrail");
+            //swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/GrandparentGroundSwipeTrailEffect");
             hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
+            //swingEffectMuzzleString = "WinchHole";//"//SwingTrail";
 
             if (isComboFinisher)
             {

@@ -346,9 +346,12 @@ namespace Cloudburst.Cores
 
         private protected void CreateWyattMaidBubble()
         {
-            wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
+            //wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
+
+            wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("LoaderPylon");
 
             CloudUtils.CreateValidProjectile(wyattMaidBubble, float.MaxValue, 0, true);
+
 
             //game objects
             var activatedWard = Resources.Load<GameObject>("prefabs/networkedobjects/TimeBubbleWard");
@@ -378,9 +381,9 @@ namespace Cloudburst.Cores
             torque.randomize = true;
 
 
-            //var simp = wyattMaidBubble.GetComponent<ProjectileSimple>();
-            //simp.velocity = 160;
-            //simp.oscillateMagnitude = 20;
+            /*var simp = wyattMaidBubble.GetComponent<ProjectileSimple>();
+            simp.velocity = 160;
+            simp.oscillateMagnitude = 20;*/
 
 
             //var speen = mdl.AddComponent<Spinner>();

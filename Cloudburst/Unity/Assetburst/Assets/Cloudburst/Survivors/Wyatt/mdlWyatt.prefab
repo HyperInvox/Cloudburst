@@ -782,6 +782,7 @@ Transform:
   - {fileID: 1668682355280843923}
   - {fileID: 7674918120136348623}
   - {fileID: 2765633793683503240}
+  - {fileID: 4618108178854883709}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -827,6 +828,8 @@ MonoBehaviour:
     transform: {fileID: 2765633793683503240}
   - name: HitboxLarge
     transform: {fileID: 7674918120136348623}
+  - name: SwingTrail
+    transform: {fileID: 4618108178854883709}
 --- !u!1 &128800408677673515
 GameObject:
   m_ObjectHideFlags: 0
@@ -3836,6 +3839,36 @@ CapsuleCollider:
   m_Height: 200
   m_Direction: 1
   m_Center: {x: 0, y: 62.79198, z: 9.432615}
+--- !u!1 &6064537653356184510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4618108178854883709}
+  m_Layer: 0
+  m_Name: SwingTrail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4618108178854883709
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6064537653356184510}
+  m_LocalRotation: {x: -0.50000006, y: 0.4999999, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: 0.27391076, y: 6.0299997, z: 7.49}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_Children: []
+  m_Father: {fileID: 128800408678168073}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6416628023773575182
 GameObject:
   m_ObjectHideFlags: 0

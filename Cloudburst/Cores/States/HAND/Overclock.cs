@@ -1,4 +1,4 @@
-﻿using Cloudburst.Cores.HAND.Components;
+﻿/*using Cloudburst.Cores.HAND.Components;
 using EntityStates;
 
 namespace Cloudburst.Cores.States.HAND
@@ -11,4 +11,4 @@ namespace Cloudburst.Cores.States.HAND
             this.outer.SetNextStateToMain();
         }
     }
-}
+}*/

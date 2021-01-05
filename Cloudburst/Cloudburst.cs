@@ -133,6 +133,7 @@ namespace Cloudburst
             LogCore.LogM("Cloudburst loaded!");
         }
 
+
         private void DefineConfig()
         {
             //learn a smile
@@ -161,6 +162,15 @@ namespace Cloudburst
                 //plus most cores rely on these
                 assetCore = new AssetsCore();
                 CommonAssets.Load();
+
+                var materials = AssetsCore.mainAssetBundle.LoadAllAssets<Material>();
+                for (int i = 0; i < materials.Length; i++)
+                {
+                    if (materials[i].shader.name == "Standard")
+                    {
+                        materials[i].shader = Resources.Load<Shader>("shaders/deferred/hgstandard");
+                    }
+                }
 
                 SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
 

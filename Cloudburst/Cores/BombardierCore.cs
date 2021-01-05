@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -351,7 +351,7 @@ namespace Cloudburst.Cores
             aimAnimator.yawRangeMax = 44f;
             aimAnimator.pitchGiveupRange = 30f;
             aimAnimator.yawGiveupRange = 10f;
-            aimAnimator.giveupDuration = 8f;*/
+            aimAnimator.giveupDuration = 8f;
 
             CloudUtils.RegisterNewBody(characterPrefab);
         }
@@ -567,7 +567,7 @@ namespace Cloudburst.Cores
             secondarySkillDef.icon = null;
             secondarySkillDef.keywordTokens = new string[] {
                  "KEYWORD_STUNNING",
-             };*/
+             };
 
             LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "Toss a satchel charge that deals <style=cIsDamage>450% damage</style>. <style=cIsDamage>Detonate all deployed charges</style> <style=cIsUtility>by using while on cooldown.</style>");
             LanguageAPI.Add(secondarySkillDef.skillNameToken, "Satchel Charge");
@@ -678,3 +678,4 @@ namespace Cloudburst.Cores
         }
     }
 }
+*/

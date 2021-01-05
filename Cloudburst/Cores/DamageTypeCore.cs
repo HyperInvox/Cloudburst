@@ -11,7 +11,6 @@ namespace Cloudburst.Cores
 
         public static DamageTypeCore instance;
 
-        public static DamageType bombardierKnockback;
         public static DamageType antiGrav;
         public static DamageType pullEnemies;
         public static DamageType spiked;
@@ -38,25 +37,12 @@ namespace Cloudburst.Cores
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            bool isOsp = (damageInfo.damageType & DamageTypeCore.bombardierKnockback) != DamageType.Generic;
             bool antiGravType = (damageInfo.damageType & antiGrav) != DamageType.Generic;
             bool spikedType = (damageInfo.damageType & spiked) != DamageType.Generic;
             bool falldmgType = (damageInfo.damageType & DamageType.FallDamage) != DamageType.Generic;
             bool pullType = (damageInfo.damageType & pullEnemies) != DamageType.Generic;
             //bool isOsp2 = (damageInfo.damageType & DamageType.AOE) != DamageType.Generic;
 
-
-            //LogCore.LogI(damageInfo.damageType);
-            if (self.body && self.body.HasBuff(BuffCore.instance.bombardierForceIndex))
-            {
-                damageInfo.force *= 2;
-            }
-            if (isOsp )
-            { 
-                if (self.body) {
-                    self.body.AddTimedBuff(BuffCore.instance.bombardierForceIndex, 3);
-                }
-            }
             var rigid = self.body.rigidbody;
             if (self.body) {
                 var motor = self.body.characterMotor;
@@ -129,7 +115,6 @@ namespace Cloudburst.Cores
         }
 
         protected void AddDamageTypes() {
-            bombardierKnockback = AddDamageType();
             antiGrav = AddDamageType();
             spiked = AddDamageType();
             pullEnemies = AddDamageType();

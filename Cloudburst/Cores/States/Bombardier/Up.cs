@@ -1,4 +1,4 @@
-﻿using Cloudburst.Cores.HAND.Components;
+﻿/*using Cloudburst.Cores.HAND.Components;
 using EntityStates;
 using RoR2;
 using System;
@@ -73,5 +73,5 @@ namespace Cloudburst.Cores.States.Bombardier
             return InterruptPriority.PrioritySkill;
         }
     }
-}
+}*/
 

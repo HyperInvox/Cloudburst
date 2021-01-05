@@ -140,7 +140,7 @@ namespace Cloudburst.Cores
                     overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                     overlay.animateShaderAlpha = true;
                     overlay.destroyComponentOnEnd = true;
-                    overlay.originalMaterial = AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Ruby2.mat"); //AssetsCore.mainAssetBundle.LoadAsset<Material>("Ramp War");
+                    overlay.originalMaterial = AssetsCore.mainAssetBundle.LoadAsset<Material>("Ramp War"); //AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Ruby2.mat"); //
                     overlay.AddToCharacerModel(model);
                     tracker.effect = overlay;
                 }

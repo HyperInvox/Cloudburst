@@ -1,4 +1,5 @@
 ﻿using Cloudburst.Cores.Components.Wyatt;
+using EntityStates.Scrapper;
 using R2API;
 using RoR2;
 using System.Collections.Generic;
@@ -76,14 +77,16 @@ namespace Cloudburst.Cores
             List<PickupIndex> list = Util.CheckRoll((5 * itemCount)) ? Run.instance.availableTier2DropList : Run.instance.availableTier1DropList;
             int item = Run.instance.treasureRng.RangeInt(0, list.Count);
 
-            PickupDropletController.CreatePickupDroplet(list[item], transform.position, new Vector3(0, 0, 0));
+            PickupDropletController.CreatePickupDroplet(list[item], transform.position, new Vector3(0, 10, 0));
+
 
             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/PodGroundImpact"), new EffectData
             {
                 origin = transform.position,
                 scale = 15
             }, true);
-        }
+        }   
+
         public ItemIndex GetRandomItem(List<ItemIndex> Item)
         {
             int itemID = UnityEngine.Random.Range(0, Item.Count);
@@ -526,60 +529,30 @@ namespace Cloudburst.Cores
             On.RoR2.GlobalEventManager.OnTeamLevelUp += GlobalEventManager_OnTeamLevelUp;
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteractionOnTeleporterBeginChargingGlobal;
             On.RoR2.GenericPickupController.GrantItem += GrantItem;
-            On.RoR2.CharacterBody.AddTimedBuff += CharacterBody_AddTimedBuff1;
             On.RoR2.CharacterBody.AddTimedBuff += CharacterBody_AddTimedBuff;
-            On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
-        }
-
-        private void CharacterBody_AddTimedBuff1(On.RoR2.CharacterBody.orig_AddTimedBuff orig, CharacterBody self, BuffIndex buffType, float duration)
-        {
-            if (self)
-            {
-                if (self.inventory)
-                {
-                    if (self.inventory.GetItemCount(lemdogIndex) > 0)
-                    {
-                        var def = BuffCatalog.GetBuffDef(buffType);
-                        if (def.isDebuff && Util.CheckRoll(25 + (self.inventory.GetItemCount(lemdogIndex) * 2.5f), self.master))
-                        {
-                            var random = Random.Range(0, lemdogList.Count);
-                            var buff = lemdogList[random];
-                            buffType = buff;
-                        }
-                    }
-                }
-            }
-            orig(self, buffType, duration);
-        }
-
-        private void CharacterBody_OnInventoryChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
-        {
-            //lol
-            if (self)
-            {
-                if (self.inventory)
-                {
-                    var inventory = self.inventory;
-
-                    //var wyattCount = inventory.GetItemCount(wyattWalkmanIndex);
-
-                    //if (wyattCount > 0) {
-                    //    self.AddItemBehavior<WyattItemWalkmanBehavior>(wyattCount);
-                    //}
-                }
-            }
-            orig(self);
         }
 
         private void CharacterBody_AddTimedBuff(On.RoR2.CharacterBody.orig_AddTimedBuff orig, CharacterBody self, BuffIndex buffType, float duration)
         {
             if (self)
             {
-                var inv = self.inventory;
-                if (inv)
+                if (self.inventory)
                 {
+                    var inv = self.inventory;
                     var earringsCount = inv.GetItemCount(extendEnemyBuffDurationIndex);
+                    var lemCount = inv.GetItemCount(lemdogIndex);
+
+                    if (lemCount > 0)
+                    {
+                        var def = BuffCatalog.GetBuffDef(buffType);
+                        if (def.isDebuff && Util.CheckRoll(25 + (lemCount * 2.5f), self.master))
+                        {
+                            var random = Random.Range(0, lemdogList.Count);
+                            var buff = lemdogList[random];
+                            buffType = buff;
+                        }
+                    }
                     if (earringsCount > 0 && buffType != BuffIndex.MedkitHeal & buffType != BuffIndex.ElementalRingsCooldown)
                     {
                         //do thing???
@@ -589,7 +562,6 @@ namespace Cloudburst.Cores
             }
             orig(self, buffType, duration);
         }
-
 
 
 
@@ -689,55 +661,24 @@ namespace Cloudburst.Cores
             if (!damageReport.attackerBody || !damageReport.victimBody || !damageReport.attacker || !damageReport.victim || !damageReport.attackerMaster || !damageReport.victimMaster || damageReport == null)
                 return;
             CharacterBody attackerBody = damageReport.attackerBody;
-            //CharacterBody victimBody = damageReport.victimBody;
             var victimBody = damageReport.victimBody;
             CharacterMaster attackerMaster = damageReport.attackerMaster;
-            //CharacterMaster victimMaster = damageReport.victimMaster;
             Inventory attackerInventory = attackerMaster ? attackerMaster.inventory : null;
-            //Inventory victimInventory = victimMaster ? victimMaster.inventory : null;
-
 
             int itemChampionOnKillCount = attackerInventory.GetItemCount(itemChampionOnKillIndex);
+            LogCore.LogI("Hi!");
 
-
-            /*if (chipCount > 0 && victimBody && victimBody.teamComponent && victimBody.teamComponent.teamIndex == TeamIndex.Player)
-            {
-                EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/ExplosionVFX"), new EffectData()
-                {
-                    scale = 25,
-                    origin = victimBody.transform.position,
-                    rotation = Quaternion.identity
-                }, true);
-
-                BlastAttack attack = new BlastAttack()
-                {
-                    attacker = victimBody.gameObject,
-                    attackerFiltering = AttackerFiltering.Default,
-                    baseDamage = (5 + chipCount) * victimBody.damage,
-                    baseForce = 2500,
-                    bonusForce = new Vector3(0, 0, 0),
-                    crit = victimBody.RollCrit(),
-                    damageColorIndex = DamageColorIndex.Default,
-                    damageType = DamageType.BlightOnHit,
-                    falloffModel = BlastAttack.FalloffModel.None,
-                    impactEffect = EffectIndex.Invalid,
-                    inflictor = victimBody.gameObject,
-                    losType = BlastAttack.LoSType.NearestHit,
-                    position = victimBody.transform.position,
-                    procChainMask = default,
-                    procCoefficient = 0.5f,
-                    radius = 30,
-                    teamIndex = victimBody.teamComponent.teamIndex,
-                };
-                attack.Fire();*/
-            //}
-
-
-
-            if (itemChampionOnKillCount > 0 && attackerMaster && Util.CheckRoll(15 + (itemChampionOnKillCount * 10)) && damageReport.victim.body.isBoss == true)
-            {
+            if (itemChampionOnKillCount > 0) {
                 Util.PlaySound("ui_obj_casinoChest_open", attackerBody.gameObject);
-                attackerInventory.GiveItem(GetRandomItem(bossitemList), 1);
+                EffectData data = new EffectData
+                {
+                    scale = 1000,
+                    origin = victimBody.transform.position,
+                };
+                LogCore.LogI("YOOOOOOOOOOO!");
+                EffectManager.SpawnEffect(EntityStates.Toolbot.ToolbotDash.knockbackEffectPrefab, data, true);
+                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(GetRandomItem(bossitemList)), victimBody.transform.position, new Vector3(0, 50, 0));
+
             }
         }
 
@@ -796,7 +737,7 @@ namespace Cloudburst.Cores
                                 if (itemOnLevelUpCount > 0 && Util.CheckRoll(50, master))
                                 {
                                     DropShipCall(characterBody.transform, itemOnLevelUpCount);
-
+                                    
                                 }
                                 /*if (barrierOnLevelUpCount > 0)
                                 {
@@ -823,14 +764,6 @@ namespace Cloudburst.Cores
             }
         }
 
-        public void EquipmentCatalog_RegisterEquipment(On.RoR2.EquipmentCatalog.orig_RegisterEquipment orig, EquipmentIndex equipmentIndex, EquipmentDef equipmentDef)
-        {
-            if (equipmentIndex == EquipmentIndex.Meteor)
-            {
-                equipmentDef.enigmaCompatible = false;
-            }
-            orig(equipmentIndex, equipmentDef);
-        }
     }
     public class WyattItemWalkmanBehavior : CharacterBody.ItemBehavior
     {

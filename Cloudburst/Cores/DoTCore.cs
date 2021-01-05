@@ -16,8 +16,6 @@ namespace Cloudburst.Cores
         //1:53.
         public static DoTCore instance;
 
-        protected internal DotIndex clean;
-
         public DoTCore() => RegisterDoTs();
 
         protected internal void RegisterDoTs()
@@ -28,7 +26,7 @@ namespace Cloudburst.Cores
 
             var lmao = new DotAPI.CustomDotBehaviour(CleanBehaviour);
             var lol = new DotAPI.CustomDotVisual(CleanVisuals);
-            clean = RegisterDotDef(1, 0.5f, DamageColorIndex.WeakPoint, BuffCore.instance.cleanIndex, lmao, lol);
+            //clean = RegisterDotDef(1, 0.5f, DamageColorIndex.WeakPoint, BuffCore.instance.cleanIndex, lmao, lol);
         }
 
         void CleanBehaviour(DotController controller, DotController.DotStack stacks) {

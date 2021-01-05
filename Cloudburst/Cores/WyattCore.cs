@@ -29,9 +29,9 @@ namespace Cloudburst.Cores.HAND
         #endregion
         #region Components
         public SkillLocator skillLocator;
-        public OverclockComponent overclockComponent;
+        //public OverclockComponent overclockComponent;
         public DroneComponent droneComponent;
-        public HANDPassiveController passiveContoller;
+        //public HANDPassiveController passiveContoller;
         public CharacterBody characterBody;
         public WyattComboScript script;
         #endregion
@@ -344,7 +344,7 @@ namespace Cloudburst.Cores.HAND
             CreateSecondary();
             CreateUtility();
             CreateSpecial();
-            InitSkillsStates();
+
         }
 
         private void FixSkin()
@@ -594,11 +594,6 @@ namespace Cloudburst.Cores.HAND
 
         private void CreateUtility()
         {
-            LoadoutAPI.AddSkill(typeof(BeginOverclock));
-            LoadoutAPI.AddSkill(typeof(ChargeBurst));
-            LoadoutAPI.AddSkill(typeof(Burst));
-            LoadoutAPI.AddSkill(typeof(ChargeSlam));
-            LoadoutAPI.AddSkill(typeof(Slam));
             LoadoutAPI.AddSkill(typeof(Winch));
             LoadoutAPI.AddSkill(typeof(FireWinch));
             LoadoutAPI.AddSkill(typeof(DeepClean));
@@ -681,7 +676,7 @@ namespace Cloudburst.Cores.HAND
 
         private void CreateSpecial()
         {
-            LoadoutAPI.AddSkill(typeof(Drone));
+            //LoadoutAPI.AddSkill(typeof(Drone));
             LoadoutAPI.AddSkill(typeof(DeployMaid));
             LoadoutAPI.AddSkill(typeof(RetrieveMaid));
 
@@ -757,78 +752,19 @@ namespace Cloudburst.Cores.HAND
                 viewableNode = new ViewablesCatalog.Node(specialSkillDef.skillNameToken, false, null)
             };
         }
-
-        private void InitSkillsStates()
-        {
-            ChargeSlam.baseDuration = 1f;
-            ChargeSlam.effectPrefab = Resources.Load<GameObject>("prefabs/effects/muzzleflashes/MuzzleflashLoader");
-            ChargeSlam.chargeEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleGuardDeathImpact");
-            Slam.baseDuration = .5f;
-            Slam.blastDamageCoefficient = 3;
-            Slam.blastForce = 200f;
-            Slam.blastRadius = 7;
-            Slam.damageCoefficient = 3f;
-            Slam.forceMagnitude = 1200;
-            Slam.hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/ImpactToolbotDashLarge");
-            Slam.rumbleEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleGuardDeathImpact");
-            Slam.overclockRumbleEffectPrefab = Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleQueenDeathImpact");
-            Drone.baseDuration = 0.9f;
-            //Charge burst used to have a duration. 
-            //It doesn't anymore.
-            //IT DOES NOW
-            ChargeBurst.baseDuration = 0.2f;
-            //Same with BURST
-            //NOW IT DOES
-            Burst.baseDuration = 0.2f;
-            Burst.damageCoeff = 8;
-        }
         #endregion
         #region Hooks
         private void Hook()
         {
             On.RoR2.CameraRigController.OnEnable += FixFadingInLobby;
-            //On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
-            On.Spinner.Start += Spinner_Start;
         }
 
-        private void Spinner_Start(On.Spinner.orig_Start orig, Spinner self)
-        {
-            orig(self);
-            if (self.gameObject.name == "WyattMaid(Clone)")
-            {
-                self.randRotationSpeed = 50;
-            }
-        }
 
         private void FixFadingInLobby(On.RoR2.CameraRigController.orig_OnEnable orig, CameraRigController rig)
         {
-            if (SceneCatalog.GetSceneDefForCurrentScene().baseSceneName is "lobby") rig.enableFading = false;
+            var def = SceneCatalog.GetSceneDefForCurrentScene();
+            if (def && def.baseSceneName is "lobby") rig.enableFading = false;
             orig(rig);
-        }
-
-        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
-        {
-            //The baron is nobody's puppet!
-            /*var hurt = self.GetComponent<SetStateOnHurt>();
-            if (damageInfo.damageType == BonusToStunned && hurt && hurt.targetStateMachine.state.GetType() == typeof(StunState)) {
-                damageInfo.damage *= 2;
-                LogM("custom dmg type working!!");
-            }*/
-            if (self.body.HasBuff(BuffCore.instance.cleanIndex) && damageInfo.attacker && damageInfo.dotIndex == DotIndex.None)
-            { //damageInfo.attacker.GetComponent<CharacterBody>().baseNameToken == "WYATT_BODY_NAME") {
-                damageInfo.damage *= 1.5f;
-                EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/omnieffect/omniexplosionvfx"), new EffectData
-                {
-                    origin = self.transform.position,
-                    scale = 10
-                }, true);
-                var FUCKTHEDOTCONTROLLER = damageInfo.attacker.GetComponent<HealthComponent>();
-                if (FUCKTHEDOTCONTROLLER)
-                {
-                    FUCKTHEDOTCONTROLLER.HealFraction(0.25f, default);
-                }
-            }
-            orig(self, damageInfo);
         }
 
         #endregion
