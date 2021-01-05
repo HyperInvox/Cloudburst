@@ -257,18 +257,9 @@ public static class CloudUtils
     {
         if (body)
         {
-            int stacks = body.GetBuffCount(buffToRemove);
-            if (stacks > stacksToRemove)
+            for (int i = 0; i < stacksToRemove; i++)
             {
-                for (int i = 0; i < stacksToRemove; i++)
-                {
-                    body.RemoveBuff(buffToRemove);
-                }
-            }
-            else
-            {
-                LogCore.LogI($"Cannot remove {buffToRemove} from " + Language.GetString(body.baseNameToken) + " because the amount of buffs that you want to remove is larger than the buffs " + Language.GetString(body.baseNameToken) + " has!");
-                //insert your own log here, i'm not your dad. do it yourself
+                SafeRemoveBuff(buffToRemove, body);
             }
         }
     }

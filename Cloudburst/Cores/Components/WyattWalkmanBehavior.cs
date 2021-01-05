@@ -27,15 +27,12 @@ namespace Cloudburst.Cores.Components.Wyatt
         private void ServerFixedUpdate()
         {
             stopwatch += Time.deltaTime;
-            if (stopwatch >= 3)
+            if (stopwatch >= 2)
             {
                 stopwatch = 0;
                 if (characterBody)
                 {
-                    if (characterBody.HasBuff(BuffCore.instance.wyattCombatIndex))
-                    {
-                        characterBody.RemoveBuff(BuffCore.instance.wyattCombatIndex);
-                    }
+                    CloudUtils.SafeRemoveBuffs(BuffCore.instance.wyattCombatIndex, characterBody, 2);
                 }
             }
         }
