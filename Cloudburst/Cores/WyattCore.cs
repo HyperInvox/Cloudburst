@@ -558,7 +558,7 @@ namespace Cloudburst.Cores.HAND
             secondarySkillDef.beginSkillCooldownOnSkillEnd = true;
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = false;
-            secondarySkillDef.interruptPriority = InterruptPriority.Skill;
+            secondarySkillDef.interruptPriority = InterruptPriority.PrioritySkill;
             secondarySkillDef.isBullets = false;
             secondarySkillDef.isCombatSkill = true;
             secondarySkillDef.mustKeyPress = false;
@@ -602,7 +602,7 @@ namespace Cloudburst.Cores.HAND
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(DeepClean));
             utilitySkillDef.activationStateMachineName = "Weapon";
-            utilitySkillDef.baseMaxStock = 1;
+            utilitySkillDef.baseMaxStock = 2;
             utilitySkillDef.baseRechargeInterval = 5f;
             utilitySkillDef.beginSkillCooldownOnSkillEnd = true;
             utilitySkillDef.canceledFromSprinting = false;
@@ -612,7 +612,7 @@ namespace Cloudburst.Cores.HAND
             utilitySkillDef.isCombatSkill = true;
             utilitySkillDef.mustKeyPress = false;
             utilitySkillDef.noSprint = false;
-            utilitySkillDef.rechargeStock = 1;
+            utilitySkillDef.rechargeStock = 2;
             utilitySkillDef.requiredStock = 1;
             utilitySkillDef.shootDelay = 0.08f;
             utilitySkillDef.stockToConsume = 1;

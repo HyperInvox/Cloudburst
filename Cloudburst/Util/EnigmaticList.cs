@@ -1,6 +1,6 @@
 ﻿
 using System.Collections.Generic;
-class EnigmaticList<T> : List<T>
+public class EnigmaticList<T> : List<T>
 {
     public delegate void OnRemoval(T objectRemoved);
     public delegate void OnAddition(T objectRemoved);

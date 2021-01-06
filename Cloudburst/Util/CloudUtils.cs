@@ -7,6 +7,7 @@ using RoR2.Skills;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using static Cloudburst.ErrorListener;
 
 public static class CloudUtils
 {
@@ -185,6 +186,47 @@ public static class CloudUtils
 
     }
     #endregion
+
+    public static bool IsLogVanilla(LogMessage log) {
+        bool isVanilla = false;
+        if (log.message.Contains("DroneFlamethrowerEffect"))
+        {
+            isVanilla = true;
+        }
+        if (log.message.Contains("FireMeatBallPool"))
+        {
+            isVanilla = true;
+        }
+        if (log.message.Contains("LunarWispTrackingBombExp_Prf"))
+        {
+            isVanilla = true;
+        }
+        if (log.message.Contains("LunarWispMinigunChargeUp"))
+        {
+            isVanilla = true;
+        }
+        if (log.message.Contains("SiphonTetherHealing"))
+        {
+            isVanilla = true;
+        }
+        if (SceneCatalog.availability.available != false && SceneCatalog.GetSceneDefForCurrentScene() && SceneCatalog.GetSceneDefForCurrentScene().baseSceneName == "lobby") {
+            isVanilla = true;
+        }
+        if (log.message.Contains("[Warning: Unity Log] Unregistered buff CrocoRegen!"))
+        {
+            isVanilla = true;
+        }
+        if (log.message.Contains("[Warning: Unity Log] Unregistered buff MercExpose!"))
+        {
+            isVanilla = true;
+        }
+        if (log.message.Contains("[Warning: Unity Log] Unregistered buff BodyArmor!"))
+        {
+            isVanilla = true;
+        }
+        return isVanilla;
+    }
+
     #region Skills
     /// <summary>
     /// Destroys generic skill components attached to the survivor object and creates an empty SkillFamily.

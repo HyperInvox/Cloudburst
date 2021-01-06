@@ -70,10 +70,11 @@ namespace Cloudburst.Cores.States.Wyatt
                     base.characterDirection.forward = base.characterMotor.velocity.normalized;
                     float distance = Util.SphereVolumeToRadius(target.volume);
 
-                    if (stopwatch > 4)
+                    if (stopwatch > 2)
                     {
                         //LogCore.LogI(stopwatch);
                         this.activatorSkillSlot.AddOneStock();
+                        characterMotor.velocity = Vector3.zero;         
                         LogCore.LogI("Can't reach target, skill refunded!");
                         this.outer.SetNextStateToMain();
                     }
@@ -129,6 +130,7 @@ namespace Cloudburst.Cores.States.Wyatt
             else
             {
                 LogCore.LogE("Something is seriously fucked. Stage: " + stage.ToString());
+                characterMotor.velocity = Vector3.zero;
                 this.outer.SetNextStateToMain();
 
             }

@@ -4,6 +4,7 @@ using Cloudburst.Cores;
 using Cloudburst.Cores.Components;
 using Cloudburst.Cores.HAND;
 using R2API.Utils;
+using RoR2.UI;
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -117,9 +118,18 @@ namespace Cloudburst
         public static ConfigEntry<bool> Enabled;
         #endregion
 
+        private static int vanillaErrors = 0;
+        private static int modErrors = 0;
+
         public Cloudburst()
         {
             LogCore.logger = Logger;
+            BepInEx.Logging.Logger.Listeners.Add(new ErrorListener());
+            
+            //important!!
+            ErrorListener.vanillaErrors.addition += VanillaErrors_addition;
+            ErrorListener.modErrors.addition += ModErrors_addition;
+            //not super important!!
 
             DefineConfig();
             InitializeCores();
@@ -133,6 +143,16 @@ namespace Cloudburst
             LogCore.LogM("Cloudburst loaded!");
         }
 
+ 
+        private void ModErrors_addition(ErrorListener.LogMessage objectRemoved)
+        {
+            modErrors++;
+        }
+
+        private void VanillaErrors_addition(ErrorListener.LogMessage msg)
+        {
+            vanillaErrors++;
+        }
 
         private void DefineConfig()
         {
@@ -255,12 +275,21 @@ namespace Cloudburst
 
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
-            LogCore.LogI(arg1.name);
             if (arg1.name == "title")
             {
                 var menu = GameObject.Find("MainMenu");
                 //LogCore.LogI(menu.name)
                 var title = menu.transform.Find("MENU: Title/TitleMenu/SafeZone/ImagePanel (JUICED)/LogoImage");
+                var indicator = menu.transform.Find("MENU: Title/TitleMenu/MiscInfo/Copyright/Copyright (1)");
+
+                var build = indicator.GetComponent<HGTextMeshProUGUI>();
+
+                build.fontSize += 6;
+                build.text = build.text + Environment.NewLine + $"Cloudburst Version: {version}";
+                build.text = build.text + Environment.NewLine + $"Vanilla Errors: {vanillaErrors.ToString()}";
+                build.text = build.text + Environment.NewLine + $"Mod Errors: {modErrors.ToString()}";
+
+
                 title.GetComponent<Image>().sprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/cloudburstlogo.png");
                 //LogCore.LogI(title.name);
 

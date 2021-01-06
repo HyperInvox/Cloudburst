@@ -68,6 +68,7 @@ namespace Cloudburst.Cores.States.Wyatt
 
             base.OnEnter();
             base.characterDirection.forward = base.GetAimRay().direction;
+            base.characterMotor.ApplyForce(GetAimRay().direction * 100, true, false);
             this.durationBeforeInterruptable = baseDurationBeforeInterruptable / this.attackSpeedStat;
         }
 
@@ -82,10 +83,6 @@ namespace Cloudburst.Cores.States.Wyatt
             if (this.isComboFinisher)
             {
                 overlapAttack.damageType = DamageTypeCore.spiked | DamageType.Generic;
-            }
-            else
-            {
-                overlapAttack.damageType = DamageType.Generic | DamageTypeCore.antiGrav;
             }
         }
 
