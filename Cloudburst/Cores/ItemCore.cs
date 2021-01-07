@@ -666,9 +666,8 @@ namespace Cloudburst.Cores
             Inventory attackerInventory = attackerMaster ? attackerMaster.inventory : null;
 
             int itemChampionOnKillCount = attackerInventory.GetItemCount(itemChampionOnKillIndex);
-            LogCore.LogI("Hi!");
 
-            if (itemChampionOnKillCount > 0) {
+            if (itemChampionOnKillCount > 0 && damageReport.victimIsBoss && Util.CheckRoll(15 + (itemChampionOnKillCount * 5), attackerMaster)) {
                 Util.PlaySound("ui_obj_casinoChest_open", attackerBody.gameObject);
                 EffectData data = new EffectData
                 {

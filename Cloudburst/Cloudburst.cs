@@ -286,6 +286,7 @@ namespace Cloudburst
 
                 build.fontSize += 6;
                 build.text = build.text + Environment.NewLine + $"Cloudburst Version: {version}";
+                build.text = build.text + Environment.NewLine + $"R2API Version: { R2API.R2API.PluginVersion }";
                 build.text = build.text + Environment.NewLine + $"Vanilla Errors: {vanillaErrors.ToString()}";
                 build.text = build.text + Environment.NewLine + $"Mod Errors: {modErrors.ToString()}";
 

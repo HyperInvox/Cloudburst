@@ -13,26 +13,23 @@ namespace Cloudburst.Cores.States.Wyatt
     {
 
         private float timer;
-
+        private OverlapAttack attack;
         public static float baseDuration = 0.1f;
         public override void OnEnter()
         {
             base.OnEnter();
-            /*if (this.modelTransform)
+
+            attack = new OverlapAttack()
             {
-                this.characterModel = this.modelTransform.GetComponent<CharacterModel>();
-                this.hurtboxGroup = this.modelTransform.GetComponent<HurtBoxGroup>();
-            }
-            if (this.characterModel)
-            {
-                this.characterModel.invisibilityCount++;
-            }
-            if (this.hurtboxGroup)
-            {
-                HurtBoxGroup hurtBoxGroup = this.hurtboxGroup;
-                int hurtBoxesDeactivatorCounter = hurtBoxGroup.hurtBoxesDeactivatorCounter + 1;
-                hurtBoxGroup.hurtBoxesDeactivatorCounter = hurtBoxesDeactivatorCounter;
-            }*/
+                attacker = base.gameObject,
+                attackerFiltering = AttackerFiltering.Default,
+                damage = 1f * damageStat,
+                damageColorIndex = DamageColorIndex.Item,
+                damageType = DamageTypeCore.pullEnemies,
+                forceVector = base.inputBank.aimDirection * (7 * 35 * Time.fixedDeltaTime),
+                
+        };
+
             if (base.isAuthority)
             {
                 characterMotor.velocity = new Vector3(characterMotor.velocity.x, 0, characterMotor.velocity.z);
@@ -50,13 +47,14 @@ namespace Cloudburst.Cores.States.Wyatt
             {
                 var a = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
                 //base.inputBank.aimDirection
+                attack.Fire(null);
                 base.characterMotor.rootMotion += base.inputBank.aimDirection * (7 * 35 * Time.fixedDeltaTime);
 
             }
 
-            if (NetworkServer.active) {
-                ShockEnemies();
-            }
+            //if (NetworkServer.active) {
+            //   ShockEnemies();
+            //}
 
             if (fixedAge >= baseDuration && isAuthority)
             {

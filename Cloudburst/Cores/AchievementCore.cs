@@ -44,9 +44,9 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_UNLOCKABLE_NAME", "One with the Planet");
             LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_DESC", "In a single run, reach the maximum level");
 
-            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "Wyatt: Mastery");
-            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "Wyatt: Mastery");
-            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As Wyatt, beat the game or obliterate on Monsoon.");
+            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "Custodian: Mastery");
+            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "Custodian: Mastery");
+            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As Custodian, beat the game or obliterate on Monsoon.");
         }
 
         public static string GetUnlockableString(string name) {

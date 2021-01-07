@@ -53,13 +53,7 @@ namespace Cloudburst.Cores
                         self.body.AddTimedBuff(BuffCore.instance.antiGravIndex, 5);
 
                     }
-                    else
-                    {
-                        if (rigid)
-                        {
-                            rigid.AddForce(new UnityEngine.Vector3(0, -10000, 0));
-                        }
-                    }
+
                 }
                 if (damageInfo.attacker && pullType)
                 {
