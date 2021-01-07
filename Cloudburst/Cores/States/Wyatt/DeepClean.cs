@@ -19,6 +19,9 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             base.OnEnter();
 
+            var obj = Cloudburst.Instantiate<GameObject>(Resources.Load<GameObject>("@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/MDLBrokenBodyArmor.prefab"), transform.position, transform.rotation);
+            NetworkServer.Spawn(obj);
+
             attack = new OverlapAttack()
             {
                 attacker = base.gameObject,
@@ -27,8 +30,13 @@ namespace Cloudburst.Cores.States.Wyatt
                 damageColorIndex = DamageColorIndex.Item,
                 damageType = DamageTypeCore.pullEnemies,
                 forceVector = base.inputBank.aimDirection * (7 * 35 * Time.fixedDeltaTime),
-                
-        };
+                hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxFAT", base.GetModelTransform()),
+                inflictor = base.gameObject,
+                isCrit = RollCrit(),
+                procChainMask = default,
+                procCoefficient = 1,
+                teamIndex = GetTeam(),
+                };
 
             if (base.isAuthority)
             {

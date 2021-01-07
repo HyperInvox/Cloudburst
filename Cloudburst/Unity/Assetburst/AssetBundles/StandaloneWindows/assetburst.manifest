@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2759217326
+CRC: 2417856049
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3a50e81327cda0410e55f9f76bf14ea4
+    Hash: 35e0f30d9cfa373f9de64e1a0ee14d18
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -95,6 +95,7 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/HottestSauceT2.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/fab_dagger.mat
+- Assets/Cloudburst/Items/BrokenBodyArmor/broken armor.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorRunBackward.anim
 - Assets/Cloudburst/Materials/8597.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorFireArrow.anim
@@ -136,6 +137,7 @@ Assets:
 - Assets/Cloudburst/Shaders/OutLine.shader
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnims.fbx
 - Assets/Cloudburst/Materials/T_Executor_Emissive.mat
+- Assets/Cloudburst/Items/BrokenBodyArmor/brokenarmoricon.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattBroomSwingFast.anim
 - Assets/Cloudburst/753network/Crystallize/Ramp Rainbow.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 1.mat
@@ -215,6 +217,7 @@ Assets:
 - Assets/Cloudburst/Items/Grinder/MDLGrinder.prefab
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Ruby.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_r.mat
+- Assets/Cloudburst/Items/BrokenBodyArmor/Just armor texture.obj
 - Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalNormal.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorRunRight.anim
 - Assets/Cloudburst/Survivors/Wyatt/old/mdlHANDWinch (1).fbx
@@ -276,6 +279,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/bombsAnims.blend
 - Assets/Cloudburst/Items/MechanicalTrinket/icon.png
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_gloss.png
+- Assets/Cloudburst/Items/BrokenBodyArmor/Materials/broken armor.mat
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Sapphire.mat
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Emissive2.mat
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Executioner_Emissive.png
@@ -292,9 +296,11 @@ Assets:
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_normals.png
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkRHT.anim
+- Assets/Cloudburst/Items/BrokenBodyArmor/admn.mat
 - Assets/Cloudburst/Survivors/Wyatt/LoaderPylon.prefab
 - Assets/Cloudburst/Items/Lemdog/LemDog_TexEmission.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/wyattBodyPitch.anim
+- Assets/Cloudburst/Items/BrokenBodyArmor/MDLBrokenBodyArmor.prefab
 - Assets/Cloudburst/Teaser/TEASER 2.fbx
 - Assets/Cloudburst/Teaser/tex/Materials/texMetalTrimDiffuse.png
 - Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalVibrant.mat

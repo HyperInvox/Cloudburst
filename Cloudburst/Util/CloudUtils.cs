@@ -227,6 +227,30 @@ public static class CloudUtils
         return isVanilla;
     }
 
+    public static HitBoxGroup FindHitBoxGroup(string groupName, Transform modelTransform)
+    {
+        if (!modelTransform)
+        {
+            return null;
+        }
+        HitBoxGroup result = null;
+        List<HitBoxGroup> gameObjectComponents = GetComponentsCache<HitBoxGroup>.GetGameObjectComponents(modelTransform.gameObject);
+        int i = 0;
+        int count = gameObjectComponents.Count;
+        while (i < count)
+        {
+            if (gameObjectComponents[i].groupName == groupName)
+            {
+                result = gameObjectComponents[i];
+                break;
+            }
+            i++;
+        }
+        GetComponentsCache<HitBoxGroup>.ReturnBuffer(gameObjectComponents);
+        return result;
+    }
+
+
     #region Skills
     /// <summary>
     /// Destroys generic skill components attached to the survivor object and creates an empty SkillFamily.
