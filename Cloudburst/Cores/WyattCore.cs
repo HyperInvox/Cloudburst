@@ -36,6 +36,9 @@ namespace Cloudburst.Cores.HAND
         public WyattComboScript script;
         #endregion
 
+        public static string trashOutStateName;
+
+
         public SkillDef throwPrimary;
         public SkillDef retrievePrimary;
         public WyattCore() => Load();
@@ -64,7 +67,7 @@ namespace Cloudburst.Cores.HAND
             CreateTokens();
             CreateWYATTPrefab();
             CreateSunderPrefab();
-            CreateWinchPrefab();
+            //CreateWinchPrefab();
             SetComponents();
             SetSkills();
             CreateSurvivorDef();
@@ -273,10 +276,17 @@ namespace Cloudburst.Cores.HAND
             hurtState.canBeStunned = false; //If this gameobject is able to be stunned. Set to false if this is a survivor
             hurtState.hitThreshold = 5f; //The hit threshold, set to 5 if this is a survivor.
 
+            var mach = wyattBody.AddComponent<EntityStateMachine>();
             int i = 0;
-            EntityStateMachine[] esmr = new EntityStateMachine[2];
+            EntityStateMachine[] esmr = new EntityStateMachine[3];
+            mach.customName = "TrashOut";
+            mach.initialStateType = new SerializableEntityStateType(typeof(EntityStates.Idle));
+            mach.mainStateType = new SerializableEntityStateType(typeof(EntityStates.Idle));
+
             foreach (EntityStateMachine esm in wyattBody.GetComponentsInChildren<EntityStateMachine>())
             {
+                LogCore.LogI(esm.gameObject.name);
+                LogCore.LogI(esm.customName);
                 switch (esm.customName)
                 {
                     case "Body":
@@ -291,6 +301,7 @@ namespace Cloudburst.Cores.HAND
                         break;
                 }
             }
+            esmr[2] = mach;
             hurtState.idleStateMachine = esmr;
         }
 
@@ -553,19 +564,20 @@ namespace Cloudburst.Cores.HAND
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<HANDDroneSkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(TrashOut));
             secondarySkillDef.activationStateMachineName = "Weapon";
-            secondarySkillDef.baseMaxStock = 1;
+            secondarySkillDef.baseMaxStock = 2;
             secondarySkillDef.baseRechargeInterval = 3f;
             secondarySkillDef.beginSkillCooldownOnSkillEnd = true;
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = false;
-            secondarySkillDef.interruptPriority = InterruptPriority.PrioritySkill;
+            secondarySkillDef.interruptPriority = InterruptPriority.Skill;
             secondarySkillDef.isBullets = false;
             secondarySkillDef.isCombatSkill = true;
-            secondarySkillDef.mustKeyPress = false;
+            secondarySkillDef.mustKeyPress = true;
             secondarySkillDef.noSprint = false;
             secondarySkillDef.rechargeStock = 1;
             secondarySkillDef.requiredStock = 1;
             secondarySkillDef.shootDelay = 0.08f;
+            
             secondarySkillDef.stockToConsume = 1;
             secondarySkillDef.skillDescriptionToken = "WYATT_SECONDARY_DESCRIPTION";
             secondarySkillDef.skillName = "aaa";
@@ -602,7 +614,7 @@ namespace Cloudburst.Cores.HAND
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(DeepClean));
             utilitySkillDef.activationStateMachineName = "Weapon";
-            utilitySkillDef.baseMaxStock = 2;
+            utilitySkillDef.baseMaxStock = 1;
             utilitySkillDef.baseRechargeInterval = 5f;
             utilitySkillDef.beginSkillCooldownOnSkillEnd = true;
             utilitySkillDef.canceledFromSprinting = false;
@@ -612,7 +624,7 @@ namespace Cloudburst.Cores.HAND
             utilitySkillDef.isCombatSkill = true;
             utilitySkillDef.mustKeyPress = false;
             utilitySkillDef.noSprint = false;
-            utilitySkillDef.rechargeStock = 2;
+            utilitySkillDef.rechargeStock = 1;
             utilitySkillDef.requiredStock = 1;
             utilitySkillDef.shootDelay = 0.08f;
             utilitySkillDef.stockToConsume = 1;

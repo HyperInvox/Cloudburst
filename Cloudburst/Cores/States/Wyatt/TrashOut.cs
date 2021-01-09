@@ -2,6 +2,8 @@
 using Cloudburst.Cores.HAND.Components;
 using RoR2;
 using UnityEngine;
+using RoR2.Projectile;
+using Cloudburst.Cores.Components;
 
 namespace Cloudburst.Cores.States.Wyatt
 {
@@ -19,7 +21,9 @@ namespace Cloudburst.Cores.States.Wyatt
         private HANDDroneTracker tracker;
         private HurtBox target;
 
-        private float stopwatch;
+        private float _stopwatch;
+
+        private GameObject _winch;
 
         public override void OnEnter()
         {
@@ -49,17 +53,40 @@ namespace Cloudburst.Cores.States.Wyatt
                 if (target && target.healthComponent && target.healthComponent.alive)
                 {
                     stage = ActionStage.FoundTarget;
+                    FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
+                    {
+                        crit = false,
+                        damage =0,
+                        damageColorIndex = DamageColorIndex.Default,
+                        force = 0f,
+                        owner = base.gameObject,
+                        position = GetAimRay().origin,
+                        procChainMask = default(ProcChainMask),
+                        projectilePrefab = ProjectileCore.winch,
+                        rotation = Util.QuaternionSafeLookRotation(GetAimRay().direction),
+                        target = target.gameObject,
+                        useSpeedOverride = true,
+                        speedOverride = 500
+                    };
+                    EffectManager.SimpleMuzzleFlash(Resources.Load<GameObject>("prefabs/effects/muzzleflashes/MuzzleflashWinch"), base.gameObject, "WinchHole", true);
+                    LogCore.LogI(outer.customName);
+                    ProjectileManager.instance.FireProjectile(fireProjectileInfo);
                     base.PlayAnimation("Fullbody, Override", "kick");
                 }
 
                 //LogCore.LogI("Stage: " + stage.ToString());
             }
         }
+
+        public void SetHookReference(GameObject winch) {
+            _winch = winch;
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
             //LogCore.LogI("Stage: " + stage.ToString());
-            stopwatch += Time.deltaTime;
+            _stopwatch += Time.deltaTime;
 
             if (stage == ActionStage.FoundTarget)
             {
@@ -70,7 +97,7 @@ namespace Cloudburst.Cores.States.Wyatt
                     base.characterDirection.forward = base.characterMotor.velocity.normalized;
                     float distance = Util.SphereVolumeToRadius(target.volume);
 
-                    if (stopwatch > 2)
+                    if (_stopwatch > 2)
                     {
                         //LogCore.LogI(stopwatch);
                         this.activatorSkillSlot.AddOneStock();
@@ -102,6 +129,10 @@ namespace Cloudburst.Cores.States.Wyatt
                             procCoefficient = 1f,
                             radius = 5
                         }.Fire();
+                        if (_winch)
+                        {
+                            _winch.GetComponent<WyattWinchManager>().OnHit();
+                        }
                         EffectData effectData = new EffectData
                         {
                             rotation = Quaternion.identity,

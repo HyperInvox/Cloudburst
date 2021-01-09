@@ -269,7 +269,7 @@ namespace Cloudburst.Cores
                         self.characterMotor.useGravity = false;
                     }
                     self.SetPropertyValue("attackSpeed", attackSpeed -= (.5f * attackSpeed));
-                    self.SetPropertyValue("moveSpeed", moveSpeed -= (.1f * moveSpeed));
+                    self.SetPropertyValue("moveSpeed", moveSpeed -= (.5f * moveSpeed));
                 }
                 if (self.HasBuff(antiGravFriendlyIndex)) {
                     //LogCore.LogI(self.moveSpeed);

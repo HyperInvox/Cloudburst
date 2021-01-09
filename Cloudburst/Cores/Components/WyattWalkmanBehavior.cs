@@ -9,6 +9,7 @@ namespace Cloudburst.Cores.Components.Wyatt
     public class WyattWalkmanBehavior : NetworkBehaviour, IOnDamageDealtServerReceiver {
         private CharacterBody characterBody;
 
+
         private float stopwatch = 0;
         private void Awake()
         {

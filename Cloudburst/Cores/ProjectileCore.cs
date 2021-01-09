@@ -4,6 +4,7 @@ using Moonstorm.Cores.Components;
 using R2API;
 using RoR2;
 using RoR2.Projectile;
+using System;
 using UnityEngine;
 
 namespace Cloudburst.Cores
@@ -133,17 +134,17 @@ namespace Cloudburst.Cores
                     if (child.name != "IndicatorSphere")
                     {
                         //child.gameObject.SetActive(false); 
-                        Object.Destroy(child.gameObject);
+                        Cloudburst.Destroy(child.gameObject);
                     }
                     else
                     {
                         indicator = child.gameObject.InstantiateClone("GenericIndicator", false);
                     }
                 }
-                Object.Destroy(container.gameObject);
-                Object.Destroy(fx.gameObject);
+                Cloudburst.Destroy(container.gameObject);
+                Cloudburst.Destroy(fx.gameObject);
 
-                var newChild = Object.Instantiate<GameObject>(indicator);
+                var newChild = Cloudburst.Instantiate<GameObject>(indicator);
                 newChild.transform.SetParent(mushrumSproutingMushroom.transform);
             }
         }
@@ -305,11 +306,43 @@ namespace Cloudburst.Cores
             if (registered)
             {
                 var impact = winch.GetComponent<ProjectileImpactExplosion>();
+                var target = winch.AddComponent<ProjectileTargetComponent>();
+                var missileController = winch.AddComponent<MissileController>();
+                var pid = winch.AddComponent<QuaternionPID>();
+                var stick = winch.AddComponent<ProjectileStickOnImpact>();
 
-                Object.Destroy(impact);
+                stick.stickSoundString = string.Empty;
+                stick.stickParticleSystem = Array.Empty<ParticleSystem>();
+                stick.ignoreCharacters = false;
+                stick.ignoreWorld = true;
+                stick.alignNormals = true;
 
-                winch.AddComponent<Components.HookProjectileImpact>();
+                missileController.maxVelocity = 25;
+                missileController.rollVelocity = 0;
+                missileController.acceleration = 3;
+                missileController.delayTimer = 0.1f;
+                missileController.giveupTimer = 100;
+                missileController.deathTimer = 100;
+                missileController.turbulence = 0;
+                missileController.maxSeekDistance = 1000;
+
+                pid.PID = new Vector3(10, 0.3f, 0);
+                pid.inputQuat = new Quaternion(0, 0, 0, 1);
+                pid.targetQuat = new Quaternion(0, 0, 0, 1);
+                pid.outputVector = new Vector3(0, 0, 0);
+                pid.gain = 10;
+
+
+
+                Cloudburst.Destroy(impact);
+
+                winch.AddComponent<WyattWinchManager/*:^))*/>();
+                
+
                 winch.GetComponent<ProjectileController>().ghostPrefab = winchGhost;
+
+
+
             }
             else LogCore.LogF("FATAL ERROR:" + winch.name + " failed to register to the projectile catalog!");
         }
@@ -348,7 +381,7 @@ namespace Cloudburst.Cores
         {
             //wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
 
-            wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("LoaderPylon");
+            wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
 
             CloudUtils.CreateValidProjectile(wyattMaidBubble, float.MaxValue, 0, true);
 

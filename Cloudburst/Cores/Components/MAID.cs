@@ -33,6 +33,7 @@ namespace Cloudburst.Cores.Components
             LogCore.LogI(controller);
             LogCore.LogI(controller.___ownerNetId);
             LogCore.LogI(controller.owner);
+            
             controller.owner.GetComponent<MAIDManager>().DeployMAIDAuthority(base.gameObject);
         }
 
@@ -83,7 +84,7 @@ namespace Cloudburst.Cores.Components
         private void FixedUpdate() {
             stopwatch += Time.deltaTime;
 
-            if (stopwatch >= 3) {
+            if (stopwatch >= 1.5f) {
                 EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                 {
                     origin = transform.position,
@@ -92,6 +93,7 @@ namespace Cloudburst.Cores.Components
                 for (int i = 0; i < this.characterMotors.Count; i++)
                 {
                     var motor = this.characterMotors[i];
+
                     var body = motor.body;
                     TeamIndex index = TeamIndex.None;
                     if (body && body.teamComponent)
@@ -101,7 +103,9 @@ namespace Cloudburst.Cores.Components
 
                     if (motor && index == TeamIndex.Monster)
                     {
-                        motor.ApplyForce(new Vector3(0, !motor.isFlying ? 500 : -500, 0), true, true);
+                        Vector3 normalized = (transform.position - motor.transform.position).normalized;
+
+                        motor.ApplyForce(normalized * 700, true, true);
                         //Why won't you come home?
                         /*EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                         {
@@ -129,7 +133,9 @@ namespace Cloudburst.Cores.Components
 
                     if (rigid && index == TeamIndex.Monster && !body.characterMotor)
                     {
-                        rigid.rigid.AddForce(new Vector3(0, -2500, 0), ForceMode.Impulse);
+                        Vector3 normalized = (transform.position - rigid.transform.position).normalized;
+
+                        rigid.rigid.AddForce(normalized * 700, ForceMode.Impulse);
                         /*EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                         {
                             origin = rigid.transform.position,

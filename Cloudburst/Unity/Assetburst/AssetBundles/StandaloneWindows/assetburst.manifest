@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2417856049
+CRC: 2736402278
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 35e0f30d9cfa373f9de64e1a0ee14d18
+    Hash: 59d8a6896d586c3018a5c47794388b35
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -69,6 +69,7 @@ Assets:
 - Assets/Cloudburst/Shaders/Ghost.shader
 - Assets/Cloudburst/Survivors/Wyatt/Materials/secondaryicon.mat
 - Assets/Cloudburst/Items/MechanicalTrinket/hitchhiker.fbx
+- Assets/Cloudburst/Survivors/Wyatt/old/Materials/d_secondaryicon.mat
 - Assets/Cloudburst/Teaser/tex/Materials/Ice_Tool_Tex.mat
 - Assets/Cloudburst/Shaders/Hologram.shader
 - Assets/Cloudburst/Items/Earrings/magicicon.png
@@ -264,6 +265,7 @@ Assets:
 - Assets/Cloudburst/Items/UESKeycard/source/keycard.fbx
 - Assets/Cloudburst/Survivors/Bombardier/icon.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorSprint.anim
+- Assets/Cloudburst/Items/UESKeycard/Materials/keycard_transparency.mat
 - Assets/Cloudburst/Shaders/BEGONE.shader
 - Assets/Cloudburst/Enemies/DeployedLamp/LampDeployed.png
 - Assets/Cloudburst/753network/Crystallize/Ramp Gold.png
