@@ -39,6 +39,23 @@ namespace Cloudburst.Cores
         //protected internal ItemIndex chipIndex;
         //protected internal ItemIndex wyattWalkmanIndex;
 
+        public GameObject extractorMDL;
+        public GameObject mechanicalTrinketMDL;
+        public GameObject fabDagMDL;
+        public GameObject japeCloakMDL;
+        public GameObject carePackageMDL;
+        public GameObject redactedMDL;
+        public GameObject keyCardMDL;
+        public GameObject topazLensMDL;
+        public GameObject bbaMDL;
+        public GameObject harvesterMDL;
+        public GameObject lemdogMDL;
+        public GameObject magicsMDL;
+
+
+
+
+
         public List<ItemIndex> bossitemList = new List<ItemIndex>{
             ItemIndex.NovaOnLowHealth,
             ItemIndex.Knurl,
@@ -102,7 +119,36 @@ namespace Cloudburst.Cores
             instance = this;
 
             foreach (var item in AssetsCore.mainAssetBundle.LoadAllAssets<GameObject>()) {
-                if (item.name.Contains("MDL")) { 
+                if (item.name.Contains("IMDL")) {
+                    switch (item.name) {
+                        case "IMDLBrokenBodyArmor":
+                            bbaMDL = item;
+                            break;
+                        case "IMDLCarePackageRequester":
+                            carePackageMDL = item;
+                            break;
+                        case "IMDLCloak":
+                            japeCloakMDL = item;
+                            break;
+                        case "IMDLEarrings":
+                            magicsMDL = item;
+                            break;
+                        case "IMDLDagger":
+                            fabDagMDL = item;
+                            break;
+                        case "IMDLGrinder":
+                            extractorMDL = item;
+                            break;
+                        case "IMDLLemDog":
+                            lemdogMDL = item;
+                            break;
+                        case "IMDLMechanicalTrinket":
+                            mechanicalTrinketMDL = item;
+                            break;
+                        case "IMDLKeycard":
+                            keyCardMDL = item;
+                            break;
+                    }
                     LogCore.LogI("Item model found! " + item.name);
                     var display = item.AddComponent<ItemDisplay>();
                     display.rendererInfos = CloudUtils.GatherRenderInfos(item);
@@ -125,7 +171,7 @@ namespace Cloudburst.Cores
                 name = "ItemChampionOnKill",
                 nameToken = "ITEM_ITEMONCHAMPIONKILL_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Grinder/icon.png", 
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Grinder/MDLGrinder.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab",
                 pickupToken = "ITEM_ITEMONCHAMPIONKILL_PICKUP",
                 tags = itemChampionOnKillTags,
                 tier = ItemTier.Tier3,
@@ -145,7 +191,7 @@ namespace Cloudburst.Cores
                 name = "LargerTeleporterRadius",
                 nameToken = "ITEM_LARGERTELEPORTERRADIUS_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/Icon.png",
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/MDLMechanicalTrinket.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/IMDLMechanicalTrinket.prefab",
                 pickupToken = "ITEM_LARGERTELEPORTERRADIUS_PICKUP",
                 tags = largerTeleporterRadiusTags,
                 tier = ItemTier.Tier2,
@@ -164,7 +210,7 @@ namespace Cloudburst.Cores
                 name = "CrippleOnHit",
                 nameToken = "ITEM_CRIPPLEONHIT_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/icon.png",
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/MDLDagger.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab",
                 pickupToken = "ITEM_CRIPPLEONHIT_PICKUP",
                 tags = crippleOnHitTags,
                 tier = ItemTier.Tier2,
@@ -185,7 +231,7 @@ namespace Cloudburst.Cores
                 name = "CloakOnInteraction",
                 nameToken = "ITEM_CLOAKBUFFONINTERACTION_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Cloak/JapeIcon.png",
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Cloak/MDLCloak.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Cloak/IMDLCloak.prefab",
                 pickupToken = "ITEM_CLOAKBUFFONINTERACTION_PICKUP",
                 tags = cloakOnInteractionTags,
                 tier = ItemTier.Tier2,
@@ -205,7 +251,7 @@ namespace Cloudburst.Cores
                 name = "ItemOnLevelUp2",
                 nameToken = "ITEM_ITEMONLEVELUP_NAME",
                 //pickupIconPath = pickUpIconPath,
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/CarePackageRequester/MDLCarePackageRequester.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/CarePackageRequester/IMDLCarePackageRequester.prefab",
                 pickupToken = "ITEM_ITEMONLEVELUP_PICKUP",
                 tags = itemOnLevelUpTags,
                 tier = ItemTier.Tier3,
@@ -245,7 +291,7 @@ namespace Cloudburst.Cores
                 name = "MoneyOnInteraction",
                 nameToken = "ITEM_MONEYONINTERACTION_NAME",
                 //pickupIconPath = pickUpIconPath,
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/MDLKeycard.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/IMDLKeycard.prefab",
                 pickupToken = "ITEM_MONEYONINTERACTION_PICKUP",
                 tags = moneyOnInteractionTags,
                 tier = ItemTier.Tier1,
@@ -285,7 +331,7 @@ namespace Cloudburst.Cores
                 name = "BarrierOnLevel",
                 nameToken = "ITEM_BARRIERONLEVEL_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/brokenarmoricon.png",
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/MDLBrokenBodyArmor.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/IMDLBrokenBodyArmor.prefab",
                 pickupToken = "ITEM_BARRIERONLEVEL_PICKUP",
                 tags = barrierOnLevelTags,
                 tier = ItemTier.Tier1,
@@ -325,7 +371,7 @@ namespace Cloudburst.Cores
                 name = "Lemdog",
                 nameToken = "ITEM_LEMDOG_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Lemdog/LemDog_TexIcon.png",
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Lemdog/MDLLemDog.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Lemdog/IMDLLemDog.prefab",
                 pickupToken = "ITEM_LEMDOG_PICKUP",
                 tags = betterCritsOnLowHealthTags,
                 tier = ItemTier.Tier3,
@@ -345,7 +391,7 @@ namespace Cloudburst.Cores
                 name = "ExtendedEnemyBuffDuration",
                 nameToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Earrings/magicicon.png",
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Earrings/MDLEarrings.prefab",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Earrings/IMDLEarrings.prefab",
                 pickupToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP",
                 tags = extendEnemyBuffDurationTags,
                 tier = ItemTier.Tier2,
@@ -462,6 +508,7 @@ namespace Cloudburst.Cores
                     largerTeleporterRadiusIndex = ItemAPI.Add(customItem);
                     break;
                 case "CrippleOnHit":
+                    customItem.ItemDisplayRules = GenerateItemDisplayRulesDagger();
                     crippleOnHitIndex = ItemAPI.Add(customItem);
                     break;
                 case "CloakOnInteraction":  
@@ -474,7 +521,9 @@ namespace Cloudburst.Cores
                     randomDebuffOnHitIndex = ItemAPI.Add(customItem);
                     break;
                 case "MoneyOnInteraction":
+                    //customItem.ItemDisplayRules = GenerateItemDisplayRulesKeyCard();
                     moneyOnInteractionIndex = ItemAPI.Add(customItem);
+                    
                     break;
                 case "BarrierOnCrit":
                     barrierOnCritIndex = ItemAPI.Add(customItem);
@@ -519,6 +568,40 @@ namespace Cloudburst.Cores
                     //how will moonfall ever recover
             }
         }
+
+        private ItemDisplayRuleDict GenerateItemDisplayRulesDagger() {
+
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = keyCardMDL,
+                    childName = "Pelvis", 
+                    localPos = new Vector3(-0.004f, 0.09f, 0.06f),
+                    localAngles = new Vector3(-10.305f, 0.057f, -0.626f),
+                    localScale = new Vector3(100, 100, 100)
+
+        }
+            });
+            rules.Add("mdlHuntress", new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = keyCardMDL,
+                    childName = "Pelvis",
+                    localPos = new Vector3(0.008f, 0.036f, -0.034f),
+                    localAngles = new Vector3(3.176f, -92.262f, -86.522f),
+                    localScale = new Vector3(50, 50, 50)
+        }
+});
+            
+            return rules;
+        }
+
+
+
 
         protected internal void Hook()
         {

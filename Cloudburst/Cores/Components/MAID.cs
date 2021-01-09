@@ -53,14 +53,6 @@ namespace Cloudburst.Cores.Components
                 //LogCore.LogI(rigidBody.gameObject.name + " is entering the bubble. Adding to the list.");
                 rigidBodies.Add(rigidBody);
             }
-
-            if (base.gameObject.name == "WyattMaid(Clone)")
-            {
-                if (collider.gameObject.name == "WyattWinch(Clone)")
-                {
-                    LiterallyDieJustForAFunnyVideo();
-                }
-            }
         }
 
         public void OnTriggerExit(Collider collider)

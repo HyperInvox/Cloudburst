@@ -40,6 +40,8 @@ public class PrefabBuilder
 
     public string masteryAchievementUnlockable;
 
+    public event Action<EnigmaticList<CharacterModel.RendererInfo>, Transform> getAdditionalEntries;
+
     /// <summary>
     /// Create a survivor prefab from a model. Don't register the prefab that it outputs, because the method already does that for you.
     /// </summary>
@@ -247,16 +249,23 @@ public class PrefabBuilder
         void SetupModel()
         {
             charModel.body = body;
-            charModel.baseRendererInfos = new CharacterModel.RendererInfo[]
+            EnigmaticList<CharacterModel.RendererInfo> infos = new EnigmaticList<CharacterModel.RendererInfo>();
+
+            infos.Add(new CharacterModel.RendererInfo
             {
-                new CharacterModel.RendererInfo
-                {
-                    defaultMaterial = transform.GetComponentInChildren<SkinnedMeshRenderer>().material,
-                    renderer = model.GetComponentInChildren<SkinnedMeshRenderer>(),
-                    defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                    ignoreOverlays = false
-                }
-            };
+                defaultMaterial = transform.GetComponentInChildren<SkinnedMeshRenderer>().material,
+                renderer = transform.GetComponentInChildren<SkinnedMeshRenderer>(),
+                defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                ignoreOverlays = false
+            });
+
+            Action<EnigmaticList<CharacterModel.RendererInfo>, Transform> action = this.getAdditionalEntries;
+            if (action != null)
+            {
+                action(infos, transform);
+            }
+
+            charModel.baseRendererInfos = infos.ToArray();
             charModel.autoPopulateLightInfos = true;
             charModel.invisibilityCount = 0;
             charModel.temporaryOverlays = new List<TemporaryOverlay>();

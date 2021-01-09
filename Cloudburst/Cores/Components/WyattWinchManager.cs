@@ -13,8 +13,8 @@ namespace Cloudburst.Cores.Components
     class WyattWinchManager : MonoBehaviour
     {
         private MAIDManager maidManager;
-        private ProjectileController controller;
-        private ProjectileOwnerInfo owner;
+        private ProjectileController controller = null;
+        private ProjectileOwnerInfo owner = default;
 
         public void Awake() {
             controller = base.GetComponent<ProjectileController>();
@@ -29,21 +29,24 @@ namespace Cloudburst.Cores.Components
 
         private void AssignHookReferenceToBodyStateMachine()
         {
-            TrashOut trashOut;
+            TrashOut trashOut; LogCore.LogI("check 0!");
             if (this.owner.stateMachine && (trashOut = (this.owner.stateMachine.state as TrashOut)) != null)
             {
                 trashOut.SetHookReference(base.gameObject);
-                LogCore.LogI("heyo!");
+                LogCore.LogI("check 1!");
             }
         }
 
             public void OnHit()
         {
 
-
+            LogCore.LogI("hi!!!");
             //goodbye, world
-            Destroy(gameObject);
-        }
+                Destroy(gameObject);
+        }   
+        /// <summary>
+        /// Contains basic info about the owner, such as  their character body, character motor, and their rigidbody. 
+        /// </summary>
         public struct ProjectileOwnerInfo
         {
             public ProjectileOwnerInfo(GameObject ownerGameObject, string targetCustomName)
@@ -69,16 +72,34 @@ namespace Cloudburst.Cores.Components
                 }
             }
 
+            /// <summary>
+            /// The owner's gameobject
+            /// </summary>
             public readonly GameObject gameObject;
 
+            /// <summary>
+            /// The owner's characterBody
+            /// </summary>
             public readonly CharacterBody characterBody;
 
+            /// <summary>
+            /// The owner's characterMotor
+            /// </summary>
             public readonly CharacterMotor characterMotor;
 
+            /// <summary>
+            /// The owner's rigidbody
+            /// </summary>
             public readonly Rigidbody rigidbody;
 
+            /// <summary>
+            /// The owner's selected statemachine
+            /// </summary>
             public readonly EntityStateMachine stateMachine;
 
+            /// <summary>
+            /// If owner has authority
+            /// </summary>
             public readonly bool hasEffectiveAuthority;
         }
     }

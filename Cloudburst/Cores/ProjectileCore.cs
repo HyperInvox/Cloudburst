@@ -321,8 +321,8 @@ namespace Cloudburst.Cores
                 missileController.rollVelocity = 0;
                 missileController.acceleration = 3;
                 missileController.delayTimer = 0.1f;
-                missileController.giveupTimer = 100;
-                missileController.deathTimer = 100;
+                missileController.giveupTimer = 2;
+                missileController.deathTimer = 2;
                 missileController.turbulence = 0;
                 missileController.maxSeekDistance = 1000;
 

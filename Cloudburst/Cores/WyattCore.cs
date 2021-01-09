@@ -222,6 +222,7 @@ namespace Cloudburst.Cores.HAND
                 builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
                 builder.masterySkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
                 builder.masterySkinDelegate = material;
+                builder.getAdditionalEntries += Builder_getAdditionalEntries; ;
 
                 wyattBody = builder.CreatePrefab();
                 Material material()
@@ -229,8 +230,23 @@ namespace Cloudburst.Cores.HAND
                     return Resources.Load<GameObject>("Prefabs/CharacterBodies/BrotherGlassBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial;
 
                 }
+                //this code will break if we change the name of the broom model
+                void Builder_getAdditionalEntries(System.Collections.Generic.List<CharacterModel.RendererInfo> arg1, Transform arg2)
+                {
+                    var broom = arg2.Find("Brom");
+                    var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
+                    arg1.Add(new CharacterModel.RendererInfo {
+                        defaultMaterial = mat.material,
+                        defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                        ignoreOverlays = false,
+                        renderer = mat,
+                    });
+                }
             }
         }
+
+         
+
 
         #endregion
         #region Components
@@ -340,7 +356,7 @@ namespace Cloudburst.Cores.HAND
             //credit
             //fuck you moffein
             characterBody.portraitIcon = AssetsCore.mainAssetBundle.LoadAsset<Texture>("WyattPortrait"); //The portrait icon, shows up in multiplayer and the death UI
-            characterBody.preferredPodPrefab = Resources.Load<GameObject>("prefabs/networkedobjects/robocratepod");
+            characterBody.preferredPodPrefab = Resources.Load<GameObject>("prefabs/networkedobjects/SurvivorPod");
         }
         #endregion
         #region Skill Creation

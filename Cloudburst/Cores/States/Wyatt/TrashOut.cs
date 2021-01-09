@@ -7,6 +7,7 @@ using Cloudburst.Cores.Components;
 
 namespace Cloudburst.Cores.States.Wyatt
 {
+    //https://i.redd.it/w8n9ovbtr0p51.jpg
     class TrashOut : BaseSkillState
     {
         enum ActionStage
@@ -23,7 +24,7 @@ namespace Cloudburst.Cores.States.Wyatt
 
         private float _stopwatch;
 
-        private GameObject _winch;
+        private GameObject _winch = null;
 
         public override void OnEnter()
         {
@@ -53,6 +54,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 if (target && target.healthComponent && target.healthComponent.alive)
                 {
                     stage = ActionStage.FoundTarget;
+                    _winch = null;
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {
                         crit = false,
@@ -60,7 +62,7 @@ namespace Cloudburst.Cores.States.Wyatt
                         damageColorIndex = DamageColorIndex.Default,
                         force = 0f,
                         owner = base.gameObject,
-                        position = GetAimRay().origin,
+                        position = target.transform.position,
                         procChainMask = default(ProcChainMask),
                         projectilePrefab = ProjectileCore.winch,
                         rotation = Util.QuaternionSafeLookRotation(GetAimRay().direction),
@@ -69,7 +71,6 @@ namespace Cloudburst.Cores.States.Wyatt
                         speedOverride = 500
                     };
                     EffectManager.SimpleMuzzleFlash(Resources.Load<GameObject>("prefabs/effects/muzzleflashes/MuzzleflashWinch"), base.gameObject, "WinchHole", true);
-                    LogCore.LogI(outer.customName);
                     ProjectileManager.instance.FireProjectile(fireProjectileInfo);
                     base.PlayAnimation("Fullbody, Override", "kick");
                 }
@@ -79,6 +80,7 @@ namespace Cloudburst.Cores.States.Wyatt
         }
 
         public void SetHookReference(GameObject winch) {
+            LogCore.LogI("got winch!");
             _winch = winch;
         }
 
@@ -101,6 +103,7 @@ namespace Cloudburst.Cores.States.Wyatt
                     {
                         //LogCore.LogI(stopwatch);
                         this.activatorSkillSlot.AddOneStock();
+                        Cloudburst.Destroy(_winch);
                         characterMotor.velocity = Vector3.zero;         
                         LogCore.LogI("Can't reach target, skill refunded!");
                         this.outer.SetNextStateToMain();
@@ -129,10 +132,10 @@ namespace Cloudburst.Cores.States.Wyatt
                             procCoefficient = 1f,
                             radius = 5
                         }.Fire();
-                        if (_winch)
-                        {
-                            _winch.GetComponent<WyattWinchManager>().OnHit();
-                        }
+
+                        LogCore.LogI("called onhit!!!");
+                        Cloudburst.Destroy(_winch);
+
                         EffectData effectData = new EffectData
                         {
                             rotation = Quaternion.identity,
@@ -155,12 +158,16 @@ namespace Cloudburst.Cores.States.Wyatt
                 }
                 else
                 {
+                    Cloudburst.Destroy(_winch);
+
                     outer.SetNextStateToMain();
                 }
             }
             else
             {
                 LogCore.LogE("Something is seriously fucked. Stage: " + stage.ToString());
+                Cloudburst.Destroy(_winch);
+
                 characterMotor.velocity = Vector3.zero;
                 this.outer.SetNextStateToMain();
 
@@ -170,6 +177,7 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void OnExit()
         {
             base.OnExit();
+            Cloudburst.Destroy(_winch);
             base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
         }
 
