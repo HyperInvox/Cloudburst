@@ -42,7 +42,7 @@ namespace Cloudburst.Cores
 
             LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_NAME", "One with the Planet");
             LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_UNLOCKABLE_NAME", "One with the Planet");
-            LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_DESC", "In a single run, reach the maximum level");
+            LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_DESC", "In a single run, reach level 35");
 
             LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "Custodian: Mastery");
             LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "Custodian: Mastery");
@@ -50,7 +50,7 @@ namespace Cloudburst.Cores
         }
 
         public static string GetUnlockableString(string name) {
-            if (Cloudburst.EnableUnlockAll.Value) {
+            if (CloudburstPlugin.EnableUnlockAll.Value) {
                 //takes a village to fake a whole culture!
                 return "";
             }

@@ -36,6 +36,8 @@ namespace Cloudburst.Cores.HAND
         public WyattComboScript script;
         #endregion
 
+        public GameObject wyattMonsterMaster;
+
         public static string trashOutStateName;
 
 
@@ -72,8 +74,17 @@ namespace Cloudburst.Cores.HAND
             SetSkills();
             CreateSurvivorDef();
             Hook();
+            CreateUmbra();
 
             On.RoR2.Projectile.SlowDownProjectiles.OnTriggerEnter += SlowDownProjectiles_OnTriggerEnter;
+        }
+
+        private void CreateUmbra()
+        {
+            wyattMonsterMaster = Resources.Load<GameObject>("prefabs/charactermasters/LoaderMonsterMaster").InstantiateClone("WyattMonsterMaster", true);
+            CloudUtils.RegisterNewMaster(wyattMonsterMaster);
+
+            wyattMonsterMaster.GetComponent<CharacterMaster>().bodyPrefab = wyattBody;
         }
 
         private void SlowDownProjectiles_OnTriggerEnter(On.RoR2.Projectile.SlowDownProjectiles.orig_OnTriggerEnter orig, SlowDownProjectiles self, Collider other)

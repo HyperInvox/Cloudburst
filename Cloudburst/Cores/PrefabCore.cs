@@ -18,7 +18,7 @@ namespace Cloudburst.Cores
         {
             LogCore.LogI("Initializing Core: " + base.ToString());
 
-            Cloudburst.start += CreateMushrumPillarEffect;
+            CloudburstPlugin.start += CreateMushrumPillarEffect;
         }
 
         public void CreateMushrumPillarEffect()

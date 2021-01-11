@@ -103,7 +103,7 @@ namespace Cloudburst.Cores.States.Wyatt
                     {
                         //LogCore.LogI(stopwatch);
                         this.activatorSkillSlot.AddOneStock();
-                        Cloudburst.Destroy(_winch);
+                        CloudburstPlugin.Destroy(_winch);
                         characterMotor.velocity = Vector3.zero;         
                         LogCore.LogI("Can't reach target, skill refunded!");
                         this.outer.SetNextStateToMain();
@@ -134,7 +134,7 @@ namespace Cloudburst.Cores.States.Wyatt
                         }.Fire();
 
                         LogCore.LogI("called onhit!!!");
-                        Cloudburst.Destroy(_winch);
+                        CloudburstPlugin.Destroy(_winch);
 
                         EffectData effectData = new EffectData
                         {
@@ -158,7 +158,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 }
                 else
                 {
-                    Cloudburst.Destroy(_winch);
+                    CloudburstPlugin.Destroy(_winch);
 
                     outer.SetNextStateToMain();
                 }
@@ -166,7 +166,7 @@ namespace Cloudburst.Cores.States.Wyatt
             else
             {
                 LogCore.LogE("Something is seriously fucked. Stage: " + stage.ToString());
-                Cloudburst.Destroy(_winch);
+                CloudburstPlugin.Destroy(_winch);
 
                 characterMotor.velocity = Vector3.zero;
                 this.outer.SetNextStateToMain();
@@ -177,7 +177,7 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void OnExit()
         {
             base.OnExit();
-            Cloudburst.Destroy(_winch);
+            CloudburstPlugin.Destroy(_winch);
             base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
         }
 

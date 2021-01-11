@@ -24,12 +24,12 @@ namespace Cloudburst.Cores.States.Wyatt
             FireProjectileInfo info = new FireProjectileInfo()
             {
                 crit = RollCrit(),
-                damage = 3 * damageStat,
+                damage = 0,
                 damageColorIndex = RoR2.DamageColorIndex.Default,
-                damageTypeOverride = DamageType.Shock5s,
-                force = 2500,
+                damageTypeOverride = DamageType.Generic,
+                force = 0,
                 owner = gameObject,
-                position = transform.position,
+                position = aimRay.origin,
                 procChainMask = default,
                 projectilePrefab = ProjectileCore.wyattMaidBubble,
                 rotation = Util.QuaternionSafeLookRotation(aimRay.direction),

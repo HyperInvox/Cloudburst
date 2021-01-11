@@ -63,9 +63,9 @@ public class PrefabBuilder
 
         void SetupModelBase()
         {
-            Cloudburst.Cloudburst.Destroy(prefab.transform.Find("ModelBase").gameObject);
-            Cloudburst.Cloudburst.Destroy(prefab.transform.Find("CameraPivot").gameObject);
-            Cloudburst.Cloudburst.Destroy(prefab.transform.Find("AimOrigin").gameObject);
+            Cloudburst.CloudburstPlugin.Destroy(prefab.transform.Find("ModelBase").gameObject);
+            Cloudburst.CloudburstPlugin.Destroy(prefab.transform.Find("CameraPivot").gameObject);
+            Cloudburst.CloudburstPlugin.Destroy(prefab.transform.Find("AimOrigin").gameObject);
 
             modelBase.transform.parent = prefab.transform;
             modelBase.transform.localPosition = new Vector3(0f, -0.81f, 0f);

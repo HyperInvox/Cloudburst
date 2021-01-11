@@ -35,7 +35,7 @@ namespace Cloudburst
         "OrbAPI"
     })]
 
-    public class Cloudburst : BaseUnityPlugin
+    public class CloudburstPlugin : BaseUnityPlugin
     {
         //be unique, though you're the same here.
 
@@ -43,7 +43,7 @@ namespace Cloudburst
         const string modName = "Cloudburst";
         const string version = "1.0.0";
 
-        public static Cloudburst instance;
+        public static CloudburstPlugin instance;
 
         /// <summary>
         /// Called BEFORE the first frame of the game.
@@ -73,7 +73,7 @@ namespace Cloudburst
         private BuffCore buffCore;
         private DoTCore dotCore;
         private EffectCore effectCore;
-        private DebuggingCore debugCore;
+        //private DebuggingCore debugCore;
         private PrefabCore prefabCore;
         //private ShitpostCore lolCore;
 
@@ -102,10 +102,8 @@ namespace Cloudburst
         #endregion
 
         #region Config
-        public static ConfigEntry<bool> EnableHAND;
-        public static ConfigEntry<bool> EnableClaymen;
+        public static ConfigEntry<bool> EnableWyatt;
         public static ConfigEntry<bool> EnableSipSip;
-        public static ConfigEntry<bool> EnableArchaicWisps;
         public static ConfigEntry<bool> EnableElites;
         public static ConfigEntry<bool> EnableCommando;
         public static ConfigEntry<bool> EnableEngineer;
@@ -121,7 +119,7 @@ namespace Cloudburst
         private static int vanillaErrors = 0;
         private static int modErrors = 0;
 
-        public Cloudburst()
+        public CloudburstPlugin()
         {
             LogCore.logger = Logger;
             BepInEx.Logging.Logger.Listeners.Add(new ErrorListener());
@@ -158,10 +156,8 @@ namespace Cloudburst
         {
             //learn a smile
             //as every good day goes on by
-            EnableHAND = Config.Bind("Cloudburst :: HAN-D", "Enabled", true, "Enables HAN-D as a survivor. Set to false to disable HAN-D.");
-            EnableClaymen = Config.Bind("Cloudburst :: Clay Men", "Enabled", true, "Enables Clay Men as enemies. Set to false to disable Clay Men.");
+            EnableWyatt = Config.Bind("Cloudburst :: Wyatt", "Enabled", true, "Enables Custodian as a survivor. Set to false to disable Custodian.");
             EnableSipSip = Config.Bind("Cloudburst :: SipSip", "Enabled", true, "Enables SipSip as a potential 5th lunar scavenger. Set to false to disable SipSip.");
-            EnableArchaicWisps = Config.Bind("Cloudburst :: Archaic Wisps", "Enabled", true, "Enables Archaic Wisps as enemies. Set to false to disable Arcahic Wisps.");
             EnableElites = Config.Bind("Cloudburst :: Elites", "Enabled", true, "Enables custom elites. Set to false to disable Cloudburst's elites.");
             EnableRex = Config.Bind("Cloudburst :: REX", "Enabled", true, "Enables Cloudburst's modifications to REX. Set to false to disable Cloudburst's modifications to REX.");
             EnableCommando = Config.Bind("Cloudburst :: Commando", "Enabled", true, "Enables Cloudburst's modifications to Commando. Set to false to disable Cloudburst's modifications to Commando.");
@@ -221,7 +217,7 @@ namespace Cloudburst
                 {
                     eliteCore = new EliteCore();
                 }
-                if (EnableHAND.Value)
+                if (EnableWyatt.Value)
                 {
                     // han_dCore = new HAN_DCore();
                 }
@@ -236,14 +232,6 @@ namespace Cloudburst
                 if (EnableSipSip.Value)
                 {
                     sipsipCore = new SipSipCore();
-                }
-                if (EnableClaymen.Value)
-                {
-                    // clayCore = new ClayMenCore();
-                }
-                if (EnableArchaicWisps.Value)
-                {
-                    // archwispCore = new ArchaicWispCore();
                 }
                 wyattCore = new WyattCore();
                 if (EnableRex.Value)
@@ -309,7 +297,7 @@ namespace Cloudburst
 
         public void Awake()
         {
-            Action awake = Cloudburst.awake;
+            Action awake = CloudburstPlugin.awake;
             if (awake == null)
             {
                 return;
@@ -319,7 +307,7 @@ namespace Cloudburst
 
         public void FixedUpdate()
         {
-            Action fixedUpdate = Cloudburst.onFixedUpdate;
+            Action fixedUpdate = CloudburstPlugin.onFixedUpdate;
             if (fixedUpdate == null)
             {
                 return;
@@ -329,7 +317,7 @@ namespace Cloudburst
 
         public void Start()
         {
-            Action awake = Cloudburst.start;
+            Action awake = CloudburstPlugin.start;
             if (awake == null)
             {
                 return;
@@ -339,9 +327,9 @@ namespace Cloudburst
 
         public void OnEnable()
         {
-            SingletonHelper.Assign<Cloudburst>(Cloudburst.instance, this);
+            SingletonHelper.Assign<CloudburstPlugin>(CloudburstPlugin.instance, this);
             LogCore.LogI("Cloudburst instance assigned.");
-            Action awake = Cloudburst.onEnable;
+            Action awake = CloudburstPlugin.onEnable;
             if (awake == null)
             {
                 return;
@@ -351,9 +339,9 @@ namespace Cloudburst
 
         public void OnDisable()
         {
-            SingletonHelper.Unassign<Cloudburst>(Cloudburst.instance, this);
+            SingletonHelper.Unassign<CloudburstPlugin>(CloudburstPlugin.instance, this);
             LogCore.LogI("Cloudburst instance unassigned.");
-            Action awake = Cloudburst.onDisable;
+            Action awake = CloudburstPlugin.onDisable;
             if (awake == null)
             {
                 return;

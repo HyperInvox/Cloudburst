@@ -31,7 +31,7 @@ namespace Cloudburst.Cores
             Skills();
 
             BuildBody();
-            Cloudburst.start += FixAncientWispPillarEffect;
+            CloudburstPlugin.start += FixAncientWispPillarEffect;
         }
     
         private void FixAncientWispPillarEffect()

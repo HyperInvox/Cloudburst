@@ -49,7 +49,7 @@ namespace Cloudburst.Achievements
 
         private void RoR2Application_onFixedUpdate()
         {
-            if (body && body.level == TeamManager.naturalLevelCap) {
+            if (body && body.level == 35) {
                 base.Grant();
             }   
         }
@@ -59,6 +59,7 @@ namespace Cloudburst.Achievements
             base.OnUninstall();
             if (localUser != null && localUser.cachedBody)
             {
+                body = null;
                 localUser.onBodyChanged -= LocalUser_onBodyChanged;
             }
             RoR2Application.onFixedUpdate -= RoR2Application_onFixedUpdate;

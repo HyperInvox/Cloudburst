@@ -450,7 +450,7 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("ITEM_MONEYONINTERACTION_PICKUP", "Activating an interactable gives gold");
 
             LanguageAPI.Add("ITEM_BARRIERONCRIT_NAME", "Topaz Lens");
-            LanguageAPI.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>10 health</style> <style=cStack>(+2.5 per stack)</style>.");
+            LanguageAPI.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.");
             LanguageAPI.Add("ITEM_BARRIERONCRIT_PICKUP", "Gain barrier on critical hits");
 
             LanguageAPI.Add("ITEM_BARRIERONLEVEL_NAME", "Broken Body Armor");
@@ -625,10 +625,10 @@ namespace Cloudburst.Cores
                     var inv = self.inventory;
                     var earringsCount = inv.GetItemCount(extendEnemyBuffDurationIndex);
                     var lemCount = inv.GetItemCount(lemdogIndex);
+                    var def = BuffCatalog.GetBuffDef(buffType);
 
                     if (lemCount > 0)
                     {
-                        var def = BuffCatalog.GetBuffDef(buffType);
                         if (def.isDebuff && Util.CheckRoll(25 + (lemCount * 2.5f), self.master))
                         {
                             var random = Random.Range(0, lemdogList.Count);
@@ -636,7 +636,7 @@ namespace Cloudburst.Cores
                             buffType = buff;
                         }
                     }
-                    if (earringsCount > 0 && buffType != BuffIndex.MedkitHeal & buffType != BuffIndex.ElementalRingsCooldown)
+                    if (earringsCount > 0 && buffType != BuffIndex.MedkitHeal & buffType != BuffIndex.ElementalRingsCooldown && !def.isDebuff)
                     {
                         //do thing???
                         duration += 1 + (1 * earringsCount);
@@ -726,14 +726,14 @@ namespace Cloudburst.Cores
         {
             if (body && procCoefficient > 0f && body && master && master.inventory)
             {
-                var masterInventory = master.inventory;
-                var healthComponent = body.healthComponent;
+                Inventory masterInventory = master.inventory;
+                HealthComponent healthComponent = body.healthComponent;
                 int topazLense = masterInventory.GetItemCount(barrierOnCritIndex);
                 //int lightningEye = masterInventory.GetItemCount(lightningOnCritIndex);
                 if (topazLense > 0 && healthComponent)
                 {
                     //oddly, this doesn't null reference
-                    healthComponent.AddBarrier(7.5f + (topazLense * 2.5f));
+                    healthComponent.AddBarrier(5f + (topazLense * 3f));
                 }
             }
             orig(self, body, master, procCoefficient, procChainMask);

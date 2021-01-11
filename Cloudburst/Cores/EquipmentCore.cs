@@ -277,7 +277,7 @@ namespace Cloudburst.Cores
                 damage = 5 * user.damage,
                 owner = user.gameObject,
                 position = user.transform.position,
-                projectilePrefab = ProjectileCore.MIRVProjectile,
+                //projectilePrefab = ProjectileCore.MIRVProjectile,
                 rotation = Util.QuaternionSafeLookRotation(aimRay.aimDirection),
             };
             ProjectileManager.instance.FireProjectile(projInfo);

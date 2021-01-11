@@ -6,6 +6,7 @@ using RoR2;
 using RoR2.Projectile;
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Cloudburst.Cores
 {
@@ -19,9 +20,6 @@ namespace Cloudburst.Cores
 
         public static GameObject mushrumDelaySproutingMushroom;
         public static GameObject mushrumSproutingMushroom;
-
-        public static GameObject MIRVProjectile;
-        public static GameObject MIRVClusterProjectile;
 
         public static GameObject stickyProjectile;
         private GameObject stickyGhost;
@@ -50,33 +48,19 @@ namespace Cloudburst.Cores
 
             CreateBombardierProjectiles();
             CreateWyattMaidBubble();
-            CreateOrbitalOrbs();
+            //CreateOrbitalOrbs();
             CreateWinchGhost();
             CreateWinchProjectile();
-            CreateMiscProjectiles();
-            CreateSproutingMushroom();
-            CreateDelaySproutingMushroom();
+            //CreateSproutingMushroom();
+            //CreateDelaySproutingMushroom();
 
-            CreateElectricPillarGhost();
-            CreateElectricPillar();
-            CreateElectricProjectile(); ;
+            //CreateElectricPillarGhost();
+            //CreateElectricPillar();
+            //CreateElectricProjectile(); ;
             
         }
 
         #region Misc   
-        protected private void CreateMiscProjectiles() {
-            CreateMIRVProjectile();
-        }
-
-        protected private void CreateMIRVProjectile()
-        {
-            MIRVProjectile = Resources.Load<GameObject>("prefabs/projectiles/CryoCanisterBombletsProjectile").InstantiateClone("MIRVEquipmentProjectile", true);
-            MIRVClusterProjectile = Resources.Load<GameObject>("prefabs/projectiles/CryoCanisterBombletsProjectile").InstantiateClone("MIRVClusterEquipmentProjectile", true);
-            if (CloudUtils.RegisterNewProjectile(MIRVProjectile) && CloudUtils.RegisterNewProjectile(MIRVClusterProjectile))
-            {
-            }
-            else LogCore.LogF("FATAL ERROR:" + MIRVProjectile.name + " failed to register!");
-        }
         #endregion
         #region Elite
 
@@ -110,11 +94,11 @@ namespace Cloudburst.Cores
         #region Mega Mushrum
         protected private void CreateDelaySproutingMushroom()
         {
-            mushrumDelaySproutingMushroom = Resources.Load<GameObject>("prefabs/projectiles/SporeGrenadeProjectile").InstantiateClone("MegaMushrumDelaySproutingMushroom", true);
-            if (CloudUtils.RegisterNewProjectile(MIRVProjectile))
-            {
-                mushrumDelaySproutingMushroom.GetComponent<ProjectileImpactExplosion>().childrenProjectilePrefab = mushrumSproutingMushroom;
-            }
+            //mushrumDelaySproutingMushroom = Resources.Load<GameObject>("prefabs/projectiles/SporeGrenadeProjectile").InstantiateClone("MegaMushrumDelaySproutingMushroom", true);
+            //if (CloudUtils.RegisterNewProjectile(MIRVProjectile))
+            //{
+            //    mushrumDelaySproutingMushroom.GetComponent<ProjectileImpactExplosion>().childrenProjectilePrefab = mushrumSproutingMushroom;
+            //}
         }
         protected private void CreateSproutingMushroom()
         {
@@ -134,17 +118,17 @@ namespace Cloudburst.Cores
                     if (child.name != "IndicatorSphere")
                     {
                         //child.gameObject.SetActive(false); 
-                        Cloudburst.Destroy(child.gameObject);
+                        CloudburstPlugin.Destroy(child.gameObject);
                     }
                     else
                     {
                         indicator = child.gameObject.InstantiateClone("GenericIndicator", false);
                     }
                 }
-                Cloudburst.Destroy(container.gameObject);
-                Cloudburst.Destroy(fx.gameObject);
+                CloudburstPlugin.Destroy(container.gameObject);
+                CloudburstPlugin.Destroy(fx.gameObject);
 
-                var newChild = Cloudburst.Instantiate<GameObject>(indicator);
+                var newChild = CloudburstPlugin.Instantiate<GameObject>(indicator);
                 newChild.transform.SetParent(mushrumSproutingMushroom.transform);
             }
         }
@@ -334,7 +318,7 @@ namespace Cloudburst.Cores
 
 
 
-                Cloudburst.Destroy(impact);
+                CloudburstPlugin.Destroy(impact);
 
                 winch.AddComponent<WyattWinchManager/*:^))*/>();
                 
@@ -381,18 +365,131 @@ namespace Cloudburst.Cores
         {
             //wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
 
-            wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
+            wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Attempt4");
+
+            var ward = Resources.Load<GameObject>("prefabs/networkedobjects/TimeBubbleWard");
+            var origVisuals = ward.transform.Find("Visuals+Collider/Sphere");
+            var origRenderer = origVisuals.GetComponent<Renderer>();
 
             CloudUtils.CreateValidProjectile(wyattMaidBubble, float.MaxValue, 0, true);
 
 
-            //game objects
-            var activatedWard = Resources.Load<GameObject>("prefabs/networkedobjects/TimeBubbleWard");
 
-            var origVisuals = activatedWard.transform.Find("Visuals+Collider/Sphere");
-            var origRenderer = origVisuals.GetComponent<Renderer>();
 
-            //var mdl = wyattMaidBubble.transform.Find("mdlWyattMaid");
+
+            #region what the fuck is wrong with me?
+            /*var networkIdentity = wyattMaidBubble.AddComponent<NetworkIdentity>();
+            var teamFilter = wyattMaidBubble.AddComponent<TeamFilter>();
+            var controller = wyattMaidBubble.AddComponent<ProjectileController>();
+            var networkTransform = wyattMaidBubble.AddComponent<ProjectileNetworkTransform>();
+            var projectileSimple = wyattMaidBubble.AddComponent<ProjectileSimple>();
+            var torque = wyattMaidBubble.AddComponent<ApplyTorqueOnStart>();
+
+            SetupMAID();
+            EnemyBuffWard();
+            SetupProjectileSlow();
+
+            void SetupMAID()
+            {
+                wyattMaidBubble.layer = LayerIndex.projectile.intVal;
+
+                networkIdentity.localPlayerAuthority = true;
+
+                controller.procCoefficient = 0;
+
+                networkTransform.positionTransmitInterval = 0.03333334f;
+                networkTransform.interpolationFactor = 1;
+                networkTransform.allowClientsideCollision = false;
+
+                projectileSimple.velocity = 0;
+                projectileSimple.lifetime = float.MaxValue;
+                projectileSimple.updateAfterFiring = false;
+                projectileSimple.enableVelocityOverLifetime = false;
+                projectileSimple.oscillate = false;
+                projectileSimple.oscillateMagnitude = 20;
+                projectileSimple.oscillateSpeed = 0;
+
+                //torque.localTorque = new Vector3(6000, 6000, 6000);
+                //torque.randomize = true;
+
+                //removed cause it did nothing useful lmao
+                var noGravForce = wyattMaidBubble.AddComponent<AntiGravityForce>();
+                noGravForce.antiGravityCoefficient = 1f;
+                noGravForce.rb = wyattMaidBubble.GetComponent<Rigidbody>();
+
+                SetupGrapplCollider();
+                    SetupCounterBalance();
+                    SetupFakeActor();
+                void SetupGrapplCollider()
+                {
+                    var grappleCollider = wyattMaidBubble.transform.Find("GrappleCollider");
+                    var locator = grappleCollider.AddComponent<EntityLocator>();
+
+                    grappleCollider.gameObject.layer = LayerIndex.entityPrecise.intVal;
+                    locator.entity = wyattMaidBubble;
+                }
+
+
+                void SetupCounterBalance()
+                {
+                    var counterBalance = wyattMaidBubble.transform.Find("CounterBalance");
+                    counterBalance.gameObject.layer = LayerIndex.noCollision.intVal;
+                }
+
+                void SetupFakeActor()
+                {
+                    var fakeActorCollider = wyattMaidBubble.transform.Find("FakeActorCollision");
+                    fakeActorCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
+                }            }
+            void EnemyBuffWard() {
+                var buffWardObject = wyattMaidBubble.transform.Find("Buffwards/EnemyBuffward");
+                BuffWard();
+                void BuffWard()
+                {
+                    //buffward
+                    var buffWard = buffWardObject.AddComponent<BuffWard>();
+                    buffWard.radius = 45;
+                    buffWard.interval = 0.2f;
+                    //buffWard.rangeIndicator = wyattMaidBubble.transform.Find("Buffwards/EnemyBuffward/SlowEnemiesAndProjectiles");
+                    buffWard.buffType = BuffCore.instance.antiGravIndex;
+                    buffWard.buffDuration = 2;
+                    buffWard.floorWard = false;
+                    buffWard.expires = false;
+                    buffWard.invertTeamFilter = true;
+                    buffWard.expireDuration = 15;
+                    buffWard.animateRadius = false;
+                    buffWard.radiusCoefficientCurve = ward.GetComponent<BuffWard>().radiusCoefficientCurve;
+                    buffWard.removalTime = 0;
+                    //buffWard.removalSoundString =
+                    //buffWard.onRemoval = UnityEngine.Events.UnityEvent UnityEngine.Events.UnityEvent
+                }
+            }
+            void SetupProjectileSlow()
+            {
+                SlowEnemiesAndProjectiles();
+                SetupSlowProjVisuals();
+
+                void SlowEnemiesAndProjectiles()
+                {
+                    var slowProjectiles = wyattMaidBubble.transform.Find("Buffwards/EnemyBuffward/SlowEnemiesAndProjectiles");
+                    var slow = slowProjectiles.AddComponent<SlowDownProjectiles>();
+
+                    slowProjectiles.gameObject.layer = LayerIndex.entityPrecise.intVal;
+
+                    slow.teamFilter = teamFilter;
+                    slow.maxVelocityMagnitude = 3;
+                    slow.antiGravity = 1;
+                }
+                void SetupSlowProjVisuals()
+                {
+                    var slowProjectilesVisuals = wyattMaidBubble.transform.Find("Buffwards/SlowEnemiesAndProjectiles/Visuals");
+                    slowProjectilesVisuals.GetComponent<MeshRenderer>().materials = origRenderer.materials;
+                }
+            }
+
+            CloudUtils.RegisterNewProjectile(wyattMaidBubble);
+
+            var mdl = wyattMaidBubble.transform.Find("mdlWyattMaid");
             var counterBalance = wyattMaidBubble.transform.Find("CounterBalance");
             var fakeActorCollider = wyattMaidBubble.transform.Find("FakeActorCollider");
 
@@ -407,34 +504,10 @@ namespace Cloudburst.Cores
 
             var visualsRenderer = visualsObject.GetComponent<Renderer>();
 
-            wyattMaidBubble.AddComponent<MAID>();
-
-            var torque = wyattMaidBubble.AddComponent<ApplyTorqueOnStart>();
-            torque.localTorque = new Vector3(6000, 6000, 6000);
-            torque.randomize = true;
-
-
-            /*var simp = wyattMaidBubble.GetComponent<ProjectileSimple>();
-            simp.velocity = 160;
-            simp.oscillateMagnitude = 20;*/
-
-
-            //var speen = mdl.AddComponent<Spinner>();
-            //var speen = mdl.AddComponent<Spinner>();
-
-            //removed cause it did nothing useful lmao
-            var noGravForce = wyattMaidBubble.AddComponent<AntiGravityForce>();
-            noGravForce.antiGravityCoefficient = 0f;
-            noGravForce.rb = wyattMaidBubble.GetComponent<Rigidbody>();
-
             SetupBuffward();
             SetupSlowProjectiles();
             SetupVisuals();
 
-            //projectileSlowObject.gameObject.SetActive(false);
-
-            //var noGravZone = antiGravDummy.AddComponent<FliteredNoGravZone>();
-            
             void SetupBuffward() {
                 TeamFilter();
                 BuffWard();
@@ -456,7 +529,7 @@ namespace Cloudburst.Cores
                     buffWard.invertTeamFilter = true;
                     buffWard.expireDuration = 15;
                     buffWard.animateRadius = false;
-                    buffWard.radiusCoefficientCurve = activatedWard.GetComponent<BuffWard>().radiusCoefficientCurve;
+                    buffWard.radiusCoefficientCurve = ward.GetComponent<BuffWard>().radiusCoefficientCurve;
                     buffWard.removalTime = 0;
                     //buffWard.removalSoundString =
                     //buffWard.onRemoval = UnityEngine.Events.UnityEvent UnityEngine.Events.UnityEvent
@@ -473,7 +546,8 @@ namespace Cloudburst.Cores
                 //you're flesh and blood - but what's underneath?
                 visualsRenderer.materials = origRenderer.materials;
                 //var rotate = visualsObject.AddComponent<Rewired.ComponentControls.Effects.RotateAroundAxis>
-            }
+            }*/
+            #endregion
 
             PrefabAPI.RegisterNetworkPrefab(wyattMaidBubble);
             CloudUtils.RegisterNewProjectile(wyattMaidBubble);

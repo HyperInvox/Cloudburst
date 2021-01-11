@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 2545863524
+CRC: 1813463811
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d4cb9a1c5ad7b609864ce0d1493c2462
+    Hash: 9d8d4f5f1b82c8b142864355eb1d0921
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -62,6 +62,7 @@ ClassTypes:
 Assets:
 - Assets/Cloudburst/Icons/Engineer/Impact_Grenades.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorRunForward.anim
+- Assets/Cloudburst/Survivors/Wyatt/lmao/WyattPylonMaid.prefab
 - Assets/Cloudburst/Survivors/Wyatt/animation/Armature_WeightPaintPose.anim
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnimator.controller
 - Assets/Cloudburst/Items/Earrings/Magicians_earings.fbx
@@ -320,6 +321,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Secondary.anim
 - Assets/Cloudburst/Teaser/tex/T_Executor_V2_Color.png
 - Assets/Cloudburst/Survivors/Bombardier/mdlBombardier.prefab
+- Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 3.mat
 - Assets/Cloudburst/Icons/Engineer/TR75_Immolator_Turret_2.png
 - Assets/Cloudburst/Survivors/Wyatt/old/d_secondaryicon.png
 - Assets/Cloudburst/Items/UESKeycard/Materials/keycard_normals.mat
