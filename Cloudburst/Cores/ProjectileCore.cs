@@ -57,7 +57,7 @@ namespace Cloudburst.Cores
             //CreateElectricPillarGhost();
             //CreateElectricPillar();
             //CreateElectricProjectile(); ;
-            
+
         }
 
         #region Misc   
@@ -171,7 +171,7 @@ namespace Cloudburst.Cores
             var winchController = newGhost.AddComponent<Components.WinchControl>();
             winchController.tailTransform = newGhost.transform.Find("Model/mdlHANDWinch/WinchArmature/WinchTail");
             newGhost.transform.SetParent(winchGhost.transform);
-            
+
         }
 
         protected private void CreateStickyProjectile()
@@ -233,7 +233,7 @@ namespace Cloudburst.Cores
             //MonoBehaviour.Destroy(impact);
 
             explosion.impactEffect = EffectCore.orbitalImpact;
-            explosion.offsetForLifetimeExpiredSound = 0; 
+            explosion.offsetForLifetimeExpiredSound = 0;
             explosion.destroyOnEnemy = true;
             explosion.destroyOnWorld = true;
             explosion.timerAfterImpact = false;
@@ -321,7 +321,7 @@ namespace Cloudburst.Cores
                 CloudburstPlugin.Destroy(impact);
 
                 winch.AddComponent<WyattWinchManager/*:^))*/>();
-                
+
 
                 winch.GetComponent<ProjectileController>().ghostPrefab = winchGhost;
 
@@ -367,15 +367,83 @@ namespace Cloudburst.Cores
 
             wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Attempt4");
 
-            var ward = Resources.Load<GameObject>("prefabs/networkedobjects/TimeBubbleWard");
-            var origVisuals = ward.transform.Find("Visuals+Collider/Sphere");
-            var origRenderer = origVisuals.GetComponent<Renderer>();
+            foreach (var thingie in wyattMaidBubble.GetComponent<ChildLocator>().transformPairs) {
+                GameObject gameObject = thingie.transform.gameObject;
+                switch (gameObject .name) {
+                    case "CounterBalance":
+                        var locator = gameObject.AddComponent<EntityLocator>();
+                        locator.entity = gameObject.transform.parent.gameObject;
+
+                        gameObject.layer = LayerIndex.entityPrecise.intVal;
+                        break;
+                    case "FakeActorCollider":
+                        gameObject.layer = LayerIndex.fakeActor.intVal;
+
+                        break;
+                    case "GrappleCollider":
+                        gameObject.layer = LayerIndex.fakeActor.intVal;
+
+                        break;
+                }
+
+            }
 
             CloudUtils.CreateValidProjectile(wyattMaidBubble, float.MaxValue, 0, true);
 
+            GameObject ward = Resources.Load<GameObject>("prefabs/networkedobjects/TimeBubbleWard");
+            Transform origVisuals = ward.transform.Find("Visuals+Collider/Sphere");
+            Renderer origRenderer = origVisuals.GetComponent<Renderer>();
 
+            Transform slowProjectiles = wyattMaidBubble.transform.Find("FUCKHOPOO/ProjectileSlow");
 
+            wyattMaidBubble.AddComponent<MAID>();
 
+            CreateProjectileSlow();
+            CreateBuffWard();
+
+            void CreateProjectileSlow()
+            {
+                SlowEnemiesAndProjectiles();
+                SetupSlowProjVisuals();
+                void SlowEnemiesAndProjectiles()
+                {
+                    var slow = slowProjectiles.AddComponent<SlowDownProjectiles>();
+
+                    slowProjectiles.gameObject.layer = LayerIndex.entityPrecise.intVal;
+
+                    slow.teamFilter = wyattMaidBubble.GetComponent < TeamFilter>();
+                    slow.maxVelocityMagnitude = 3;
+                    slow.antiGravity = 1;
+                }
+                void SetupSlowProjVisuals()
+                {
+                    slowProjectiles.GetComponent<MeshRenderer>().materials = origRenderer.materials;
+                }
+            }
+            void CreateBuffWard()
+            {
+                BuffWard buffWard = wyattMaidBubble.AddComponent<BuffWard>();
+                buffWard.radius = 25;
+                buffWard.interval = 0.5f;
+                buffWard.rangeIndicator = slowProjectiles;
+                buffWard.buffType = BuffCore.instance.antiGravIndex;
+                buffWard.buffDuration = 1.5f;
+                buffWard.floorWard = false;
+                buffWard.expires = false;
+                buffWard.invertTeamFilter = true;
+                buffWard.expireDuration = 15;
+                buffWard.animateRadius = false;
+                buffWard.radiusCoefficientCurve = new AnimationCurve();
+                buffWard.removalTime = 0;
+                //buffWard.removalSoundString =
+                //buffWard.onRemoval = UnityEngine.Events.UnityEvent UnityEngine.Events.UnityEvent
+            }
+
+            
+
+            PrefabAPI.RegisterNetworkPrefab(wyattMaidBubble);
+
+            CloudUtils.RegisterNewProjectile(wyattMaidBubble);
 
             #region what the fuck is wrong with me?
             /*var networkIdentity = wyattMaidBubble.AddComponent<NetworkIdentity>();
@@ -547,7 +615,6 @@ namespace Cloudburst.Cores
                 visualsRenderer.materials = origRenderer.materials;
                 //var rotate = visualsObject.AddComponent<Rewired.ComponentControls.Effects.RotateAroundAxis>
             }*/
-            #endregion
 
             PrefabAPI.RegisterNetworkPrefab(wyattMaidBubble);
             CloudUtils.RegisterNewProjectile(wyattMaidBubble);
@@ -577,6 +644,10 @@ namespace Cloudburst.Cores
             //activatedWard.transform.Find("Visuals+Collider").gameObject.AddComponent<FliteredNoGravZone>();*/
             //}
             //else LogCore.LogF("FATAL ERROR:" + wyattMaidBubble.name + " failed to register to the projectile catalog!");
+            #endregion
+
+
+
         }
 
         private protected void CreateBombardierPayloadProjectile()

@@ -126,30 +126,12 @@ namespace Cloudburst.Cores
                 buffColor = new Color(0.6784314f, 0.6117647f, 0.4117647f)
             });
 
-            On.RoR2.CharacterMotor.OnMovementHit += CharacterMotor_OnMovementHit;
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
             On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
             On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
-            On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround;
-            //On.RoR2.Projectile.ProjectileManager.FireProjectile_FireProjectileInfo += ProjectileManager_FireProjectile_FireProjectileInfo;
-        }
+            On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround;        }
 
-        private void CharacterMotor_OnMovementHit(On.RoR2.CharacterMotor.orig_OnMovementHit orig, CharacterMotor self, Collider hitCollider, Vector3 hitNormal, Vector3 hitPoint, ref KinematicCharacterController.HitStabilityReport hitStabilityReport)
-        {
-
-            //var provider = SurfaceDefProvider.GetObjectSurfaceDef(hitCollider, hitPoint);
-
-            //LogCore.LogI(self.lastVelocity);
-            orig(self, hitCollider, hitNormal, hitPoint, ref hitStabilityReport);
-
-        }
-
-        private void ProjectileManager_FireProjectile_FireProjectileInfo(On.RoR2.Projectile.ProjectileManager.orig_FireProjectile_FireProjectileInfo orig, RoR2.Projectile.ProjectileManager self, RoR2.Projectile.FireProjectileInfo fireProjectileInfo)
-        {
-            LogCore.LogI(fireProjectileInfo.projectilePrefab.name);
-            orig(self, fireProjectileInfo);
-        }
 
         private void CharacterMotor_OnDeathStart(On.RoR2.CharacterMotor.orig_OnDeathStart orig, CharacterMotor self)
         {
@@ -195,18 +177,24 @@ namespace Cloudburst.Cores
 
         private void CharacterBody_AddBuff(On.RoR2.CharacterBody.orig_AddBuff orig, CharacterBody self, BuffIndex buffType)
         {
-            bool shouldOrigSelf = true;
-            if (self)
-            {
-                if (buffType == this.antiGravIndex && self.teamComponent && self.teamComponent.teamIndex == TeamIndex.Player)
+            orig(self, buffType);
+            if (buffType == antiGravFriendlyIndex) {
+                ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
+                if (component != null)
                 {
-                    shouldOrigSelf = false;
-                    //self.AddTimedBuff(this.antiGravFriendlyIndex, 10);
+                    CharacterFlightParameters flightParameters = component.flightParameters;
+                    flightParameters.channeledFlightGranterCount++;
+                    //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
+                    component.flightParameters = flightParameters;
                 }
-            }
-            if (shouldOrigSelf)
-            {
-                orig(self, buffType);
+                ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
+                if (component2 != null)
+                {
+                    CharacterGravityParameters gravityParameters = component2.gravityParameters;
+                    gravityParameters.environmentalAntiGravityGranterCount++;
+                    //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
+                    component2.gravityParameters = gravityParameters;
+                }
             }
         }
 
@@ -220,7 +208,7 @@ namespace Cloudburst.Cores
                 }
             }
             if (buffType == antiGravFriendlyIndex) {
-                /*ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
+                ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
                 if (component != null)
                 {
                     CharacterFlightParameters flightParameters = component.flightParameters;
@@ -235,7 +223,7 @@ namespace Cloudburst.Cores
                     gravityParameters.environmentalAntiGravityGranterCount--;
                     //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
                     component2.gravityParameters = gravityParameters;
-                }*/
+                }
             }
 
             orig(self, buffType);

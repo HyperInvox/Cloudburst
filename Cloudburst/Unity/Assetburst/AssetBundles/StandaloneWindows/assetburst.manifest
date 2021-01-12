@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1813463811
+CRC: 2322297910
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 9d8d4f5f1b82c8b142864355eb1d0921
+    Hash: ce452219a457813e5089a8f72735d7f9
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -153,6 +153,7 @@ Assets:
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorIdle.anim
 - Assets/Cloudburst/Items/CarePackageRequester/carepackage.fbx
 - Assets/Cloudburst/Enemies/texExampleSurvivor.png
+- Assets/Cloudburst/Survivors/Wyatt/Attempt4.prefab
 - Assets/Cloudburst/Materials/texTrimSheetMetalVibrant.mat
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_texture_red.png
 - Assets/Cloudburst/Teaser/tex/Ice_Tool_Tex.png
@@ -319,6 +320,7 @@ Assets:
 - Assets/Cloudburst/753network/Crystallize/Ramp Ruby.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/Armature_M2.anim
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Secondary.anim
+- Assets/Cloudburst/Survivors/Wyatt/GrappleCollider.prefab
 - Assets/Cloudburst/Teaser/tex/T_Executor_V2_Color.png
 - Assets/Cloudburst/Survivors/Bombardier/mdlBombardier.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 3.mat

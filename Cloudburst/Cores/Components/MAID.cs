@@ -8,172 +8,111 @@ namespace Cloudburst.Cores.Components
     class MAID : MonoBehaviour
     {
         private ProjectileController controller;
-        private List<CharacterMotor> characterMotors;
-        private List<RigidbodyMotor> rigidBodies;
-        private float stopwatch;
+        /// <summary>
+        /// List containing ground enemies, like lemurians and beetles/
+        /// </summary>
+        private EnigmaticList<CharacterMotor> characterMotors;
+        private EnigmaticList<Rigidbody> rigidBodies;
 
+
+        private float stopwatch;
+        private ProjectileOwnerInfo owner = default;
         public void Awake()
         {
-            characterMotors = new List<CharacterMotor>();
-            rigidBodies = new List<RigidbodyMotor>();
+            characterMotors = new EnigmaticList<CharacterMotor>();
+            rigidBodies = new EnigmaticList<Rigidbody>();
 
             controller = base.gameObject.GetComponent<ProjectileController>();
-            //manager = controller.owner.GetComponent<MAIDManager>();
-            //LogCore.LogI(controller);
-            //LogCore.LogI(controller.___ownerNetId);
-            //LogCore.LogI(controller.owner);
-            //LogCore.LogI("ok bro. die.");
-            //body = controller.owner.GetComponent<CharacterBody>();
-            //manager.DeployMAIDAuthority(base.gameObject);
-            //else LogCore.LogF("DUUUUUDE WHAT IS WRONG WITH YOU????");
         }
 
-        public void Start() {
-
-            LogCore.LogI(controller);
-            LogCore.LogI(controller.___ownerNetId);
-            LogCore.LogI(controller.owner);
-            
-            controller.owner.GetComponent<MAIDManager>().DeployMAIDAuthority(base.gameObject);
+        public void Start()
+        {
+            owner = new ProjectileOwnerInfo(controller.owner, "");
+            owner.gameObject.GetComponent<MAIDManager>().DeployMAIDAuthority(base.gameObject);
         }
 
+        #region Collision
         public void OnTriggerEnter(Collider collider)
         {
-            var motor = collider.GetComponent<CharacterMotor>();
-            var rigidBody = collider.GetComponent<RigidbodyMotor>();
-            var rememberNOPROJECTILES = collider.GetComponent<ProjectileController>();
+            CharacterMotor motor = collider.GetComponent<CharacterMotor>();
+            CharacterBody body = collider.GetComponent<CharacterBody>();
+            Rigidbody rigid = collider.GetComponent<Rigidbody>();
 
-            if (motor)
+            if (motor && body && body.HasBuff(BuffCore.instance.antiGravIndex))
             {
-               // LogCore.LogI(Language.GetString(motor.body.baseNameToken) + " is entering the bubble. Adding to the list.");
                 characterMotors.Add(motor);
             }
-            if (rigidBody && !rememberNOPROJECTILES)
-            {
-                //LogCore.LogI(rigidBody.gameObject.name + " is entering the bubble. Adding to the list.");
-                rigidBodies.Add(rigidBody);
+            if (rigid && body && body.HasBuff(BuffCore.instance.antiGravIndex)) {
+                rigidBodies.Add(rigid);
             }
         }
 
         public void OnTriggerExit(Collider collider)
         {
-            var motor = collider.GetComponent<CharacterMotor>();
-            var rigidBody = collider.GetComponent<RigidbodyMotor>();
-            var rememberNOPROJECTILES = collider.GetComponent<ProjectileController>();
-
+            CharacterMotor motor = collider.GetComponent<CharacterMotor>();
+            Rigidbody rigid = collider.GetComponent<Rigidbody>();
             if (motor)
             {
-                //LogCore.LogI(Language.GetString(motor.body.baseNameToken) + " is leaving the bubble. Removing from the list.");
                 characterMotors.Remove(motor);
             }
-            if (rigidBody && !rememberNOPROJECTILES)
-            {
-                //LogCore.LogI(rigidBody.gameObject.name + " is leaving the bubble. Removing from the list.");
-                rigidBodies.Remove(rigidBody);
+            if (rigid && !motor) {
+                rigidBodies.Remove(rigid);
             }
         }
+        #endregion
 
-        private void FixedUpdate() {
-            stopwatch += Time.deltaTime;
-
-            if (stopwatch >= 1.5f) {
+        public void FixedUpdate() {
+            stopwatch += Time.fixedDeltaTime;
+            if (stopwatch >= 1.5f)
+            {
+                LogCore.LogI("proced MAID");
                 EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                 {
                     origin = transform.position,
                     scale = 2.5f
                 }, true);
-                for (int i = 0; i < this.characterMotors.Count; i++)
+                for (int i = 0; i < characterMotors.Count; i++)
                 {
-                    var motor = this.characterMotors[i];
-
-                    var body = motor.body;
-                    TeamIndex index = TeamIndex.None;
-                    if (body && body.teamComponent)
-                    {
-                        index = body.teamComponent.teamIndex;
-                    }
-
-                    if (motor && index == TeamIndex.Monster)
-                    {
-                        Vector3 normalized = (transform.position - motor.transform.position).normalized;
-
-                        motor.ApplyForce(normalized * 700, true, true);
-                        //Why won't you come home?
-                        /*EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
-                        {
-                            origin = motor.transform.position,
-                            scale = 5
-                        }, true);*/
-                    }
-
-                    //wait
-                    //else
-                    //{
-                    //    this.characterMotors.Remove(motor);
-                    //}
+                    HandleAntiGravMotor(characterMotors[i]);
                 }
-                for (int i = 0; i < this.rigidBodies.Count; i++)
+                for (int i = 0; i < rigidBodies.Count; i++)
                 {
-                    var rigid = this.rigidBodies[i];
-                    var body = rigid.gameObject.GetComponent<CharacterBody>();
-                    
-                    TeamIndex index = TeamIndex.None;
-                    if (body && body.teamComponent)
-                    {
-                        index = body.teamComponent.teamIndex;
-                    }
-
-                    if (rigid && index == TeamIndex.Monster && !body.characterMotor)
-                    {
-                        Vector3 normalized = (transform.position - rigid.transform.position).normalized;
-
-                        rigid.rigid.AddForce(normalized * 700, ForceMode.Impulse);
-                        /*EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
-                        {
-                            origin = rigid.transform.position,
-                            scale = 1
-                        }, true);*/
-
-                    }   
-                    else
-                    {
-                        this.rigidBodies.Remove(rigid);
-                    }
+                    HandleAntiGravRigid(rigidBodies[i]);
                 }
                 stopwatch = 0;
             }
         }
 
-            public void LiterallyDieJustForAFunnyVideo() {
-            var body = controller.owner.GetComponent<CharacterBody>();
+        private void HandleAntiGravMotor(CharacterMotor motor)
+        {
+            if (motor)
+            {
+                if (motor.isGrounded)
+                {
+                    motor.Motor.ForceUnground();
+                    motor.ApplyForce(new Vector3(0, motor.mass, 0), true, true);
+                }
+                Vector3 normalized = (transform.position - motor.transform.position).normalized;
+                motor.ApplyForce(normalized * 700, true, true);
+            }
+            else characterMotors.Remove(motor);
+        }
 
-            BlastAttack attack = new BlastAttack()
+        private void HandleAntiGravRigid(Rigidbody body)
+        {
+            if (body)
             {
-                attacker = controller.owner,
-                attackerFiltering = AttackerFiltering.Default,
-                baseDamage = 5  * body.damage,
-                baseForce = -3000,
-                bonusForce = new Vector3(0, 0, 0),
-                crit = body.RollCrit(),
-                damageColorIndex = DamageColorIndex.Default,
-                damageType = DamageType.Shock5s,
-                falloffModel = BlastAttack.FalloffModel.None,
-                impactEffect = EffectIndex.Invalid,
-                inflictor = base.gameObject,
-                losType = BlastAttack.LoSType.NearestHit,
-                position = base.transform.position,
-                procChainMask = default,
-                procCoefficient = 0.5f,
-                radius = 30,
-                teamIndex = TeamIndex.Player,
-            };
-            attack.Fire();
-            EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/VagrantNovaExplosion"), new EffectData
-            {
-                origin = transform.position,
-                scale = 30
-            }, true);
-            Destroy(base.gameObject);
+                Vector3 normalized = (transform.position - body.transform.position).normalized;
+                body.AddForce(normalized * 700, ForceMode.Acceleration);
+            }
+            else rigidBodies.Remove(body);
+        }
+
+
+        public void OnDestroy() {
+            //ensure that everything is wiped on death
+            characterMotors = null;
+            rigidBodies = null;
         }
     }
 }

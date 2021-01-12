@@ -95,7 +95,16 @@ namespace Cloudburst.Cores.HAND
             if (other.gameObject.name == "WyattWinch(Clone)")
             {
                 shouldOrigSelf = false;
+
             }
+            var con = other.gameObject.GetComponent<ProjectileController>();
+            if (con)
+            {
+                if (con.teamFilter && con.teamFilter.teamIndex == TeamIndex.Player) {
+                    shouldOrigSelf = false;
+                }
+            }
+
             if (shouldOrigSelf)
             {
                 orig(self, other);

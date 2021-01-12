@@ -9,7 +9,65 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Cloudburst.Cores.Components
-{
+{        /// <summary>
+         /// Contains basic info about the owner, such as  their character body, character motor, and their rigidbody. 
+         /// </summary>
+    public struct ProjectileOwnerInfo
+    {
+        public ProjectileOwnerInfo(GameObject ownerGameObject, string targetCustomName)
+        {
+            this = default(ProjectileOwnerInfo);
+            this.gameObject = ownerGameObject;
+            if (this.gameObject)
+            {
+                this.characterBody = this.gameObject.GetComponent<CharacterBody>();
+                this.characterMotor = this.gameObject.GetComponent<CharacterMotor>();
+                this.rigidbody = this.gameObject.GetComponent<Rigidbody>();
+                this.hasEffectiveAuthority = Util.HasEffectiveAuthority(this.gameObject);
+                EntityStateMachine[] components = characterBody.GetComponent<SetStateOnHurt>().idleStateMachine;
+                for (int i = 0; i < components.Length; i++)
+                {
+                    LogCore.LogI(components[i]);
+                    if (components[i].customName == targetCustomName)
+                    {
+                        this.stateMachine = components[i];
+                        return;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The owner's gameobject
+        /// </summary>
+        public readonly GameObject gameObject;
+
+        /// <summary>
+        /// The owner's characterBody
+        /// </summary>
+        public readonly CharacterBody characterBody;
+
+        /// <summary>
+        /// The owner's characterMotor
+        /// </summary>
+        public readonly CharacterMotor characterMotor;
+
+        /// <summary>
+        /// The owner's rigidbody
+        /// </summary>
+        public readonly Rigidbody rigidbody;
+
+        /// <summary>
+        /// The owner's selected statemachine
+        /// </summary>
+        public readonly EntityStateMachine stateMachine;
+
+        /// <summary>
+        /// If owner has authority
+        /// </summary>
+        public readonly bool hasEffectiveAuthority;
+    }
+
     class WyattWinchManager : MonoBehaviour
     {
         private MAIDManager maidManager;
@@ -44,63 +102,5 @@ namespace Cloudburst.Cores.Components
             //goodbye, world
                 Destroy(gameObject);
         }   
-        /// <summary>
-        /// Contains basic info about the owner, such as  their character body, character motor, and their rigidbody. 
-        /// </summary>
-        public struct ProjectileOwnerInfo
-        {
-            public ProjectileOwnerInfo(GameObject ownerGameObject, string targetCustomName)
-            {
-                this = default(ProjectileOwnerInfo);
-                this.gameObject = ownerGameObject;
-                if (this.gameObject)
-                {
-                    this.characterBody = this.gameObject.GetComponent<CharacterBody>();
-                    this.characterMotor = this.gameObject.GetComponent<CharacterMotor>();
-                    this.rigidbody = this.gameObject.GetComponent<Rigidbody>();
-                    this.hasEffectiveAuthority = Util.HasEffectiveAuthority(this.gameObject);
-                    EntityStateMachine[] components = characterBody.GetComponent<SetStateOnHurt>().idleStateMachine;
-                    for (int i = 0; i < components.Length; i++)
-                    {
-                        LogCore.LogI(components[i]);
-                        if (components[i].customName == targetCustomName)
-                        {
-                            this.stateMachine = components[i];
-                            return;
-                        }
-                    }
-                }
-            }
-
-            /// <summary>
-            /// The owner's gameobject
-            /// </summary>
-            public readonly GameObject gameObject;
-
-            /// <summary>
-            /// The owner's characterBody
-            /// </summary>
-            public readonly CharacterBody characterBody;
-
-            /// <summary>
-            /// The owner's characterMotor
-            /// </summary>
-            public readonly CharacterMotor characterMotor;
-
-            /// <summary>
-            /// The owner's rigidbody
-            /// </summary>
-            public readonly Rigidbody rigidbody;
-
-            /// <summary>
-            /// The owner's selected statemachine
-            /// </summary>
-            public readonly EntityStateMachine stateMachine;
-
-            /// <summary>
-            /// If owner has authority
-            /// </summary>
-            public readonly bool hasEffectiveAuthority;
-        }
     }
 }
