@@ -261,7 +261,7 @@ namespace Cloudburst.Cores
                 }
                 if (self.HasBuff(antiGravFriendlyIndex)) {
                     //LogCore.LogI(self.moveSpeed);
-                    self.SetPropertyValue("moveSpeed", moveSpeed * .9f);
+                    self.SetPropertyValue("moveSpeed", moveSpeed * 1);
                     //LogCore.LogI(self.moveSpeed);
                 }
                 if (self.HasBuff(wyattCombatIndex)) {

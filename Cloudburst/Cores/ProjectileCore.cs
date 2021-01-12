@@ -18,7 +18,7 @@ namespace Cloudburst.Cores
         public static GameObject bombardierFireBombProjectile;
         public static GameObject bombardierSeekerBombProjectile;
 
-        public static GameObject mushrumDelaySproutingMushroom;
+        //public static GameObject mushrumDelaySproutingMushroom;
         public static GameObject mushrumSproutingMushroom;
 
         public static GameObject stickyProjectile;
@@ -394,6 +394,8 @@ namespace Cloudburst.Cores
             Transform origVisuals = ward.transform.Find("Visuals+Collider/Sphere");
             Renderer origRenderer = origVisuals.GetComponent<Renderer>();
 
+
+            Transform friendly = wyattMaidBubble.transform.Find("FriendlyBuffWard");
             Transform slowProjectiles = wyattMaidBubble.transform.Find("FUCKHOPOO/ProjectileSlow");
 
             wyattMaidBubble.AddComponent<MAID>();
@@ -435,11 +437,26 @@ namespace Cloudburst.Cores
                 buffWard.animateRadius = false;
                 buffWard.radiusCoefficientCurve = new AnimationCurve();
                 buffWard.removalTime = 0;
-                //buffWard.removalSoundString =
+
+                if (CloudburstPlugin.EnableWyattFreeFlight.Value)
+                {
+                    BuffWard buffWard2 = wyattMaidBubble.AddComponent<BuffWard>();
+                    buffWard2.radius = 25;
+                    buffWard2.interval = 0.5f;
+                    buffWard2.rangeIndicator = null;
+                    buffWard2.buffType = BuffCore.instance.antiGravFriendlyIndex;
+                    buffWard2.buffDuration = 0.6f;
+                    buffWard2.floorWard = false;
+                    buffWard2.expires = false;
+                    buffWard2.invertTeamFilter = false;
+                    buffWard2.expireDuration = 15;
+                    buffWard2.animateRadius = false;
+                    buffWard2.radiusCoefficientCurve = new AnimationCurve();
+                    buffWard2.removalTime = 0;
+                }//buffWard.removalSoundString =
                 //buffWard.onRemoval = UnityEngine.Events.UnityEvent UnityEngine.Events.UnityEvent
             }
 
-            
 
             PrefabAPI.RegisterNetworkPrefab(wyattMaidBubble);
 

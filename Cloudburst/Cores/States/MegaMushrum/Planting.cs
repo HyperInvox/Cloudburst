@@ -92,7 +92,7 @@ namespace Cloudburst.Cores.States.MegaMushrum
                     Quaternion rotation = Util.QuaternionSafeLookRotation(raycastHit.normal);
 
 
-                    ProjectileManager.instance.FireProjectile(ProjectileCore.mushrumDelaySproutingMushroom, hitPoint, Util.QuaternionSafeLookRotation(Vector3.up * 20), base.gameObject, this.damageStat * SporeGrenades.damageCoefficient, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null);
+                    //ProjectileManager.instance.FireProjectile(ProjectileCore.mushrumDelaySproutingMushroom, hitPoint, Util.QuaternionSafeLookRotation(Vector3.up * 20), base.gameObject, this.damageStat * SporeGrenades.damageCoefficient, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null);
 
                 }
             }

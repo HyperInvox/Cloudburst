@@ -111,6 +111,8 @@ namespace Cloudburst
         public static ConfigEntry<bool> EnableItems;
         public static ConfigEntry<bool> EnableEquipment;
 
+        public static ConfigEntry<bool> EnableWyattFreeFlight;
+
         public static ConfigEntry<bool> EnableWIP;
         public static ConfigEntry<bool> EnableUnlockAll;
         public static ConfigEntry<bool> Enabled;
@@ -156,7 +158,8 @@ namespace Cloudburst
         {
             //learn a smile
             //as every good day goes on by
-            EnableWyatt = Config.Bind("Cloudburst :: Wyatt", "Enabled", true, "Enables Custodian as a survivor. Set to false to disable Custodian.");
+            EnableWyattFreeFlight = Config.Bind("Cloudburst :: Custodian", "Free Flight", true, "Enables Custodian's free flight mechanic. Set to false to disable it.");
+            EnableWyatt = Config.Bind("Cloudburst :: Custodian", "Enabled", true, "Enables Custodian as a survivor. Set to false to disable Custodian.");
             EnableSipSip = Config.Bind("Cloudburst :: SipSip", "Enabled", true, "Enables SipSip as a potential 5th lunar scavenger. Set to false to disable SipSip.");
             EnableElites = Config.Bind("Cloudburst :: Elites", "Enabled", true, "Enables custom elites. Set to false to disable Cloudburst's elites.");
             EnableRex = Config.Bind("Cloudburst :: REX", "Enabled", true, "Enables Cloudburst's modifications to REX. Set to false to disable Cloudburst's modifications to REX.");
