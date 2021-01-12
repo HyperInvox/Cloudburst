@@ -30,6 +30,7 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             base.OnEnter();
             tracker = base.gameObject.GetComponent<HANDDroneTracker>();
+            _winch = null;
 
             if (base.isAuthority)
             {
@@ -43,12 +44,8 @@ namespace Cloudburst.Cores.States.Wyatt
 
                 if (!isGrounded)
                 {
-                    //we good
-                }
-                else
-                {
-                    //We have to unground ourselves so we can actually hit the target.
                     base.SmallHop(base.characterMotor, 10f);
+                    //we good
                 }
 
                 if (target && target.healthComponent && target.healthComponent.alive)
@@ -166,7 +163,6 @@ namespace Cloudburst.Cores.States.Wyatt
             else
             {
                 LogCore.LogE("Something is seriously fucked. Stage: " + stage.ToString());
-                CloudburstPlugin.Destroy(_winch);
 
                 characterMotor.velocity = Vector3.zero;
                 this.outer.SetNextStateToMain();

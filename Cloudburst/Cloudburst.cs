@@ -125,7 +125,9 @@ namespace Cloudburst
         {
             LogCore.logger = Logger;
             BepInEx.Logging.Logger.Listeners.Add(new ErrorListener());
-            
+
+            On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
+
             //important!!
             ErrorListener.vanillaErrors.addition += VanillaErrors_addition;
             ErrorListener.modErrors.addition += ModErrors_addition;
@@ -245,7 +247,8 @@ namespace Cloudburst
                 {
                     wipCore = new HuntressCore();
                 }
-
+                //On.RoR2.CharacterBody.AddTimedBuff += GlobalHooks.CharacterBody_AddTimedBuff;
+                //On.RoR2.HealthComponent.TakeDamage += GlobalHooks.HealthComponent_TakeDamage;
 
                 //and thus
                 //we reach the end
@@ -262,6 +265,11 @@ namespace Cloudburst
             {
                 LogCore.LogW("You have disabled ALL of Cloudburst. If this was not desired, you can re-enable it in Cloudburst's config file.");
             }
+        }
+
+        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, RoR2.HealthComponent self, RoR2.DamageInfo damageInfo)
+        {
+            throw new NotImplementedException();
         }
 
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)

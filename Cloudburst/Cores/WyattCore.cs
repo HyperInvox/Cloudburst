@@ -278,13 +278,13 @@ namespace Cloudburst.Cores.HAND
             characterBody = wyattBody.GetComponent<CharacterBody>();
             MAIDManager janniePower = wyattBody.AddComponent<MAIDManager>();
             SfxLocator sfxLocator = wyattBody.GetComponent<SfxLocator>();
-            CharacterDeathBehavior characterDeathBehavior = wyattBody.GetComponent<CharacterDeathBehavior>();
+            //CharacterDeathBehavior characterDeathBehavior = wyattBody.GetComponent<CharacterDeathBehavior>();
             HANDDroneTracker tracker = wyattBody.AddComponent<HANDDroneTracker>();
             script = wyattBody.AddComponent<WyattComboScript>();
             wyattBody.AddComponent<WyattWalkmanBehavior>();
             //kil
-            LoadoutAPI.AddSkill(typeof(DeathState));
-            characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(DeathState));
+            //LoadoutAPI.AddSkill(typeof(DeathState));
+            //characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(DeathState));
 
             //sfx
             sfxLocator.fallDamageSound = "Play_MULT_shift_hit";
@@ -574,7 +574,7 @@ namespace Cloudburst.Cores.HAND
             LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
             LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. Applies <style=cIsUtility>Weightless</style>. Every 4th hit <style=cIsDamage>Spikes</style>.");
             LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
-            LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks the target directly toward the ground at dangerous speeds.</style>");
+            LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
 
             LoadoutAPI.AddSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
@@ -622,11 +622,11 @@ namespace Cloudburst.Cores.HAND
             secondarySkillDef.keywordTokens = new string[] {
                 // "KEYWORD_AGILE",
                 // "KEYWORD_CHARGEABLE",
-                // "KEYWORD_CLOCKED"
+                "KEYWORD_SPIKED"
              };
 
             LanguageAPI.Add(secondarySkillDef.skillNameToken, "Trash Out");
-            LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "<style=cIsDamage>Kick</style> toward a targeted enemy for <style=cIsDamage>X% damage</style>, knocking them back.");
+            LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
 
             LoadoutAPI.AddSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
@@ -837,25 +837,25 @@ namespace Cloudburst.Cores.HAND
             string desc = "AYO HOL' UP <color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > *SMACKS LIPS*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > SO WHAT YOU BE SAYIN' IS" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *HANDICAPS MOONFALL*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *CANCELS MOONFALL*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > HOL' UP" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > *DIVERTS ALL RESOURCES TO STARSTORM 2*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > SO WHAT YOU BE SAYIN' IS....." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *ONLY HAS ONE CODER ON MOONFALL*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *NO CODERS ON MOONFALL*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > AYO" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *SCOPE CREEP*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *DEATH*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > FINNA REALLY" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *DEVELOPMENT MOVES AT THE PACE OF A DYING SNAIL*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *NEVER RELEASES*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > WE GONNA FINNA" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *ONLY HAS TWO MODELERS ON MOONFALL*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *NO WORK ON MOONFALL*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > SO WHATCHOO SAYIN' IS" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *FINISHES NO CONTENT*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *FINISHES NOTHING*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > WE GONNA" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *LETS MODS BACK INTO DEV CHAT*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *ALMOST CANCELS MOD OVER GENO NOT GETTING INTO SMASH*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > FINNA" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > *NAMEDROPS*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > MAKE A MOD? SHIEEEEEEEEETTTTTTTTT" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *NEVER RELEASES*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *DIES*" + Environment.NewLine + Environment.NewLine;
 
             LanguageAPI.Add("WYATT_DESCRIPTION", desc);
             LanguageAPI.Add("WYATT_OUTRO_FLAVOR", "...and so he left, a job well done.");

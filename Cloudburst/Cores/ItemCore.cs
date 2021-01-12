@@ -679,13 +679,15 @@ namespace Cloudburst.Cores
                         }
                         var count = (int)0;
 
-                        if (inv2) {
+                        if (inv2)
+                        {
                             count = inv2.GetItemCount(barrierOnLevelIndex);
                         }
 
                         int experienceOnHitCount = inv.GetItemCount(experienceOnHitIndex);
 
-                        if (count > 0 && victimBody) {
+                        if (count > 0 && victimBody)
+                        {
                             victimBody.AddTimedBuff(BuffCore.instance.skinIndex, 5);
                         }
 

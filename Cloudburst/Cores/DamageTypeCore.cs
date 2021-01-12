@@ -44,9 +44,11 @@ namespace Cloudburst.Cores
             //bool isOsp2 = (damageInfo.damageType & DamageType.AOE) != DamageType.Generic;
 
             var rigid = self.body.rigidbody;
-            if (self.body) {
+            if (self.body)
+            {
                 var motor = self.body.characterMotor;
-                if (antiGravType && self.body) {
+                if (antiGravType && self.body)
+                {
                     //implement alternate behavior if it's a flier
                     if (self.body.characterMotor)
                     {

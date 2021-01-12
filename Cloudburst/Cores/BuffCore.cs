@@ -3,6 +3,7 @@ using R2API;
 using R2API.Utils;
 using RoR2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Cloudburst.Cores
 {
@@ -178,54 +179,68 @@ namespace Cloudburst.Cores
         private void CharacterBody_AddBuff(On.RoR2.CharacterBody.orig_AddBuff orig, CharacterBody self, BuffIndex buffType)
         {
             orig(self, buffType);
-            if (buffType == antiGravFriendlyIndex) {
-                ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
-                if (component != null)
+            if (self)
+            {
+                if (buffType == antiGravFriendlyIndex && self)
                 {
-                    CharacterFlightParameters flightParameters = component.flightParameters;
-                    flightParameters.channeledFlightGranterCount++;
-                    //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
-                    component.flightParameters = flightParameters;
-                }
-                ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
-                if (component2 != null)
-                {
-                    CharacterGravityParameters gravityParameters = component2.gravityParameters;
-                    gravityParameters.environmentalAntiGravityGranterCount++;
-                    //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
-                    component2.gravityParameters = gravityParameters;
+                    if (NetworkServer.active)
+                    {
+                        ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
+                        if (component != null)
+                        {
+                            CharacterFlightParameters flightParameters = component.flightParameters;
+                            flightParameters.channeledFlightGranterCount++;
+                            //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
+                            component.flightParameters = flightParameters;
+                        }
+                        ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
+                        if (component2 != null)
+                        {
+                            CharacterGravityParameters gravityParameters = component2.gravityParameters;
+                            gravityParameters.environmentalAntiGravityGranterCount++;
+                            //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
+                            component2.gravityParameters = gravityParameters;
+                        }
+                    }
                 }
             }
         }
 
         private void CharacterBody_RemoveBuff(On.RoR2.CharacterBody.orig_RemoveBuff orig, CharacterBody self, BuffIndex buffType)
         {
-            if (buffType == antiGravIndex)
+            if (self)
             {
-                if (self.characterMotor)
+                if (buffType == antiGravIndex)
                 {
-                    self.characterMotor.useGravity = true;
+                    if (self.characterMotor)
+                    {
+                        self.characterMotor.useGravity = true;
+                    }
                 }
-            }
-            if (buffType == antiGravFriendlyIndex) {
-                ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
-                if (component != null)
+                if (buffType == antiGravFriendlyIndex)
                 {
-                    CharacterFlightParameters flightParameters = component.flightParameters;
-                    flightParameters.channeledFlightGranterCount--;
-                    //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
-                    component.flightParameters = flightParameters;
+                    if (NetworkServer.active)
+                    {
+                        ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
+                        if (component != null)
+                        {
+                            CharacterFlightParameters flightParameters = component.flightParameters;
+                            flightParameters.channeledFlightGranterCount--;
+                            //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
+                            component.flightParameters = flightParameters;
+                        }
+                        ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
+                        if (component2 != null)
+                        {
+                            CharacterGravityParameters gravityParameters = component2.gravityParameters;
+                            gravityParameters.environmentalAntiGravityGranterCount--;
+                            //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
+                            component2.gravityParameters = gravityParameters;
+                        }
+                    }
                 }
-                ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
-                if (component2 != null)
-                {
-                    CharacterGravityParameters gravityParameters = component2.gravityParameters;
-                    gravityParameters.environmentalAntiGravityGranterCount--;
-                    //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
-                    component2.gravityParameters = gravityParameters;
-                }
-            }
 
+            }
             orig(self, buffType);
         }
 

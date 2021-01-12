@@ -31,8 +31,8 @@ namespace Cloudburst.Cores
         protected EquipmentIndex lunarEquip;
         protected EliteIndex lunarElite;
 
-        protected BuffIndex warIndex;
-        protected BuffIndex warFriendlyBuffIndex;
+        public BuffIndex warIndex;
+        public BuffIndex warFriendlyBuffIndex;
         protected EquipmentIndex warEquip;
         protected EliteIndex warElite;
 
@@ -469,7 +469,7 @@ namespace Cloudburst.Cores
                 //renderer.sharedMaterial.SetColor("_TintColor", new Color(75 / 255, 0 / 255, 130)); ;
             }
 
-            On.RoR2.CharacterBody.AddTimedBuff += CharacterBody_AddTimedBuff;
+            //On.RoR2.CharacterBody.AddTimedBuff += CharacterBody_AddTimedBuff;
         }
 
         private void CharacterBody_AddTimedBuff(On.RoR2.CharacterBody.orig_AddTimedBuff orig, CharacterBody self, BuffIndex buffType, float duration)
