@@ -250,8 +250,109 @@ public static class CloudUtils
         return result;
     }
 
+    public static ItemDisplayRuleSet.NamedRuleGroup CreateGenericDisplayRule(string itemName, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        LogCore.LogI("hi!!");
+        ItemDisplayRuleSet.NamedRuleGroup displayRule = new ItemDisplayRuleSet.NamedRuleGroup
+        {
+            name = itemName,
+            displayRuleGroup = new DisplayRuleGroup
+            {
 
+                rules = new ItemDisplayRule[]
+                {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            childName = childName,
+                            followerPrefab = CommonAssets.LoadDisplay(prefabName),
+                            limbMask = LimbFlags.None,
+                            localPos = position,
+                            localAngles = rotation,
+                            localScale = scale
+                        }
+                }
+            }
+        };
 
+        return displayRule;
+    }
+    public static ItemDisplayRuleSet.NamedRuleGroup CreateGenericDisplayRule(string itemName, GameObject itemPrefab, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        ItemDisplayRuleSet.NamedRuleGroup displayRule = new ItemDisplayRuleSet.NamedRuleGroup
+        {
+            name = itemName,
+            displayRuleGroup = new DisplayRuleGroup
+            {
+                rules = new ItemDisplayRule[]
+                {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            childName = childName,
+                            followerPrefab = itemPrefab,
+                            limbMask = LimbFlags.None,
+                            localPos = position,
+                            localAngles = rotation,
+                            localScale = scale
+                        }
+                }
+            }
+        };
+
+        return displayRule;
+    }
+
+    public static ItemDisplayRuleSet.NamedRuleGroup CreateFollowerDisplayRule(string itemName, string prefabName, Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        ItemDisplayRuleSet.NamedRuleGroup displayRule = new ItemDisplayRuleSet.NamedRuleGroup
+        {
+            name = itemName,
+            displayRuleGroup = new DisplayRuleGroup
+            {
+                rules = new ItemDisplayRule[]
+                {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            childName = "Base",
+                            followerPrefab = CommonAssets.LoadDisplay(prefabName),
+                            limbMask = LimbFlags.None,
+                            localPos = position,
+                            localAngles = rotation,
+                            localScale = scale
+                        }
+                }
+            }
+        };
+
+        return displayRule;
+    }
+    public static ItemDisplayRuleSet.NamedRuleGroup CreateFollowerDisplayRule(string itemName, GameObject itemPrefab, Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        ItemDisplayRuleSet.NamedRuleGroup displayRule = new ItemDisplayRuleSet.NamedRuleGroup
+        {
+            name = itemName,
+            displayRuleGroup = new DisplayRuleGroup
+            {
+                rules = new ItemDisplayRule[]
+                {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            childName = "Base",
+                            followerPrefab = itemPrefab,
+                            limbMask = LimbFlags.None,
+                            localPos = position,
+                            localAngles = rotation,
+                            localScale = scale
+                        }
+                }
+            }
+        };
+
+        return displayRule;
+    }
 
     #region Skills
     /// <summary>

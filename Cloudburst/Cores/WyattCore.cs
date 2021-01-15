@@ -14,6 +14,7 @@ using Cloudburst.Cores.States.Wyatt;
 using Cloudburst.Cores.Components.Wyatt;
 using UnityEngine.Networking;
 using Cloudburst.Cores.Components;
+using System.Collections.Generic;
 
 namespace Cloudburst.Cores.HAND
 {
@@ -242,7 +243,10 @@ namespace Cloudburst.Cores.HAND
                 builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
                 builder.masterySkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
                 builder.masterySkinDelegate = material;
-                builder.getAdditionalEntries += Builder_getAdditionalEntries; ;
+                builder.GetAdditionalRenderInfos += Builder_getAdditionalEntries; ;
+                builder.GetAdditionalItemDisplays += Builder_GetAdditionalItemDisplays;
+                builder.GetAdditionalEquipmentDisplays += Builder_GetAdditionalEquipmentDisplays;
+
 
                 wyattBody = builder.CreatePrefab();
                 Material material()
@@ -251,7 +255,7 @@ namespace Cloudburst.Cores.HAND
 
                 }
                 //this code will break if we change the name of the broom model
-                void Builder_getAdditionalEntries(System.Collections.Generic.List<CharacterModel.RendererInfo> arg1, Transform arg2)
+                void Builder_getAdditionalEntries(List<CharacterModel.RendererInfo> arg1, Transform arg2)
                 {
                     var broom = arg2.Find("Brom");
                     var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
@@ -265,7 +269,18 @@ namespace Cloudburst.Cores.HAND
             }
         }
 
-         
+        private void Builder_GetAdditionalEquipmentDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
+        {
+            LogCore.LogI("SETUP DISPLAY");
+            obj.Add(CloudUtils.CreateGenericDisplayRule("CritOnUse", "DisplayNeuralImplant", "Head_end", new Vector3(-0.008f, 0.006f, 0), new Vector3(0, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
+        }
+
+        private void Builder_GetAdditionalItemDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
+        {
+
+        }
+
+
 
 
         #endregion

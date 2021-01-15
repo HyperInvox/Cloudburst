@@ -5,6 +5,7 @@ using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -40,7 +41,13 @@ public class PrefabBuilder
 
     public string masteryAchievementUnlockable;
 
-    public event Action<EnigmaticList<CharacterModel.RendererInfo>, Transform> getAdditionalEntries;
+    public event Action<List<CharacterModel.RendererInfo>, Transform> GetAdditionalRenderInfos;
+
+    public event Action<List<ItemDisplayRuleSet.NamedRuleGroup>> GetAdditionalItemDisplays;
+   public event Action<List<ItemDisplayRuleSet.NamedRuleGroup>> GetAdditionalEquipmentDisplays;
+
+    public List<ItemDisplayRuleSet.NamedRuleGroup> itemRules;
+    public List<ItemDisplayRuleSet.NamedRuleGroup> equipmentRules;
 
     /// <summary>
     /// Create a survivor prefab from a model. Don't register the prefab that it outputs, because the method already does that for you.
@@ -138,6 +145,7 @@ public class PrefabBuilder
         SetupFootstep();
         SetupAimAnimator();
         SetupHitbox();
+        RegisterItemDisplays();
 
         void SetupModelTransform()
         {
@@ -259,16 +267,14 @@ public class PrefabBuilder
                 ignoreOverlays = false
             });
 
-            Action<EnigmaticList<CharacterModel.RendererInfo>, Transform> action = this.getAdditionalEntries;
-            if (action != null)
-            {
-                action(infos, transform);
-            }
+            Action<List<CharacterModel.RendererInfo>, Transform> action = this.GetAdditionalRenderInfos;
+            action(infos, transform);
 
             charModel.baseRendererInfos = infos.ToArray();
             charModel.autoPopulateLightInfos = true;
             charModel.invisibilityCount = 0;
             charModel.temporaryOverlays = new List<TemporaryOverlay>();
+            //charModel.itemDisplayRuleSet = itemDisplayRuleSet;
         }
 
         void SetupKCharacterMotor()
@@ -404,6 +410,30 @@ public class PrefabBuilder
 
             skinController.skins = skinDefs;
         }
+        void RegisterItemDisplays() {
+            ItemDisplayRuleSet itemDisplayRuleSet = ScriptableObject.CreateInstance<ItemDisplayRuleSet>();
+
+            itemRules = new List<ItemDisplayRuleSet.NamedRuleGroup>();
+            equipmentRules = new List<ItemDisplayRuleSet.NamedRuleGroup>();
+
+
+            Action<List<ItemDisplayRuleSet.NamedRuleGroup>> action2 = this.GetAdditionalItemDisplays;
+
+            action2(itemRules);
+
+            Action<List<ItemDisplayRuleSet.NamedRuleGroup>> action3 = this.GetAdditionalEquipmentDisplays;
+
+            action3(equipmentRules);
+
+            BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+            ItemDisplayRuleSet.NamedRuleGroup[] item = itemRules.ToArray();
+            ItemDisplayRuleSet.NamedRuleGroup[] equip = equipmentRules.ToArray();
+            typeof(ItemDisplayRuleSet).GetField("namedItemRuleGroups", bindingAttr).SetValue(itemDisplayRuleSet, item);
+            typeof(ItemDisplayRuleSet).GetField("namedEquipmentRuleGroups", bindingAttr).SetValue(itemDisplayRuleSet, equip);
+
+            charModel.itemDisplayRuleSet = itemDisplayRuleSet;
+        }
+
 
         CloudUtils.RegisterNewBody(prefab);
 

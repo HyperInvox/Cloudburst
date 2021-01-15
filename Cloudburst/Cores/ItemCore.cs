@@ -737,7 +737,7 @@ namespace Cloudburst.Cores
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = lemdogMDL,
                     childName = "Head",
-                    localPos = new Vector3(0.48f, 3.85f, -0.01f),
+                    localPos = new Vector3(0.48f, 5f, -0.01f),
                     localAngles = new Vector3(15.79083f, 90,106.9842f),
                     localScale = new Vector3(5, 5, 5)
                 }

@@ -126,7 +126,7 @@ namespace Cloudburst
             LogCore.logger = Logger;
             BepInEx.Logging.Logger.Listeners.Add(new ErrorListener());
 
-            On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
+            //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
 
             //important!!
             ErrorListener.vanillaErrors.addition += VanillaErrors_addition;
@@ -135,12 +135,6 @@ namespace Cloudburst
 
             DefineConfig();
             InitializeCores();
-
-            /*if (!gameObject.HasComponent<ProgressTracker>() || !ProgressTracker.instance)
-            {
-                LogCore.LogI("Bepinex object does not have a progress tracker or there is no instance of the progress tracker. Attaching now.");
-                gameObject.AddComponent<ProgressTracker>();
-            }*/
 
             LogCore.LogM("Cloudburst loaded!");
         }
@@ -173,6 +167,7 @@ namespace Cloudburst
             EnableUnlockAll = Config.Bind("Cloudburst :: Achivements", "Enabled", false, "Enables Cloudburst's unlocks for unlockable content. Set to false to unlock all of Cloudburst's unlockable content.");
             Enabled = Config.Bind("Cloudburst", "Enabled", true, "Enables the mod. Set to false to disable the mod entirely.");
         }
+
 
         private void InitializeCores()
         {
