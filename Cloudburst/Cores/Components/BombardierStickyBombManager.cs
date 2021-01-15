@@ -5,12 +5,13 @@ using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.Components
 {
-    public class BombardierStickyBombManager : NetworkBehaviour {
+    public class BombardierStickyBombManager : NetworkBehaviour
+    {
         private List<GameObject> bombs;
         public void Awake()
         {
             //click and she's gone
-            
+
             bombs = new List<GameObject>();
         }
 

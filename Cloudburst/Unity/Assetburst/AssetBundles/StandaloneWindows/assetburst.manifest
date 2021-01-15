@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1099446111
+CRC: 3548274022
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 510cfb300a815e69baa38e9f055004e6
+    Hash: b858540fb4bc12acb9c8f7be3d79de5b
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -222,6 +222,7 @@ Assets:
 - Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Ruby.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_r.mat
+- Assets/Cloudburst/Items/Dummies/ModelBase.prefab
 - Assets/Cloudburst/Items/BrokenBodyArmor/Just armor texture.obj
 - Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalNormal.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorRunRight.anim
@@ -231,6 +232,7 @@ Assets:
 - Assets/Cloudburst/Items/Cloak/Materials/japes_cloak.mat
 - Assets/Cloudburst/753network/Crystallize/Ramp RubyCorrupt.png
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_transparency.png
+- Assets/Cloudburst/Items/Dummies/texCommandoPaletteDiffuse.png
 - Assets/Cloudburst/Teaser/TEASER.fbx
 - Assets/Cloudburst/Teaser/tex/Materials/Materials/texMetalTrimDiffuse.mat
 - Assets/Cloudburst/logo.png
@@ -246,6 +248,7 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/Materials/T_Executor_Emissive.mat
 - Assets/Cloudburst/Survivors/Wyatt/passive.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattAim.mask
+- Assets/Cloudburst/Items/Dummies/CommandoMesh_0.asset
 - Assets/Cloudburst/Items/UESKeycard/keycard.fbx
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Special1.anim
 - Assets/Cloudburst/753network/Crystallize/Sapphire.mat
@@ -305,6 +308,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkRHT.anim
 - Assets/Cloudburst/Items/BrokenBodyArmor/admn.mat
 - Assets/Cloudburst/Survivors/Wyatt/LoaderPylon.prefab
+- Assets/Cloudburst/Items/Dummies/Materials/texCommandoPaletteDiffuse.mat
 - Assets/Cloudburst/Items/Lemdog/LemDog_TexEmission.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/m12.anim
 - Assets/Cloudburst/Survivors/Wyatt/animation/wyattBodyPitch.anim

@@ -128,11 +128,70 @@ namespace Cloudburst.Cores
             });
 
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
-            On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
-            On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
+
+            On.RoR2.CharacterBody.OnBuffFirstStackGained += CharacterBody_OnBuffFirstStackGained;
+            On.RoR2.CharacterBody.OnBuffFinalStackLost += CharacterBody_OnBuffFinalStackLost;
+
+            //On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
+            //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
             On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround;        }
 
+        private void CharacterBody_OnBuffFinalStackLost(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
+        {
+            orig(self, buffDef);
+            if (self)
+            {
+                if (buffDef.buffIndex == antiGravFriendlyIndex && self)
+                {
+
+                    ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
+                    if (component != null)
+                    {
+                        CharacterFlightParameters flightParameters = component.flightParameters;
+                        flightParameters.channeledFlightGranterCount--;
+                        //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
+                        component.flightParameters = flightParameters;
+                    }
+                    ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
+                    if (component2 != null)
+                    {
+                        CharacterGravityParameters gravityParameters = component2.gravityParameters;
+                        gravityParameters.environmentalAntiGravityGranterCount--;
+                        //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
+                        component2.gravityParameters = gravityParameters;
+                    }
+                }
+            }
+        }
+
+        private void CharacterBody_OnBuffFirstStackGained(On.RoR2.CharacterBody.orig_OnBuffFirstStackGained orig, CharacterBody self, BuffDef buffDef)
+        {
+            orig(self, buffDef);
+            if (self)
+            {
+                if (buffDef.buffIndex == antiGravFriendlyIndex && self)
+                {
+
+                    ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
+                    if (component != null)
+                    {
+                        CharacterFlightParameters flightParameters = component.flightParameters;
+                        flightParameters.channeledFlightGranterCount++;
+                        //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
+                        component.flightParameters = flightParameters;
+                    }
+                    ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
+                    if (component2 != null)
+                    {
+                        CharacterGravityParameters gravityParameters = component2.gravityParameters;
+                        gravityParameters.environmentalAntiGravityGranterCount++;
+                        //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
+                        component2.gravityParameters = gravityParameters;
+                    }
+                }
+            }
+        }
 
         private void CharacterMotor_OnDeathStart(On.RoR2.CharacterMotor.orig_OnDeathStart orig, CharacterMotor self)
         {
@@ -145,7 +204,7 @@ namespace Cloudburst.Cores
             orig(self, hitGroundInfo);
             if (self.body && self.body.HasBuff(this.antiGravIndex)) {
                 self.useGravity = false;
-                if (self.lastVelocity.y < -20)
+                if (self.lastVelocity.y < -30)
                 {
                     EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleGuardGroundSlam"), new EffectData
                     {
@@ -183,26 +242,25 @@ namespace Cloudburst.Cores
             {
                 if (buffType == antiGravFriendlyIndex && self)
                 {
-                    if (NetworkServer.active)
+
+                    ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
+                    if (component != null)
                     {
-                        ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
-                        if (component != null)
-                        {
-                            CharacterFlightParameters flightParameters = component.flightParameters;
-                            flightParameters.channeledFlightGranterCount++;
-                            //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
-                            component.flightParameters = flightParameters;
-                        }
-                        ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
-                        if (component2 != null)
-                        {
-                            CharacterGravityParameters gravityParameters = component2.gravityParameters;
-                            gravityParameters.environmentalAntiGravityGranterCount++;
-                            //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
-                            component2.gravityParameters = gravityParameters;
-                        }
+                        CharacterFlightParameters flightParameters = component.flightParameters;
+                        flightParameters.channeledFlightGranterCount++;
+                        //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
+                        component.flightParameters = flightParameters;
+                    }
+                    ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
+                    if (component2 != null)
+                    {
+                        CharacterGravityParameters gravityParameters = component2.gravityParameters;
+                        gravityParameters.environmentalAntiGravityGranterCount++;
+                        //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
+                        component2.gravityParameters = gravityParameters;
                     }
                 }
+
             }
         }
 

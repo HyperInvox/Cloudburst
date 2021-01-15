@@ -505,6 +505,7 @@ namespace Cloudburst.Cores
                     
                     break;
                 case "LargerTeleporterRadius":
+                    customItem.ItemDisplayRules = GenerateItemDisplayRulesMT();
                     largerTeleporterRadiusIndex = ItemAPI.Add(customItem);
                     break;
                 case "CrippleOnHit":
@@ -529,12 +530,14 @@ namespace Cloudburst.Cores
                     barrierOnCritIndex = ItemAPI.Add(customItem);
                     break;
                 case "BarrierOnLevel":
+                    customItem.ItemDisplayRules = GenerateItemDisplayRulesBBA(); 
                     barrierOnLevelIndex = ItemAPI.Add(customItem);
                     break;
                 case "ExperienceOnHit":
                     experienceOnHitIndex = ItemAPI.Add(customItem);
                     break;
                 case "Lemdog":
+                    customItem.ItemDisplayRules = GenerateItemDisplayRulesLD();
                     lemdogIndex = ItemAPI.Add(customItem);
                     break;
                 case "ExtendedEnemyBuffDuration":
@@ -569,7 +572,8 @@ namespace Cloudburst.Cores
             }
         }
 
-        private ItemDisplayRuleDict GenerateItemDisplayRulesDagger() {
+        private ItemDisplayRuleDict GenerateItemDisplayRulesDagger()
+        {
 
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
             {
@@ -577,7 +581,7 @@ namespace Cloudburst.Cores
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
                     followerPrefab = keyCardMDL,
-                    childName = "Pelvis", 
+                    childName = "Pelvis",
                     localPos = new Vector3(-0.004f, 0.09f, 0.06f),
                     localAngles = new Vector3(-10.305f, 0.057f, -0.626f),
                     localScale = new Vector3(100, 100, 100)
@@ -596,7 +600,161 @@ namespace Cloudburst.Cores
                     localScale = new Vector3(50, 50, 50)
         }
 });
-            
+
+            return rules;
+        }
+        private ItemDisplayRuleDict GenerateItemDisplayRulesBBA()
+        {
+
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = bbaMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(-0.001f, -0.5F, -0.004f),
+                    localAngles = Vector3.zero,
+                    localScale = new Vector3(0.5f   ,  0.5f, 0.8f)
+
+        }
+            });
+            return rules;
+        }
+        private ItemDisplayRuleDict GenerateItemDisplayRulesMT()
+        {
+
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = mechanicalTrinketMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(-0.0012f, 0.2745f, 0.2034f),
+                    localAngles = new Vector3(-18.398f, 0.02f, -0.125f),
+                    localScale = new Vector3(5,5, 5)
+
+        }
+            });
+            return rules;
+        }
+
+
+        private ItemDisplayRuleDict GenerateItemDisplayRulesLD()
+        {
+
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "Head",
+                    localPos = new Vector3(0, 0.4f, 0),
+                    localAngles = new Vector3(0,90,0),
+                    localScale = new Vector3(1   ,  1, 1)
+
+        }
+            });
+            rules.Add("mdlToolbot", new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "HeadCenter",
+                    localPos = new Vector3(0.08f, 0.899f, 1.84f),
+                    localAngles = new Vector3(0,-90,0),
+                    localScale = new Vector3(5, 5, 5)
+                }
+});
+
+            rules.Add("mdlEngi", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "HeadCenter",
+                    localPos = new Vector3(0, 0.3f, 0),
+                    localAngles = new Vector3(0,90,0),
+                    localScale = new Vector3(1   ,  1, 1)
+                }
+            });
+            rules.Add("mdlMage", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "Head",
+                    localPos = new Vector3(0, 0.4f, 0),
+                    localAngles = new Vector3(0,90,0),
+                    localScale = new Vector3(1   ,  1, 1)
+                }
+            });
+            rules.Add("mdlMerc", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "Head",
+                    localPos = new Vector3(0, 0.4f, 0),
+                    localAngles = new Vector3(0,90,0),
+                    localScale = new Vector3(1   ,  1, 1)
+                }
+            });
+            rules.Add("mdlTreebot", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "FlowerBase",
+                    localPos = new Vector3(0, 2, 0),
+                    localAngles = new Vector3(90,90,180),
+                    localScale = new Vector3(2,  2, 2)
+                }
+            });
+            rules.Add("mdlLoader", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "Head",
+                    localPos = new Vector3(0, 0.4f, 0),
+                    localAngles = new Vector3(0,90,0),
+                    localScale = new Vector3(1   ,  1, 1)
+                }
+            });
+            rules.Add("mdlCroco", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "Head",
+                    localPos = new Vector3(0.48f, 3.85f, -0.01f),
+                    localAngles = new Vector3(15.79083f, 90,106.9842f),
+                    localScale = new Vector3(5, 5, 5)
+                }
+            });
+            rules.Add("mdlCaptain", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                    {
+                        ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = lemdogMDL,
+                    childName = "Head",
+                    localPos = new Vector3(0, 0.4f, 0),
+                    localAngles = new Vector3(0,90,0),
+                    localScale = new Vector3(1   ,  1, 1)
+                }
+            });
+
             return rules;
         }
 
