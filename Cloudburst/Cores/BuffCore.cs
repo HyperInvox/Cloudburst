@@ -162,6 +162,14 @@ namespace Cloudburst.Cores
                         component2.gravityParameters = gravityParameters;
                     }
                 }
+                if (buffDef.buffIndex == antiGravIndex) {
+
+                    if (self.characterMotor) {
+                        self.characterMotor.useGravity = true;
+                        self.characterMotor.velocity = Vector3.zero;
+                    }
+                }
+
             }
         }
 

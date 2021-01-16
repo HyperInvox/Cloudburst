@@ -271,7 +271,7 @@ namespace Cloudburst.Cores.HAND
 
         private void Builder_GetAdditionalEquipmentDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
         {
-            LogCore.LogI("SETUP DISPLAY");
+            //LogCore.LogI("SETUP DISPLAY");
             obj.Add(CloudUtils.CreateGenericDisplayRule("CritOnUse", "DisplayNeuralImplant", "Head_end", new Vector3(-0.008f, 0.006f, 0), new Vector3(0, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
         }
 
@@ -336,8 +336,8 @@ namespace Cloudburst.Cores.HAND
 
             foreach (EntityStateMachine esm in wyattBody.GetComponentsInChildren<EntityStateMachine>())
             {
-                LogCore.LogI(esm.gameObject.name);
-                LogCore.LogI(esm.customName);
+               // LogCore.LogI(esm.gameObject.name);
+                //LogCore.LogI(esm.customName);
                 switch (esm.customName)
                 {
                     case "Body":
@@ -488,7 +488,7 @@ namespace Cloudburst.Cores.HAND
             passive.icon = AssetsCore.wyattPassive;
 
             LanguageAPI.Add(passive.skillNameToken, "Walkman");
-            LanguageAPI.Add(passive.skillDescriptionToken, "For every 3 seconds you're engaged in combat, gain a stack of <style=cIsUtility>Velocity</style>, up to 10.");
+            LanguageAPI.Add(passive.skillDescriptionToken, "On hit, gain a stack of <style=cIsUtility>Velocity</style>, up to 10. <style=cIsHealth>Lose two stacks every two seconds</style>");
 
             skillLocator.passiveSkill = passive;
 
@@ -587,8 +587,8 @@ namespace Cloudburst.Cores.HAND
             };
 
             LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
-            LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. Applies <style=cIsUtility>Weightless</style>. Every 4th hit <style=cIsDamage>Spikes</style>.");
-            LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
+            LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
+            //LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
             LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
 
             LoadoutAPI.AddSkillDef(primarySkillDef);
@@ -751,7 +751,7 @@ namespace Cloudburst.Cores.HAND
             specialSkillDef.beginSkillCooldownOnSkillEnd = true;
             specialSkillDef.canceledFromSprinting = false;
             specialSkillDef.fullRestockOnAssign = true;
-            specialSkillDef.interruptPriority = InterruptPriority.Skill;
+            specialSkillDef.interruptPriority = InterruptPriority.Any;
             specialSkillDef.isBullets = false;
             specialSkillDef.isCombatSkill = false;
             specialSkillDef.mustKeyPress = true;
@@ -778,7 +778,7 @@ namespace Cloudburst.Cores.HAND
             specialSkillDef2.beginSkillCooldownOnSkillEnd = true;
             specialSkillDef2.canceledFromSprinting = false;
             specialSkillDef2.fullRestockOnAssign = true;
-            specialSkillDef2.interruptPriority = InterruptPriority.Skill;
+            specialSkillDef2.interruptPriority = InterruptPriority.Any;
             specialSkillDef2.isBullets = false;
             specialSkillDef2.isCombatSkill = false;
             specialSkillDef2.mustKeyPress = true;
@@ -798,7 +798,7 @@ namespace Cloudburst.Cores.HAND
             retrievePrimary = specialSkillDef2;
 
             LanguageAPI.Add(specialSkillDef.skillNameToken, "G22 MAID");
-            LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
+            LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>pulls enemies</style> and <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
 
             LanguageAPI.Add(specialSkillDef2.skillNameToken, "Retrival");
             LanguageAPI.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");

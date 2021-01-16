@@ -449,7 +449,7 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("ITEM_MONEYONINTERACTION_DESC", "Gain <style=cIsUtility>10 gold</style> <style=cStack>(+5 gold per stack)</style> upon opening a chest. ");
             LanguageAPI.Add("ITEM_MONEYONINTERACTION_PICKUP", "Activating an interactable gives gold");
 
-            LanguageAPI.Add("ITEM_BARRIERONCRIT_NAME", "Topaz Lens");
+            LanguageAPI.Add("ITEM_BARRIERONCRIT_NAME", "Onyx Optics");
             LanguageAPI.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.");
             LanguageAPI.Add("ITEM_BARRIERONCRIT_PICKUP", "Gain barrier on critical hits");
 

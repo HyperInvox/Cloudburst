@@ -41,7 +41,7 @@ namespace Cloudburst
 
         const string guid = "com.TeamCloudburst.Cloudburst";
         const string modName = "Cloudburst";
-        const string version = "1.0.0";
+        const string version = "0.1.1";
 
         public static CloudburstPlugin instance;
 

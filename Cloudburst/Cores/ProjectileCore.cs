@@ -426,10 +426,10 @@ namespace Cloudburst.Cores
             {
                 BuffWard buffWard = wyattMaidBubble.AddComponent<BuffWard>();
                 buffWard.radius = 25;
-                buffWard.interval = 0.5f;
+                buffWard.interval = 0.2f;
                 buffWard.rangeIndicator = slowProjectiles;
                 buffWard.buffType = BuffCore.instance.antiGravIndex;
-                buffWard.buffDuration = 1.5f;
+                buffWard.buffDuration = 0.3f;
                 buffWard.floorWard = false;
                 buffWard.expires = false;
                 buffWard.invertTeamFilter = true;

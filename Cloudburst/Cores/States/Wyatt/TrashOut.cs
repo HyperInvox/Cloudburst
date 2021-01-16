@@ -102,7 +102,7 @@ namespace Cloudburst.Cores.States.Wyatt
                         this.activatorSkillSlot.AddOneStock();
                         CloudburstPlugin.Destroy(_winch);
                         characterMotor.velocity = Vector3.zero;         
-                        LogCore.LogI("Can't reach target, skill refunded!");
+                        LogCore.LogW("Can't reach target, skill refunded!");
                         this.outer.SetNextStateToMain();
                     }
 
@@ -130,7 +130,7 @@ namespace Cloudburst.Cores.States.Wyatt
                             radius = 5
                         }.Fire();
 
-                        LogCore.LogI("called onhit!!!");
+                        //LogCore.LogI("called onhit!!!");
                         CloudburstPlugin.Destroy(_winch);
 
                         EffectData effectData = new EffectData

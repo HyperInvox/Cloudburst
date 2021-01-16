@@ -11,30 +11,22 @@ namespace Cloudburst.Cores.States.Wyatt
 {
     class RetrieveMaid : BaseSkillState
     {
-        public static float baseDuration = 0.1f;
-
         public override void OnEnter()
         {
             base.OnEnter();
-            if (base.isAuthority) {
-                gameObject.GetComponent<MAIDManager>().RetrieveMAIDAuthority();
-            }
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if (fixedAge >= baseDuration && isAuthority)
+            if (base.isAuthority)
             {
+                gameObject.GetComponent<MAIDManager>().RetrieveMAIDAuthority();
                 skillLocator.special.SetSkillOverride(this, WyattCore.instance.throwPrimary, GenericSkill.SkillOverridePriority.Contextual);
                 //skillLocator.special.SetPropertyValue("cooldownRemaining", (Single)3);
                 //skillLocator.special.cooldownRemaining
-                outer.SetNextStateToMain(); 
-            };
+                outer.SetNextStateToMain();
+            }
         }
+
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Any;
         }
     }
 }

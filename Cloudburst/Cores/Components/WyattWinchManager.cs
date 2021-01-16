@@ -27,7 +27,7 @@ namespace Cloudburst.Cores.Components
                 EntityStateMachine[] components = characterBody.GetComponent<SetStateOnHurt>().idleStateMachine;
                 for (int i = 0; i < components.Length; i++)
                 {
-                    LogCore.LogI(components[i]);
+                    //LogCore.LogI(components[i]);
                     if (components[i].customName == targetCustomName)
                     {
                         this.stateMachine = components[i];
@@ -87,10 +87,10 @@ namespace Cloudburst.Cores.Components
 
         private void AssignHookReferenceToBodyStateMachine()
         {
-            TrashOut trashOut; LogCore.LogI("check 0!");
+            TrashOut trashOut; //LogCore.LogI("check 0!");
             if (this.owner.stateMachine && (trashOut = (this.owner.stateMachine.state as TrashOut)) != null)
             {
-                trashOut.SetHookReference(base.gameObject);
+                //trashOut.SetHookReference(base.gameObject);
                 LogCore.LogI("check 1!");
             }
         }
@@ -98,7 +98,7 @@ namespace Cloudburst.Cores.Components
             public void OnHit()
         {
 
-            LogCore.LogI("hi!!!");
+            //LogCore.LogI("hi!!!");
             //goodbye, world
                 Destroy(gameObject);
         }   

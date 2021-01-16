@@ -16,6 +16,8 @@ namespace Cloudburst.Cores.States.Wyatt
             if (base.isAuthority)
             {
                 FireProjectile();
+                skillLocator.special.SetSkillOverride(this, WyattCore.instance.retrievePrimary, GenericSkill.SkillOverridePriority.Contextual);
+                outer.SetNextStateToMain();
             }
         }
 
@@ -40,18 +42,9 @@ namespace Cloudburst.Cores.States.Wyatt
             ProjectileManager.instance.FireProjectile(info);
         }
 
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if (fixedAge >= baseDuration && isAuthority)
-            {
-                skillLocator.special.SetSkillOverride(this, WyattCore.instance.retrievePrimary, GenericSkill.SkillOverridePriority.Contextual);
-                outer.SetNextStateToMain();
-            };
-        }
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Any;
         }
     }
 }

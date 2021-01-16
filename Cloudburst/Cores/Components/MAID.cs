@@ -51,6 +51,7 @@ namespace Cloudburst.Cores.Components
         {
             CharacterMotor motor = collider.GetComponent<CharacterMotor>();
             Rigidbody rigid = collider.GetComponent<Rigidbody>();
+
             if (motor)
             {
                 characterMotors.Remove(motor);
@@ -65,7 +66,6 @@ namespace Cloudburst.Cores.Components
             stopwatch += Time.fixedDeltaTime;
             if (stopwatch >= 1.5f)
             {
-                LogCore.LogI("proced MAID");
                 EffectManager.SpawnEffect(EntityStates.Loader.LoaderMeleeAttack.overchargeImpactEffectPrefab, new EffectData
                 {
                     origin = transform.position,
