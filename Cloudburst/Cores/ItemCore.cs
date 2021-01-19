@@ -2,6 +2,7 @@
 using EntityStates.Scrapper;
 using R2API;
 using RoR2;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -52,8 +53,20 @@ namespace Cloudburst.Cores
         public GameObject lemdogMDL;
         public GameObject magicsMDL;
 
+        public const string japesLore = @"""In the cold rain, amongst the remnants of ships long fallen, shouting could be heard. Shrouded in fog, were three figures crowded around the spoils of a blue security chest.""
 
+""I found it first! You keep your hands off of it!""
 
+""I’ve barely gotten any items! You don’t need another one!""
+
+""Barely gotten any items? All I have is this shitty rusty key! Give me that item!""
+
+Their argument abruptly stopped when they realized what they had been fighting over was gone. In it’s place was a single, small holo-note.
+
+""I needed this for my build, I hope you don’t mind.""
+
+";
+        //string a = "\In the cold rain, amongst the remnants of ships long fallen, shouting could be heard. Shrouded in fog, were three figures crowded around the spoils of a blue security chest.\r\n\r\n\"I found it first! You keep your hands off of it!\"\r\n\r\n\"I’ve barely gotten any items! You don’t need another one!\"\r\n\r\n\"Barely gotten any items? All I have is this shitty rusty key! Give me that item!\"\r\n\r\n\Their argument abruptly stopped when they realized what they had been fighting over was gone. In it’s place was a single, small holo-note.\r\n\r\nI needed this for my build, I hope you don’t mind.\"\r\n\r\n\"";
 
 
         public List<ItemIndex> bossitemList = new List<ItemIndex>{
@@ -227,7 +240,7 @@ namespace Cloudburst.Cores
                 canRemove = true,
                 descriptionToken = "ITEM_CLOAKBUFFONINTERACTION_DESC",
                 hidden = false,
-                loreToken = "",
+                loreToken = "ITEM_CLOAKBUFFONINTERACTION_LORE",
                 name = "CloakOnInteraction",
                 nameToken = "ITEM_CLOAKBUFFONINTERACTION_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Cloak/JapeIcon.png",
@@ -432,9 +445,13 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("ITEM_CRIPPLEONHIT_DESC", "20% Chance to <style=cIsDamage>cripple enemies</style> for 3 <style=cStack>(+3 seconds per stack)</style> seconds.");
             LanguageAPI.Add("ITEM_CRIPPLEONHIT_PICKUP", "Chance to cripple enemies on hit.");
 
+
+            //var nArmor = armor + (0.1f + (count * 0.2f));
+            //var nRegen = regen + (0.1f + (count * 0.2f));
             LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_NAME", "Jape's Cloak");
-            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Become <style=cIsUtility>cloaked for 2 seconds</style> <style=cStack>(+2 seconds per stack)</style> when picking up an item.");
-            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Become cloaked when picking up an item.");
+            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Gain a buff that grants you <style=cIsUtility>30% armor</style> and <style=cIsHealing>30% healing</style> when picking up an item. Maximum cap of 3 buffs <style=cStack>(+2 per stack)</style>.");
+            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Gain a buff picking up an item.");
+            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_LORE", japesLore);
 
             LanguageAPI.Add("ITEM_ITEMONLEVELUP_NAME", "Care Package Requester");
             LanguageAPI.Add("ITEM_ITEMONLEVELUP_DESC", "<style=cIsUtility>75% Chance to gain an item on level up</style>. <style=cStack>+5% chance to gain a green item per stack</style>");
@@ -472,6 +489,7 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("ITEM_WYATTWALKMAN_NAME", "Walkman");
             LanguageAPI.Add("ITEM_WYATTWALKMAN_DESC", "Gain <style=cIsUtility>+x% speed</style> and <style=cIsHealing>+x% regen</style> while in combat every 3 seconds. Maximum 10 stacks <style=cStack>(+1 per stack)</style>");
             LanguageAPI.Add("ITEM_WYATTWALKMAN_PICKUP", "Gain speed and regeneration while in combat");
+
         }
 
         protected internal void RegisterItem(ItemDef itemDef)
@@ -789,12 +807,12 @@ namespace Cloudburst.Cores
                     {
                         if (def.isDebuff && Util.CheckRoll(25 + (lemCount * 2.5f), self.master))
                         {
-                            var random = Random.Range(0, lemdogList.Count);
+                            var random = UnityEngine.Random.Range(0, lemdogList.Count);
                             var buff = lemdogList[random];
                             buffType = buff;
                         }
                     }
-                    if (earringsCount > 0 && buffType != BuffIndex.MedkitHeal & buffType != BuffIndex.ElementalRingsCooldown && !def.isDebuff)
+                    if (earringsCount > 0 && buffType != BuffIndex.MedkitHeal & buffType != BuffIndex.ElementalRingsCooldown && !def.isDebuff && buffType != BuffCore.instance.antiGravFriendlyIndex)
                     {
                         //do thing???
                         duration += 1 + (1 * earringsCount);
@@ -812,7 +830,11 @@ namespace Cloudburst.Cores
             int cloakOnInteractionCount = inventory.GetItemCount(cloakOnInteractionIndex);
             if (self && inventory && cloakOnInteractionCount > 0)
             {
-                body.AddTimedBuff(BuffIndex.Cloak, 2 * cloakOnInteractionCount);
+                if (body && body.GetBuffCount(BuffCore.instance.japesCloak) < 2 + cloakOnInteractionCount)
+                {
+                    body.AddBuff(BuffCore.instance.japesCloak);
+                }
+                //body.AddTimedBuff(BuffCore.instance.japesCloak, 30);
             }
         }
 

@@ -217,10 +217,6 @@ namespace Cloudburst
                 {
                     eliteCore = new EliteCore();
                 }
-                if (EnableWyatt.Value)
-                {
-                    // han_dCore = new HAN_DCore();
-                }
                 if (EnableEngineer.Value)
                 {
                     engineerCore = new EngineerCore();
@@ -233,7 +229,10 @@ namespace Cloudburst
                 {
                     sipsipCore = new SipSipCore();
                 }
-                wyattCore = new WyattCore();
+                if (EnableWyatt.Value)
+                {
+                    wyattCore = new WyattCore();
+                }
                 if (EnableRex.Value)
                 {
                     rexCore = new RexCore();

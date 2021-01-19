@@ -14,7 +14,7 @@ namespace Cloudburst.Cores.States.Wyatt
 
         private float timer;
         private OverlapAttack attack;
-        public static float baseDuration = 0.1f;
+        public static float baseDuration = 0.2f;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -55,14 +55,13 @@ namespace Cloudburst.Cores.States.Wyatt
             {
                 var a = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
                 //base.inputBank.aimDirection
-                attack.Fire(null);
-                base.characterMotor.rootMotion += base.inputBank.aimDirection * (7 * 35 * Time.fixedDeltaTime);
-
+                if (timer > 0.1)
+                {
+                    attack.Fire(null);
+                    timer = 0;
+                }
+                base.characterMotor.rootMotion += base.inputBank.aimDirection * (7 * (35 /2) * Time.fixedDeltaTime);
             }
-
-            //if (NetworkServer.active) {
-            //   ShockEnemies();
-            //}
 
             if (fixedAge >= baseDuration && isAuthority)
             {

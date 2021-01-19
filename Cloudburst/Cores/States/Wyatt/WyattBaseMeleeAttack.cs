@@ -32,6 +32,8 @@ namespace Cloudburst.Cores.States.Wyatt
             }
         }
 
+        private bool spawnEffect = false;
+
         public override bool allowExitFire
         {
             get
@@ -40,26 +42,41 @@ namespace Cloudburst.Cores.States.Wyatt
             }
         }
 
+        private GameObject obj
+        { get {
+                if (this.isComboFinisher)
+                {
+                    return EffectCore.wyattSwingTrail;
 
+                }
+
+                return EffectCore.wyatt2SwingTrail;
+
+            }
+        }
 
         public override void OnEnter()
         {
-            this.hitBoxGroupName = "TempHitbox";
+            //this.hitBoxGroupName = "TempHitbox";
+            this.hitBoxGroupName = "TempHitboxLarge";
             this.mecanimHitboxActiveParameter = "BroomSwing.Hitbox";
             this.baseDuration = 0.69f;
             this.duration = this.baseDuration / base.attackSpeedStat;
             this.hitPauseDuration = 0.1f;
             this.damageCoefficient = 2f;
-
+            spawnEffect = false;
             //swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/GrandparentGroundSwipeTrailEffect");
             hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
             //swingEffectMuzzleString = "WinchHole";//"//SwingTrail";
 
+            LogCore.LogW(step);
+
             if (isComboFinisher)
             {
-                //LogCore.LogF("finisher");
-                this.hitBoxGroupName = "TempHitboxLarge";
-                //this.baseDuration = 1f;
+                LogCore.LogW("finisher");
+                this.hitBoxGroupName = "TempHitbox";
+                forceVector = new Vector3(0, 1000, 0);
+                    //this.baseDuration = 1f;
                 //this.duration = this.baseDuration / base.attackSpeedStat;
                 this.hitPauseDuration = 0.2f;
                 this.damageCoefficient = 4f;
@@ -72,6 +89,17 @@ namespace Cloudburst.Cores.States.Wyatt
             this.durationBeforeInterruptable = baseDurationBeforeInterruptable / this.attackSpeedStat;
         }
 
+
+        public override void BeginMeleeAttackEffect()
+        {
+            if (!spawnEffect)
+            {
+                spawnEffect = true;
+                EffectManager.SimpleMuzzleFlash(obj, base.gameObject, "SwingTrail", true);
+            }
+        }
+            
+
         public override void OnExit()
         {
             base.OnExit();
@@ -82,7 +110,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.AuthorityModifyOverlapAttack(overlapAttack);
             if (this.isComboFinisher)
             {
-                overlapAttack.damageType = DamageTypeCore.spiked | DamageType.Generic;
+                overlapAttack.damageType = DamageTypeCore.antiGrav | DamageType.Generic;
             }
         }
 
@@ -122,12 +150,6 @@ namespace Cloudburst.Cores.States.Wyatt
             base.characterBody.AddSpreadBloom(this.bloom);
         }
 
-        public override void BeginMeleeAttackEffect()
-        {
-            //this.swingEffectMuzzleString = this.animationStateName;
-            //base.AddRecoil(-0.1f * BladeOfCessation.recoilAmplitude, 0.1f * BladeOfCessation.recoilAmplitude, -1f * BladeOfCessation.recoilAmplitude, 1f * BladeOfCessation.recoilAmplitude);
-            base.BeginMeleeAttackEffect();
-        }
 
         public override void OnSerialize(NetworkWriter writer)
         {

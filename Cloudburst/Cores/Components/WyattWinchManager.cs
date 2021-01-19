@@ -90,8 +90,8 @@ namespace Cloudburst.Cores.Components
             TrashOut trashOut; //LogCore.LogI("check 0!");
             if (this.owner.stateMachine && (trashOut = (this.owner.stateMachine.state as TrashOut)) != null)
             {
-                //trashOut.SetHookReference(base.gameObject);
-                LogCore.LogI("check 1!");
+                trashOut.SetHookReference(base.gameObject);
+                //LogCore.LogI("check 1!");
             }
         }
 

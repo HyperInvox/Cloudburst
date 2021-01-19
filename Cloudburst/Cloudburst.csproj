@@ -140,6 +140,7 @@
     <Compile Include="Achievements\Paradox.cs" />
     <Compile Include="Cores\Components\AntiGravityChecker.cs" />
     <Compile Include="Cores\Components\WyattWinchManager.cs" />
+    <Compile Include="Cores\States\Wyatt\SS2Dies.cs" />
     <Compile Include="Cores\States\Wyatt\TrashOut2.cs" />
     <Compile Include="Cores\States\Wyatt\WyattBaseMeleeAttack.cs" />
     <Compile Include="Cores\States\Wyatt\Cleanup.cs" />

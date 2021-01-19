@@ -12,6 +12,9 @@ namespace Cloudburst.Cores
         public static GameObject orbitalImpact;
         public static GameObject HANDRetrivalOrb;
         public static GameObject coinImpactEffect;
+        public static GameObject wyattSwingTrail;
+        public static GameObject wyatt2SwingTrail;
+
         public EffectCore() => Effects();
 
         protected void Effects() {
@@ -25,6 +28,7 @@ namespace Cloudburst.Cores
         protected void Repair() {
             RepairAncientWispPillar();
             RepairHANDSwingEffect();
+            RepairWyattEPICSwingEffect();
             RepairAncientWispSwingEffect();
         }
 
@@ -143,22 +147,40 @@ namespace Cloudburst.Cores
 
         private void RepairHANDSwingEffect()
         {
-            GameObject HANDSwingTrail = Resources.Load<GameObject>("prefabs/effects/handslamtrail");
+            wyattSwingTrail = Resources.Load<GameObject>("prefabs/effects/handslamtrail").InstantiateClone("WyattSwingTrail", false);
             GameObject healEffect = Resources.Load<GameObject>("prefabs/effects/HANDheal");
 
             Transform HANDHealRingEffectTransform = healEffect.transform.Find("SwingTrail");
-            Transform HANDSwingTrailTransform = HANDSwingTrail.transform.Find("SlamTrail");
+            Transform HANDSwingTrailTransform = wyattSwingTrail.transform.Find("SlamTrail");
 
             var ringRenderer = HANDHealRingEffectTransform.GetComponent<Renderer>();
             var HANDrenderer = HANDSwingTrailTransform.GetComponent<Renderer>();
 
             if (HANDrenderer)
             {
+                HANDrenderer.material = CommonAssets.parentSwingEffectMaterial;
+            }
+            if (ringRenderer)
+            {
+                ringRenderer.material = CommonAssets.parentSwingEffectMaterial;
+            }
+
+            EffectAPI.AddEffect(wyattSwingTrail);
+        }
+        private void RepairWyattEPICSwingEffect()
+        {
+            wyatt2SwingTrail = Resources.Load<GameObject>("prefabs/effects/handslamtrail").InstantiateClone("WyattSwingTrail2", false);
+
+            Transform HANDSwingTrailTransform = wyatt2SwingTrail.transform.Find("SlamTrail");
+
+            var HANDrenderer = HANDSwingTrailTransform.GetComponent<Renderer>();
+
+            if (HANDrenderer)
+            {
                 HANDrenderer.material = CommonAssets.lemurianSwingEffectMaterial;
             }
-            if (ringRenderer) {
-                ringRenderer.material = CommonAssets.lemurianSwingEffectMaterial;
-            }
+
+            EffectAPI.AddEffect(wyatt2SwingTrail);
         }
         #endregion
         #region AncientWisp

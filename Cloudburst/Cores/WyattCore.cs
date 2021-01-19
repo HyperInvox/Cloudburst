@@ -15,6 +15,8 @@ using Cloudburst.Cores.Components.Wyatt;
 using UnityEngine.Networking;
 using Cloudburst.Cores.Components;
 using System.Collections.Generic;
+using Cloudburst.Cores.Skills;
+using Cloudburst.Cores.States.Bombardier;
 
 namespace Cloudburst.Cores.HAND
 {
@@ -247,6 +249,7 @@ namespace Cloudburst.Cores.HAND
                 builder.GetAdditionalItemDisplays += Builder_GetAdditionalItemDisplays;
                 builder.GetAdditionalEquipmentDisplays += Builder_GetAdditionalEquipmentDisplays;
 
+                //On.RoR2.BuffWard.BuffTeam += BuffWard_BuffTeam;
 
                 wyattBody = builder.CreatePrefab();
                 Material material()
@@ -265,6 +268,43 @@ namespace Cloudburst.Cores.HAND
                         ignoreOverlays = false,
                         renderer = mat,
                     });
+                }
+            }
+        }
+
+        private void BuffWard_BuffTeam(On.RoR2.BuffWard.orig_BuffTeam orig, BuffWard self, IEnumerable<TeamComponent> recipients, float radiusSqr, Vector3 currentPosition)
+        {
+            orig(self, recipients, radiusSqr, currentPosition);
+            var maid = self.GetComponent<MAID>();
+            foreach (TeamComponent teamComponent in recipients)
+            {
+                CharacterBody component = teamComponent.GetComponent<CharacterBody>();
+                bool isInRadius = (teamComponent.transform.position - currentPosition).sqrMagnitude <= radiusSqr;
+                if (component) {
+                    if (isInRadius && teamComponent.teamIndex != TeamIndex.Player && component.HasBuff(BuffCore.instance.antiGravIndex))
+                    {
+                        LogCore.LogI("entry");
+                        if (component && component.characterMotor)
+                        {
+                            LogCore.LogI("entry1");
+                            maid.OnEntry(component.characterMotor, null);
+                        }
+                        if (component && component.rigidbody && !component.characterMotor)
+                        {
+                            maid.OnEntry(null, component.rigidbody);
+                        }
+                        // self.GetComponent<MAID>().OnEntry(null, component.rigidbody);
+                    }
+                else if (!component.HasBuff(BuffCore.instance.antiGravIndex) && !isInRadius) {
+                        if (component.characterMotor)
+                        {
+                            maid.characterMotors.Remove(component.characterMotor);
+                        }
+                        if (component.rigidbody && !component.characterMotor)
+                        {
+                            maid.rigidBodies.Remove(component.rigidbody);
+                        }
+                    }
                 }
             }
         }
@@ -561,6 +601,7 @@ namespace Cloudburst.Cores.HAND
             SteppedSkillDef primarySkillDef = ScriptableObject.CreateInstance<SteppedSkillDef>();
 
             primarySkillDef.activationState = new SerializableEntityStateType(typeof(WyattBaseMeleeAttack));
+            primarySkillDef.stepCount = 3;
             primarySkillDef.activationStateMachineName = "Weapon";
             primarySkillDef.baseMaxStock = 1;
             primarySkillDef.baseRechargeInterval = 0f;
@@ -628,7 +669,7 @@ namespace Cloudburst.Cores.HAND
             secondarySkillDef.rechargeStock = 1;
             secondarySkillDef.requiredStock = 1;
             secondarySkillDef.shootDelay = 0.08f;
-            
+            secondarySkillDef.dontAllowPastMaxStocks = true;
             secondarySkillDef.stockToConsume = 1;
             secondarySkillDef.skillDescriptionToken = "WYATT_SECONDARY_DESCRIPTION";
             secondarySkillDef.skillName = "aaa";
@@ -661,9 +702,10 @@ namespace Cloudburst.Cores.HAND
             LoadoutAPI.AddSkill(typeof(FireWinch));
             LoadoutAPI.AddSkill(typeof(DeepClean));
             LoadoutAPI.AddSkill(typeof(DeeperClean));
+            LoadoutAPI.AddSkill(typeof(SS2Dies));
 
-            SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            utilitySkillDef.activationState = new SerializableEntityStateType(typeof(DeepClean));
+            SkillDef utilitySkillDef = ScriptableObject.CreateInstance<IsNotroundedSkillDef>();
+            utilitySkillDef.activationState = new SerializableEntityStateType(typeof(GrandSlam));
             utilitySkillDef.activationStateMachineName = "Weapon";
             utilitySkillDef.baseMaxStock = 1;
             utilitySkillDef.baseRechargeInterval = 5f;

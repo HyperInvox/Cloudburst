@@ -17,6 +17,7 @@ class CommonAssets
 
     public static Material lemurianSwingEffectMaterial;
     public static Material ancientWispPillarEffect;
+    public static Material parentSwingEffectMaterial;
 
     public static GameObject goldAffix;
 
@@ -34,6 +35,8 @@ class CommonAssets
         goldAffix = Resources.Load<GameObject>("Prefabs/GoldAffixEffect");
 
         lemurianSwingEffectMaterial = Resources.Load<GameObject>("prefabs/effects/LemurianBiteTrail").transform.Find("SwingTrail").GetComponent<Renderer>().material;
+        parentSwingEffectMaterial = Resources.Load<GameObject>("prefabs/effects/ParentSlamTrail").transform.Find("SwingTrail").GetComponent<Renderer>().material;
+        //parentSwingEffectMaterial = Resources.Load<GameObject>("prefabs/effects/GrandparentGroundSwipeTrailEffect").transform.Find("EnergyParticles/SwipeTrail").GetComponent<Renderer>().material;   
         ancientWispPillarEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/AncientWispPillar").transform.Find("Particles/Flames, Tube, CenterHuge").GetComponent<Renderer>().material;
 
         PopulateDisplays();

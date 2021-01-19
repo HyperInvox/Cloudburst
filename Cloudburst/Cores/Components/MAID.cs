@@ -11,8 +11,8 @@ namespace Cloudburst.Cores.Components
         /// <summary>
         /// List containing ground enemies, like lemurians and beetles/
         /// </summary>
-        private EnigmaticList<CharacterMotor> characterMotors;
-        private EnigmaticList<Rigidbody> rigidBodies;
+        public EnigmaticList<CharacterMotor> characterMotors;
+        public EnigmaticList<Rigidbody> rigidBodies;
 
 
         private float stopwatch;
@@ -47,6 +47,17 @@ namespace Cloudburst.Cores.Components
             }
         }
 
+        public void OnEntry(CharacterMotor motor = null, Rigidbody body = null) {
+            if (motor) {
+                characterMotors.Add(motor);
+
+            }
+            if (body && !motor) {
+                rigidBodies.Add(body);
+            }
+
+        }
+
         public void OnTriggerExit(Collider collider)
         {
             CharacterMotor motor = collider.GetComponent<CharacterMotor>();
@@ -73,11 +84,38 @@ namespace Cloudburst.Cores.Components
                 }, true);
                 for (int i = 0; i < characterMotors.Count; i++)
                 {
-                    HandleAntiGravMotor(characterMotors[i]);
+                    var rigid = characterMotors[i];
+                    if (rigid)
+                    {
+                        var body = rigid.body;
+
+                        if (body && !body.HasBuff(BuffCore.instance.antiGravIndex)) {
+                            characterMotors.Remove(rigid);
+                        }
+
+                        if (body && body.HasBuff(BuffCore.instance.antiGravIndex))
+                        {
+                            HandleAntiGravMotor(rigid);
+                        }
+
+                    }
                 }
                 for (int i = 0; i < rigidBodies.Count; i++)
                 {
-                    HandleAntiGravRigid(rigidBodies[i]);
+                    var rigid = rigidBodies[i];
+                    if (rigid)
+                    {
+                        var body = rigid.GetComponent<CharacterBody>();
+
+                        if (body && !body.HasBuff(BuffCore.instance.antiGravIndex)) {
+                            rigidBodies.Remove(rigid);
+                        }
+
+                        if (body && body.HasBuff(BuffCore.instance.antiGravIndex))
+                        {
+                            HandleAntiGravRigid(rigid);
+                        }
+                    }
                 }
                 stopwatch = 0;
             }

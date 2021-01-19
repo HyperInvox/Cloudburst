@@ -31,16 +31,16 @@ namespace Cloudburst.Cores.States.Wyatt
             base.OnEnter();
             tracker = base.gameObject.GetComponent<HANDDroneTracker>();
             _winch = null;
-
+            if (characterBody)
+            {
+                characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+            }
             if (base.isAuthority)
             {
                 stage = ActionStage.StartUp;
                 target = tracker.GetTrackingTarget();
 
-                if (characterBody)
-                {
-                    characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
-                }
+
 
                 if (!isGrounded)
                 {
@@ -143,7 +143,7 @@ namespace Cloudburst.Cores.States.Wyatt
                         EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact"), effectData, true);
                         EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/ExplosionSolarFlare"), effectData, true);
 
-                        base.characterMotor.velocity = Vector3.up * 20f;
+                        base.characterMotor.velocity = Vector3.up * 30f;
                         //characterMotor.ApplyForce(-(GetAimRay().direction * (-characterMotor.mass * 10)), true, false);
                         stage = ActionStage.HitTarget;
 

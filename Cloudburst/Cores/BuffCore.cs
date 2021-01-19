@@ -15,6 +15,7 @@ namespace Cloudburst.Cores
         protected internal BuffIndex antiGravIndex;
         protected internal BuffIndex antiGravFriendlyIndex;
         protected internal BuffIndex wyattCombatIndex;
+        protected internal BuffIndex japesCloak;
 
         internal bool Loaded { get; private set; } = false;
         public BuffCore() => RegisterBuffs();
@@ -125,6 +126,15 @@ namespace Cloudburst.Cores
                 iconPath = "Textures/BuffIcons/texBuffGenericShield",
                 name = "AntiGravFriendly",
                 buffColor = new Color(0.6784314f, 0.6117647f, 0.4117647f)
+            }); RegisterBuff(new BuffDef()
+            {
+                buffIndex = BuffIndex.Count,
+                canStack = true,
+                isDebuff = false,
+                eliteIndex = EliteIndex.None,
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/JapesCloakBuff.png",
+                name = "JapesCloak",
+                buffColor = new Color(1f, 0.7882353f, 0.05490196f)
             });
 
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
@@ -227,7 +237,7 @@ namespace Cloudburst.Cores
                         attacker = null,
                         inflictor = null,
                         teamIndex = TeamIndex.Player,
-                        baseDamage = 0.1f * self.body.maxHealth,
+                        baseDamage = self.body.maxHealth / 5,
                         attackerFiltering = default,
                         //bonusForce = new Vector3(0, -3000, 0),
                         damageType = DamageType.Stun1s | DamageType.NonLethal, //| DamageTypeCore.spiked,
@@ -315,6 +325,7 @@ namespace Cloudburst.Cores
             orig(self);
             if (self)
             {
+                //this code is shit but i don't care
                 //Reflection.SetPropertyValue<float>(self, "maxHealth", characterBody.maxHealth * 100f);
 
                 var attackSpeed = self.attackSpeed;
@@ -323,13 +334,31 @@ namespace Cloudburst.Cores
                 var regen = self.regen;
                 var crit = self.crit;
 
+                var inv = self.inventory;
+
+                if (self.HasBuff(japesCloak)) {
+                    var count = 0;
+                    if (inv) {
+                        count = inv.GetItemCount(ItemCore.instance.cloakOnInteractionIndex);
+                    }
+                    var buffCount = self.GetBuffCount(japesCloak);
+                    for (int i = 0; i < buffCount; i++)
+                    {
+                        var nArmor = armor + 0.3f;
+                        var nRegen = regen + 0.3f;
+
+                        self.armor = nArmor;
+                        self.regen = nRegen;
+                    }
+                }
+
                 if (self.HasBuff(skinIndex)) // && controller)
                 {
                     var count = 0;
-                    if (self.inventory) {
-                        count = self.inventory.GetItemCount(ItemCore.instance.barrierOnLevelIndex);
+                    if (inv) {
+                        count = inv.GetItemCount(ItemCore.instance.barrierOnLevelIndex);
                     }
-                    self.SetPropertyValue("armor", armor + (5f + (count * 5)));
+                    self.armor = armor + (5f + (count * 5));
                 }
                 if (self.HasBuff(antiGravIndex))
                 {
@@ -337,19 +366,20 @@ namespace Cloudburst.Cores
                     {
                         self.characterMotor.useGravity = false;
                     }
-                    self.SetPropertyValue("attackSpeed", attackSpeed -= (.5f * attackSpeed));
-                    self.SetPropertyValue("moveSpeed", moveSpeed -= (.5f * moveSpeed));
+                    self.attackSpeed = attackSpeed -= (.5f * attackSpeed);
+                    self.moveSpeed = moveSpeed -= (.5f * moveSpeed);
                 }
                 if (self.HasBuff(antiGravFriendlyIndex)) {
                     //LogCore.LogI(self.moveSpeed);
-                    self.SetPropertyValue("moveSpeed", moveSpeed * 1);
+                    self.moveSpeed = moveSpeed += (.5f * moveSpeed);// self.acceleration += 1;
                     //LogCore.LogI(self.moveSpeed);
                 }
                 if (self.HasBuff(wyattCombatIndex)) {
                     var buffCount = self.GetBuffCount(wyattCombatIndex);
-                    for (int i = 0; i < buffCount; i++) {
-                        self.SetPropertyValue("moveSpeed", moveSpeed * (1f + (buffCount * 0.19f)));
-                        self.SetPropertyValue("regen", regen * (1f + (buffCount * 0.19f)));
+                    for (int i = 0; i < buffCount; i++)
+                    {
+                        self.moveSpeed = moveSpeed * (1f + (buffCount * 0.17f));
+                        self.regen = regen * (1f + (buffCount * 0.17f));
                     }
                 }
             }
@@ -371,6 +401,9 @@ namespace Cloudburst.Cores
                     break;
                 case "AntiGravFriendly":
                     antiGravFriendlyIndex = BuffAPI.Add(customBuff);
+                    break;
+                case "JapesCloak":
+                    japesCloak = BuffAPI.Add(customBuff);
                     break;
                 //throw new System.NotImplementedException("not implemented yet!");
                 default:

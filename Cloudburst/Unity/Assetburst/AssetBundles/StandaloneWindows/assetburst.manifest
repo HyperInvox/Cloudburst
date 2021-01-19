@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3548274022
+CRC: 198312237
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b858540fb4bc12acb9c8f7be3d79de5b
+    Hash: b2cfae774571bca29aa20e4b2b6a8dcc
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -196,6 +196,7 @@ Assets:
 - Assets/Cloudburst/753network/Crystallize/Ice HDR.mat
 - Assets/Cloudburst/Survivors/Bombardier/ExecAnimsupdate(Updated)2.blend
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorFallDown.anim
+- Assets/Cloudburst/Items/Dummies/texHuntressDiffuse.png
 - Assets/Cloudburst/753network/Crystallize/Ramp Blue.png
 - Assets/Cloudburst/Items/UESKeycard/Materials/keycard_gloss.mat
 - Assets/Cloudburst/Materials/Dormant_Fungus_Tex.mat
@@ -297,6 +298,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/Materials/specialicon2.mat
 - Assets/Cloudburst/Items/Grinder/Materials/texExtractor.mat
 - Assets/Cloudburst/Survivors/Wyatt/old/WinchGhost.prefab
+- Assets/Cloudburst/Items/Dummies/HuntressMesh.asset
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnimsupdate(Updated)2.blend
 - Assets/Cloudburst/Teaser/tex/Materials/Detritive_Trematode_Tex.mat
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/axetexture.mat
@@ -307,6 +309,7 @@ Assets:
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkRHT.anim
 - Assets/Cloudburst/Items/BrokenBodyArmor/admn.mat
+- Assets/Cloudburst/Items/Dummies/mdlHuntress.prefab
 - Assets/Cloudburst/Survivors/Wyatt/LoaderPylon.prefab
 - Assets/Cloudburst/Items/Dummies/Materials/texCommandoPaletteDiffuse.mat
 - Assets/Cloudburst/Items/Lemdog/LemDog_TexEmission.png
@@ -323,6 +326,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/bombsAnims.blend
 - Assets/Cloudburst/753network/Crystallize/Ramp Ruby.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/Armature_M2.anim
+- Assets/Cloudburst/Items/Dummies/Materials/texHuntressDiffuse.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Secondary.anim
 - Assets/Cloudburst/Survivors/Wyatt/GrappleCollider.prefab
 - Assets/Cloudburst/Teaser/tex/T_Executor_V2_Color.png
@@ -334,6 +338,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/old/texWyattIndicatorOLD.png
 - Assets/Cloudburst/Icons/REX/texTreebotHarvester.png
 - Assets/Cloudburst/Survivors/Bombardier/Flan/BROJUSTFUCKINGWORK.prefab
+- Assets/Cloudburst/BuffIcons/JapesCloakBuff.png
 - Assets/Cloudburst/Items/Grinder/Extractor.blend
 - Assets/Cloudburst/Materials/T_Executor_V2_Color.mat
 - Assets/Cloudburst/cloudburstlogo.png

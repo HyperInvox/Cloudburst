@@ -4,7 +4,7 @@ using RoR2.Skills;
 
 namespace Cloudburst.Cores.Skills
 {
-    public class BombardierTrackingSkillDef : SkillDef
+    public class IsNotroundedSkillDef : SkillDef
     {
 
         public override SkillDef.BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
