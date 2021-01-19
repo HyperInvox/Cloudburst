@@ -10,7 +10,7 @@ namespace Cloudburst.Cores.States.Wyatt
     //TODO:
     //Fix the combo finisher being weird.
 
-    class WyattMeleeAttack : BasicMeleeAttack, SteppedSkillDef.IStepSetter
+    class WyattBaseMeleeAttack : BasicMeleeAttack, SteppedSkillDef.IStepSetter
     {
 
         public int step = 0;
@@ -44,10 +44,14 @@ namespace Cloudburst.Cores.States.Wyatt
 
         private GameObject obj
         { get {
-                if (this.isComboFinisher) {
-                    return EffectCore.wyatt2SwingTrail;
+                if (this.isComboFinisher)
+                {
+                    return EffectCore.wyattSwingTrail;
+
                 }
-                return EffectCore.wyattSwingTrail;
+
+                return EffectCore.wyatt2SwingTrail;
+
             }
         }
 
@@ -88,7 +92,6 @@ namespace Cloudburst.Cores.States.Wyatt
 
         public override void BeginMeleeAttackEffect()
         {
-            BeginMeleeAttackEffect();
             if (!spawnEffect)
             {
                 spawnEffect = true;
@@ -113,8 +116,32 @@ namespace Cloudburst.Cores.States.Wyatt
 
         public override void PlayAnimation()
         {
-            base.PlayAnimation();
-            base.PlayAnimation("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration);//, 0.05f);
+            /*this.animationStateName = "";
+            switch (this.step)
+            {
+                case 0:
+                    this.animationStateName = "Primary1";
+                    break;
+                case 1:
+                    this.animationStateName = "Primary2";
+                    break;
+                case 2:
+                    this.animationStateName = "Primary3";
+                    break;
+            }
+            bool @bool = this.animator.GetBool("isMoving");
+            bool bool2 = this.animator.GetBool("isGrounded");
+
+            if (!@bool && bool2)
+            {
+                base.PlayCrossfade("FullBody, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
+            }
+            else
+            {
+                base.PlayCrossfade("UpperBody, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
+            }*/
+
+            base.PlayCrossfade("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration, 0.05f);
         }
 
         public override void OnMeleeHitAuthority()

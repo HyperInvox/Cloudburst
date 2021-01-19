@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 862213887
+CRC: 198312237
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: ad1fc62f8641c4a1eb48aa571739d061
+    Hash: b2cfae774571bca29aa20e4b2b6a8dcc
   TypeTreeHash:
     serializedVersion: 2
     Hash: f6fb0e02a020d81af6a5bf5453857c8f
@@ -254,7 +254,6 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Special1.anim
 - Assets/Cloudburst/753network/Crystallize/Sapphire.mat
 - Assets/Cloudburst/Teaser/tex/Detritive_Trematode_Tex.png
-- Assets/Cloudburst/Survivors/Wyatt/fbx/Wyatt.mesh
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorFallUp.anim
 - Assets/Cloudburst/Survivors/Wyatt/utilityicon.png
 - Assets/Cloudburst/Items/UESKeycard/Materials/keycard_texture_red.mat
@@ -348,7 +347,6 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/T_Bombardier_Color 3.mat
 - Assets/Cloudburst/Survivors/Bombardier/mdlSatchel.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Animations/CharSelect.anim
-- Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear_Jot_Swings.fbx
 - Assets/Cloudburst/Survivors/Bombardier/Flan/axetexture.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 2.mat
 Dependencies: []

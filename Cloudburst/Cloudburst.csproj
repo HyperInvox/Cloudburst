@@ -142,7 +142,7 @@
     <Compile Include="Cores\Components\WyattWinchManager.cs" />
     <Compile Include="Cores\States\Wyatt\SS2Dies.cs" />
     <Compile Include="Cores\States\Wyatt\TrashOut2.cs" />
-    <Compile Include="Cores\States\Wyatt\WyattMeleeAttack.cs" />
+    <Compile Include="Cores\States\Wyatt\WyattBaseMeleeAttack.cs" />
     <Compile Include="Cores\States\Wyatt\Cleanup.cs" />
     <Compile Include="Util\Listener.cs" />
     <Compile Include="Util\EnigmaticList.cs" />
