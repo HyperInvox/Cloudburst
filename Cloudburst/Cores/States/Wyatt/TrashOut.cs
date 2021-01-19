@@ -89,75 +89,80 @@ namespace Cloudburst.Cores.States.Wyatt
 
             if (stage == ActionStage.FoundTarget)
             {
-                if (this.target)
+
+                if (base.isAuthority)
                 {
-                    Vector3 velocity = (target.transform.position - base.transform.position).normalized * 120f;
-                    base.characterMotor.velocity = velocity;
-                    base.characterDirection.forward = base.characterMotor.velocity.normalized;
-                    float distance = Util.SphereVolumeToRadius(target.volume);
-
-                    if (_stopwatch > 2)
+                    if (this.target)
                     {
-                        //LogCore.LogI(stopwatch);
-                        this.activatorSkillSlot.AddOneStock();
-                        CloudburstPlugin.Destroy(_winch);
-                        characterMotor.velocity = Vector3.zero;         
-                        LogCore.LogW("Can't reach target, skill refunded!");
-                        this.outer.SetNextStateToMain();
+                        Vector3 velocity = (target.transform.position - base.transform.position).normalized * 120f;
+                        base.characterMotor.velocity = velocity;
+                        base.characterDirection.forward = base.characterMotor.velocity.normalized;
+                        float distance = Util.SphereVolumeToRadius(target.volume);
+
+                        if (_stopwatch > 2)
+                        {
+                            //LogCore.LogI(stopwatch);
+                            this.activatorSkillSlot.AddOneStock();
+                            CloudburstPlugin.Destroy(_winch);
+                            characterMotor.velocity = Vector3.zero;
+                            LogCore.LogW("Can't reach target, skill refunded!");
+                            this.outer.SetNextStateToMain();
+                        }
+
+
+                        if (Vector3.Distance(base.transform.position, target.transform.position) < distance + 5f && target)
+                        {
+
+                            base.PlayCrossfade("Fullbody, Override", "BufferEmpty", 0.5f);
+                            new BlastAttack
+                            {
+                                position = target.transform.position,
+                                baseForce = 3000,
+                                attacker = base.gameObject,
+                                inflictor = base.gameObject,
+                                teamIndex = base.GetTeam(),
+                                baseDamage = 5 * this.damageStat,
+                                attackerFiltering = default,
+                                bonusForce = new Vector3(0, -3000, 0),
+                                damageType = DamageType.Stun1s | DamageTypeCore.spiked,
+                                crit = RollCrit(),
+                                damageColorIndex = DamageColorIndex.Default,
+                                falloffModel = BlastAttack.FalloffModel.None,
+                                //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
+                                procCoefficient = 1f,
+                                radius = 5
+                            }.Fire();
+
+                            //LogCore.LogI("called onhit!!!");
+                            CloudburstPlugin.Destroy(_winch);
+
+                            EffectData effectData = new EffectData
+                            {
+                                rotation = Quaternion.identity,
+                                scale = 20f,
+                                //start = base.transform.position,
+                                origin = target.transform.position
+                            };
+                            EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact"), effectData, true);
+                            EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/ExplosionSolarFlare"), effectData, true);
+
+                            base.characterMotor.velocity = Vector3.up * 30f;
+                            //characterMotor.ApplyForce(-(GetAimRay().direction * (-characterMotor.mass * 10)), true, false);
+                            stage = ActionStage.HitTarget;
+
+
+                            //LogCore.LogI("Stage: " + stage.ToString());
+
+                            this.outer.SetNextStateToMain();
+                        }
                     }
-
-
-                    if (Vector3.Distance(base.transform.position, target.transform.position) < distance + 5f && target)
+                    else
                     {
-
-                        base.PlayCrossfade("Fullbody, Override", "BufferEmpty",0.5f);
-                        new BlastAttack
-                        {
-                            position = target.transform.position,
-                            baseForce = 3000,
-                            attacker = base.gameObject,
-                            inflictor = base.gameObject,
-                            teamIndex = base.GetTeam(),
-                            baseDamage = 5 * this.damageStat,
-                            attackerFiltering = default,
-                            bonusForce = new Vector3(0, -3000, 0),
-                            damageType = DamageType.Stun1s | DamageTypeCore.spiked,
-                            crit = RollCrit(),
-                            damageColorIndex = DamageColorIndex.Default,
-                            falloffModel = BlastAttack.FalloffModel.None,
-                            //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
-                            procCoefficient = 1f,
-                            radius = 5
-                        }.Fire();
-
-                        //LogCore.LogI("called onhit!!!");
                         CloudburstPlugin.Destroy(_winch);
-
-                        EffectData effectData = new EffectData
-                        {
-                            rotation = Quaternion.identity,
-                            scale = 20f,
-                            //start = base.transform.position,
-                            origin = target.transform.position
-                        };
-                        EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact"), effectData, true);
-                        EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/ExplosionSolarFlare"), effectData, true);
-
-                        base.characterMotor.velocity = Vector3.up * 30f;
-                        //characterMotor.ApplyForce(-(GetAimRay().direction * (-characterMotor.mass * 10)), true, false);
-                        stage = ActionStage.HitTarget;
-
-
-                        //LogCore.LogI("Stage: " + stage.ToString());
-
-                        this.outer.SetNextStateToMain();
+                        characterMotor.velocity = Vector3.zero; ;
+                        outer.SetNextStateToMain();
+                        return;
                     }
-                }
-                else
-                {
-                    CloudburstPlugin.Destroy(_winch);
-
-                    outer.SetNextStateToMain();
                 }
             }
             else
@@ -167,6 +172,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 characterMotor.velocity = Vector3.zero;
                 this.outer.SetNextStateToMain();
 
+                return;
             }
         }
 

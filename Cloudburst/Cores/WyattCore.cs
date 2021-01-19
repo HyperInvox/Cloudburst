@@ -726,8 +726,7 @@ namespace Cloudburst.Cores.HAND
             utilitySkillDef.skillNameToken = "WYATT_UTILITY_NAME";
             utilitySkillDef.icon = AssetsCore.wyattUtility;
             utilitySkillDef.keywordTokens = new string[] {
-                 "KEYWORD_STUNNING",
-                 "KEYWORD_WEIGHTLESS"
+                 "KEYWORD_RUPTURE",
              };
 
             SkillDef utilitySkillDef2 = ScriptableObject.CreateInstance<SkillDef>();
@@ -753,8 +752,10 @@ namespace Cloudburst.Cores.HAND
             utilitySkillDef2.icon = AssetsCore.wyattUtilityAlt;
             utilitySkillDef2.keywordTokens = Array.Empty<string>();
 
-            LanguageAPI.Add(utilitySkillDef.skillNameToken, "Deep Clean");
-            LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Stunning</style>. Dash forward, rapidly attacking any enemies along your path for X% damage repeatedly. <style=cIsUtility>Applies Weightless</style>.");
+            LanguageAPI.Add(utilitySkillDef.skillNameToken, "Rub and Scrub");
+            LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "Dive downwards, <style=cIsDamage>dealing 100% damage</style>. Enemies directly below you are bounced on, <style=cIsUtility>reducing 3 seconds off the next cast</style> and <style=cIsDamage>taking 700% damage that is Sparkling</style>.");
+            LanguageAPI.Add("KEYWORD_RUPTURE", "<style=cKeywordName>Sparkling</style><style=cSub>This damage deals up to <style=cIsDamage>3x</style> damage to low health enemies.</style>");
+
 
             LanguageAPI.Add(utilitySkillDef2.skillNameToken, "G22 WINCH");
             LanguageAPI.Add(utilitySkillDef2.skillDescriptionToken, "Fire a winch that deals <style=cIsDamage>500%</style> damage and <style=cIsUtility>pulls you</style> towards the target.");

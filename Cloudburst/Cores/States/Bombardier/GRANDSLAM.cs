@@ -39,9 +39,9 @@ namespace Cloudburst.Cores.States.Bombardier
                 attacker = base.gameObject,
                 attackerFiltering = AttackerFiltering.Default,
                 damage = 1f * damageStat,
-                damageColorIndex = DamageColorIndex.Item,
-                damageType = DamageType.BonusToLowHealth,
-                forceVector = Vector3.zero,
+                damageColorIndex = DamageColorIndex.Default,
+                damageType = DamageType.Generic,
+                forceVector = Vector3.down * 100,
                 hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxGrandSlam", base.GetModelTransform()),
                 inflictor = base.gameObject,
                 isCrit = false,
@@ -100,7 +100,6 @@ namespace Cloudburst.Cores.States.Bombardier
                         characterMotor.Motor.ForceUnground();
                         characterMotor.velocity = Vector3.zero;
                         characterMotor.velocity = Vector3.up * 30;
-                        base.skillLocator.utility.RunRecharge(5);
                         outer.SetNextStateToMain();
                         return;
                     }
@@ -155,7 +154,10 @@ namespace Cloudburst.Cores.States.Bombardier
 
         public override void OnExit()
         {
-            base.OnExit();
+            base.OnExit(); if (hit)
+            {
+                skillLocator.utility.rechargeStopwatch += 2;
+            }
             base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
         }
     }
