@@ -596,14 +596,14 @@ namespace Cloudburst.Cores.HAND
             LoadoutAPI.AddSkill(typeof(FullSwing));
             LoadoutAPI.AddSkill(typeof(FullSwing2));
             LoadoutAPI.AddSkill(typeof(Cleanup));
-            LoadoutAPI.AddSkill(typeof(WyattBaseMeleeAttack));
+            LoadoutAPI.AddSkill(typeof(WyattMeleeAttack));
 
             SteppedSkillDef primarySkillDef = ScriptableObject.CreateInstance<SteppedSkillDef>();
 
-            primarySkillDef.activationState = new SerializableEntityStateType(typeof(WyattBaseMeleeAttack));
-            primarySkillDef.stepCount = 3;
+            primarySkillDef.activationState = new SerializableEntityStateType(typeof(WyattMeleeAttack));
             primarySkillDef.activationStateMachineName = "Weapon";
             primarySkillDef.baseMaxStock = 1;
+            primarySkillDef.stepCount = 3;
             primarySkillDef.baseRechargeInterval = 0f;
             primarySkillDef.beginSkillCooldownOnSkillEnd = true;
             primarySkillDef.canceledFromSprinting = false;

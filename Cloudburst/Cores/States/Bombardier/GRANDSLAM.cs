@@ -40,7 +40,7 @@ namespace Cloudburst.Cores.States.Bombardier
                 attackerFiltering = AttackerFiltering.Default,
                 damage = 1f * damageStat,
                 damageColorIndex = DamageColorIndex.Item,
-                damageType = DamageType.BonusToLowHealth,
+                damageType = DamageType.Generic,
                 forceVector = Vector3.zero,
                 hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxGrandSlam", base.GetModelTransform()),
                 inflictor = base.gameObject,
@@ -156,6 +156,10 @@ namespace Cloudburst.Cores.States.Bombardier
         public override void OnExit()
         {
             base.OnExit();
+            if (hit)
+            {
+                skillLocator.utility.rechargeStopwatch += 2;
+                    }
             base.characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
         }
     }
