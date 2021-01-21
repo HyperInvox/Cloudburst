@@ -28,7 +28,7 @@ namespace Cloudburst.Cores
         protected internal ItemIndex randomDebuffOnHitIndex; //model and icon
         protected internal ItemIndex moneyOnInteractionIndex; //rob
         protected internal ItemIndex barrierOnCritIndex; //rob
-        protected internal ItemIndex barrierOnLevelIndex; //jello
+        protected internal ItemIndex barrierOnLevelIndex; //model and icon
         protected internal ItemIndex experienceOnHitIndex; //rob
         protected internal ItemIndex lemdogIndex; //model and icon
         protected internal ItemIndex extendEnemyBuffDurationIndex; //model and icon
@@ -598,11 +598,11 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 new ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = keyCardMDL,
-                    childName = "Pelvis",
-                    localPos = new Vector3(-0.004f, 0.09f, 0.06f),
-                    localAngles = new Vector3(-10.305f, 0.057f, -0.626f),
-                    localScale = new Vector3(100, 100, 100)
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(5, 2, 3)
 
         }
             });
@@ -611,13 +611,96 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 new ItemDisplayRule
                 {
                     ruleType = ItemDisplayRuleType.ParentedPrefab,
-                    followerPrefab = keyCardMDL,
-                    childName = "Pelvis",
-                    localPos = new Vector3(0.008f, 0.036f, -0.034f),
-                    localAngles = new Vector3(3.176f, -92.262f, -86.522f),
-                    localScale = new Vector3(50, 50, 50)
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)
         }
+}); rules.Add("mdlToolbot", new ItemDisplayRule[]
+{
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)
+                }
 });
+
+            rules.Add("mdlEngi", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)                }
+            });
+            rules.Add("mdlMage", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)                }
+            });
+            rules.Add("mdlMerc", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)
+                }
+            });
+            rules.Add("mdlLoader", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)
+                }
+            });
+            rules.Add("mdlCroco", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = fabDagMDL,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)
+                }
+            });
+            rules.Add("mdlCaptain", new ItemDisplayRule[]
+            {
+                new ItemDisplayRule
+                    {
+                        ruleType = ItemDisplayRuleType.ParentedPrefab,
+                    followerPrefab = fabDagMDL  ,
+                    childName = "Chest",
+                    localPos = new Vector3(0, 0.2f, 0.3f),
+                    localAngles = new Vector3(-180f, 0, -0),
+                    localScale = new Vector3(3, 2, 3)
+                }
+            });
+
 
             return rules;
         }
@@ -651,7 +734,7 @@ Their argument abruptly stopped when they realized what they had been fighting o
                     childName = "Chest",
                     localPos = new Vector3(-0.0012f, 0.2745f, 0.2034f),
                     localAngles = new Vector3(-18.398f, 0.02f, -0.125f),
-                    localScale = new Vector3(5,5, 5)
+                    localScale = new Vector3(10,10, 10)
 
         }
             });
@@ -783,13 +866,44 @@ Their argument abruptly stopped when they realized what they had been fighting o
         {
             On.RoR2.GlobalEventManager.OnCrit += GlobalEventManager_OnCrit;
             On.RoR2.GlobalEventManager.OnInteractionBegin += GlobalEventManager_OnInteractionBegin;
-            GlobalEventManager.onServerDamageDealt += GlobalEventManager_onServerDamageDealt;
+            On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             GlobalEventManager.onCharacterDeathGlobal += GlobalEventManagerOnOnCharacterDeath;
             On.RoR2.GlobalEventManager.OnTeamLevelUp += GlobalEventManager_OnTeamLevelUp;
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteractionOnTeleporterBeginChargingGlobal;
             On.RoR2.GenericPickupController.GrantItem += GrantItem;
             On.RoR2.CharacterBody.AddTimedBuff += CharacterBody_AddTimedBuff;
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+        }
+
+        private void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
+        {
+
+            CharacterBody victimBody = victim ? victim.GetComponent<CharacterBody>() : null;
+            CharacterBody attackerBody = damageInfo.attacker ? damageInfo.attacker.GetComponent<CharacterBody>() : null;
+            CharacterMaster attackerMaster = attackerBody ? attackerBody.master : null ;
+            Inventory attackerInventory = attackerMaster ? attackerMaster.inventory : null;
+            //Inventory victimInventory = victimMaster ? victimMaster.inventory : null;
+
+            if (attackerBody && attackerMaster && attackerInventory)
+            {
+
+                int scpRandom = UnityEngine.Random.Range(0, scpBuffList.Count);
+                int rootCount = attackerInventory.GetItemCount(crippleOnHitIndex);
+                int scpCount = attackerInventory.GetItemCount(randomDebuffOnHitIndex);
+                //int freezeCount = attackerInventory.GetItemCount(freezeEnemiesOnHitIndex);
+
+
+                if (rootCount > 0 && Util.CheckRoll(20 * damageInfo.procCoefficient, attackerMaster) && attackerMaster && victimBody)
+                {
+                    victimBody.AddTimedBuff(BuffIndex.Cripple, 3);
+                }
+
+                if (scpCount > 0 && victimBody)
+                {
+                    victimBody.AddTimedBuff(scpBuffList[scpRandom], (scpCount * 2));
+                }
+            }
+            orig(self, damageInfo, victim);
         }
 
         private void CharacterBody_AddTimedBuff(On.RoR2.CharacterBody.orig_AddTimedBuff orig, CharacterBody self, BuffIndex buffType, float duration)
@@ -942,39 +1056,6 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 LogCore.LogI("YOOOOOOOOOOO!");
                 EffectManager.SpawnEffect(EntityStates.Toolbot.ToolbotDash.knockbackEffectPrefab, data, true);
                 PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(GetRandomItem(bossitemList)), victimBody.transform.position, new Vector3(0, 50, 0));
-
-            }
-        }
-
-        public void GlobalEventManager_onServerDamageDealt(DamageReport damageReport)
-        {
-            if (!damageReport.attackerBody || !damageReport.victimBody || !damageReport.attacker || !damageReport.victim || !damageReport.attackerMaster || !damageReport.victimMaster || damageReport == null)
-                return;
-            if (damageReport.attackerBody && damageReport != null)
-            {
-                //CharacterBody attackerBody = damageReport.attackerBody;
-                CharacterBody victimBody = damageReport.victimBody;
-                CharacterBody attackerBody = damageReport.attackerBody;
-                CharacterMaster attackerMaster = damageReport.attackerMaster;
-                CharacterMaster victimMaster = damageReport.victimMaster;
-                Inventory attackerInventory = attackerMaster ? attackerMaster.inventory : null;
-                //Inventory victimInventory = victimMaster ? victimMaster.inventory : null;
-
-                int scpRandom = UnityEngine.Random.Range(0, scpBuffList.Count);
-                int rootCount = attackerInventory.GetItemCount(crippleOnHitIndex);
-                int scpCount = attackerInventory.GetItemCount(randomDebuffOnHitIndex);
-                //int freezeCount = attackerInventory.GetItemCount(freezeEnemiesOnHitIndex);
-
-
-                if (rootCount > 0 && Util.CheckRoll(20, attackerMaster) && attackerMaster && damageReport.victimBody)
-                {
-                    victimBody.AddTimedBuff(BuffIndex.Cripple, 3);
-                }
-
-                if (scpCount > 0 && damageReport.victimBody && victimMaster)
-                {
-                    victimBody.AddTimedBuff(scpBuffList[scpRandom], (scpCount * 2));
-                }
 
             }
         }

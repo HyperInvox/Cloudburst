@@ -138,6 +138,11 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
+    <Compile Include="Cores\Components\EmitVoidBrother.cs" />
+    <Compile Include="Cores\Components\InfestationTrigger.cs" />
+    <Compile Include="Cores\Components\EmitVoid.cs" />
+    <Compile Include="Cores\NewtCore.cs" />
+    <Compile Include="Cores\VoidCore.cs" />
     <Compile Include="Cores\Components\AntiGravityChecker.cs" />
     <Compile Include="Cores\Components\WyattWinchManager.cs" />
     <Compile Include="Cores\States\Wyatt\SS2Dies.cs" />

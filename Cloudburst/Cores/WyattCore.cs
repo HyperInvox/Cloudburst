@@ -43,6 +43,23 @@ namespace Cloudburst.Cores.HAND
 
         public static string trashOutStateName;
 
+        public const string lore = @"Can't stop now. Can't stop now. Every step I take is a step I can't take back. Come hell or high water I will find it.
+
+It's all a rhythm, just a rhythm. Every time I step out of line is a punishment. I will obey the groove. Nothing can stop me now.
+
+Every scar is worth it. I can feel it, I am coming closer to it. I will have it, and it will be mine.
+
+No matter the blood, it's worth it. I will find what I want, and I will come home.
+
+No matter how many I slaughter, it will be mine... It can't hide from me from me forever.
+
+It's here, I can feel it. This security chest, it has it. I crack it open, and I find it.
+
+It's... finally mine. I hold it in my bruised hands. Has it really been years? 
+
+She'll love this, I know.
+
+";
 
         public SkillDef throwPrimary;
         public SkillDef retrievePrimary;
@@ -409,9 +426,10 @@ namespace Cloudburst.Cores.HAND
             characterBody.baseMaxShield = 0; //Base shield, basically the same as baseMaxHealth but with shields
             characterBody.baseMoveSpeed = 7; //Base move speed, this is usual 7
             characterBody.baseNameToken = "WYATT_BODY_NAME"; //The base name token. 
+            LanguageAPI.Add("WYATT_BODY_LORE", lore);
             characterBody.subtitleNameToken = "WYATT_BODY_SUBTITLE"; //Set this if its a boss
             characterBody.baseRegen = 1.5f; //Base health regen.
-            characterBody.bodyFlags = (CharacterBody.BodyFlags.ImmuneToExecutes | CharacterBody.BodyFlags.Mechanical); ///Base body flags, should be self explanatory 
+            characterBody.bodyFlags = (CharacterBody.BodyFlags.ImmuneToExecutes); ///Base body flags, should be self explanatory 
             characterBody.crosshairPrefab = characterBody.crosshairPrefab = Resources.Load<GameObject>("Prefabs/CharacterBodies/HuntressBody").GetComponent<CharacterBody>().crosshairPrefab; //The crosshair prefab.
             characterBody.hideCrosshair = false; //Whether or not to hide the crosshair
             characterBody.hullClassification = HullClassification.Human; //The hull classification, usually used for AI

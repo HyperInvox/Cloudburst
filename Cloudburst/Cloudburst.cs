@@ -4,6 +4,7 @@ using Cloudburst.Cores;
 using Cloudburst.Cores.Components;
 using Cloudburst.Cores.HAND;
 using R2API.Utils;
+using RoR2;
 using RoR2.UI;
 using System;
 using UnityEngine;
@@ -65,6 +66,10 @@ namespace Cloudburst
         /// Called on the mod's FixedUpdate
         /// </summary>
         public static event Action onFixedUpdate;
+        /// <summary>
+        /// Called when a new scene is loaded
+        /// </summary>
+        public static event Action<Scene, Scene, SceneDef, SceneInfo> onSceneLoaded;
 
         #region Cores
         //Support cores; Cannot be disabled.
@@ -244,6 +249,8 @@ namespace Cloudburst
                 //On.RoR2.CharacterBody.AddTimedBuff += GlobalHooks.CharacterBody_AddTimedBuff;
                 //On.RoR2.HealthComponent.TakeDamage += GlobalHooks.HealthComponent_TakeDamage;
 
+                new VoidCore();
+                new NewtCore();
                 //and thus
                 //we reach the end
                 qol = new QOLCore();
@@ -268,6 +275,8 @@ namespace Cloudburst
 
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
+            //var def = SceneCatalog.GetSceneDefFromScene(arg1);
+            //onSceneLoaded(arg0, arg1, def, SceneInfo.instance);
             if (arg1.name == "title")
             {
                 var menu = GameObject.Find("MainMenu");

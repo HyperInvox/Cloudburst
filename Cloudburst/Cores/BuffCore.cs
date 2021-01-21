@@ -4,6 +4,7 @@ using R2API.Utils;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
 namespace Cloudburst.Cores
 {
@@ -253,6 +254,7 @@ namespace Cloudburst.Cores
 
         }
 
+
         private void CharacterBody_AddBuff(On.RoR2.CharacterBody.orig_AddBuff orig, CharacterBody self, BuffIndex buffType)
         {
             orig(self, buffType);
@@ -335,7 +337,7 @@ namespace Cloudburst.Cores
                 var crit = self.crit;
 
                 var inv = self.inventory;
-
+                
                 if (self.HasBuff(japesCloak)) {
                     var count = 0;
                     if (inv) {

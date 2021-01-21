@@ -30,6 +30,7 @@ namespace Cloudburst.Cores
         public static GameObject winch;
 
         public static GameObject orbitalOrb;
+        public static GameObject orbitalOrbGhost;
 
         public static GameObject wyattMaidBubble;
 
@@ -48,16 +49,21 @@ namespace Cloudburst.Cores
 
             CreateBombardierProjectiles();
             CreateWyattMaidBubble();
-            //CreateOrbitalOrbs();
+            CreateOrbitalOrbs();
             CreateWinchGhost();
             CreateWinchProjectile();
-            //CreateSproutingMushroom();
-            //CreateDelaySproutingMushroom();
 
-            //CreateElectricPillarGhost();
-            //CreateElectricPillar();
-            //CreateElectricProjectile(); ;
+            CloudburstPlugin.start += CloudburstPlugin_start;
+        }
 
+        private void CloudburstPlugin_start()
+        {
+            orbitalOrbGhost = Resources.Load<GameObject>("prefabs/projectileghosts/RedAffixMissileGhost").InstantiateClone("VoidOrbGhost", false);
+            orbitalOrbGhost.transform.Find("Sphere").GetComponent<Renderer>().materials = new Material[] {
+                VoidCore.voidMat
+            };
+
+            orbitalOrb.GetComponent<ProjectileController>().ghostPrefab = orbitalOrbGhost;
         }
 
         #region Misc   
@@ -251,13 +257,13 @@ namespace Cloudburst.Cores
 
             //collider.radius = 0.2f;
 
-            orb.attackFireCount = 6;
-            orb.attackInterval = 1;
+            orb.attackFireCount = 1;
+            orb.attackInterval = 2;
             orb.listClearInterval = 0.1f;
-            orb.attackRange = 25;
+            orb.attackRange = 20    ;
             orb.minAngleFilter = 0;
             orb.maxAngleFilter = 180;
-            orb.procCoefficient = 0.5f;
+            orb.procCoefficient = 1f;
             orb.damageCoefficient = 1;
             orb.bounces = 0;
             orb.inheritDamageType = false;
