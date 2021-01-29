@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 class CommonAssets
 {
@@ -21,10 +22,14 @@ class CommonAssets
 
     public static GameObject goldAffix;
 
+    public static List<PostProcessProfile> profiles = new List<PostProcessProfile>();
+
     public static Dictionary<string, GameObject> itemDisplayPrefabs = new Dictionary<string, GameObject>();
 
     public static void Load() {
         LogCore.LogI("Loading common assets...");
+
+        profiles = Resources.FindObjectsOfTypeAll<PostProcessProfile>().ToList();
 
         lunarStarburst = Resources.Load<GameObject>("prefabs/LunarChestStarburst");
         smallChestStarburst = Resources.Load<GameObject>("prefabs/Chest1Starburst");

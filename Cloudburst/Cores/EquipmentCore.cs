@@ -193,8 +193,8 @@ namespace Cloudburst.Cores
         {
             LanguageAPI.Add("EQUIPMENT_LUMPKIN_NAME", "The Lumpkin");
             LanguageAPI.Add("EQUIPMENT_LUMPKIN_PICKUP", "And his screams were Brazilian...");
-            LanguageAPI.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does double your maximum health for damage and stuns enemies within 35m.");
-            LanguageAPI.Add("EQUIPMENT_LUMPKIN_LORE", "\"Lumpkin, one of the many commanders in the War of 2019 possessed a scream that could deafen his oppenents. For many months allies and foes never knew how he could scream so loudly, until he was killed in the final battle of WW19 and had his lungs ripped from his chest. \r\n\r\nHis lungs, pictured above, allowed him to scream loudly without injuring himself.\"\r\n\r\n-Exhibit at The National WW19 Museum");
+            LanguageAPI.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does <style=cIsDamage>500% damage, and twice your maximum health for damage</style>.");
+            LanguageAPI.Add("EQUIPMENT_LUMPKIN_LORE", "\"Lumpkin, one of the many commanders in the War of 2019 possessed a scream that could deafen his oppenents. For many battles, it was a mystery how he his scream was so powerful. Until he was impaled in the final battle of WW19, and had his lungs ripped from his chest. \r\n\r\nHis lungs, pictured above, allowed him to scream loudly without injuring himself.\"\r\n\r\n-Exhibit at The National WW19 Museum");
 
             LanguageAPI.Add("EQUIPMENT_REACTOR_NAME", "Unstable Quantum Reactor");
             LanguageAPI.Add("EQUIPMENT_REACTOR_PICKUP", "Fire a random projectile on use.");
@@ -244,9 +244,9 @@ namespace Cloudburst.Cores
             {
                 attacker = Screamer.gameObject,
                 attackerFiltering = AttackerFiltering.Default,
-                baseDamage = Screamer.maxHealth,
-                baseForce = 30,
-                bonusForce = new Vector3(0, 0, 0),
+                baseDamage = (5 * Screamer.damage) + (Screamer.maxHealth * 2),
+                baseForce = 5000, 
+                bonusForce = new Vector3(0, 5000, 0),
                 crit = false,
                 damageColorIndex = DamageColorIndex.CritHeal,
                 damageType = DamageType.AOE,
@@ -255,15 +255,15 @@ namespace Cloudburst.Cores
                 losType = BlastAttack.LoSType.NearestHit,
                 position = Screamer.transform.position,
                 procChainMask = default,
-                procCoefficient = 1.2f,
-                radius = 35,
+                procCoefficient = 2f,
+                radius = 15,
                 teamIndex = Screamer.teamComponent.teamIndex
             };
             impactAttack.Fire();
             EffectData effect = new EffectData()
             {
                 origin = Screamer.transform.position,
-                scale = 35
+                scale = 15
             };
             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleQueenDeathImpact"), effect, true);
         }

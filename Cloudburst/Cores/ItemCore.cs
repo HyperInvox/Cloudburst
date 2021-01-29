@@ -2,6 +2,7 @@
 using EntityStates.Scrapper;
 using R2API;
 using RoR2;
+using RoR2.Projectile;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,12 +25,12 @@ namespace Cloudburst.Cores
         protected internal ItemIndex largerTeleporterRadiusIndex; //model and icon
         protected internal ItemIndex crippleOnHitIndex; //model and icon
         protected internal ItemIndex cloakOnInteractionIndex; //model and icon
-        protected internal ItemIndex itemOnLevelUpIndex; //rob if he wants to do texturing
+        protected internal ItemIndex armorOnCd; //rob if he wants to do texturing
         protected internal ItemIndex randomDebuffOnHitIndex; //model and icon
         protected internal ItemIndex moneyOnInteractionIndex; //rob
-        protected internal ItemIndex barrierOnCritIndex; //rob
+        protected internal ItemIndex barrierOnCritIndex; //does not have a model
         protected internal ItemIndex barrierOnLevelIndex; //model and icon
-        protected internal ItemIndex experienceOnHitIndex; //rob
+        protected internal ItemIndex experienceOnHitIndex; //has icon
         protected internal ItemIndex lemdogIndex; //model and icon
         protected internal ItemIndex extendEnemyBuffDurationIndex; //model and icon
         //protected internal ItemIndex damageOnDamagedIndex;
@@ -52,6 +53,8 @@ namespace Cloudburst.Cores
         public GameObject harvesterMDL;
         public GameObject lemdogMDL;
         public GameObject magicsMDL;
+
+        public GameObject projectileBlastPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/OmniExplosionVFX");
 
         public const string japesLore = @"""In the cold rain, amongst the remnants of ships long fallen, shouting could be heard. Shrouded in fog, were three figures crowded around the spoils of a blue security chest.""
 
@@ -158,8 +161,14 @@ Their argument abruptly stopped when they realized what they had been fighting o
                         case "IMDLMechanicalTrinket":
                             mechanicalTrinketMDL = item;
                             break;
-                        case "IMDLKeycard":
+                        case "IMDLKeycard": 
                             keyCardMDL = item;
+                            break;
+                        case "IMDLHarvester":
+                            harvesterMDL = item;
+                            break;
+                        case "IMDLRabbitFoot":
+                            topazLensMDL = item;
                             break;
                     }
                     LogCore.LogI("Item model found! " + item.name);
@@ -263,11 +272,11 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 loreToken = "",
                 name = "ItemOnLevelUp2",
                 nameToken = "ITEM_ITEMONLEVELUP_NAME",
-                //pickupIconPath = pickUpIconPath,
+                pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/CarePackageRequester/icon.png",
                 pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/CarePackageRequester/IMDLCarePackageRequester.prefab",
                 pickupToken = "ITEM_ITEMONLEVELUP_PICKUP",
                 tags = itemOnLevelUpTags,
-                tier = ItemTier.Tier3,
+                tier = ItemTier.Tier2,
                 unlockableName = ""
             });
             ItemTag[] randomDebuffOnHitTags = new ItemTag[2]
@@ -283,8 +292,8 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 loreToken = "",
                 name = "RandomDebuffOnHit",
                 nameToken = "ITEM_RANDOMDEBUFFONHIT_NAME",
-                //pickupIconPath = pickUpIconPath,
-                //pickupModelPath = pickUpModelPath,
+                pickupIconPath = "textures/miscicons/texMysteryIcon",
+                pickupModelPath = "prefabs/pickupmodels/PickupMystery",
                 pickupToken = "ITEM_RANDOMDEBUFFONHIT_PICKUP",
                 tags = randomDebuffOnHitTags,
                 tier = ItemTier.Tier3,
@@ -303,7 +312,7 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 loreToken = "",
                 name = "MoneyOnInteraction",
                 nameToken = "ITEM_MONEYONINTERACTION_NAME",
-                //pickupIconPath = pickUpIconPath,
+                pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/icon.png",
                 pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/IMDLKeycard.prefab",
                 pickupToken = "ITEM_MONEYONINTERACTION_PICKUP",
                 tags = moneyOnInteractionTags,
@@ -323,8 +332,8 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 loreToken = "",
                 name = "BarrierOnCrit",
                 nameToken = "ITEM_BARRIERONCRIT_NAME",
-                //pickupIconPath = pickUpIconPath,
-                //pickupModelPath = pickUpModelPath,
+                pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/TopazLense/icon.png",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/TopazLense/IMDLRabbitFoot.prefab",
                 pickupToken = "ITEM_BARRIERONCRIT_PICKUP",
                 tags = barrierOnCritTags,
                 tier = ItemTier.Tier2,
@@ -363,8 +372,8 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 loreToken = "",
                 name = "ExperienceOnHit",
                 nameToken = "ITEM_EXPERIENCEONHIT_NAME",
-                //pickupIconPath = pickUpIconPath,
-                //pickupModelPath = pickUpModelPath,
+                pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Harvester/icon.png",
+                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Harvester/IMDLHarvester.prefab",
                 pickupToken = "ITEM_EXPERIENCEONHIT_PICKUP",
                 tags = experienceOnHitTags,
                 tier = ItemTier.Tier1,
@@ -434,8 +443,8 @@ Their argument abruptly stopped when they realized what they had been fighting o
         protected internal void RegisterTokens()
         {
             LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_NAME", "Extractor"); //model
-            LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_DESC", "<style=cIsUtility>25% chance <style=cStack>(+10% per stack)</style> for bosses to drop a random boss item when killed.</style>");
-            LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_PICKUP", "Chance for bosses to drop items when killed");
+            LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_DESC", "On boss death, <style=cIsUtility>25% chance <style=cStack>(+10% per stack)</style> for bosses to drop a random boss item when killed.</style> Nearby projectiles are also destroyed, gain 5 <style=cStack>(+5 per stack)</style> for each destroyed projectile. ");
+            LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_PICKUP", "On death, bosses have a chance to drop an item. Nearby projectiles are also destroyed, gain barrier for each destroyed projectile.");
 
             LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_NAME", "Mechanical Trinket"); //model
             LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_DESC", "<style=cIsUtility>Increase teleporter radius by 3m</style> <style=cStack>(+3m per stack)</style>.");
@@ -449,33 +458,38 @@ Their argument abruptly stopped when they realized what they had been fighting o
             //var nArmor = armor + (0.1f + (count * 0.2f));
             //var nRegen = regen + (0.1f + (count * 0.2f));
             LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_NAME", "Jape's Cloak");
-            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Gain a buff that grants you <style=cIsUtility>30% armor</style> and <style=cIsHealing>30% healing</style> when picking up an item. Maximum cap of 3 buffs <style=cStack>(+2 per stack)</style>.");
-            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Gain a buff picking up an item.");
+            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Gain a buff that grants you <style=cIsUtility>+5 armor</style> and <style=cIsHealing>30% healing</style> when picking up an item. Maximum cap of 3 buffs <style=cStack>(+2 per stack)</style>.");
+            LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Gain a buff that grants armor and healing on item pickup.");
             LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_LORE", japesLore);
 
-            LanguageAPI.Add("ITEM_ITEMONLEVELUP_NAME", "Care Package Requester");
-            LanguageAPI.Add("ITEM_ITEMONLEVELUP_DESC", "<style=cIsUtility>75% Chance to gain an item on level up</style>. <style=cStack>+5% chance to gain a green item per stack</style>");
-            LanguageAPI.Add("ITEM_ITEMONLEVELUP_PICKUP", "Chance to gain an item on level up");
+            //LanguageAPI.Add("ITEM_ITEMONLEVELUP_NAME", "Opportunists Charm");
+            //LanguageAPI.Add("ITEM_ITEMONLEVELUP_DESC", "For each skill on cooldown, recieve an armor buff that gives you <style=cIsUtility>+10 <style=cStack>+10 chance per stack</style> armor</style>. ");
+            //LanguageAPI.Add("ITEM_ITEMONLEVELUP_PICKUP", "Recieve armor for each skill on cooldown");
+
+            LanguageAPI.Add("ITEM_ITEMONLEVELUP_NAME", "Blastboot Shell");
+            LanguageAPI.Add("ITEM_ITEMONLEVELUP_DESC", "20% chance on hit, if in midair, to <style=cIsDamage>spawn an explosion beneath you</style> that does <style=cIsDamage>100%<style=cStack>+250% chance per stack</style> damage</style> and <style=cIsUtility>boosts you upwards</style>");
+            LanguageAPI.Add("ITEM_ITEMONLEVELUP_PICKUP", "On hit, spawn an explosion beneath you if in midair.");
+
 
             LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_NAME", "[REDACTED]");
             LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_DESC", "[REDACTED]");
             LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_PICKUP", "[REDACTED]");
-            LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_LORE", "Order: \u201C[REDACTED]\u201D\r\nTracking Number: [REDACTED]\r\nEstimated Delivery: [REDACTED]\r\nShipping Method: [REDACTED]\r\nShipping Address: [REDACTED], [REDACTED]\r\nShipping Details:\r\n\r\nSecure, contain, protect.\r\n");
+            LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_LORE", "Order: \u201C[REDACTED]\u201D\r\nTracking Number: [REDACTED]\r\nEstimated Delivery: [REDACTED]\r\nShipping Method: [REDACTED]\r\nShipping Address: [REDACTED], [REDACTED]\r\nShipping Details:\r\n\r\nThere is always a job for us.     Secure, contain, protect.\r\n");
 
-            LanguageAPI.Add("ITEM_MONEYONINTERACTION_NAME", "UES Keycard");
-            LanguageAPI.Add("ITEM_MONEYONINTERACTION_DESC", "Gain <style=cIsUtility>10 gold</style> <style=cStack>(+5 gold per stack)</style> upon opening a chest. ");
-            LanguageAPI.Add("ITEM_MONEYONINTERACTION_PICKUP", "Activating an interactable gives gold");
+            LanguageAPI.Add("ITEM_MONEYONINTERACTION_NAME", "Enigmatic Keycard");
+            LanguageAPI.Add("ITEM_MONEYONINTERACTION_DESC", "10% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style>.");
+            LanguageAPI.Add("ITEM_MONEYONINTERACTION_PICKUP", "Chance to spawn a void orb on hit.");
 
-            LanguageAPI.Add("ITEM_BARRIERONCRIT_NAME", "Onyx Optics");
+            LanguageAPI.Add("ITEM_BARRIERONCRIT_NAME", "Lucky Rabbit Foot");
             LanguageAPI.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.");
             LanguageAPI.Add("ITEM_BARRIERONCRIT_PICKUP", "Gain barrier on critical hits");
 
             LanguageAPI.Add("ITEM_BARRIERONLEVEL_NAME", "Broken Body Armor");
-            LanguageAPI.Add("ITEM_BARRIERONLEVEL_DESC", "Gain 10 <style=cStack>(+5 per stack)</style> <style=cIsUtility>armor</style> when hurt.");
-            LanguageAPI.Add("ITEM_BARRIERONLEVEL_PICKUP", "Gain armor when hurt");
+            LanguageAPI.Add("ITEM_BARRIERONLEVEL_DESC", "Gain a buff that grants 10 <style=cStack>(+5 per stack)</style> <style=cIsUtility>armor</style> when hurt.");
+            LanguageAPI.Add("ITEM_BARRIERONLEVEL_PICKUP", "Gain an armor buff when hurt ");
 
             LanguageAPI.Add("ITEM_EXPERIENCEONHIT_NAME", "Glass Harvester");
-            LanguageAPI.Add("ITEM_EXPERIENCEONHIT_DESC", "Gain 0.5 <style=cStack>(+0.4 per stack)</style> <style=cIsUtility>experience</style> on hit.");
+            LanguageAPI.Add("ITEM_EXPERIENCEONHIT_DESC", "Gain 3 <style=cStack>(+2 per stack)</style> <style=cIsUtility>experience</style> on hit.");
             LanguageAPI.Add("ITEM_EXPERIENCEONHIT_PICKUP", "Gain experience on hit");
 
             LanguageAPI.Add("ITEM_LEMDOG_NAME", "Lemdog");
@@ -534,7 +548,7 @@ Their argument abruptly stopped when they realized what they had been fighting o
                     cloakOnInteractionIndex = ItemAPI.Add(customItem);
                     break;
                 case "ItemOnLevelUp2":
-                    itemOnLevelUpIndex = ItemAPI.Add(customItem);
+                    armorOnCd = ItemAPI.Add(customItem);
                     break;
                 case "RandomDebuffOnHit":
                     randomDebuffOnHitIndex = ItemAPI.Add(customItem);
@@ -865,10 +879,8 @@ Their argument abruptly stopped when they realized what they had been fighting o
         protected internal void Hook()
         {
             On.RoR2.GlobalEventManager.OnCrit += GlobalEventManager_OnCrit;
-            On.RoR2.GlobalEventManager.OnInteractionBegin += GlobalEventManager_OnInteractionBegin;
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             GlobalEventManager.onCharacterDeathGlobal += GlobalEventManagerOnOnCharacterDeath;
-            On.RoR2.GlobalEventManager.OnTeamLevelUp += GlobalEventManager_OnTeamLevelUp;
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteractionOnTeleporterBeginChargingGlobal;
             On.RoR2.GenericPickupController.GrantItem += GrantItem;
             On.RoR2.CharacterBody.AddTimedBuff += CharacterBody_AddTimedBuff;
@@ -890,8 +902,116 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 int scpRandom = UnityEngine.Random.Range(0, scpBuffList.Count);
                 int rootCount = attackerInventory.GetItemCount(crippleOnHitIndex);
                 int scpCount = attackerInventory.GetItemCount(randomDebuffOnHitIndex);
-                //int freezeCount = attackerInventory.GetItemCount(freezeEnemiesOnHitIndex);
+                int blastCount = attackerInventory.GetItemCount(armorOnCd);
+                int moneyCount = attackerInventory.GetItemCount(moneyOnInteractionIndex);
 
+                /*var ppos = CloudUtils.FindBestPosition(victimBody.mainHurtBox);
+                EffectData ddata = new EffectData()
+                {
+                    rotation = Quaternion.Euler(victimBody.transform.forward),
+                    scale = 15,
+                    origin = ppos,
+                };
+                var dddamage = moneyCount * 2.5f;
+                EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), ddata, true);
+                FireProjectileInfo iinfo = new FireProjectileInfo()
+                {
+                    crit = false,
+                    damage = dddamage * attackerBody.damage,
+                    damageColorIndex = RoR2.DamageColorIndex.Default,
+                    damageTypeOverride = DamageType.Generic,
+                    force = 0,
+                    owner = attackerBody.gameObject,
+                    position = ppos,
+                    procChainMask = default,
+                    projectilePrefab = ProjectileCore.orbitalOrb,   
+                    rotation = Util.QuaternionSafeLookRotation(victimBody.transform.position),
+                    target = victim,
+                    useFuseOverride = false,
+                    useSpeedOverride = true,
+                    _speedOverride = 100
+                };
+                ProjectileManager.instance.FireProjectile(iinfo);*/
+
+
+                if (moneyCount > 0 && Util.CheckRoll(10 * damageInfo.procCoefficient, attackerMaster) && victimBody && !damageInfo.procChainMask.HasProc(ProcType.AACannon)) {
+                    var pos = CloudUtils.FindBestPosition(victimBody.mainHurtBox);
+
+                    damageInfo.procChainMask.AddProc(ProcType.AACannon);
+                    EffectData data = new EffectData()
+                    {
+                        rotation = Quaternion.Euler(victimBody.transform.forward),
+                        scale = 8,
+                        origin = pos,
+                    };
+                    var ddamage = moneyCount * 1f;
+                    EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), data, true);
+                    FireProjectileInfo info = new FireProjectileInfo()
+                    {
+                        crit = false,
+                        damage = ddamage * attackerBody.damage,
+                        damageColorIndex = RoR2.DamageColorIndex.Default,
+                        damageTypeOverride = DamageType.Generic,
+                        force = 0,
+                        owner = attackerBody.gameObject,
+                        position = pos,
+                        procChainMask = default,
+                        projectilePrefab = ProjectileCore.orbitalOrbPlayer,
+                        rotation = Util.QuaternionSafeLookRotation(victimBody.transform.position),
+                        target = victim,
+                        useFuseOverride = false,
+                        useSpeedOverride = true,
+                        _speedOverride = 100
+                    };
+                    ProjectileManager.instance.FireProjectile(info);
+
+                }
+
+                if (blastCount > 0 && Util.CheckRoll(20 * damageInfo.procCoefficient, attackerMaster) && attackerBody.characterMotor && !attackerBody.characterMotor.isGrounded && !damageInfo.procChainMask.HasProc(ProcType.LoaderLightning)) {
+                    RaycastHit raycastHit;
+                    if (Physics.Raycast(attackerBody.transform.position, Vector3.down, out raycastHit, 500f, LayerIndex.world.mask))
+                    {
+                        if (attackerBody.characterMotor.velocity == Vector3.zero)
+                        {
+                            attackerBody.characterMotor.ApplyForce(new Vector3(0, 1000, 0));
+                        }
+                        else {
+                            attackerBody.characterMotor.ApplyForce(new Vector3(0, attackerBody.characterMotor.mass * 3, 0));
+                        }
+                        //stops infinite loops!
+                        damageInfo.procChainMask.AddProc(ProcType.LoaderLightning);
+                        EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/omnieffect/OmniExplosionVFXLemurianBruiserFireballImpact"), new EffectData
+                        {
+                            scale = 10,
+                            rotation = Quaternion.identity,
+                            origin = raycastHit.point,
+                        }, true); 
+                        float multiplier = 1;
+                        if (blastCount > 1) {
+                            multiplier = 1 + (blastCount * 2.5f);
+                        }
+                        new BlastAttack
+                        {
+                            position = raycastHit.point,
+                            //baseForce = 3000,
+                            attacker = null,
+                            inflictor = null,
+                            
+                            teamIndex = attackerBody.teamComponent.teamIndex,
+                            baseDamage = attackerBody.damage * multiplier,
+                            attackerFiltering = default,
+                            //bonusForce = new Vector3(0, -3000, 0),
+                            damageType = DamageType.Stun1s, //| DamageTypeCore.spiked,
+                            crit = attackerBody.RollCrit(),
+                            damageColorIndex = DamageColorIndex.Default,
+                            falloffModel = BlastAttack.FalloffModel.None,
+                            //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
+                            procCoefficient = 0,
+                            radius = 10
+                        }.Fire();
+
+                    }
+                }
 
                 if (rootCount > 0 && Util.CheckRoll(20 * damageInfo.procCoefficient, attackerMaster) && attackerMaster && victimBody)
                 {
@@ -919,7 +1039,7 @@ Their argument abruptly stopped when they realized what they had been fighting o
 
                     if (lemCount > 0)
                     {
-                        if (def.isDebuff && Util.CheckRoll(25 + (lemCount * 2.5f), self.master))
+                        if (def.isDebuff && Util.CheckRoll(25 + (lemCount * 2.5f), self.master) && buffType != BuffIndex.NullSafeZone)
                         {
                             var random = UnityEngine.Random.Range(0, lemdogList.Count);
                             var buff = lemdogList[random];
@@ -987,7 +1107,7 @@ Their argument abruptly stopped when they realized what they had been fighting o
 
                         if (experienceOnHitCount > 0 && attackerBody.teamComponent)
                         {
-                            float exp = 0.1f + (experienceOnHitCount * 0.4f);
+                            float exp = 1 + (experienceOnHitCount * 2);
                             TeamManager.instance.GiveTeamExperience(attackerBody.teamComponent.teamIndex, (uint)exp);
                         }
                     }
@@ -1046,58 +1166,39 @@ Their argument abruptly stopped when they realized what they had been fighting o
 
             int itemChampionOnKillCount = attackerInventory.GetItemCount(itemChampionOnKillIndex);
 
-            if (itemChampionOnKillCount > 0 && damageReport.victimIsBoss && Util.CheckRoll(15 + (itemChampionOnKillCount * 5), attackerMaster)) {
+            if (itemChampionOnKillCount > 0 && damageReport.victimIsBoss && attackerBody && attackerMaster) {
                 Util.PlaySound("ui_obj_casinoChest_open", attackerBody.gameObject);
-                EffectData data = new EffectData
-                {
-                    scale = 1000,
-                    origin = victimBody.transform.position,
-                };
-                LogCore.LogI("YOOOOOOOOOOO!");
-                EffectManager.SpawnEffect(EntityStates.Toolbot.ToolbotDash.knockbackEffectPrefab, data, true);
-                PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(GetRandomItem(bossitemList)), victimBody.transform.position, new Vector3(0, 50, 0));
-
-            }
-        }
-
-        public void GlobalEventManager_OnTeamLevelUp(On.RoR2.GlobalEventManager.orig_OnTeamLevelUp orig, TeamIndex teamIndex)
-        {
-            ReadOnlyCollection<TeamComponent> teamMembers = TeamComponent.GetTeamMembers(teamIndex);
-            for (int i = 0; i < teamMembers.Count; i++)
-            {
-                TeamComponent teamComponent = teamMembers[i];
-                if (teamComponent)
-                {
-                    CharacterBody characterBody = teamComponent.GetComponent<CharacterBody>();
-                    if (characterBody)
+                if (Util.CheckRoll(15 + (itemChampionOnKillCount * 5))) {
+                    EffectData data = new EffectData
                     {
-                        if (NetworkServer.active)
-                        {
-                            CharacterMaster master = characterBody.master;
-                            if (master)
-                            {
-                                int itemOnLevelUpCount = master.inventory.GetItemCount(itemOnLevelUpIndex);
-                                int barrierOnLevelUpCount = master.inventory.GetItemCount(barrierOnLevelIndex);
+                        scale = 1000,
+                        origin = victimBody.transform.position,
+                    };
+                    LogCore.LogI("YOOOOOOOOOOO!");
+                    EffectManager.SpawnEffect(EntityStates.Toolbot.ToolbotDash.knockbackEffectPrefab, data, true);
+                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(GetRandomItem(bossitemList)), victimBody.transform.position, new Vector3(0, 50, 0));
+                }
+                Collider[] array = Physics.OverlapSphere(victimBody.transform.position, 10, LayerIndex.projectile.mask);
 
-                                if (itemOnLevelUpCount > 0 && Util.CheckRoll(50, master))
-                                {
-                                    DropShipCall(characterBody.transform, itemOnLevelUpCount);
-                                    
-                                }
-                                /*if (barrierOnLevelUpCount > 0)
-                                {
-                                    if (characterBody.healthComponent)
-                                    {
-                                        characterBody.healthComponent.AddBarrier(25 + (5 * barrierOnLevelUpCount));
-                                    }
-                                }*/
-                            }
+
+                for (int i = 0; i < array.Length; i++)
+                {
+                    ProjectileController pc = array[i].GetComponentInParent<ProjectileController>();
+                    if (pc)
+                    {
+                        //if its not a friendly
+                        if (pc.teamFilter.teamIndex != attackerBody.teamComponent.teamIndex)
+                        {
+                            attackerBody.healthComponent.AddBarrier(5 * itemChampionOnKillCount);
+                            EffectManager.SpawnEffect(projectileBlastPrefab, new EffectData {
+                                origin = pc.transform.position
+                            }, true);
                         }
                     }
                 }
             }
-            orig(teamIndex);
         }
+
         #endregion
 
         public void TeleporterInteractionOnTeleporterBeginChargingGlobal(TeleporterInteraction obj)
@@ -1108,7 +1209,6 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 obj.holdoutZoneController.baseRadius = obj.holdoutZoneController.baseRadius + (count * 3);
             }
         }
-
     }
     public class WyattItemWalkmanBehavior : CharacterBody.ItemBehavior
     {
@@ -1140,7 +1240,9 @@ Their argument abruptly stopped when they realized what they had been fighting o
                 timer = 0;
             }*/
         }
+
     }
+
     public class DormantFungusBehavior : CharacterBody.ItemBehavior
     {
         //VICE VS YOU
@@ -1192,59 +1294,27 @@ Their argument abruptly stopped when they realized what they had been fighting o
     }
     public class GeigerCounterBehavior : CharacterBody.ItemBehavior
     {
-        private float counter;
-        public void Start()
-        {
-            On.RoR2.GenericSkill.OnExecute += GenericSkill_OnExecute;
-        }
-
-        private void GenericSkill_OnExecute(On.RoR2.GenericSkill.orig_OnExecute orig, GenericSkill self)
-        {
-            if (self.characterBody.Equals(body))
-            {
-                if (!self.characterBody.skillLocator.primary.Equals(self))
-                {
-                    counter += 1;
-                }
-            }
-            orig(self);
-        }
 
         public void FixedUpdate()
         {
-            if (counter == 10)
+            if (body)
             {
-                //LogCore.LogD("Fired!");
-
-                EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/LightningStakeNova"), new EffectData()
-                {
-                    scale = 25,
-                    origin = transform.position,
-                    rotation = Quaternion.identity
-                }, true);
-
-                BlastAttack attack = new BlastAttack()
-                {
-                    attacker = base.gameObject,
-                    attackerFiltering = AttackerFiltering.Default,
-                    baseDamage = (2.5f + (2.5f * stack)) * body.damage,
-                    baseForce = 2500,
-                    bonusForce = new Vector3(0, 0, 0),
-                    crit = body.RollCrit(),
-                    damageColorIndex = DamageColorIndex.Default,
-                    damageType = DamageType.BlightOnHit,
-                    falloffModel = BlastAttack.FalloffModel.None,
-                    impactEffect = EffectIndex.Invalid,
-                    inflictor = base.gameObject,
-                    losType = BlastAttack.LoSType.NearestHit,
-                    position = base.transform.position,
-                    procChainMask = default,
-                    procCoefficient = 0.5f,
-                    radius = 25,
-                    teamIndex = body.teamComponent.teamIndex,
-                };
-                attack.Fire();
-                counter = 0;
+                foreach (GenericSkill i in body.skillLocator.allSkills) {
+                    if (i && (i.rechargeStopwatch > 0))
+                    {
+                        if (NetworkServer.active)
+                        {
+                            body.AddBuff(BuffCore.instance.charmIndex);
+                        }
+                    }
+                    else
+                    {
+                        if (NetworkServer.active)
+                        {
+                            CloudUtils.SafeRemoveBuff(BuffCore.instance.charmIndex, body);
+                        }
+                    }
+                }
             }
         }
     }

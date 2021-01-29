@@ -7,6 +7,7 @@ using RoR2.Skills;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Rendering.PostProcessing;
 using static Cloudburst.ErrorListener;
 
 public static class CloudUtils
@@ -274,9 +275,85 @@ public static class CloudUtils
                 }
             }
         };
-
         return displayRule;
     }
+
+    public static void AlterCurrentPostProcessing(PostProcessProfile profile, float weight = 0.85f)
+    {
+        PostProcessVolume ppv = FindCurrentPostProcessing();
+        if (ppv)
+        {
+            ppv.profile = profile;
+            ppv.weight = weight;
+        }
+    }
+
+    public static void PostProcessingOverlay(PostProcessProfile profile, float weight = 0.85f, float blendDistance = 227.5f, float priority = 9999)
+    {
+        //basic rundown, some scenes like the Moon and Limbo will throw a hissy fit (the moon morso) if you alter their post processing,
+        //to get around this, i basically add an overlay over the current post processing, which won't be touched by stupid shit (fuck you Hook Lighting Into Post Processing Volume)
+        //therefore, nothing is altered, and nothing acts like a 4 year old in a burger king
+        PostProcessVolume ppv = FindCurrentPostProcessing();
+        if (ppv)
+        {
+            PostProcessVolume ppvv = ppv.AddComponent<PostProcessVolume>();
+
+            //know your fucking place, trash
+            ppv.priority /= ppv.priority;
+            ppv.weight /= ppv.weight;
+            ppv.blendDistance /= ppv.blendDistance;
+            
+
+
+            ppvv.profile = profile;
+            ppvv.weight = weight;
+            ppvv.priority = priority;
+            ppvv.blendDistance = blendDistance;
+        }
+    }
+
+        public static PostProcessVolume FindCurrentPostProcessing()
+    {   
+        PostProcessVolume postProcessVolume = null;
+        SceneInfo instance = SceneInfo.instance;
+
+        if (instance)
+        {
+            postProcessVolume = instance.GetComponent<PostProcessVolume>();
+        }
+        if (!postProcessVolume)
+        {
+            GameObject postProcessing = GameObject.Find("PP + Amb");
+            if (!postProcessing)
+            {
+                postProcessing = GameObject.Find("PP, Global");
+            }
+            if (!postProcessing)
+            {
+                postProcessing = GameObject.Find("GlobalPostProcessVolume, Base");
+            }
+            if (postProcessing)
+            {
+                postProcessVolume = postProcessing.GetComponent<PostProcessVolume>();
+            }
+            else
+            {
+                postProcessVolume = null;
+            }
+        }
+        return postProcessVolume;
+    }
+
+    public static  Vector3 FindBestPosition(HurtBox target)
+    {
+        float radius = 15f;
+        var originPoint = target.transform.position;
+        originPoint.x += UnityEngine.Random.Range(-radius, radius);
+        originPoint.z += UnityEngine.Random.Range(-radius, radius);
+        originPoint.y += UnityEngine.Random.Range(radius, radius);
+        return originPoint;
+    }
+
     public static Vector3 RandomPointInBounds(Bounds bounds)
     {
         return new Vector3(

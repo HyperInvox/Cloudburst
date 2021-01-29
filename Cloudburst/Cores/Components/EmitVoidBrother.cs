@@ -16,6 +16,13 @@ namespace Cloudburst.Cores.Components
 
         private CharacterBody body;
         private float stopwatch;
+        private float stopwatch2;
+
+        bool phase4 = false;
+        bool spawned = false;
+
+        private float limit = 3;
+
         public void Awake()
         {
             body = base.GetComponent<CharacterBody>();
@@ -23,12 +30,30 @@ namespace Cloudburst.Cores.Components
 
         public void Start()
         {
+            if (PhaseCounter.instance)
+            {
+
+                switch (PhaseCounter.instance.phase)
+                {
+                    case 1:
+                        limit = 6;
+                        break;
+                    case 3:
+                        limit = 5;
+                        break;
+                    case 4:
+                        limit = 3;
+                        phase4 = true;
+
+                        break;
+                }
+            }
         }
 
         private HurtBox SearchForTarget()
         {
             bullseyeSearch.searchOrigin = transform.position;
-            bullseyeSearch.maxDistanceFilter = 200;
+            bullseyeSearch.maxDistanceFilter = 1000;
             bullseyeSearch.teamMaskFilter = TeamMask.allButNeutral;
             bullseyeSearch.sortMode = BullseyeSearch.SortMode.Distance;
             bullseyeSearch.filterByLoS = true;
@@ -48,113 +73,117 @@ namespace Cloudburst.Cores.Components
             return originPoint;
         }
 
+        private Vector3 FindBestClosePosition(HurtBox target)
+        {
+            var originPoint = target.transform.position;
+            originPoint += UnityEngine.Random.insideUnitSphere * 16;
+            return originPoint;
+        }
+
+
+
         public void FixedUpdate()
         {
-            stopwatch += Time.deltaTime;
-            if (stopwatch >= 10 && body && !body.outOfCombat)
+            if (NetworkServer.active)
             {
-                stopwatch = 0;
+                stopwatch += Time.deltaTime;
 
-                if (PhaseCounter.instance) {
+                if (phase4)
+                {
+                    stopwatch2 += Time.deltaTime;
+
+
+                }
+
+                if (PhaseCounter.instance && stopwatch >= limit)
+                {
+                    stopwatch = 0;
                     var target = SearchForTarget();
-                    switch (PhaseCounter.instance.phase) {
-                        case 1:
-                            var pos1 = FindBestPosition(target);
+                    var pos = FindBestPosition(target);
 
-                            EffectData data = new EffectData()
-                            {
-                                rotation = Quaternion.Euler(target.transform.forward),
-                                scale = 15,
-                                origin = pos1,
-                            };
-                            EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), data, true);
-                            FireProjectileInfo info = new FireProjectileInfo()
-                            {
-                                crit = false,
-                                damage = 0.2f * body.damage,
-                                damageColorIndex = RoR2.DamageColorIndex.Default,
-                                damageTypeOverride = DamageType.Generic,
-                                force = 0,
-                                owner = base.gameObject,
-                                position = pos1,
-                                procChainMask = default,
-                                projectilePrefab = ProjectileCore.orbitalOrb,
-                                rotation = Util.QuaternionSafeLookRotation(body.inputBank.GetAimRay().direction),
-                                target = null,
-                                useFuseOverride = false,
-                                useSpeedOverride = true,
-                                _speedOverride = 100
-                            };
-                            ProjectileManager.instance.FireProjectile(info);
+                    switch (PhaseCounter.instance.phase)
+                    {
+                        case 1:
+                            Phase1(pos, target);
                             break;
                         case 2:
                             break;
                         case 3:
-                            for (int i = 0; i < 2; i++)
+                            for (int i = 0; i < 3; i++)
                             {
-                                var pos2 = FindBestPosition(target);
-
-                                EffectData adata = new EffectData()
-                                {
-                                    rotation = Quaternion.Euler(target.transform.forward),
-                                    scale = 15,
-                                    origin = pos2,
-                                };
-                                EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), adata, true);
-                                FireProjectileInfo ainfo = new FireProjectileInfo()
-                                {
-                                    crit = false,
-                                    damage = 0.2f * body.damage,
-                                    damageColorIndex = RoR2.DamageColorIndex.Default,
-                                    damageTypeOverride = DamageType.Generic,
-                                    force = 0,
-                                    owner = base.gameObject,
-                                    position = pos2,
-                                    procChainMask = default,
-                                    projectilePrefab = ProjectileCore.orbitalOrb,
-                                    rotation = Util.QuaternionSafeLookRotation(body.inputBank.GetAimRay().direction),
-                                    target = null,
-                                    useFuseOverride = false,
-                                    useSpeedOverride = true,
-                                    _speedOverride = 100
-                                };
-                                ProjectileManager.instance.FireProjectile(ainfo);
-                            }
-                            break;
+                                Phase1(FindBestPosition(target), target);
+                                Phase3(pos, target);
+                            } break;
                         case 4:
-                            for (int i = 0; i < 3; i++) {
-                                var pos3 = FindBestPosition(target);
-                                EffectData ndata = new EffectData()
-                                {
-                                    rotation = Quaternion.Euler(target.transform.forward),
-                                    scale = 15,
-                                    origin = pos3,
-                                };
-                                EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), ndata, true);
-                                FireProjectileInfo ninfo = new FireProjectileInfo()
-                                {
-                                    crit = false,
-                                    damage = 0.4f * body.damage,
-                                    damageColorIndex = RoR2.DamageColorIndex.Default,
-                                    damageTypeOverride = DamageType.Generic,
-                                    force = 0,
-                                    owner = base.gameObject,
-                                    position = pos3,
-                                    procChainMask = default,
-                                    projectilePrefab = ProjectileCore.orbitalOrb,
-                                    rotation = Util.QuaternionSafeLookRotation(body.inputBank.GetAimRay().direction),
-                                    target = null,
-                                    useFuseOverride = false,
-                                    useSpeedOverride = true,
-                                    _speedOverride = 100
-                                };
-                                ProjectileManager.instance.FireProjectile(ninfo);
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Phase1(pos, target);
                             }
+                            Phase3(pos, target);
+                            Phase4(pos, target);
                             break;
                     }
                 }
             }
         }
+        public void Phase4(Vector3 position, HurtBox target)
+        {
 
+        }
+
+        public void Phase3(Vector3 positiona, HurtBox target)
+        {
+            //I'M THE BOMB
+            var position = FindBestClosePosition(target);
+
+            FireProjectileInfo info = new FireProjectileInfo()
+            {
+                crit = false,
+                damage = 4f * body.damage,
+                damageColorIndex = RoR2.DamageColorIndex.Default,
+                damageTypeOverride = DamageType.Nullify,
+                force = 0,
+                owner = base.gameObject,
+                position = position,
+                procChainMask = default,
+                projectilePrefab = Resources.Load<GameObject>("prefabs/projectiles/NullifierPreBombProjectile"),
+                rotation = Util.QuaternionSafeLookRotation(body.inputBank.GetAimRay().direction),
+                target = null,
+                useFuseOverride = false,
+                useSpeedOverride = true,
+                _speedOverride = 100
+            };
+            ProjectileManager.instance.FireProjectile(info);
+
+        }
+
+        public void Phase1(Vector3 position, HurtBox target) {
+            EffectData data = new EffectData()
+            {
+                rotation = Quaternion.Euler(target.transform.forward),
+                scale = 15,
+                origin = position,
+            };
+            EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), data, true);
+            FireProjectileInfo info = new FireProjectileInfo()
+            {
+                crit = false,
+                damage = .7f * body.damage,
+                damageColorIndex = RoR2.DamageColorIndex.Default,
+                damageTypeOverride = DamageType.Generic,
+                force = 0,
+                owner = base.gameObject,
+                position = position,
+                procChainMask = default,
+                projectilePrefab = ProjectileCore.orbitalOrb,
+                rotation = Util.QuaternionSafeLookRotation(body.inputBank.GetAimRay().direction),
+                target = null,
+                useFuseOverride = false,
+                useSpeedOverride = true,
+                _speedOverride = 100
+            };
+            ProjectileManager.instance.FireProjectile(info);
+        }
     }
+
 }

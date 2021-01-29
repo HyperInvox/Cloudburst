@@ -13,6 +13,7 @@ namespace Cloudburst.Cores
         public static BuffCore instance;
 
         protected internal BuffIndex skinIndex;
+        protected internal BuffIndex charmIndex;
         protected internal BuffIndex antiGravIndex;
         protected internal BuffIndex antiGravFriendlyIndex;
         protected internal BuffIndex wyattCombatIndex;
@@ -94,7 +95,7 @@ namespace Cloudburst.Cores
                 canStack = false,
                 isDebuff = false,
                 eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texBuffBodyArmorIcon",
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/Charm.png", //"Textures/BuffIcons/texBuffBodyArmorIcon",
                 name = "SkinStack",
                 buffColor = new Color32(219, 224, 198, byte.MaxValue)
             });
@@ -127,7 +128,8 @@ namespace Cloudburst.Cores
                 iconPath = "Textures/BuffIcons/texBuffGenericShield",
                 name = "AntiGravFriendly",
                 buffColor = new Color(0.6784314f, 0.6117647f, 0.4117647f)
-            }); RegisterBuff(new BuffDef()
+            }); 
+            RegisterBuff(new BuffDef()
             {
                 buffIndex = BuffIndex.Count,
                 canStack = true,
@@ -136,6 +138,15 @@ namespace Cloudburst.Cores
                 iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/JapesCloakBuff.png",
                 name = "JapesCloak",
                 buffColor = new Color(1f, 0.7882353f, 0.05490196f)
+            }); RegisterBuff(new BuffDef()
+            {
+                buffIndex = BuffIndex.Count,
+                canStack = true,
+                isDebuff = false,
+                eliteIndex = EliteIndex.None,
+                iconPath = "Textures/BuffIcons/texBuffBodyArmorIcon",
+                name = "Charm",
+                buffColor = new Color32(219, 224, 198, byte.MaxValue)
             });
 
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
@@ -337,20 +348,21 @@ namespace Cloudburst.Cores
                 var crit = self.crit;
 
                 var inv = self.inventory;
-                
-                if (self.HasBuff(japesCloak)) {
-                    var count = 0;
-                    if (inv) {
-                        count = inv.GetItemCount(ItemCore.instance.cloakOnInteractionIndex);
+
+                if (self.HasBuff(charmIndex)){
+                    var vount = 0;
+                    if (self.inventory) {
+                        vount = self.inventory.GetItemCount(ItemCore.instance.armorOnCd);
+                        self.armor = armor + (vount * 10);
                     }
+                }
+
+                if (self.HasBuff(japesCloak)) {
                     var buffCount = self.GetBuffCount(japesCloak);
                     for (int i = 0; i < buffCount; i++)
                     {
-                        var nArmor = armor + 0.3f;
-                        var nRegen = regen + 0.3f;
-
-                        self.armor = nArmor;
-                        self.regen = nRegen;
+                        self.armor = armor + 5;
+                        self.regen = regen * (1f + (regen * 0.3f));
                     }
                 }
 
@@ -406,6 +418,9 @@ namespace Cloudburst.Cores
                     break;
                 case "JapesCloak":
                     japesCloak = BuffAPI.Add(customBuff);
+                    break;
+                case "Charm":
+                    charmIndex = BuffAPI.Add(customBuff);
                     break;
                 //throw new System.NotImplementedException("not implemented yet!");
                 default:

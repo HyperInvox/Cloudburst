@@ -93,6 +93,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>libs\Unity.Postprocessing.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>libs\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>libs\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>libs\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -138,6 +147,8 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
+    <Compile Include="Cores\Components\OrbitingProjectileBehaviour.cs" />
+    <Compile Include="Cores\Components\VoidProjectile.cs" />
     <Compile Include="Cores\Components\EmitVoidBrother.cs" />
     <Compile Include="Cores\Components\InfestationTrigger.cs" />
     <Compile Include="Cores\Components\EmitVoid.cs" />

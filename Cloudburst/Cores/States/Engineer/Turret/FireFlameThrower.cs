@@ -35,7 +35,7 @@ namespace Cloudburst.Cores.Engineer.ETStates
             }
             this.bulletCount = _goodState.bulletCount;
             //this.bulletCountCurrent = _goodState.bulletCount;
-            this.damageCoefficient = .15f;
+            this.damageCoefficient = .2f;
             this.effectPrefab = EntityStates.Mage.Weapon.Flamethrower.impactEffectPrefab;
             this.fireFrequency = _goodState.fireFrequency;
             this.force = _goodState.force;

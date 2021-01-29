@@ -8,6 +8,7 @@ using RoR2;
 using RoR2.UI;
 using System;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -42,7 +43,7 @@ namespace Cloudburst
 
         const string guid = "com.TeamCloudburst.Cloudburst";
         const string modName = "Cloudburst";
-        const string version = "0.1.1";
+        const string version = "0.1.3";
 
         public static CloudburstPlugin instance;
 
@@ -66,10 +67,7 @@ namespace Cloudburst
         /// Called on the mod's FixedUpdate
         /// </summary>
         public static event Action onFixedUpdate;
-        /// <summary>
-        /// Called when a new scene is loaded
-        /// </summary>
-        public static event Action<Scene, Scene, SceneDef, SceneInfo> onSceneLoaded;
+
 
         #region Cores
         //Support cores; Cannot be disabled.
@@ -118,6 +116,9 @@ namespace Cloudburst
 
         public static ConfigEntry<bool> EnableWyattFreeFlight;
 
+        public static ConfigEntry<bool> EnableVoid;
+        public static ConfigEntry<bool> EnableNewt;
+
         public static ConfigEntry<bool> EnableWIP;
         public static ConfigEntry<bool> EnableUnlockAll;
         public static ConfigEntry<bool> Enabled;
@@ -159,6 +160,8 @@ namespace Cloudburst
         {
             //learn a smile
             //as every good day goes on by
+            EnableNewt = Config.Bind("Cloudburst :: Newt", "Enabled", true, "Enables Newt speaking in-game. Set to false to seal his mouth shut.");
+            EnableVoid = Config.Bind("Cloudburst :: Nilthnix", "Enabled", true, "Enables the cloudburst event in-game. Set to false to it completely (aka the alternate boss battle)");
             EnableWyattFreeFlight = Config.Bind("Cloudburst :: Custodian", "Free Flight", true, "Enables Custodian's free flight mechanic. Set to false to disable it.");
             EnableWyatt = Config.Bind("Cloudburst :: Custodian", "Enabled", true, "Enables Custodian as a survivor. Set to false to disable Custodian.");
             EnableSipSip = Config.Bind("Cloudburst :: SipSip", "Enabled", true, "Enables SipSip as a potential 5th lunar scavenger. Set to false to disable SipSip.");
@@ -167,10 +170,10 @@ namespace Cloudburst
             EnableCommando = Config.Bind("Cloudburst :: Commando", "Enabled", true, "Enables Cloudburst's modifications to Commando. Set to false to disable Cloudburst's modifications to Commando.");
             EnableEngineer = Config.Bind("Cloudburst :: Engineer", "Enabled", true, "Enables Cloudburst's modifications to Engineer. Set to false to disable Cloudburst's modifications to Engineer.");
             EnableItems = Config.Bind("Cloudburst :: Items", "Enabled", true, "Enables Cloudburst's items. Set to false to disable Cloudburst's items.");
-            EnableEquipment = Config.Bind("Cloudburst :: Equipment", "Enabled", true, "Enables Cloudburst's equipment. Set to false to disable Cloudburst's equipment.");
-            EnableWIP = Config.Bind("Cloudburst :: WIP", "Enabled", false, "WARNING: CONTENT ADDED BY THIS MODULE MAY NOT BE STABLE. ENABLE AT YOUR OWN RISK! Enables Cloudburst's WIP (work in progress) content. Set to false to disable Cloudburst's WIP content.");
-            EnableUnlockAll = Config.Bind("Cloudburst :: Achivements", "Enabled", false, "Enables Cloudburst's unlocks for unlockable content. Set to false to unlock all of Cloudburst's unlockable content.");
-            Enabled = Config.Bind("Cloudburst", "Enabled", true, "Enables the mod. Set to false to disable the mod entirely.");
+            EnableEquipment = Config.Bind("Cloudburst :: Equipment", "Enabled", false, "Enables Cloudburst's equipment. Set to false to disable Cloudburst's equipment.");
+            EnableWIP = Config.Bind("Cloudburst :: WIP", "Enabled", false, "[WARNING]: CONTENT ADDED BY THIS MODULE MAY NOT BE STABLE. ENABLE AT YOUR OWN RISK! Enables Cloudburst's WIP (work in progress) content. Set to false to disable Cloudburst's WIP content.");
+            EnableUnlockAll = Config.Bind("Cloudburst :: Achievements", "Enabled", false, "Enables Cloudburst's unlocks for unlockable content. Set to false to unlock all of Cloudburst's unlockable content.");
+            Enabled = Config.Bind("Cloudburst", "Enabled", true, "THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS. Enables the mod. Set to false to disable the mod entirely. THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS.");
         }
 
 
@@ -190,6 +193,9 @@ namespace Cloudburst
                     if (materials[i].shader.name == "Standard")
                     {
                         materials[i].shader = Resources.Load<Shader>("shaders/deferred/hgstandard");
+                    }
+                    if (materials[i].name.Contains("GLASS")) {
+                        materials[i].shader = Resources.Load<Shader>("shaders/fx/hgintersectioncloudremap");
                     }
                 }
 
@@ -248,8 +254,10 @@ namespace Cloudburst
                 }
                 //On.RoR2.CharacterBody.AddTimedBuff += GlobalHooks.CharacterBody_AddTimedBuff;
                 //On.RoR2.HealthComponent.TakeDamage += GlobalHooks.HealthComponent_TakeDamage;
-
-                new VoidCore();
+                if (EnableVoid.Value)
+                {
+                    new VoidCore();
+                }
                 new NewtCore();
                 //and thus
                 //we reach the end
@@ -257,6 +265,9 @@ namespace Cloudburst
                 // mushrum = new MegaMushrum();
                 // ancientWisp = new AncientWispCore();
                 // bombManCore = new BombardierCore();
+
+                //i'll follow you home when the night comes
+                R2API.Utils.CommandHelper.AddToConsoleWhenReady();
 #if DEBUG
                 //unlock!
                 debugCore = new DebuggingCore();
@@ -266,11 +277,6 @@ namespace Cloudburst
             {
                 LogCore.LogW("You have disabled ALL of Cloudburst. If this was not desired, you can re-enable it in Cloudburst's config file.");
             }
-        }
-
-        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, RoR2.HealthComponent self, RoR2.DamageInfo damageInfo)
-        {
-            throw new NotImplementedException();
         }
 
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
@@ -321,7 +327,9 @@ namespace Cloudburst
 
         public void FixedUpdate()
         {
-            Action fixedUpdate = CloudburstPlugin.onFixedUpdate;
+
+            
+                Action fixedUpdate = CloudburstPlugin.onFixedUpdate;    
             if (fixedUpdate == null)
             {
                 return;

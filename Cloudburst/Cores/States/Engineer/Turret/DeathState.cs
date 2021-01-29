@@ -8,7 +8,7 @@ namespace Cloudburst.Cores.Engineer.ETStates {
     public class DeathState : GenericCharacterDeath
     {
         public GameObject initialExplosion = Resources.Load<GameObject>("prefabs/effects/ExplosionEngiTurret");
-        public GameObject deathExplosion = Resources.Load<GameObject>("prefabs/effects/VolatileBatteryExplosion");
+        public GameObject deathExplosion = Resources.Load<GameObject>("prefabs/effects/omnieffect/OmniExplosionVFX");
         private float deathDuration;
         public override void PlayDeathAnimation(float crossfadeDuration = 0.1f)
         {
@@ -61,7 +61,7 @@ namespace Cloudburst.Cores.Engineer.ETStates {
                     procChainMask = default,
                     procCoefficient = 1,
                     radius = radius,
-                    teamIndex = characterBody.teamComponent.teamIndex
+                    teamIndex = GetTeam()
                 }.Fire();
                 EntityState.Destroy(base.gameObject);
             }

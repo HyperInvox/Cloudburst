@@ -230,26 +230,6 @@ namespace Cloudburst.Cores
             {
                 Inventory inv = self.inventory;
                 self.AddItemBehavior<AffixWarBehavior>(self.HasBuff(warIndex) ? 1 : 0);
-                /*if (self.HasBuff(this.warIndex))
-                {
-                    self.gameObject.AddOrGetComponent<EnableGoldAffixEffect>().EnableGoldAffix();
-                }*/
-                /*if (self.HasBuff(tarIndex))
-                {
-                    Transform modelBaseTransform = self.modelLocator.modelBaseTransform;
-                    if (modelBaseTransform)
-                    {
-                        //Legacy
-                        /*var characterModel = modelBaseTransform.GetComponent<CharacterModel>();
-                        TemporaryOverlay temporaryOverlay = modelBaseTransform.gameObject.AddComponent<TemporaryOverlay>();
-                        temporaryOverlay.duration = 9000000f;
-                        temporaryOverlay.animateShaderAlpha = true;
-                        temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 9000000f, 1f);
-                        temporaryOverlay.destroyComponentOnEnd = false;
-                        temporaryOverlay.originalMaterial = CharacterModel.clayGooMaterial;
-                        temporaryOverlay.AddToCharacerModel(characterModel);
-                    }
-                }*/
             }
         }
 
@@ -382,7 +362,7 @@ namespace Cloudburst.Cores
         protected internal void War()
         {
             //spawn cmd:
-            //spawn_ai beetle 1 6 0 2
+            //spawn_ai beetle 1 6 0 2   
             Color warColor = new Color(0.827451f, 0.19607843f, 0.09803922f); ; ; ; ; ;
 
             EquipmentDef equipmentDef = new EquipmentDef

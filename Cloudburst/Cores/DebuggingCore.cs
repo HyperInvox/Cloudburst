@@ -22,7 +22,7 @@
 
 
 
-            //On.EntityStates.Missions.Arena.NullWard.Active.FixedUpdate += Active_FixedUpdate;
+
             //On.EntityStates.Toolbot.AimGrenade.OnEnter += AimGrenade_OnEnter;
             //On.EntityStates.Commando.CommandoWeapon.FireRocket.OnEnter += FireRocket_OnEnter;
             //On.RoR2.GenericSkill.ExecuteIfReady += GenericSkill_ExecuteIfReady;
@@ -48,11 +48,6 @@
             LogCore.LogI("hi");
         }
 
-        private void Active_FixedUpdate(On.EntityStates.Missions.Arena.NullWard.Active.orig_FixedUpdate orig, EntityStates.Missions.Arena.NullWard.Active self)
-        {
-            self.outer.SetNextState(new EntityStates.Missions.Arena.NullWard.Complete());
-            return;
-        }
 
         protected void Unlockall()
         {

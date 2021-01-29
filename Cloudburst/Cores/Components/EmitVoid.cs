@@ -51,7 +51,7 @@ namespace Cloudburst.Cores.Components
         public void FixedUpdate()
         {
             stopwatch += Time.deltaTime;
-            if (stopwatch >= 10 && body && !body.outOfCombat)
+            if (stopwatch >= 10 && body && !body.outOfCombat && NetworkServer.active)
             {
                 stopwatch = 0;
 
@@ -61,14 +61,14 @@ namespace Cloudburst.Cores.Components
                 EffectData data = new EffectData()
                 {
                     rotation = Quaternion.Euler(target.transform.forward),
-                    scale = 15,
+                    scale = 8,
                     origin = pos,
                 };
                 EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), data, true);
                 FireProjectileInfo info = new FireProjectileInfo()
                 {
                     crit = false,
-                    damage = 0.2f * body.damage,
+                    damage = 0.5f * body.damage,
                     damageColorIndex = RoR2.DamageColorIndex.Default,
                     damageTypeOverride = DamageType.Generic,
                     force = 0,

@@ -30,9 +30,15 @@ namespace Cloudburst.Cores
         public static GameObject winch;
 
         public static GameObject orbitalOrb;
+        public static GameObject orbitalOrbPlayer;
         public static GameObject orbitalOrbGhost;
 
         public static GameObject wyattMaidBubble;
+
+        public static GameObject voidSeeker;
+
+        public static GameObject droneGhost;
+        public static GameObject drone;
 
         public static GameObject electricPillar;
         public static GameObject electricPillarGhost;
@@ -52,8 +58,32 @@ namespace Cloudburst.Cores
             CreateOrbitalOrbs();
             CreateWinchGhost();
             CreateWinchProjectile();
+            VoidSeeker();
+            OrbitalOrbPlayer();
+
+            //CreateElectricPillarGhost();
+            //CreateElectricPillar();
 
             CloudburstPlugin.start += CloudburstPlugin_start;
+        }
+
+        private void VoidSeeker()
+        {
+            voidSeeker = Resources.Load<GameObject>("prefabs/projectiles/NullifierPreBombProjectile").InstantiateClone("VoidthrixSeeker", true);
+            var rigid = voidSeeker.GetComponent<Rigidbody>();
+            var impact = voidSeeker.GetComponent<ProjectileImpactExplosion>();
+
+            voidSeeker.AddComponent<SphereCollider>().radius = 1;   
+
+            rigid.isKinematic = false;
+            rigid.useGravity = true;
+
+
+            voidSeeker.transform.localScale *= 2;
+
+            impact.lifetime = 15;
+            impact.timerAfterImpact = true;
+            impact.lifetimeAfterImpact = 15;
         }
 
         private void CloudburstPlugin_start()
@@ -64,27 +94,23 @@ namespace Cloudburst.Cores
             };
 
             orbitalOrb.GetComponent<ProjectileController>().ghostPrefab = orbitalOrbGhost;
+            orbitalOrbPlayer.GetComponent<ProjectileController>().ghostPrefab = orbitalOrbGhost;
         }
 
         #region Misc   
         #endregion
         #region Elite
 
-        protected void CreateElectricPillarGhost() {
+        protected void CreateElectricPillarGhost()
+        {
             electricPillarGhost = Resources.Load<GameObject>("prefabs/projectileghosts/BrotherFirePillarGhost").InstantiateClone("OverchargedPillarGhost", false);
             //var temptile = Resources.Load<GameObject>("prefabs/projectileghosts/ElectricOrbGhost");
             //var mat = temptile.transform.Find("Helix/Trail").GetComponent<Renderer>().material;
-            var mat = AssetsCore.mainAssetBundle.LoadAsset<Material>("Assets/Cloudburst/753network/Crystallize/Materials/Ramp Foil.mat");
-
-            electricPillarGhost.transform.Find("Scale/Glow, Looping").GetComponent<Renderer>().material = mat;
-            electricPillarGhost.transform.Find("Scale/Glow, Initial").gameObject.SetActive(false);
-            electricPillarGhost.transform.Find("Scale/Fire, Directional").GetComponent<Renderer>().material = mat;
-            electricPillarGhost.transform.Find("Scale/Rock Particles, Fast").gameObject.SetActive(false);
         }
 
         protected void CreateElectricPillar() {
             electricPillar = Resources.Load<GameObject>("prefabs/projectiles/BrotherFirePillar").InstantiateClone("OverchargedPillar", true);
-            electricPillar.GetComponent<ProjectileController>().ghostPrefab = electricPillarGhost;
+            electricPillar.GetComponent<ProjectileDotZone>().lifetime = float.PositiveInfinity;
         }
 
         protected void CreateElectricProjectile() {
@@ -96,6 +122,20 @@ namespace Cloudburst.Cores
             impact.maxAngleOffset = new Vector3(0, 0, 0);
         }
 
+        private protected void CreateDroneGhost()
+        {
+            droneGhost = Resources.Load<GameObject>("prefabs/projectileghosts/EngiMineGhost").InstantiateClone("DroneGhost", false);
+            foreach (Transform child in droneGhost.transform)
+            {
+                //destroy the child. 
+                BaseUnityPlugin.Destroy(child.gameObject);
+            }
+            UnityEngine.Object.Destroy(droneGhost.GetComponent<EngiMineAnimator>());
+            UnityEngine.Object.Destroy(droneGhost.GetComponent<EngiMineGhostController>());
+
+            var newGhost = BaseUnityPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("IMDLHarvester"));
+            newGhost.transform.SetParent(stickyGhost.transform);
+        }
         #endregion
         #region Mega Mushrum
         protected private void CreateDelaySproutingMushroom()
@@ -148,15 +188,16 @@ namespace Cloudburst.Cores
             CreateStickyProjectile();
         }
 
-        private protected void CreateStickyGhost() {
+        private protected void CreateStickyGhost()
+        {
             stickyGhost = Resources.Load<GameObject>("prefabs/projectileghosts/EngiMineGhost").InstantiateClone("BombardierStickyGhost", false);
             foreach (Transform child in stickyGhost.transform)
             {
                 //destroy the child. 
                 BaseUnityPlugin.Destroy(child.gameObject);
             }
-            BaseUnityPlugin.Destroy(stickyGhost.GetComponent<EngiMineAnimator>());
-            BaseUnityPlugin.Destroy(stickyGhost.GetComponent<EngiMineGhostController>());
+            UnityEngine.Object.Destroy(stickyGhost.GetComponent<EngiMineAnimator>());
+            UnityEngine.Object.Destroy(stickyGhost.GetComponent<EngiMineGhostController>());
 
             var newGhost = BaseUnityPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlSatchel"));
             newGhost.transform.SetParent(stickyGhost.transform);
@@ -218,6 +259,7 @@ namespace Cloudburst.Cores
         protected private void CreateOrbitalOrbs() {
             orbitalOrb = Resources.Load<GameObject>("prefabs/projectiles/RedAffixMissileProjectile").InstantiateClone("OrbitalOrb", true);
 
+            //orbitalOrb.AddComponent<OrbitingProjectileBehaviour>();
             //MonoBehaviour.Destroy(orbitalOrb.GetComponent<BoxCollider>());
 
             //var collider = orbitalOrb.AddComponent<SphereCollider>();
@@ -238,29 +280,30 @@ namespace Cloudburst.Cores
 
             //MonoBehaviour.Destroy(impact);
 
-            explosion.impactEffect = EffectCore.orbitalImpact;
+            explosion.impactEffect = Resources.Load<GameObject>("prefabs/effects/NullifierExplosion");
             explosion.offsetForLifetimeExpiredSound = 0;
             explosion.destroyOnEnemy = true;
             explosion.destroyOnWorld = true;
             explosion.timerAfterImpact = false;
             explosion.falloffModel = BlastAttack.FalloffModel.None;
-            explosion.lifetime = float.MaxValue;
+            explosion.lifetime = 15;
             explosion.lifetimeAfterImpact = 0;
             explosion.lifetimeRandomOffset = 0;
-            explosion.blastRadius = 8;
-            explosion.blastDamageCoefficient = 1;
+            explosion.blastRadius = 15;
+            explosion.blastDamageCoefficient = 10;
             explosion.blastProcCoefficient = 1;
             explosion.blastAttackerFiltering = AttackerFiltering.Default;
 
             explosion.childrenCount = 0;
             explosion.transformSpace = ProjectileImpactExplosion.TransformSpace.World;
 
+
             //collider.radius = 0.2f;
 
             orb.attackFireCount = 1;
             orb.attackInterval = 2;
             orb.listClearInterval = 0.1f;
-            orb.attackRange = 20    ;
+            orb.attackRange = 20;
             orb.minAngleFilter = 0;
             orb.maxAngleFilter = 180;
             orb.procCoefficient = 1f;
@@ -272,6 +315,68 @@ namespace Cloudburst.Cores
             CloudUtils.RegisterNewProjectile(orbitalOrb);
             //Resources.Load<GameObject>("prefabs/effects/impacteffects/ParentSlamEffect");
         }
+
+        private void OrbitalOrbPlayer()
+        {
+            orbitalOrbPlayer = Resources.Load<GameObject>("prefabs/projectiles/RedAffixMissileProjectile").InstantiateClone("EnigmaticOrb", true);
+
+            //orbitalOrb.AddComponent<OrbitingProjectileBehaviour>();
+            //MonoBehaviour.Destroy(orbitalOrb.GetComponent<BoxCollider>());
+
+            //var collider = orbitalOrb.AddComponent<SphereCollider>();
+            orbitalOrbPlayer.GetComponent<BoxCollider>().isTrigger = false;
+            var orb = orbitalOrbPlayer.AddComponent<ProjectileProximityBeamController>();
+            var explosion = orbitalOrbPlayer.AddComponent<ProjectileImpactExplosion>();
+            var impact = orbitalOrbPlayer.GetComponent<ProjectileSingleTargetImpact>();
+            var missile = orbitalOrbPlayer.GetComponent<MissileController>();
+
+            missile.giveupTimer = float.MaxValue;
+            missile.maxSeekDistance = float.MaxValue;
+            missile.deathTimer = float.MaxValue;
+
+            LogCore.LogI(-(float.MaxValue * 2));
+            //missile.maxVelocity = float.MaxValue;
+
+            impact.impactEffect = EffectCore.orbitalImpact;
+
+            //MonoBehaviour.Destroy(impact);
+
+            explosion.impactEffect = Resources.Load<GameObject>("prefabs/effects/NullifierExplosion");
+            explosion.offsetForLifetimeExpiredSound = 0;
+            explosion.destroyOnEnemy = true;
+            explosion.destroyOnWorld = true;
+            explosion.timerAfterImpact = false;
+            explosion.falloffModel = BlastAttack.FalloffModel.None;
+            explosion.lifetime = 15;
+            explosion.lifetimeAfterImpact = 0;
+            explosion.lifetimeRandomOffset = 0;
+            explosion.blastRadius = 15;
+            explosion.blastDamageCoefficient = 10;
+            explosion.blastProcCoefficient = 1;
+            explosion.blastAttackerFiltering = AttackerFiltering.Default;
+
+            explosion.childrenCount = 0;
+            explosion.transformSpace = ProjectileImpactExplosion.TransformSpace.World;
+
+
+            //collider.radius = 0.2f;
+
+            orb.attackFireCount = 1;
+            orb.attackInterval = 2;
+            orb.listClearInterval = 0.1f;
+            orb.attackRange = 50;
+            orb.minAngleFilter = 0;
+            orb.maxAngleFilter = 180;
+            orb.procCoefficient = 1f;
+            orb.damageCoefficient = 1;
+            orb.bounces = 0;
+            orb.inheritDamageType = false;
+            orb.lightningType = RoR2.Orbs.LightningOrb.LightningType.Tesla;
+
+            CloudUtils.RegisterNewProjectile(orbitalOrbPlayer);
+
+        }
+
 
         protected private void CreateBombardierRocketProjectile() {
             bombardierBombProjectile = Resources.Load<GameObject>("prefabs/projectiles/PaladinRocket").InstantiateClone("BombardierRocketProjectile", true);

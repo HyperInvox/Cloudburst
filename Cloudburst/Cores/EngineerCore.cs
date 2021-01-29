@@ -61,7 +61,7 @@ namespace Cloudburst.Cores
             if (!engi) return orig(self, slot);
             else {
                 //Reflection will never fail me!
-                GameObject fuckIL = self.GetPropertyValue<GameObject>("bodyInstanceObject");
+                GameObject fuckIL = self.bodyInstanceObject;
                 if (fuckIL) {
                     if (fuckIL.GetComponent<SkillLocator>().special.skillDef.skillName == "FUCKIL") {
                         return 4;
@@ -92,15 +92,18 @@ namespace Cloudburst.Cores
                 x => x.MatchLdcI4(2),
                 //IL_0068: stloc.0   
                 x => x.MatchStloc(out AAAA)
+                //x => x.MatchBrtrue(out ILLabel a)
                 //x => x.MatchStloc(0)
                 //we don't talk about this one
                 //x => x.Next.Operand = (object)4,
                 );
             c.Index += 16;
-
+            
             c.Emit(OpCodes.Ldarg_0);
             c.Emit(OpCodes.Ldloc, AAAA);
             c.Emit(OpCodes.Ldloc, otherAA);
+
+
 
             c.EmitDelegate<Func<CharacterMaster, int>>((cm) =>
             {
@@ -152,7 +155,7 @@ namespace Cloudburst.Cores
             LoadoutAPI.AddSkillDef(newDef);
 
             LanguageAPI.Add("ENGI_SPECIAL_ALT2_NAME", "TR27 Immolator Turret");
-            LanguageAPI.Add("ENGI_SPECIAL_ALT2_DESCRIPTION", "Place a <style=cIsUtility>mobile</style> turret that <style=cIsUtility>inherits all your items.</style> Fires a plume of flame for <style=cIsDamage>60% damage per second</style> that <style=cIsDamage>ignites enemies</style>. <style=cIsDamage>Explodes on death for 3x</style> maximum health. Can place up to 4.");
+            LanguageAPI.Add("ENGI_SPECIAL_ALT2_DESCRIPTION", "Place a <style=cIsUtility>mobile</style> turret that <style=cIsUtility>inherits all your items.</style> Fires a plume of flame for <style=cIsDamage>100% damage per second</style> that <style=cIsDamage>ignites enemies</style>. <style=cIsDamage>Explodes on death for 3x</style> maximum health. Can place up to 4.");
 
             newDef.baseRechargeInterval = 15;
             newDef.activationState = new SerializableEntityStateType(typeof(PlaceFlameTurret));
@@ -224,6 +227,9 @@ namespace Cloudburst.Cores
 
             body.baseMaxHealth = 70;
             body.levelMaxHealth = 21;
+            body.baseDamage = 8;
+            body.levelDamage = 1.6f;    
+
 
             //KILL
             LoadoutAPI.AddSkill(typeof(DeathState));
