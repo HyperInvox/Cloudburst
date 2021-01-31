@@ -38,7 +38,7 @@ namespace Cloudburst.Cores.Engineer.ETStates {
             base.FixedUpdate();
             if (base.fixedAge > this.deathDuration && NetworkServer.active && this.deathExplosion)
             {
-                float radius = characterBody.maxHealth * .5f;
+                float radius = characterBody.maxHealth * 2f;
                 EffectManager.SpawnEffect(this.deathExplosion, new EffectData
                 {
                     origin = base.transform.position,
@@ -62,7 +62,7 @@ namespace Cloudburst.Cores.Engineer.ETStates {
                     procCoefficient = 1,
                     radius = radius,
                     teamIndex = GetTeam()
-                }.Fire();
+                }.Fire();   
                 EntityState.Destroy(base.gameObject);
             }
         }

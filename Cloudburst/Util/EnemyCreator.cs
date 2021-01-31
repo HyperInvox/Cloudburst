@@ -63,7 +63,7 @@ internal abstract class EnemyCreator
     public virtual void CreateDirectorCard()
     {
         On.RoR2.CharacterSpawnCard.Awake += GlobalHooks.CharacterSpawnCard_Awake;
-        characterSpawnCard = new CharacterSpawnCard();
+        characterSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
         On.RoR2.CharacterSpawnCard.Awake -= GlobalHooks.CharacterSpawnCard_Awake;
         characterSpawnCard.directorCreditCost = 350;
         characterSpawnCard.forbiddenAsBoss = false;

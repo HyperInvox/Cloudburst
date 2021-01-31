@@ -19,6 +19,7 @@ namespace Cloudburst.Cores
         protected internal BuffIndex wyattCombatIndex;
         protected internal BuffIndex japesCloak;
         protected internal BuffIndex engageLunarShell;
+        protected internal BuffIndex REDACTED;
         internal bool Loaded { get; private set; } = false;
         public BuffCore() => RegisterBuffs();
 
@@ -138,16 +139,18 @@ namespace Cloudburst.Cores
                 iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/JapesCloakBuff.png",
                 name = "JapesCloak",
                 buffColor = new Color(1f, 0.7882353f, 0.05490196f)
-            }); RegisterBuff(new BuffDef()
+            });
+            RegisterBuff(new BuffDef()
             {
                 buffIndex = BuffIndex.Count,
                 canStack = true,
                 isDebuff = false,
                 eliteIndex = EliteIndex.None,
                 iconPath = "Textures/BuffIcons/texBuffBodyArmorIcon",
-                name = "Charm",
+                name = "REDACTED",
                 buffColor = new Color32(219, 224, 198, byte.MaxValue)
             });
+
 
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 

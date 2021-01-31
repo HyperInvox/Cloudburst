@@ -109,6 +109,12 @@ All research on Irregularity [/]-[//]-[//] shall be focused on preventing it fro
 Hold strong, and keep your heads up.
 -[///////]""";
 
+        public const string magicLore = @"""The jewelry pictured on the right belonged to Aleksi Kivimäki, more often known during the conflict as 'Kalasmus the Profane.' Descriptions of him from the war describe him having an overbearingly odious presence to him, as well as being prone to fits of hyperactivity and rage. Most notably is the accounts of him possessing 'supernatural abilities' such as explosive conjuration, inducing spontaneous combustion in his enemies, and in some rare cases, being able to enter a pneumatic state for a brief period of time. Many sources from rebel groups competing against him claim he was 'Unusually youthful' and had gotten his rumored powers from 'Drinking of the blood of Lambs' and 'Pacts with devils exiled from their home realm.'
+
+These claims have never been proven, nor disproved, as Aleksi was said to be killed during the latter half of the war by Frederick Ammon of the Stygian Mirror rebellion. Rumors claim that, during his final moments, Aleksi detonated with such force that it left a third of Frederick's battalion dead, alongside fracturing Frederick's armor, creating the infamous 'Lightning scar' spanning his Horned War-mask.
+Although much of Aleksi's belongings have been collected from his uncovered residence, no body has ever been found. Old tales say that he still walked the earth even after being struck down. The world may never know what truly became of him.""
+- 2019, The year that shook the world.""";
+
         //string a = "\In the cold rain, amongst the remnants of ships long fallen, shouting could be heard. Shrouded in fog, were three figures crowded around the spoils of a blue security chest.\r\n\r\n\"I found it first! You keep your hands off of it!\"\r\n\r\n\"I’ve barely gotten any items! You don’t need another one!\"\r\n\r\n\"Barely gotten any items? All I have is this shitty rusty key! Give me that item!\"\r\n\r\n\Their argument abruptly stopped when they realized what they had been fighting over was gone. In it’s place was a single, small holo-note.\r\n\r\nI needed this for my build, I hope you don’t mind.\"\r\n\r\n\"";
 
 
@@ -447,7 +453,7 @@ Hold strong, and keep your heads up.
                 canRemove = true,
                 descriptionToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC",
                 hidden = false, 
-                loreToken = "",
+                loreToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_LORE",
                 name = "ExtendedEnemyBuffDuration",
                 nameToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME",
                 pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Earrings/magicicon.png",
@@ -537,6 +543,7 @@ Hold strong, and keep your heads up.
             LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME", "Magician's Earrings");
             LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC", "Extend <style=cIsUtility>positive buff duration</style> by 2<style=cStack>(+1 per stack)</style> seconds.");
             LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP", "Extend positive buff duration");
+            LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_LORE", magicLore);
 
             LanguageAPI.Add("ITEM_WYATTWALKMAN_NAME", "Walkman");
             LanguageAPI.Add("ITEM_WYATTWALKMAN_DESC", "Gain <style=cIsUtility>+x% speed</style> and <style=cIsHealing>+x% regen</style> while in combat every 3 seconds. Maximum 10 stacks <style=cStack>(+1 per stack)</style>");
@@ -978,7 +985,7 @@ Hold strong, and keep your heads up.
                 ProjectileManager.instance.FireProjectile(iinfo);*/
 
 
-                if (moneyCount > 0 && Util.CheckRoll(10 * damageInfo.procCoefficient, attackerMaster) && victimBody && !damageInfo.procChainMask.HasProc(ProcType.AACannon)) {
+                if (moneyCount > 0 && Util.CheckRoll(5 * damageInfo.procCoefficient, attackerMaster) && victimBody && !damageInfo.procChainMask.HasProc(ProcType.AACannon)) {
                     var pos = CloudUtils.FindBestPosition(victimBody.mainHurtBox);
 
                     damageInfo.procChainMask.AddProc(ProcType.AACannon);
