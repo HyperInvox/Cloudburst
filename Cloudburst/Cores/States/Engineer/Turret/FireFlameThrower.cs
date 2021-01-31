@@ -27,7 +27,7 @@ namespace Cloudburst.Cores.Engineer.ETStates
         private GameObject laserEffectInstance;
         public int bulletCountCurrent = 1;
 
-        private FireBeam _goodState;
+        private static FireBeam _goodState;
         public FireFlameThrower() {
             if (_goodState == null)
             {             
@@ -37,7 +37,7 @@ namespace Cloudburst.Cores.Engineer.ETStates
             //this.bulletCountCurrent = _goodState.bulletCount;
             this.damageCoefficient = .2f;
             this.effectPrefab = EntityStates.Mage.Weapon.Flamethrower.impactEffectPrefab;
-            this.fireFrequency = _goodState.fireFrequency;
+            this.fireFrequency = _goodState.fireFrequency += 0.4f;
             this.force = _goodState.force;
             this.hitEffectPrefab = EntityStates.Mage.Weapon.Flamethrower.impactEffectPrefab;
             this.laserPrefab = Resources.Load<GameObject>("Prefabs/Effects/DroneFlameThrowerEffect");

@@ -31,6 +31,130 @@ namespace Cloudburst.Cores
         public static GameObject flameTurretMaster;
         public static GameObject projectileGameObject;
         protected GameObject engineerObject;
+
+        private FlameTurrets turrets;
+        public class FlameTurrets : EnemyCreator
+        {
+            protected override string resourceMasterPath => "prefabs/charactermasters/EngiWalkerTurretMaster";
+
+            protected override string resourceBodyPath => "prefabs/characterbodies/EngiWalkerTurretBody";
+
+            protected override string bodyName => "EngiFlameTurret";
+
+            protected override bool registerNetwork => true;
+
+            public override void OverrideCharacterbody(CharacterBody body)
+            {
+                base.OverrideCharacterbody(body);
+                body.baseMaxHealth = 70;
+                body.levelMaxHealth = 21;
+                body.baseDamage = 8;
+                body.levelDamage = 1.6f;
+
+            }
+
+            public override void OverrideSkills()
+            {
+                base.OverrideSkills();
+                //KILL
+                LoadoutAPI.AddSkill(typeof(DeathState));
+
+                var characterDeathBehavior = enemyBody.GetComponent<CharacterDeathBehavior>();
+                characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(DeathState));
+            }
+
+            public override void CreatePrimary(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreatePrimary(skillLocator, skillFamily);
+
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/engiturretbody/EngiTurretFireBeam");
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                LoadoutAPI.AddSkill(typeof(FireFlameThrower));
+
+                def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
+
+                LoadoutAPI.AddSkillDef(def);
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+
+            public override void CreateSecondary(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreateSecondary(skillLocator, skillFamily);
+
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/engiturretbody/EngiTurretFireBeam");
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                LoadoutAPI.AddSkill(typeof(FireFlameThrower));
+
+                def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
+
+                LoadoutAPI.AddSkillDef(def);
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+
+            public override void CreateUtility(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreateUtility(skillLocator, skillFamily);
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/engiturretbody/EngiTurretFireBeam");
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                LoadoutAPI.AddSkill(typeof(FireFlameThrower));
+
+                def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
+
+                LoadoutAPI.AddSkillDef(def);
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+
+            public override void CreateSpecial(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreateSpecial(skillLocator, skillFamily);
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/engiturretbody/EngiTurretFireBeam");
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                LoadoutAPI.AddSkill(typeof(FireFlameThrower));
+
+                def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
+
+                LoadoutAPI.AddSkillDef(def);
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+
+        }
+
         public EngineerCore() => EngineerEdits();
 
 
@@ -136,13 +260,12 @@ namespace Cloudburst.Cores
         }
 
         protected void RegisterNewTurret() {
-            flameTurret = Resources.Load<GameObject>("prefabs/characterbodies/EngiWalkerTurretBody").InstantiateClone("EngiFlameTurretBody", true);
-            CloudUtils.RegisterNewBody(flameTurret);
-            flameTurretMaster = Resources.Load<GameObject>("prefabs/charactermasters/EngiWalkerTurretMaster").InstantiateClone("EngiFlameTurretMaster", true);
-            CloudUtils.RegisterNewMaster(flameTurretMaster);
+            turrets = new FlameTurrets();
 
-            flameTurretMaster.GetComponent<CharacterMaster>().bodyPrefab = flameTurret;
-            FlameTurrets();
+            turrets.Create();
+
+            flameTurret = turrets.enemyBody;
+            flameTurretMaster = turrets.enemyMaster;
         }
         protected void AddNewSpecial()
         {
@@ -214,26 +337,6 @@ namespace Cloudburst.Cores
             int prevLength = family.variants.Length;
             Array.Resize<SkillFamily.Variant>(ref family.variants, prevLength + 1);
             family.variants[prevLength] = variant;
-        }
-
-
-        protected void FlameTurrets() {
-            var locator = flameTurret.GetComponent<SkillLocator>();
-            LoadoutAPI.AddSkill(typeof(FireFlameThrower));
-            locator.primary.skillFamily.variants[locator.primary.skillFamily.defaultVariantIndex].skillDef.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
-
-            var characterDeathBehavior = flameTurret.GetComponent<CharacterDeathBehavior>();
-            var body = flameTurret.GetComponent<CharacterBody>();
-
-            body.baseMaxHealth = 70;
-            body.levelMaxHealth = 21;
-            body.baseDamage = 8;
-            body.levelDamage = 1.6f;    
-
-
-            //KILL
-            LoadoutAPI.AddSkill(typeof(DeathState));
-            characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(DeathState));
         }
     }
 }

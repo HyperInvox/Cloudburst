@@ -36,14 +36,15 @@ namespace Cloudburst.Cores.Components
                 switch (PhaseCounter.instance.phase)
                 {
                     case 1:
-                        limit = 6;
+                        limit = 12;
                         break;
                     case 3:
-                        limit = 5;
+                        limit = 9;
                         break;
                     case 4:
-                        limit = 3;
-                        phase4 = true;
+
+                            limit = 6;
+                            phase4 = true;
 
                         break;
                 }
@@ -53,7 +54,7 @@ namespace Cloudburst.Cores.Components
         private HurtBox SearchForTarget()
         {
             bullseyeSearch.searchOrigin = transform.position;
-            bullseyeSearch.maxDistanceFilter = 1000;
+            bullseyeSearch.maxDistanceFilter = 5000;
             bullseyeSearch.teamMaskFilter = TeamMask.allButNeutral;
             bullseyeSearch.sortMode = BullseyeSearch.SortMode.Distance;
             bullseyeSearch.filterByLoS = true;
@@ -61,6 +62,23 @@ namespace Cloudburst.Cores.Components
             bullseyeSearch.RefreshCandidates();
             bullseyeSearch.FilterOutGameObject(base.gameObject);
             return bullseyeSearch.GetResults().FirstOrDefault<HurtBox>();
+        }
+
+        private void SpawnGlass() {
+            DirectorSpawnRequest directorSpawnRequest = new DirectorSpawnRequest((SpawnCard)Resources.Load("SpawnCards/CharacterSpawnCards/cscBrotherGlass"), new DirectorPlacementRule
+            {
+                placementMode = DirectorPlacementRule.PlacementMode.Approximate,
+                minDistance = 3f,
+                maxDistance = 20f,
+                spawnOnTarget = base.gameObject.transform
+            }, RoR2Application.rng);
+            directorSpawnRequest.summonerBodyObject = base.gameObject;
+            DirectorSpawnRequest directorSpawnRequest2 = directorSpawnRequest;
+            directorSpawnRequest2.onSpawnedServer = (Action<SpawnCard.SpawnResult>)Delegate.Combine(directorSpawnRequest2.onSpawnedServer, new Action<SpawnCard.SpawnResult>(delegate (SpawnCard.SpawnResult spawnResult)
+            {
+                spawnResult.spawnedInstance.GetComponent<Inventory>().GiveItem(ItemIndex.HealthDecay, 23);
+            }));
+            DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
         }
 
         private Vector3 FindBestPosition(HurtBox target)
@@ -100,28 +118,37 @@ namespace Cloudburst.Cores.Components
                     stopwatch = 0;
                     var target = SearchForTarget();
                     var pos = FindBestPosition(target);
-
-                    switch (PhaseCounter.instance.phase)
+                    if (spawned == false)
                     {
-                        case 1:
-                            Phase1(pos, target);
-                            break;
-                        case 2:
-                            break;
-                        case 3:
-                            for (int i = 0; i < 3; i++)
-                            {
-                                Phase1(FindBestPosition(target), target);
-                                Phase3(pos, target);
-                            } break;
-                        case 4:
-                            for (int i = 0; i < 3; i++)
-                            {
+                        SpawnGlass();
+                        spawned = true;
+                    }
+                    if (Util.HasEffectiveAuthority(gameObject))
+                    {
+                        switch (PhaseCounter.instance.phase)
+                        {
+                            case 1:
                                 Phase1(pos, target);
-                            }
-                            Phase3(pos, target);
-                            Phase4(pos, target);
-                            break;
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    Phase1(FindBestPosition(target), target);
+                                    Phase3(pos, target);
+                                }
+                                break;
+                            case 4:
+                                for (int i = 0; i < 3; i++)
+                                {
+                                    Phase1(pos, target);
+                                }
+                                Phase3(pos, target);
+                                Phase4(pos, target);
+
+                                break;
+                        }
                     }
                 }
             }

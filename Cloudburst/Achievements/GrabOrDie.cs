@@ -34,62 +34,28 @@ namespace Cloudburst.Achievements
         // The sprite provider.
         protected override CustomSpriteProvider SpriteProvider { get; } = new CustomSpriteProvider("NotAPath");
 
-        private PlayerCharacterMasterController currentMasterController;
-
-        private Inventory inv;
-
         public override void OnInstall()
         {
             base.OnInstall();
-            base.localUser.onMasterChanged += this.OnMasterChanged;
-            this.SetupMasterController(base.localUser.cachedMasterController);
+            base.userProfile.onPickupDiscovered += UserProfile_onPickupDiscovered;
         }
 
-        public override void OnUninstall()
+        private void UserProfile_onPickupDiscovered(PickupIndex obj)
         {
-            this.SetupMasterController(null);
-            base.localUser.onMasterChanged -= this.OnMasterChanged;
-            base.OnUninstall();
-        }
-
-
-
-        private void SetupMasterController(PlayerCharacterMasterController anotherMasterController)
-        {
-            if (this.currentMasterController == anotherMasterController) return;
-            if (this.inv != null) this.inv.onInventoryChanged -= this.OnInventoryChanged;
-
-            this.currentMasterController = anotherMasterController;
-            PlayerCharacterMasterController playerCharacterMasterController = this.currentMasterController;
-            Inventory anotherFuckinInv;
-            if (playerCharacterMasterController == null)
-            {
-                anotherFuckinInv = null;
-            }
-            else
-            {
-                CharacterMaster master = playerCharacterMasterController.master;
-                anotherFuckinInv = (master != null) ? master.inventory : null;
-            }
-            this.inv = anotherFuckinInv;
-            if (this.inv != null)
-            {
-                this.inv.onInventoryChanged += this.OnInventoryChanged;
-            }
-        }
-        private void OnInventoryChanged()
-        {
-            if (this.inv && base.localUser.cachedBody)
-            {
-                if (this.localUser.cachedBody.healthComponent.combinedHealthFraction < 0.3f)
-                {
+            PickupDef pickupDef = PickupCatalog.GetPickupDef(obj);
+            ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
+            if (itemIndex != ItemIndex.None) {
+                if (this.localUser.cachedBody && localUser.cachedBody.healthComponent.combinedHealthFraction < 0.3f) {
                     base.Grant();
                 }
             }
         }
-        private void OnMasterChanged()
+
+        public override void OnUninstall()
         {
-            this.SetupMasterController(base.localUser.cachedMasterController);
+            base.userProfile.onPickupDiscovered -= UserProfile_onPickupDiscovered;
+
+            base.OnUninstall();
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Cloudburst.Cores.Engineer
     {
         public PlaceFlameTurret()
         {
-            blueprintPrefab = Resources.Load<GameObject>("prefabs/EngiTurretBlueprints");
-            wristDisplayPrefab = Resources.Load<GameObject>("prefabs/EngiTurretWristDisplay");
-            turretMasterPrefab = EngineerCore.flameTurretMaster;
+            this.blueprintPrefab = Resources.Load<GameObject>("prefabs/EngiTurretBlueprints");
+            this.wristDisplayPrefab = Resources.Load<GameObject>("prefabs/EngiTurretWristDisplay");
+            this.turretMasterPrefab = EngineerCore.flameTurretMaster;
         }
     }
 }

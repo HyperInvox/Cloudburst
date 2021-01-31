@@ -18,7 +18,7 @@ namespace Cloudburst.Cores
         protected internal BuffIndex antiGravFriendlyIndex;
         protected internal BuffIndex wyattCombatIndex;
         protected internal BuffIndex japesCloak;
-
+        protected internal BuffIndex engageLunarShell;
         internal bool Loaded { get; private set; } = false;
         public BuffCore() => RegisterBuffs();
 
@@ -128,7 +128,7 @@ namespace Cloudburst.Cores
                 iconPath = "Textures/BuffIcons/texBuffGenericShield",
                 name = "AntiGravFriendly",
                 buffColor = new Color(0.6784314f, 0.6117647f, 0.4117647f)
-            }); 
+            });
             RegisterBuff(new BuffDef()
             {
                 buffIndex = BuffIndex.Count,
@@ -157,7 +157,8 @@ namespace Cloudburst.Cores
             //On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
             //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
-            On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround;        }
+            On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround; }
+    
 
         private void CharacterBody_OnBuffFinalStackLost(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
         {
@@ -349,6 +350,15 @@ namespace Cloudburst.Cores
 
                 var inv = self.inventory;
 
+
+                if (self.HasBuff(BuffIndex.LunarShell)) {
+                    self.attackSpeed += 3;
+                    self.armor += 25;
+                    self.moveSpeed -= 1;
+                    self.regen += 3;
+                    self.damage += 2;
+                }
+
                 if (self.HasBuff(charmIndex)){
                     var vount = 0;
                     if (self.inventory) {
@@ -362,7 +372,7 @@ namespace Cloudburst.Cores
                     for (int i = 0; i < buffCount; i++)
                     {
                         self.armor = armor + 5;
-                        self.regen = regen * (1f + (regen * 0.3f));
+                        self.regen = regen + 0.1f;
                     }
                 }
 
@@ -421,6 +431,9 @@ namespace Cloudburst.Cores
                     break;
                 case "Charm":
                     charmIndex = BuffAPI.Add(customBuff);
+                    break;
+                case "EngageLunarShell":
+                    engageLunarShell = BuffAPI.Add(customBuff);
                     break;
                 //throw new System.NotImplementedException("not implemented yet!");
                 default:

@@ -350,9 +350,9 @@ namespace Cloudburst.Cores
             explosion.lifetime = 15;
             explosion.lifetimeAfterImpact = 0;
             explosion.lifetimeRandomOffset = 0;
-            explosion.blastRadius = 15;
-            explosion.blastDamageCoefficient = 10;
-            explosion.blastProcCoefficient = 1;
+            explosion.blastRadius = 8   ;
+            explosion.blastDamageCoefficient = 5;
+            explosion.blastProcCoefficient = 0;
             explosion.blastAttackerFiltering = AttackerFiltering.Default;
 
             explosion.childrenCount = 0;
@@ -367,7 +367,7 @@ namespace Cloudburst.Cores
             orb.attackRange = 50;
             orb.minAngleFilter = 0;
             orb.maxAngleFilter = 180;
-            orb.procCoefficient = 1f;
+            orb.procCoefficient = 0f;
             orb.damageCoefficient = 1;
             orb.bounces = 0;
             orb.inheritDamageType = false;

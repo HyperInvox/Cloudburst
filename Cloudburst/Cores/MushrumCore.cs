@@ -103,6 +103,8 @@ namespace Cloudburst.Cores
             DirectorAPI.DirectorCardHolder directorCardHolder = new DirectorAPI.DirectorCardHolder();
             DirectorCard directorCard = new DirectorCard();
 
+
+
             characterSpawnCard.directorCreditCost = 330;
             characterSpawnCard.forbiddenAsBoss = false;
             characterSpawnCard.name = "cscMegaMushrum";

@@ -51,7 +51,7 @@ namespace Cloudburst.Cores.Components
         public void FixedUpdate()
         {
             stopwatch += Time.deltaTime;
-            if (stopwatch >= 10 && body && !body.outOfCombat && NetworkServer.active)
+            if (stopwatch >= 15 && body && !body.outOfCombat && NetworkServer.active)
             {
                 stopwatch = 0;
 

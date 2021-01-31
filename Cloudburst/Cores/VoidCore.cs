@@ -1,7 +1,9 @@
 ﻿using Cloudburst.Cores.Components;
 using R2API;
 using RoR2;
+using RoR2.CharacterAI;
 using RoR2.Projectile;
+using RoR2.Skills;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,181 @@ using UnityEngine.Networking;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 using static R2API.LanguageAPI;
+using static RoR2.CharacterAI.AISkillDriver;
 
 namespace Cloudburst.Cores
 {
     class VoidCore
     {
+        public VoidCore instance;
+        /// <summary>
+        /// https://cdn.discordapp.com/attachments/739717122229403740/804910319029321728/IMG_20210129_112137.jpg
+        /// </summary>
+        internal class VoidGolems : EnemyCreator {
+
+            protected override string resourceMasterPath => "prefabs/charactermasters/LunarGolemMaster";
+
+            protected override string resourceBodyPath => "prefabs/characterbodies/LunarGolemBody";
+
+            protected override string bodyName => "VoidGolem";
+
+            protected override bool registerNetwork => true;
+
+            public override void Create()
+            {
+                base.Create();
+                CloudburstPlugin.start += CloudburstPlugin_StartVoid;
+            }
+
+            public override void OverrideMasterAI(CharacterMaster master)
+            {
+                base.OverrideMasterAI(master);
+                AISkillDriver shell = master.AddComponent<AISkillDriver>();
+
+                foreach (AISkillDriver driver in master.GetComponents<AISkillDriver>()) {
+                    if (driver.customName == "StrafeAndShoot") {
+                        driver.nextHighPriorityOverride = shell ;
+                        //driver.skillSlot = SkillSlot.Secondary;
+                    }
+                }
+
+                shell.customName = "Engage Shell Defenses";
+                shell.skillSlot = SkillSlot.Secondary;
+                shell.requireSkillReady = false;
+                shell.requireEquipmentReady = false;
+                shell.moveTargetType = TargetType.CurrentEnemy;
+                shell.minUserHealthFraction = float.NegativeInfinity;
+                shell.maxUserHealthFraction = float.PositiveInfinity;
+                shell.minTargetHealthFraction = float.NegativeInfinity;
+                shell.maxTargetHealthFraction = float.PositiveInfinity;
+                shell.minDistance = 0;
+                shell.maxDistance = 65;
+                shell.selectionRequiresTargetLoS = false;
+                shell.activationRequiresTargetLoS = false;
+                shell.activationRequiresAimConfirmation = false;
+                shell.movementType = MovementType.FleeMoveTarget;
+                shell.moveInputScale = 1;
+                shell.aimType = AimType.AtCurrentEnemy;
+                shell.ignoreNodeGraph = true;
+                shell.driverUpdateTimerOverride = -1;
+                shell.resetCurrentEnemyOnNextDriverSelection = false;
+                shell.noRepeat = false;
+                shell.shouldSprint = false;
+                shell.shouldFireEquipment = false;
+                shell.buttonPressType = ButtonPressType.Hold;
+
+            }
+
+            private void CloudburstPlugin_StartVoid()
+            {
+                OverrideVisuals(enemyBody.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>());
+            }
+
+            public override void OverrideVisuals(CharacterModel mdl)
+            {
+                base.OverrideVisuals(mdl);
+                mdl.baseRendererInfos[0].defaultMaterial = voidMat;
+            }
+
+            public override void OverrideCharacterbody(CharacterBody body)
+            {
+                base.OverrideCharacterbody(body);
+
+            }
+
+            public override void CreatePrimary(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreatePrimary(skillLocator, skillFamily);
+
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/lunargolembody/LunarGolemBodyTwinShot");
+
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                LoadoutAPI.AddSkillDef(def);
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+
+            public override void CreateSecondary(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreateSecondary(skillLocator, skillFamily);
+
+
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/lunargolembody/LunarGolemBodyShield");
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                def.activationState = new EntityStates.SerializableEntityStateType(typeof(States.VoidGolems.EngageShell));
+
+                LoadoutAPI.AddSkillDef(def);
+                LoadoutAPI.AddSkill(typeof(States.VoidGolems.EngageShell));
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+
+            public override void CreateUtility(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreateUtility(skillLocator, skillFamily);
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/lunargolembody/LunarGolemBodyShield");
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                LoadoutAPI.AddSkillDef(def);
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+
+            public override void CreateSpecial(SkillLocator skillLocator, SkillFamily skillFamily)
+            {
+                base.CreateSpecial(skillLocator, skillFamily);
+                SkillDef origDef = Resources.Load<SkillDef>("skilldefs/lunargolembody/LunarGolemBodyShield");
+                SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
+
+                CloudUtils.CopySkillDefSettings(origDef, def);
+
+                LoadoutAPI.AddSkillDef(def);
+
+                skillFamily.variants[0] = new SkillFamily.Variant
+                {
+                    skillDef = def,
+                    unlockableName = "",
+                    viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
+
+                };
+            }
+            /*public override void CreatePrimary(SkillLocator skillLocator)
+            {
+                base.CreatePrimary(skillLocator);
+
+            }
+
+            public override void CreateSecondary(SkillLocator skillLocator)
+            {
+                base.CreateSecondary(skillLocator); 
+            }*/
+        }
 
         public VoidCore() => FindGod();
 
@@ -30,22 +202,47 @@ namespace Cloudburst.Cores
         private GameObject floatingPlatform2;
         private float skyLeap;
 
+        private VoidGolems golems = null;
 
         private void FindGod()
         {
+            instance = this;
             On.RoR2.CharacterBody.Start += CharacterBody_Start;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
             ArenaMissionController.onBeatArena += ArenaMissionController_onBeatArena;
             Run.onRunStartGlobal += Run_onRunStartGlobal;
             //On.EntityStates.Missions.Arena.NullWard.Active.FixedUpdate += Active_FixedUpdate;
             On.EntityStates.BrotherMonster.WeaponSlam.OnEnter += WeaponSlam_OnEnter;
+            On.EntityStates.BrotherMonster.HoldSkyLeap.OnEnter += HoldSkyLeap_OnEnter;
             CloudburstPlugin.start += CloudburstPlugin_start;
 
-            LanguageAPI.Add("TRIGGER_INFECTION", "A foul infection creeps into the place between time...");
+            golems = new VoidGolems();
+            golems.Create();
+
+            LanguageAPI.Add("TRIGGER_INFECTION", "A foul infection creeps into the exchange between time...");
 
             FindAssets();
 
             VoidGlass();
+        }
+
+        private void HoldSkyLeap_OnEnter(On.EntityStates.BrotherMonster.HoldSkyLeap.orig_OnEnter orig, EntityStates.BrotherMonster.HoldSkyLeap self)
+        {
+            orig(self);
+            if (triggeredTrueInfection)
+            {
+                BullseyeSearch bullseyeSearch = new BullseyeSearch();
+                bullseyeSearch.searchOrigin = self.transform.position;
+                bullseyeSearch.searchDirection = Vector3.forward;
+                bullseyeSearch.maxDistanceFilter = 2000;
+                bullseyeSearch.teamMaskFilter = TeamMask.allButNeutral;
+                bullseyeSearch.teamMaskFilter.RemoveTeam(TeamComponent.GetObjectTeam(self.gameObject));
+                bullseyeSearch.sortMode = BullseyeSearch.SortMode.Distance;
+                bullseyeSearch.RefreshCandidates();
+                HurtBox target = bullseyeSearch.GetResults().FirstOrDefault();
+
+                self.characterMotor.Motor.SetPositionAndRotation(target.transform.position, Quaternion.identity, true);
+            }
         }
 
         private void CloudburstPlugin_start()
@@ -54,11 +251,10 @@ namespace Cloudburst.Cores
         }
 
         public void VoidGlass() {
-            var mdl = Resources.Load<GameObject>("prefabs/characterbodies/BrotherGlassBody").GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>();
-            for (int i = 0; i < mdl.baseRendererInfos.Length; i++)
-            {
-                mdl.baseRendererInfos[i].defaultMaterial = voidMat;
-            }
+            var mdl = Resources.Load<GameObject>("prefabs/characterbodies/BrotherGlassBody").GetComponent<CharacterBody>();
+            Add("GLASS_BODY_NAME", "Shattered Clone");
+            mdl.baseNameToken = "GLASS_BODY_NAME";
+
         }
 
         private void WeaponSlam_OnEnter(On.EntityStates.BrotherMonster.WeaponSlam.orig_OnEnter orig, EntityStates.BrotherMonster.WeaponSlam self)
@@ -312,7 +508,6 @@ namespace Cloudburst.Cores
                 var scene = SceneManager.GetSceneByName("arena"); ;
                 var root = scene.GetRootGameObjects();
 
-                List<Transform> michealPense = new List<Transform>();
                 for (int i = 0; i < root.Length; i++)
                 {
                     if (root[i].name == "HOLDER: Ruins and Gameplay Zones")
@@ -373,8 +568,6 @@ namespace Cloudburst.Cores
                 CreateInfection(yo);
 
 
-                LogCore.LogF("Micheal Pense is " + michealPense.Count + "ft long!");
-
                 SceneManager.UnloadSceneAsync("arena");
             };
 
@@ -425,10 +618,11 @@ namespace Cloudburst.Cores
 
             if (nameToken == "BROTHER_BODY_NAME")
             {
-                if (PhaseCounter.instance)
+                if (PhaseCounter.instance)  
                 {
                     switch (PhaseCounter.instance.phase) {
                         case 1:
+
                             mdl.baseRendererInfos[1].defaultMaterial = voidMat;
                             mdl.baseRendererInfos[2].defaultMaterial = voidMat;
                             mdl.baseRendererInfos[4].defaultMaterial = voidMat;
@@ -451,26 +645,15 @@ namespace Cloudburst.Cores
                                 mdl.baseRendererInfos[i].defaultMaterial = voidMat;
                             }
                             break;
-
-
-
-                } }
-            }
-
-            if (nameToken == "LUNARWISP_BODY_NAME") {
-                for (int i = 0; i < mdl.baseRendererInfos.Length; i++) {
-                    mdl.baseRendererInfos[i].defaultMaterial = voidMat;
+                    }
                 }
             }
 
-        }
+            if (nameToken == "LUNARWISP_BODY_NAME") {
+                mdl.baseRendererInfos[0].defaultMaterial = voidMat;
+            }
 
-        private void Active_FixedUpdate(On.EntityStates.Missions.Arena.NullWard.Active.orig_FixedUpdate orig, EntityStates.Missions.Arena.NullWard.Active self)
-        {
-            self.outer.SetNextState(new EntityStates.Missions.Arena.NullWard.Complete());
-            return;
         }
-
 
         private void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
@@ -519,56 +702,31 @@ namespace Cloudburst.Cores
                                where p.name == "ppSceneArenaSick"
                                select p).FirstOrDefault<PostProcessProfile>();
 
-
                 var objs = GameObject.FindObjectsOfType<Light>();
                 for (int i = 0; i < objs.Length; i++)
                 {
                     objs[i].intensity = 0.1f;
                 }
 
-                FireProjectileInfo _info = new FireProjectileInfo()
-                {
-                    owner = null,
-                    crit = false,
-                    damage = 1 * Run.instance.teamlessDamageCoefficient,
-                    damageColorIndex = DamageColorIndex.DeathMark,
-                    damageTypeOverride = DamageType.Generic,
-                    projectilePrefab = ProjectileCore.electricPillar,
-                    position = new Vector3(1710.21f, 327.924f, -7.9f),
-                    rotation = Quaternion.identity,
-                    force = 1000,
-                     procChainMask = default,
-                     target = null,
-                     useFuseOverride = false,
-                     useSpeedOverride = false
-                };
-                //ProjectileManager.instance.FireProjectile(_info);
+                var spawner = SceneInfo.instance.transform.Find("BrotherMissionController/BrotherEncounter, Phase 2");
+                var combatEncounter =  spawner.GetComponent<ScriptedCombatEncounter>();
+
+                combatEncounter.spawns[3].spawnCard = golems.characterSpawnCard;
+                combatEncounter.spawns[4].spawnCard = golems.characterSpawnCard;
+                combatEncounter.spawns[5].spawnCard = golems.characterSpawnCard;
+
+                /*foreach (Transform form in spawner.transform) {
+                    CloudburstPlugin.Destroy(form.gameObject);
+                }
+
+                
+                var a = CloudburstPlugin.Instantiate<GameObject>(monsterMaster);
+                a.GetComponent<CharacterMaster>().teamIndex = TeamIndex.Monster;
+                a.transform.position = new Vector3(1447.18f, 494.8316f, 776.7117f);
+                a.transform.SetParent(spawner.transform);*/
 
 
-               //
-
-               /*var volume = info.AddComponent<PostProcessVolume>();
-
-               volume.enabled = true;
-               volume.profile = profile;
-               volume.isGlobal = true;
-               volume.blendDistance = 0;
-               volume.weight = 0;
-               volume.priority = 99;*/
-
-               //theres something weird goin on with the moon and i dunno what
-               //hmm
-               /*PostProcessVolume[] postProcessVolume = GameObject.FindObjectsOfType<PostProcessVolume>();
-               for (int i = 0; i < postProcessVolume.Length; i++) {
-                   postProcessVolume[i].profile = profile;
-                   postProcessVolume[i].weight = 0.85f;
-                   LogCore.LogI(postProcessVolume[i].gameObject);
-               }*/
-
-
-
-
-               CloudburstPlugin.Instantiate<GameObject>(floatingPlatform, new Vector3(1146, 857.3f, 185.6f), Quaternion.identity).AddComponent<Spinner>();
+                CloudburstPlugin.Instantiate<GameObject>(floatingPlatform, new Vector3(1146, 857.3f, 185.6f), Quaternion.identity).AddComponent<Spinner>();
                 CloudburstPlugin.Instantiate<GameObject>(floatingPlatform, new Vector3(315, 600, -138), Quaternion.identity).AddComponent<Spinner>();
                 CloudburstPlugin.Instantiate<GameObject>(floatingPlatform, new Vector3(-136, 240, -333), Quaternion.identity).AddComponent<Spinner>();
 
@@ -613,7 +771,7 @@ namespace Cloudburst.Cores
             EntityStates.BrotherMonster.HoldSkyLeap.duration /= 4;
         }
 
-        private void MithrixReplacementLines()
+        public static void MithrixReplacementLines()
         {
             LanguageAPI.Add("BROTHER_SPAWN_PHASE1_1", "Become one.");
             LanguageAPI.Add("BROTHER_SPAWN_PHASE1_2", "Embrace.");
@@ -663,7 +821,7 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("BROTHER_DAMAGEDEALT_10", "WHEN WILL YOU MAKE YOUR PEACE?");
 
             Add("BROTHER_BODY_NAME", "Nilthnix");
-            Add("BROTHER_BODY_SUBTITLE", "Slave to eternity.");
+            Add("BROTHER_BODY_SUBTITLE", "Slave to Eternity.");
 
             LanguageAPI.Add("BROTHER_DEATH_1", "FUTILITY...");
             LanguageAPI.Add("BROTHER_DEATH_2", "WE ARE NUMBERLESS...");
@@ -684,8 +842,8 @@ namespace Cloudburst.Cores
         private static void TTriggerInfection(ConCommandArgs arg)
         {
             triggeredTrueInfection = true;
+            VoidCore.MithrixReplacementLines();
         }
-
 
         private void ArenaMissionController_onBeatArena()
         {

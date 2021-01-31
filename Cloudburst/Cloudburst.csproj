@@ -153,6 +153,7 @@
     <Compile Include="Cores\Components\InfestationTrigger.cs" />
     <Compile Include="Cores\Components\EmitVoid.cs" />
     <Compile Include="Cores\NewtCore.cs" />
+    <Compile Include="Cores\States\VoidGolems\Shell.cs" />
     <Compile Include="Cores\VoidCore.cs" />
     <Compile Include="Cores\Components\AntiGravityChecker.cs" />
     <Compile Include="Cores\Components\WyattWinchManager.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Cores\States\Wyatt\TrashOut2.cs" />
     <Compile Include="Cores\States\Wyatt\WyattBaseMeleeAttack.cs" />
     <Compile Include="Cores\States\Wyatt\Cleanup.cs" />
+    <Compile Include="Util\EnemyCreator.cs" />
     <Compile Include="Util\Listener.cs" />
     <Compile Include="Util\EnigmaticList.cs" />
     <Compile Include="Util\CloudUtils.cs" />
