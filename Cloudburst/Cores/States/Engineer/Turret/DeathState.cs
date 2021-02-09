@@ -38,7 +38,7 @@ namespace Cloudburst.Cores.Engineer.ETStates {
             base.FixedUpdate();
             if (base.fixedAge > this.deathDuration && NetworkServer.active && this.deathExplosion)
             {
-                float radius = characterBody.maxHealth * 2f;
+                float radius = characterBody.maxHealth * 0.2f;
                 EffectManager.SpawnEffect(this.deathExplosion, new EffectData
                 {
                     origin = base.transform.position,

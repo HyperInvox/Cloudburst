@@ -29,16 +29,16 @@ namespace Cloudburst.Cores
             DotDef def = new DotDef() {
                 associatedBuff = BuffCore.instance.REDACTED,
                 damageColorIndex = DamageColorIndex.DeathMark,
-                damageCoefficient = 2,
-                interval = 2,
+                damageCoefficient = 1,
+                interval = 1,
             };
 
-            var lmao = new DotAPI.CustomDotBehaviour(CleanBehaviour);
-            var lol = new DotAPI.CustomDotVisual(CleanVisuals);
+            redactedIndex = RegisterDotDef(def, RedactedBehaviour, null);
+
             //clean = RegisterDotDef(1, 0.5f, DamageColorIndex.WeakPoint, BuffCore.instance.cleanIndex, lmao, lol);
         }
 
-        void CleanBehaviour(DotController controller, DotController.DotStack stacks) {
+        void RedactedBehaviour(DotController controller, DotController.DotStack stacks) {
             stacks.damageType = DamageType.NonLethal;
             var body = controller.victimBody;
             if (body) {
@@ -46,6 +46,38 @@ namespace Cloudburst.Cores
                 if (healthComponent) {
 
                     bool isFullHealth = body.healthComponent.combinedHealthFraction >= 1;
+                    if (isFullHealth) {
+                        stacks.damage = 0;
+                    }
+                    switch (healthComponent.combinedHealthFraction) {
+                        case 0.9f:
+                            stacks.damage += 0.5f;
+                            break;
+                        case 0.8f:
+                            stacks.damage += 1f;
+                            break;
+                        case 0.7f:
+                            stacks.damage += 1.5f;
+                            break;
+                        case 0.6f:
+                            stacks.damage += 2f;
+                            break;
+                        case 0.5f:
+                            stacks.damage += 3f;
+                            break;
+                        case 0.4f:
+                            stacks.damage += 3.5f;
+                            break;
+                        case 0.3f:
+                            stacks.damage += 4f;
+                            break;
+                        case 0.2f:
+                            stacks.damage += 4.5f;
+                            break;
+                        case 0.1f:
+                            stacks.damage += 5f;
+                            break;
+                    }
                 }
             }
         }

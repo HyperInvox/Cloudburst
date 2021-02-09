@@ -834,6 +834,72 @@ MonoBehaviour:
     transform: {fileID: 7674918120136348623}
   - name: SwingTrail
     transform: {fileID: 4618108178854883709}
+  - name: CoreIK
+    transform: {fileID: 128800408678168517}
+  - name: Elbow.L
+    transform: {fileID: 128800408678168519}
+  - name: Elbow.R
+    transform: {fileID: 128800408678168523}
+  - name: HeadTracking
+    transform: {fileID: 128800408678168467}
+  - name: Pelvis
+    transform: {fileID: 128800408678168137}
+  - name: UpperBody
+    transform: {fileID: 128800408678168065}
+  - name: Collar.L
+    transform: {fileID: 128800408678168513}
+  - name: Collar.R
+    transform: {fileID: 128800408678168515}
+  - name: Neck
+    transform: {fileID: 128800408678168151}
+  - name: UpperArm.L
+    transform: {fileID: 128800408678168093}
+  - name: LowerArm.L
+    transform: {fileID: 128800408678168507}
+  - name: Hand.L
+    transform: {fileID: 128800408678168571}
+  - name: UpperArm.R
+    transform: {fileID: 128800408678168095}
+  - name: LowerArm.R
+    transform: {fileID: 128800408678168509}
+  - name: Hand.R
+    transform: {fileID: 128800408678168573}
+  - name: Head
+    transform: {fileID: 128800408678168575}
+  - name: Head_end
+    transform: {fileID: 128800408678168545}
+  - name: Zipper
+    transform: {fileID: 128800408678168075}
+  - name: Zipper_End
+    transform: {fileID: 128800408678168077}
+  - name: Elbow.L_end
+    transform: {fileID: 128800408678168521}
+  - name: Elbow.R_end
+    transform: {fileID: 128800408678168525}
+  - name: HeadTracking_end
+    transform: {fileID: 128800408678168469}
+  - name: LowerBody
+    transform: {fileID: 128800408678168511}
+  - name: LowerBody_end
+    transform: {fileID: 128800408678168481}
+  - name: UpperLeg.L
+    transform: {fileID: 128800408678168067}
+  - name: LowerLeg.L
+    transform: {fileID: 128800408678168483}
+  - name: Foot.L
+    transform: {fileID: 128800408678168527}
+  - name: UpperLeg.R
+    transform: {fileID: 128800408678168069}
+  - name: LowerLeg.R
+    transform: {fileID: 128800408678168485}
+  - name: Foot.R
+    transform: {fileID: 128800408678168561}
+  - name: Broom3
+    transform: {fileID: 128800408678168539}
+  - name: GyroBall
+    transform: {fileID: 128800408678168563}
+  - name: GyroRing
+    transform: {fileID: 128800408678168567}
 --- !u!1 &128800408677673515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,8 +1260,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128800408677673539}
   m_LocalRotation: {x: -0.09663038, y: 0.00071029365, z: -0.3407789, w: 0.9351641}
-  m_LocalPosition: {x: -0.0000000037252907, y: 0.016957857, z: 0}
-  m_LocalScale: {x: 0.9999998, y: 0.99999964, z: 0.9999998}
+  m_LocalPosition: {x: 0, y: 0.016957857, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 128800408678168527}
   m_Father: {fileID: 128800408678168067}
@@ -2026,14 +2092,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128800408677673593}
-  m_LocalRotation: {x: -0.28104913, y: 0.6669629, z: -0.33959505, w: 0.60070556}
+  m_LocalRotation: {x: -0.25874645, y: 0.7140936, z: -0.3029773, w: 0.5756087}
   m_LocalPosition: {x: 0.0020473462, y: 0.006065872, z: 0.0004680861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 128800408678168157}
   m_Father: {fileID: 128800408678168571}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 6.62318, y: 92.7499, z: -52.01315}
+  m_LocalEulerAnglesHint: {x: 7.7490005, y: 98.927, z: -46.465004}
 --- !u!1 &128800408677673595
 GameObject:
   m_ObjectHideFlags: 0
@@ -2488,14 +2554,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128800408677673879}
-  m_LocalRotation: {x: 0.4758643, y: 0.52302325, z: 0.4749123, w: 0.5238876}
+  m_LocalRotation: {x: -0.7321469, y: 0.5021604, z: 0.368721, w: -0.2753918}
   m_LocalPosition: {x: -0.00000659097, y: 0.01992897, z: 0.00008350758}
   m_LocalScale: {x: 0.99999994, y: 0.9999999, z: 0.99999994}
   m_Children:
   - {fileID: 128800408678168569}
   m_Father: {fileID: 128800408678168537}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0.10419792, y: 90.00001, z: 84.48981}
+  m_LocalEulerAnglesHint: {x: 1.8880001, y: 234.78, z: -110.131004}
 --- !u!1 &128800408677673881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2991,7 +3057,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 128800408677673911}
   m_LocalRotation: {x: -0.39350304, y: 0.9075537, z: -0.13437285, w: 0.058700204}
-  m_LocalPosition: {x: 0.053053163, y: 0.00042244233, z: -0.011679791}
+  m_LocalPosition: {x: 0.0531, y: 0.0046, z: -0.0117}
   m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
   m_Children:
   - {fileID: 128800408678168473}

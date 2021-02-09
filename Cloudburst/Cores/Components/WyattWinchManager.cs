@@ -74,11 +74,13 @@ namespace Cloudburst.Cores.Components
         private ProjectileController controller = null;
         private ProjectileOwnerInfo owner = default;
 
-        public void Awake() {
+        public void Awake()
+        {
             controller = base.GetComponent<ProjectileController>();
         }
 
-        public void Start() {
+        public void Start()
+        {
             owner = new ProjectileOwnerInfo(controller.owner, "Weapon");
             AssignHookReferenceToBodyStateMachine();
             maidManager = owner.gameObject.GetComponent<MAIDManager>();
@@ -95,12 +97,12 @@ namespace Cloudburst.Cores.Components
             }
         }
 
-            public void OnHit()
+        public void OnHit()
         {
 
             //LogCore.LogI("hi!!!");
             //goodbye, world
-                Destroy(gameObject);
-        }   
+            Destroy(gameObject);
+        }
     }
 }

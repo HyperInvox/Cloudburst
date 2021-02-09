@@ -263,6 +263,7 @@ namespace Cloudburst.Cores
             //MonoBehaviour.Destroy(orbitalOrb.GetComponent<BoxCollider>());
 
             //var collider = orbitalOrb.AddComponent<SphereCollider>();
+            orbitalOrb.AddComponent<VoidProjectile>();
             orbitalOrb.GetComponent<BoxCollider>().isTrigger = false;
             var orb = orbitalOrb.AddComponent<ProjectileProximityBeamController>();
             var explosion = orbitalOrb.AddComponent<ProjectileImpactExplosion>();
@@ -286,7 +287,7 @@ namespace Cloudburst.Cores
             explosion.destroyOnWorld = true;
             explosion.timerAfterImpact = false;
             explosion.falloffModel = BlastAttack.FalloffModel.None;
-            explosion.lifetime = 15;
+            explosion.lifetime = 14;
             explosion.lifetimeAfterImpact = 0;
             explosion.lifetimeRandomOffset = 0;
             explosion.blastRadius = 15;
@@ -362,12 +363,12 @@ namespace Cloudburst.Cores
             //collider.radius = 0.2f;
 
             orb.attackFireCount = 1;
-            orb.attackInterval = 2;
+            orb.attackInterval = 1;
             orb.listClearInterval = 0.1f;
             orb.attackRange = 50;
             orb.minAngleFilter = 0;
             orb.maxAngleFilter = 180;
-            orb.procCoefficient = 0f;
+            orb.procCoefficient = 0.3f;
             orb.damageCoefficient = 1;
             orb.bounces = 0;
             orb.inheritDamageType = false;
@@ -386,6 +387,7 @@ namespace Cloudburst.Cores
                 var impact = bombardierBombProjectile.GetComponent<ProjectileImpactExplosion>();
                 impact.blastProcCoefficient = 0.3f;
                 impact.blastDamageCoefficient = 1.1f;
+                bombardierBombProjectile.AddComponent<WyattSoap>();
                 //Object.Destroy(impact);
 
                 //bombardierBombProjectile.AddComponent<Components.HookProjectileImpact>();

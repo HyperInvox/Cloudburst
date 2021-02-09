@@ -2,6 +2,7 @@
 using R2API;
 using RoR2;
 using RoR2.CharacterAI;
+using RoR2.Navigation;
 using RoR2.Projectile;
 using RoR2.Skills;
 using System;
@@ -24,7 +25,7 @@ namespace Cloudburst.Cores
         /// <summary>
         /// https://cdn.discordapp.com/attachments/739717122229403740/804910319029321728/IMG_20210129_112137.jpg
         /// </summary>
-        internal class VoidGolems : EnemyCreator {
+        internal class VoidGolems : EnemyBuilder {
 
             protected override string resourceMasterPath => "prefabs/charactermasters/LunarGolemMaster";
 
@@ -33,6 +34,16 @@ namespace Cloudburst.Cores
             protected override string bodyName => "VoidGolem";
 
             protected override bool registerNetwork => true;
+
+            public override int DirectorCost => 350;
+
+            public override bool NoElites => false;
+
+            public override bool ForbiddenAsBoss => false;
+
+            public override HullClassification HullClassification => HullClassification.Golem;
+
+            public override MapNodeGroup.GraphType GraphType => MapNodeGroup.GraphType.Ground;
 
             public override void Create()
             {
@@ -233,13 +244,14 @@ namespace Cloudburst.Cores
             {
                 BullseyeSearch bullseyeSearch = new BullseyeSearch();
                 bullseyeSearch.searchOrigin = self.transform.position;
-                bullseyeSearch.searchDirection = Vector3.forward;
-                bullseyeSearch.maxDistanceFilter = 2000;
-                bullseyeSearch.teamMaskFilter = TeamMask.allButNeutral;
-                bullseyeSearch.teamMaskFilter.RemoveTeam(TeamComponent.GetObjectTeam(self.gameObject));
+                bullseyeSearch.maxDistanceFilter = 500;
+                bullseyeSearch.teamMaskFilter = TeamMask.AllExcept(self.GetTeam());
                 bullseyeSearch.sortMode = BullseyeSearch.SortMode.Distance;
+                bullseyeSearch.filterByLoS = true;
+                bullseyeSearch.searchDirection = Vector3.up;
                 bullseyeSearch.RefreshCandidates();
-                HurtBox target = bullseyeSearch.GetResults().FirstOrDefault();
+                bullseyeSearch.FilterOutGameObject(self.gameObject);
+                var target = bullseyeSearch.GetResults().FirstOrDefault<HurtBox>();
 
                 self.characterMotor.Motor.SetPositionAndRotation(target.transform.position, Quaternion.identity, true);
             }
@@ -252,8 +264,9 @@ namespace Cloudburst.Cores
 
         public void VoidGlass() {
             var mdl = Resources.Load<GameObject>("prefabs/characterbodies/BrotherGlassBody").GetComponent<CharacterBody>();
-            Add("GLASS_BODY_NAME", "Shattered Clone");
+            Add("GLASS_BODY_NAME", "Shattering Clone");
             mdl.baseNameToken = "GLASS_BODY_NAME";
+            mdl.gameObject.AddComponent<Glass>();
 
         }
 
@@ -285,6 +298,7 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("BROTHER_SPAWN_PHASE1_2", "Beg.");
             LanguageAPI.Add("BROTHER_SPAWN_PHASE1_3", "Die.");
             LanguageAPI.Add("BROTHER_SPAWN_PHASE1_4", "Be slaughtered.");
+            Language.CCLanguageReload(new ConCommandArgs());
 
             LanguageAPI.Add("BROTHER_KILL_1", "Return to dirt.");
             LanguageAPI.Add("BROTHER_KILL_2", "Submit, vermin.");
@@ -292,6 +306,7 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("BROTHER_KILL_4", "Die, weakling.");
             LanguageAPI.Add("BROTHER_KILL_5", "Become memories.");
 
+            Language.CCLanguageReload(new ConCommandArgs());
 
 
             LanguageAPI.Add("BROTHER_DAMAGEDEALT_1", "Bleed.");
@@ -304,12 +319,14 @@ namespace Cloudburst.Cores
             LanguageAPI.Add("BROTHER_DAMAGEDEALT_8", "Break beneath me.");
             LanguageAPI.Add("BROTHER_DAMAGEDEALT_9", "Slow.");
             LanguageAPI.Add("BROTHER_DAMAGEDEALT_10", "Your body will shatter.");
+            Language.CCLanguageReload(new ConCommandArgs());
 
             LanguageAPI.Add("BROTHER_KILL_1", "Return to dirt.");
             LanguageAPI.Add("BROTHER_KILL_2", "Submit, vermin.");
             LanguageAPI.Add("BROTHER_KILL_3", "Die, vermin.");
             LanguageAPI.Add("BROTHER_KILL_4", "Die, weakling.");
             LanguageAPI.Add("BROTHER_KILL_5", "Become memories.");
+            Language.CCLanguageReload(new ConCommandArgs());
 
             LanguageAPI.Add("BROTHER_DEATH_1", "NO... NOT NOW...");
             LanguageAPI.Add("BROTHER_DEATH_2", "WHY... WHY NOW...?");
@@ -404,6 +421,7 @@ namespace Cloudburst.Cores
             voidMat = obj.GetComponent<Renderer>().material;
 
             PrefabAPI.RegisterNetworkPrefab(obj);
+            CloudUtils.RegisterNewBody(obj);
 
             infectionTrigger = obj;
         }
@@ -495,6 +513,7 @@ namespace Cloudburst.Cores
             voidMat = obj.GetComponent<Renderer>().material;
 
             PrefabAPI.RegisterNetworkPrefab(obj);
+            CloudUtils.RegisterNewBody(obj);
 
             infectionTrigger = obj;
         }
@@ -657,7 +676,6 @@ namespace Cloudburst.Cores
 
         private void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
-            orig(self);
             if (self)
             {
                 SpawnInfectionBazaar();
@@ -669,6 +687,7 @@ namespace Cloudburst.Cores
                     PassivelyTriggerVoidEffect();
                 }
             }
+            orig(self);
         }
 
         private void PassivelyTriggerVoidEffect() {
@@ -676,6 +695,7 @@ namespace Cloudburst.Cores
             PostProcessProfile profile = (from p in source
                                           where p.name == "ppSceneArenaSick"//"ppLocalUnderwater"
                                           select p).FirstOrDefault<PostProcessProfile>();
+            CloudUtils.PostProcessingOverlay(profile);
             if (SceneCatalog.mostRecentSceneDef == SceneCatalog.GetSceneDefFromSceneName("moon"))
             {
                 CloudUtils.PostProcessingOverlay(profile);
@@ -739,13 +759,23 @@ namespace Cloudburst.Cores
 
             private void SpawnInfectionBazaar()
         {
-            if (SceneCatalog.mostRecentSceneDef == SceneCatalog.GetSceneDefFromSceneName("bazaar") && NetworkServer.active && !triggeredTrueInfection && spawnInfection)
+            if (SceneCatalog.mostRecentSceneDef == SceneCatalog.GetSceneDefFromSceneName("bazaar"))
             {
-                var o2bj = GameObject.Find("LunarTable");
-                GameObject obj = GameObject.Instantiate<GameObject>(infectionTrigger, o2bj.transform.position, Quaternion.identity);
-                obj.transform.localScale = new Vector3(20, 20, 20);
-                InfestationTrigger.OnKilled += InfestationTrigger_OnKilled;
-                NetworkServer.Spawn(obj);
+                LogCore.LogI("Is bazaar");
+                if (NetworkServer.active)
+                {
+                    LogCore.LogI("Server active");
+
+                    if (!triggeredTrueInfection && spawnInfection)
+                    {
+                        LogCore.LogI("Can spawn");
+                        var o2bj = GameObject.Find("LunarTable");
+                        GameObject obj = GameObject.Instantiate<GameObject>(infectionTrigger, o2bj.transform.position, Quaternion.identity);
+                        obj.transform.localScale = new Vector3(20, 20, 20);
+                        InfestationTrigger.OnKilled += InfestationTrigger_OnKilled;
+                        NetworkServer.Spawn(obj);
+                    }
+                }
             }
         }
 
@@ -848,6 +878,7 @@ namespace Cloudburst.Cores
         private void ArenaMissionController_onBeatArena()
         {
             spawnInfection = true;
+            LogCore.LogI("triggered arena");
             Chat.SendBroadcastChat(new Chat.SimpleChatMessage()
             {
                 baseToken = "TRIGGER_INFECTION",

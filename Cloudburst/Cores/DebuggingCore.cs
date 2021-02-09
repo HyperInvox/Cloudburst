@@ -25,7 +25,7 @@
 
             //On.EntityStates.Toolbot.AimGrenade.OnEnter += AimGrenade_OnEnter;
             //On.EntityStates.Commando.CommandoWeapon.FireRocket.OnEnter += FireRocket_OnEnter;
-            //On.RoR2.GenericSkill.ExecuteIfReady += GenericSkill_ExecuteIfReady;
+            On.RoR2.GenericSkill.ExecuteIfReady += GenericSkill_ExecuteIfReady;
             Unlockall();
         }
 
@@ -38,7 +38,7 @@
 
         private bool GenericSkill_ExecuteIfReady(On.RoR2.GenericSkill.orig_ExecuteIfReady orig, RoR2.GenericSkill self)
         {
-            //LogCore.LogI(self.activationState.stateType.FullName);
+            LogCore.LogI(self.activationState.stateType.FullName);
             return orig(self);
         }
 

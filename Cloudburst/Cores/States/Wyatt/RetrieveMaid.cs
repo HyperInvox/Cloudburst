@@ -17,7 +17,7 @@ namespace Cloudburst.Cores.States.Wyatt
             if (base.isAuthority)
             {
                 gameObject.GetComponent<MAIDManager>().RetrieveMAIDAuthority();
-                skillLocator.special.SetSkillOverride(this, WyattCore.instance.throwPrimary, GenericSkill.SkillOverridePriority.Contextual);
+                skillLocator.special.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Contextual);
                 //skillLocator.special.SetPropertyValue("cooldownRemaining", (Single)3);
                 //skillLocator.special.cooldownRemaining
                 outer.SetNextStateToMain();

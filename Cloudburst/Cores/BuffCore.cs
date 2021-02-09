@@ -1,4 +1,6 @@
 ﻿using Cloudburst.Cores.HAND.Components;
+using Cloudburst.Cores.Items.Green;
+using Cloudburst.Cores.Items.White;
 using R2API;
 using R2API.Utils;
 using RoR2;
@@ -20,6 +22,13 @@ namespace Cloudburst.Cores
         protected internal BuffIndex japesCloak;
         protected internal BuffIndex engageLunarShell;
         protected internal BuffIndex REDACTED;
+
+        protected internal BuffIndex magicArmor;
+        protected internal BuffIndex magicRegen;
+        protected internal BuffIndex magicAttackSpeed;
+
+
+        protected internal BuffIndex glassMithrix;
         internal bool Loaded { get; private set; } = false;
         public BuffCore() => RegisterBuffs();
 
@@ -143,12 +152,49 @@ namespace Cloudburst.Cores
             RegisterBuff(new BuffDef()
             {
                 buffIndex = BuffIndex.Count,
+                canStack = false,
+                isDebuff = true,
+                eliteIndex = EliteIndex.None,
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/Redacted.png",
+                name = "REDACTED",
+                buffColor = new Color32(219, 224, 198, byte.MaxValue)
+            }); RegisterBuff(new BuffDef()
+            {
+                buffIndex = BuffIndex.Count,
                 canStack = true,
                 isDebuff = false,
                 eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texBuffBodyArmorIcon",
-                name = "REDACTED",
-                buffColor = new Color32(219, 224, 198, byte.MaxValue)
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/GlassShatter.png",
+                name = "UnbrokenGlass",
+                buffColor = CloudUtils.HexToColor("#50b8e7"),
+            });
+            RegisterBuff(new BuffDef()
+            {
+                buffIndex = BuffIndex.Count,
+                canStack = false,
+                isDebuff = false,
+                eliteIndex = EliteIndex.None,
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/BaseMagicIcon.png",
+                name = "MagicianBuffRegen",
+                buffColor = CloudUtils.HexToColor("#3CB043"),
+            }); RegisterBuff(new BuffDef()
+            {
+                buffIndex = BuffIndex.Count,
+                canStack = false,
+                isDebuff = false,
+                eliteIndex = EliteIndex.None,
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/BaseMagicIcon.png",
+                name = "MagicianBuffAttackspeed",
+                buffColor = CloudUtils.HexToColor("#FFA500"),
+            }); RegisterBuff(new BuffDef()
+            {
+                buffIndex = BuffIndex.Count,
+                canStack = false,
+                isDebuff = false,
+                eliteIndex = EliteIndex.None,
+                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/BaseMagicIcon.png",
+                name = "MagicianBuffArmor",
+                buffColor = CloudUtils.HexToColor("#4D516D"),
             });
 
 
@@ -353,24 +399,58 @@ namespace Cloudburst.Cores
 
                 var inv = self.inventory;
 
+                if (inv) {
+                    if (MagiciansEarrings.Enabled) {
+                        int magicCount = inv.GetItemCount(MagiciansEarrings.instance.Index);
+                        if (self && self.HasBuff(magicArmor))
+                        {
+                            self.armor += (8f * magicCount);
+                        }
+                        if (self && self.HasBuff(magicAttackSpeed))
+                        {
+                            self.attackSpeed += (0.1f * magicCount);
+                        }
+                        if (self && self.HasBuff(magicRegen))
+                        {
+                            self.regen += (0.2f * magicCount);
+                        }
+                    }
+                    if (LuckyRabbitFoot.Enabled)
+                    {
+                        if (inv.GetItemCount(LuckyRabbitFoot.instance.Index) > 0)
+                        {
+                            self.crit += 5;
+                        }
+                    }
+                    if (BrokenBodyArmor.Enabled) {
+                        if (self && self.HasBuff(charmIndex))
+                        {
+                            var vount = 0;
+                            if (self.inventory)
+                            {
+                                vount = inv.GetItemCount(BrokenBodyArmor.instance.Index);
+                                self.armor = armor + (vount * 10);
+                            }
+                        }
+                    }
+                }
+                if (self && self.HasBuff(REDACTED)) {
+                    self.moveSpeed -= (moveSpeed / 2);
+                    self.attackSpeed -= (attackSpeed / 2);
+                }
 
-                if (self.HasBuff(BuffIndex.LunarShell)) {
+
+                if (self && self.HasBuff(BuffIndex.LunarShell)) {
                     self.attackSpeed += 3;
-                    self.armor += 25;
+                    self.armor += 50;
                     self.moveSpeed -= 1;
                     self.regen += 3;
                     self.damage += 2;
                 }
 
-                if (self.HasBuff(charmIndex)){
-                    var vount = 0;
-                    if (self.inventory) {
-                        vount = self.inventory.GetItemCount(ItemCore.instance.armorOnCd);
-                        self.armor = armor + (vount * 10);
-                    }
-                }
 
-                if (self.HasBuff(japesCloak)) {
+
+                if (self && self.HasBuff(japesCloak)) {
                     var buffCount = self.GetBuffCount(japesCloak);
                     for (int i = 0; i < buffCount; i++)
                     {
@@ -378,16 +458,7 @@ namespace Cloudburst.Cores
                         self.regen = regen + 0.1f;
                     }
                 }
-
-                if (self.HasBuff(skinIndex)) // && controller)
-                {
-                    var count = 0;
-                    if (inv) {
-                        count = inv.GetItemCount(ItemCore.instance.barrierOnLevelIndex);
-                    }
-                    self.armor = armor + (5f + (count * 5));
-                }
-                if (self.HasBuff(antiGravIndex))
+                if (self && self.HasBuff(antiGravIndex))
                 {
                     if (self.characterMotor)
                     {
@@ -396,17 +467,31 @@ namespace Cloudburst.Cores
                     self.attackSpeed = attackSpeed -= (.5f * attackSpeed);
                     self.moveSpeed = moveSpeed -= (.5f * moveSpeed);
                 }
-                if (self.HasBuff(antiGravFriendlyIndex)) {
+                if (self && self.HasBuff(antiGravFriendlyIndex)) {
                     //LogCore.LogI(self.moveSpeed);
                     self.moveSpeed = moveSpeed += (.5f * moveSpeed);// self.acceleration += 1;
                     //LogCore.LogI(self.moveSpeed);
                 }
-                if (self.HasBuff(wyattCombatIndex)) {
+                if (self && self.HasBuff(wyattCombatIndex))
+                {
                     var buffCount = self.GetBuffCount(wyattCombatIndex);
                     for (int i = 0; i < buffCount; i++)
                     {
                         self.moveSpeed = moveSpeed * (1f + (buffCount * 0.17f));
                         self.regen = regen * (1f + (buffCount * 0.17f));
+                    }
+                }
+                if (self && self.HasBuff(glassMithrix))
+                {
+                    var buffCount = self.GetBuffCount(glassMithrix);
+                    self.skillLocator.secondary.flatCooldownReduction = 3;
+                    self.skillLocator.utility.flatCooldownReduction = 2;
+                    self.skillLocator.secondary.SetBonusStockFromBody(1 * buffCount);
+                    self.skillLocator.utility.SetBonusStockFromBody(1 * buffCount);
+                    for (int i = 0; i < buffCount; i++)
+                    {
+                        self.moveSpeed = moveSpeed += (0.1f * moveSpeed);
+                        self.armor = armor += 5 ;   
                     }
                 }
             }
@@ -437,6 +522,21 @@ namespace Cloudburst.Cores
                     break;
                 case "EngageLunarShell":
                     engageLunarShell = BuffAPI.Add(customBuff);
+                    break;
+                case "REDACTED":
+                    REDACTED = BuffAPI.Add(customBuff);
+                    break;
+                case "UnbrokenGlass":
+                    glassMithrix = BuffAPI.Add(customBuff);
+                    break;
+                case "MagicianBuffRegen":
+                    magicRegen = BuffAPI.Add(customBuff);
+                    break;
+                case "MagicianBuffAttackspeed":
+                    magicAttackSpeed = BuffAPI.Add(customBuff);
+                    break;
+                case "MagicianBuffArmor":
+                    magicArmor = BuffAPI.Add(customBuff);
                     break;
                 //throw new System.NotImplementedException("not implemented yet!");
                 default:

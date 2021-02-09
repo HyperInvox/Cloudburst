@@ -16,7 +16,7 @@ namespace Cloudburst.Cores.States.Wyatt
             if (base.isAuthority)
             {
                 FireProjectile();
-                skillLocator.special.SetSkillOverride(this, WyattCore.instance.retrievePrimary, GenericSkill.SkillOverridePriority.Contextual);
+                skillLocator.special.SetSkillOverride(this, Custodian.retrievePrimary, GenericSkill.SkillOverridePriority.Contextual);
                 outer.SetNextStateToMain();
             }
         }

@@ -279,7 +279,8 @@ She'll love this, I know.
                 {
                     var broom = arg2.Find("Brom");
                     var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
-                    arg1.Add(new CharacterModel.RendererInfo {
+                    arg1.Add(new CharacterModel.RendererInfo
+                    {
                         defaultMaterial = mat.material,
                         defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                         ignoreOverlays = false,
@@ -716,77 +717,7 @@ She'll love this, I know.
 
         private void CreateUtility()
         {
-            LoadoutAPI.AddSkill(typeof(Winch));
-            LoadoutAPI.AddSkill(typeof(FireWinch));
-            LoadoutAPI.AddSkill(typeof(DeepClean));
-            LoadoutAPI.AddSkill(typeof(DeeperClean));
-            LoadoutAPI.AddSkill(typeof(SS2Dies));
 
-            SkillDef utilitySkillDef = ScriptableObject.CreateInstance<IsNotroundedSkillDef>();
-            utilitySkillDef.activationState = new SerializableEntityStateType(typeof(GrandSlam));
-            utilitySkillDef.activationStateMachineName = "Weapon";
-            utilitySkillDef.baseMaxStock = 1;
-            utilitySkillDef.baseRechargeInterval = 5f;
-            utilitySkillDef.beginSkillCooldownOnSkillEnd = true;
-            utilitySkillDef.canceledFromSprinting = false;
-            utilitySkillDef.fullRestockOnAssign = false;
-            utilitySkillDef.interruptPriority = InterruptPriority.Skill;
-            utilitySkillDef.isBullets = false;
-            utilitySkillDef.isCombatSkill = true;
-            utilitySkillDef.mustKeyPress = false;
-            utilitySkillDef.noSprint = false;
-            utilitySkillDef.rechargeStock = 1;
-            utilitySkillDef.requiredStock = 1;
-            utilitySkillDef.shootDelay = 0.08f;
-            utilitySkillDef.stockToConsume = 1;
-            utilitySkillDef.skillDescriptionToken = "WYATT_UTILITY_DESCRIPTION";
-            utilitySkillDef.skillName = "aaa";
-            utilitySkillDef.skillNameToken = "WYATT_UTILITY_NAME";
-            utilitySkillDef.icon = AssetsCore.wyattUtility;
-            utilitySkillDef.keywordTokens = new string[] {
-                 "KEYWORD_RUPTURE",
-             };
-
-            SkillDef utilitySkillDef2 = ScriptableObject.CreateInstance<SkillDef>();
-            utilitySkillDef2.activationState = new SerializableEntityStateType(typeof(FireWinch));
-            utilitySkillDef2.activationStateMachineName = "Weapon";
-            utilitySkillDef2.baseMaxStock = 1;
-            utilitySkillDef2.baseRechargeInterval = 4f;
-            utilitySkillDef2.beginSkillCooldownOnSkillEnd = true;
-            utilitySkillDef2.canceledFromSprinting = false;
-            utilitySkillDef2.fullRestockOnAssign = false;
-            utilitySkillDef2.interruptPriority = InterruptPriority.Skill;
-            utilitySkillDef2.isBullets = false;
-            utilitySkillDef2.isCombatSkill = true;
-            utilitySkillDef2.mustKeyPress = false;
-            utilitySkillDef2.noSprint = false;
-            utilitySkillDef2.rechargeStock = 1;
-            utilitySkillDef2.requiredStock = 1;
-            utilitySkillDef2.shootDelay = 0.08f;
-            utilitySkillDef2.stockToConsume = 1;
-            utilitySkillDef2.skillDescriptionToken = "WYATT_UTILITY2_DESCRIPTION";
-            utilitySkillDef2.skillName = "aaa";
-            utilitySkillDef2.skillNameToken = "WYATT_UTILITY2_NAME";
-            utilitySkillDef2.icon = AssetsCore.wyattUtilityAlt;
-            utilitySkillDef2.keywordTokens = Array.Empty<string>();
-
-            LanguageAPI.Add(utilitySkillDef.skillNameToken, "Rub and Scrub");
-            LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "Dive downwards, <style=cIsDamage>dealing 100% damage</style>. Enemies directly below you are bounced on, <style=cIsUtility>reducing 3 seconds off the next cast</style> and <style=cIsDamage>taking 700% damage that is Sparkling</style>.");
-            LanguageAPI.Add("KEYWORD_RUPTURE", "<style=cKeywordName>Sparkling</style><style=cSub>This damage deals up to <style=cIsDamage>3x</style> damage to low health enemies.</style>");
-
-
-            LanguageAPI.Add(utilitySkillDef2.skillNameToken, "G22 WINCH");
-            LanguageAPI.Add(utilitySkillDef2.skillDescriptionToken, "Fire a winch that deals <style=cIsDamage>500%</style> damage and <style=cIsUtility>pulls you</style> towards the target.");
-
-            LoadoutAPI.AddSkillDef(utilitySkillDef);
-            SkillFamily utilitySkillFamily = skillLocator.utility.skillFamily;
-
-            utilitySkillFamily.variants[0] = new SkillFamily.Variant
-            {
-                skillDef = utilitySkillDef,
-                unlockableName = "",
-                viewableNode = new ViewablesCatalog.Node(utilitySkillDef.skillNameToken, false, null)
-            };
 
             /*SkillFamily.Variant variant = new SkillFamily.Variant();
 
@@ -909,8 +840,15 @@ She'll love this, I know.
 
         private void CreateSurvivorDef()
         {
-            GameObject WYATTDisplay = this.wyattBody.GetComponent<ModelLocator>().modelTransform.gameObject;
-            string desc = "AYO HOL' UP <color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
+            string desc = "The Custodian is a master of janitorial warfare who uses his MAID to control the battle field<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Send enemies upwards with the MAID, and spike them downwads with Trash Out for major damage." + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > The MAID slows projectiles within her radius, use this to your advantage in combat!" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > Direct strikes with Rub and Scrub help you stay in the air longer -- use this to avoid crowds!" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > The key to success is realizing that staying away from the ground helps you stay alive longer." + Environment.NewLine + Environment.NewLine;
+
+
+
+            /*string desc = "AYO HOL' UP <color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > *SMACKS LIPS*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > SO WHAT YOU BE SAYIN' IS" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > *CANCELS MOONFALL*" + Environment.NewLine + Environment.NewLine;
@@ -931,17 +869,17 @@ She'll love this, I know.
             desc = desc + "< ! > FINNA" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > *NAMEDROPS*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > MAKE A MOD? SHIEEEEEEEEETTTTTTTTT" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *DIES*" + Environment.NewLine + Environment.NewLine;
+            desc = desc + "< ! > *DIES*" + Environment.NewLine + Environment.NewLine;*/
 
             LanguageAPI.Add("WYATT_DESCRIPTION", desc);
-            LanguageAPI.Add("WYATT_OUTRO_FLAVOR", "...and so he left, a job well done.");
+            LanguageAPI.Add("WYATT_OUTRO_FLAVOR", "...and so they left, a job well done.");
 
             SurvivorDef def = new SurvivorDef()
             {
                 bodyPrefab = this.wyattBody,
                 descriptionToken = "WYATT_DESCRIPTION",
                 displayNameToken = "WYATT_BODY_NAME",
-                displayPrefab = WYATTDisplay,
+                displayPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattCSS"),
                 name = "AAAAAAAAA",
                 outroFlavorToken = "WYATT_OUTRO_FLAVOR",
                 primaryColor = new Color(0.4862745098f, 0.94901960784f, 0.71764705882f),

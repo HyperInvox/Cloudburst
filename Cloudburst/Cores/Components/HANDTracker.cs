@@ -7,13 +7,14 @@ namespace Cloudburst.Cores.HAND.Components
     [RequireComponent(typeof(CharacterBody))]
     [RequireComponent(typeof(TeamComponent))]
     [RequireComponent(typeof(InputBankTest))]
-    public class HANDDroneTracker : MonoBehaviour {
+    public class HANDDroneTracker : MonoBehaviour
+    {
         public float maxTrackingDistance = 20f;
         public float maxTrackingAngle = 20f;
         public float trackerUpdateFrequency = 10f;
         public GameObject indicatorPrefab;
         private HurtBox trackingTarget;
-        private CharacterBody characterBody;
+        public CharacterBody characterBody;
         private TeamComponent teamComponent;
         private InputBankTest inputBank;
         private float trackerUpdateStopwatch;
@@ -27,7 +28,8 @@ namespace Cloudburst.Cores.HAND.Components
             this.indicator = new Indicator(base.gameObject, GetIndicator()); //Resources.Load<GameObject>("Prefabs/EngiShieldRetractIndicator"));
         }
 
-        public virtual GameObject GetIndicator() {
+        public virtual GameObject GetIndicator()
+        {
             return indicatorPrefab;
         }
 
@@ -61,7 +63,7 @@ namespace Cloudburst.Cores.HAND.Components
             if (this.trackerUpdateStopwatch >= 1f / this.trackerUpdateFrequency)
             {
                 this.trackerUpdateStopwatch -= 1f / this.trackerUpdateFrequency;
-//                HurtBox hurtBox = this.trackingTarget;
+                //                HurtBox hurtBox = this.trackingTarget;
                 Ray aimRay = new Ray(this.inputBank.aimOrigin, this.inputBank.aimDirection);
                 this.SearchForTarget(aimRay);
                 this.indicator.targetTransform = (this.trackingTarget ? this.trackingTarget.transform : null);
@@ -75,11 +77,16 @@ namespace Cloudburst.Cores.HAND.Components
             this.search.searchOrigin = aimRay.origin;
             this.search.searchDirection = aimRay.direction;
             this.search.sortMode = BullseyeSearch.SortMode.Angle;
-            this.search.maxDistanceFilter = this.maxTrackingDistance;
+            this.search.maxDistanceFilter = GetDistance();
             this.search.maxAngleFilter = this.maxTrackingAngle;
             this.search.RefreshCandidates();
             this.search.FilterOutGameObject(base.gameObject);
             this.trackingTarget = this.search.GetResults().FirstOrDefault<HurtBox>();
+        }
+
+        public virtual float GetDistance()
+        {
+            return maxTrackingDistance;
         }
 
     }

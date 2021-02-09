@@ -3,14 +3,12 @@ using UnityEngine;
 
 namespace Cloudburst.Cores.Components
 {
-    public class BombardierTracker : HANDDroneTracker
+    public class WyattTracker : HANDDroneTracker
     {
         //GameObject indicator = Resources.Load<GameObject>("prefabs/EngiShieldRetractIndicator");
-        public override GameObject GetIndicator()
+        public override float GetDistance()
         {
-
-            return Resources.Load<GameObject>("Prefabs/EngiShieldRetractIndicator");
-
+            return maxTrackingDistance + (characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) * 10);
         }
     }
 }

@@ -7,6 +7,7 @@ using R2API.Utils;
 using RoR2;
 using RoR2.UI;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -68,6 +69,32 @@ namespace Cloudburst
         /// </summary>
         public static event Action onFixedUpdate;
 
+        public ConfigFile GetConfig()
+        {
+            return Config;
+        }
+        public bool ValidateItem(ItemBuilder item, List<ItemBuilder> itemList)
+        {
+            var enabled = Config.Bind<bool>("Item: " + item.ItemName, "Enable Item?", true, "Should this item appear in runs?").Value;
+            var aiBlacklist = Config.Bind<bool>("Item: " + item.ItemName, "Blacklist Item from AI Use?", false, "Should the AI not be able to obtain this item?").Value;
+            if (enabled)
+            {
+                itemList.Add(item);
+                if (aiBlacklist)
+                {
+                    item.AIBlacklisted = true;
+                }
+            }
+            return enabled;
+        }
+
+        public ConfigFile configFile
+        {
+            get {
+                return this.Config;
+            }
+            private set { }
+        }
 
         #region Cores
         //Support cores; Cannot be disabled.
@@ -132,6 +159,8 @@ namespace Cloudburst
             LogCore.logger = Logger;
             BepInEx.Logging.Logger.Listeners.Add(new ErrorListener());
 
+            SingletonHelper.Assign<CloudburstPlugin>(ref CloudburstPlugin.instance, this);
+            LogCore.LogI("Cloudburst instance assigned.");
             //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
 
             //important!!
@@ -169,7 +198,7 @@ namespace Cloudburst
             EnableRex = Config.Bind("Cloudburst :: REX", "Enabled", true, "Enables Cloudburst's modifications to REX. Set to false to disable Cloudburst's modifications to REX.");
             EnableCommando = Config.Bind("Cloudburst :: Commando", "Enabled", true, "Enables Cloudburst's modifications to Commando. Set to false to disable Cloudburst's modifications to Commando.");
             EnableEngineer = Config.Bind("Cloudburst :: Engineer", "Enabled", true, "Enables Cloudburst's modifications to Engineer. Set to false to disable Cloudburst's modifications to Engineer.");
-            EnableItems = Config.Bind("Cloudburst :: Items", "Enabled", true, "Enables Cloudburst's items. Set to false to disable Cloudburst's items.");
+            EnableItems = Config.Bind("Cloudburst :: Items", "Enabled", true, "Enables Cloudburst's items. Set to false to disable  's items.");
             EnableEquipment = Config.Bind("Cloudburst :: Equipment", "Enabled", false, "Enables Cloudburst's equipment. Set to false to disable Cloudburst's equipment.");
             EnableWIP = Config.Bind("Cloudburst :: WIP", "Enabled", false, "[WARNING]: CONTENT ADDED BY THIS MODULE MAY NOT BE STABLE. ENABLE AT YOUR OWN RISK! Enables Cloudburst's WIP (work in progress) content. Set to false to disable Cloudburst's WIP content.");
             EnableUnlockAll = Config.Bind("Cloudburst :: Achievements", "Enabled", false, "Enables Cloudburst's unlocks for unlockable content. Set to false to unlock all of Cloudburst's unlockable content.");
@@ -185,6 +214,7 @@ namespace Cloudburst
                 //so i can't do that
                 //plus most cores rely on these
                 assetCore = new AssetsCore();
+                GlobalHooks.Init();
                 CommonAssets.Load();
 
                 var materials = AssetsCore.mainAssetBundle.LoadAllAssets<Material>();
@@ -242,7 +272,8 @@ namespace Cloudburst
                 }
                 if (EnableWyatt.Value)
                 {
-                    wyattCore = new WyattCore();
+                    new Custodian().Init(Config);
+                    //wyattCore = new WyattCore();
                 }
                 if (EnableRex.Value)
                 {
@@ -340,18 +371,6 @@ namespace Cloudburst
         public void Start()
         {
             Action awake = CloudburstPlugin.start;
-            if (awake == null)
-            {
-                return;
-            }
-            awake();
-        }
-
-        public void OnEnable()
-        {
-            SingletonHelper.Assign<CloudburstPlugin>(CloudburstPlugin.instance, this);
-            LogCore.LogI("Cloudburst instance assigned.");
-            Action awake = CloudburstPlugin.onEnable;
             if (awake == null)
             {
                 return;

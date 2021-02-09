@@ -10,6 +10,7 @@ using MonoMod.Cil;
 using R2API;
 using R2API.Utils;
 using RoR2;
+using RoR2.Navigation;
 using RoR2.Projectile;
 using RoR2.Skills;
 using UnityEngine;
@@ -33,7 +34,7 @@ namespace Cloudburst.Cores
         protected GameObject engineerObject;
 
         private FlameTurrets turrets;
-        public class FlameTurrets : EnemyCreator
+        public class FlameTurrets : EnemyBuilder
         {
             protected override string resourceMasterPath => "prefabs/charactermasters/EngiWalkerTurretMaster";
 
@@ -42,6 +43,16 @@ namespace Cloudburst.Cores
             protected override string bodyName => "EngiFlameTurret";
 
             protected override bool registerNetwork => true;
+
+            public override int DirectorCost => 7595;
+
+            public override bool NoElites => true;
+
+            public override bool ForbiddenAsBoss => true;
+
+            public override HullClassification HullClassification => HullClassification.Human;
+
+            public override MapNodeGroup.GraphType GraphType => MapNodeGroup.GraphType.Ground;
 
             public override void OverrideCharacterbody(CharacterBody body)
             {
@@ -314,10 +325,12 @@ namespace Cloudburst.Cores
             LoadoutAPI.AddSkillDef(newDef);
 
             LanguageAPI.Add("ENGINEER_PRIMARY_ALT_NAME", "Impact Grenades");
+            LanguageAPI.Add("ENGINEER_PRIMARY_ALT_DESCRIPTION", "Shoot 3 impact grenades from each cannon that deal <style=cIsDamage>100%</style>");
 
             newDef.activationState = new SerializableEntityStateType(typeof(FireVolley));
             newDef.skillName = "GrenadeVolley";
             newDef.skillNameToken = "ENGINEER_PRIMARY_ALT_NAME";
+            newDef.skillDescriptionToken = "ENGINEER_PRIMARY_ALT_DESCRIPTION";
             //newDef.beginSkillCooldownOnSkillEnd = true;
             //newDef.baseRechargeInterval = .1f;
             newDef.icon = AssetsCore.engiImpact;

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using R2API;
 using RoR2;
+using TMPro;
+using RoR2.UI;
 
 namespace Cloudburst.Cores
 {
@@ -14,6 +16,10 @@ namespace Cloudburst.Cores
         public static GameObject coinImpactEffect;
         public static GameObject wyattSwingTrail;
         public static GameObject wyatt2SwingTrail;
+
+        public static GameObject magicArmor;
+        public static GameObject magicRegen;
+        public static GameObject magicAttackSpeed;
 
         public EffectCore() => Effects();
 
@@ -36,6 +42,7 @@ namespace Cloudburst.Cores
             MakeHANDOrbEffect();
             CreateCoinImpactEffect();
             CreateOrbitalImpact();
+            CreateMagicEffects();
             CreateUnknownEliteEffect();
         }
 
@@ -64,6 +71,76 @@ namespace Cloudburst.Cores
             //flames.transform.SetParent(fire.transform);
             flames.transform.SetParent(unknownEffect.transform);
 
+        }
+
+        private void CreateMagicEffects()
+        {
+            Armor();
+            Regen();
+            AttackSpeed();
+            void Armor() {
+                magicArmor = Resources.Load<GameObject>("Prefabs/Effects/BearProc").InstantiateClone("MagicEffectArmor", false);
+                var tmp = magicArmor.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<TextMeshPro>();
+                var langMeshController = magicArmor.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<LanguageTextMeshController>();
+
+                magicArmor.transform.Find("Fluff").gameObject.SetActive(false);
+
+                LanguageAPI.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
+
+                tmp.text = "+Armor!";
+                langMeshController.token = "MAGIC_ARMOR_EFFECT";
+
+                EffectAPI.AddEffect(new EffectDef()
+                {
+
+                    prefab = magicArmor,
+                    prefabEffectComponent = magicArmor.GetComponent<EffectComponent>(),
+                    prefabVfxAttributes = magicArmor.GetComponent<VFXAttributes>(),
+                    prefabName = magicArmor.name,
+                });
+            }
+            void Regen() {
+                magicRegen = Resources.Load<GameObject>("Prefabs/Effects/BearProc").InstantiateClone("MagicEffectRegen", false);
+                var tmp = magicRegen.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<TextMeshPro>();
+                var langMeshController = magicRegen.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<LanguageTextMeshController>();
+
+                magicRegen.transform.Find("Fluff").gameObject.SetActive(false);
+
+                LanguageAPI.Add("MAGIC_REGEN_EFFECT", "+Regeneration!");
+
+                tmp.text = "+Regeneration!";
+                langMeshController.token = "MAGIC_REGEN_EFFECT";
+
+                EffectAPI.AddEffect(new EffectDef()
+                {
+
+                    prefab = magicRegen,
+                    prefabEffectComponent = magicRegen.GetComponent<EffectComponent>(),
+                    prefabVfxAttributes = magicRegen.GetComponent<VFXAttributes>(),
+                    prefabName = magicRegen.name,
+                });
+            }
+            void AttackSpeed() {
+                magicAttackSpeed = Resources.Load<GameObject>("Prefabs/Effects/BearProc").InstantiateClone("MagicEffectAttackSpeed", false);
+                var tmp = magicAttackSpeed.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<TextMeshPro>();
+                var langMeshController = magicAttackSpeed.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<LanguageTextMeshController>();
+
+                magicAttackSpeed.transform.Find("Fluff").gameObject.SetActive(false);
+
+                LanguageAPI.Add("MAGIC_ATKSPEED_EFFECT", "+Attack Speed!");
+
+                tmp.text = "+Attack Speed!";
+                langMeshController.token = "MAGIC_ATKSPEED_EFFECT";
+
+                EffectAPI.AddEffect(new EffectDef()
+                {
+
+                    prefab = magicAttackSpeed,
+                    prefabEffectComponent = magicAttackSpeed.GetComponent<EffectComponent>(),
+                    prefabVfxAttributes = magicAttackSpeed.GetComponent<VFXAttributes>(),
+                    prefabName = magicAttackSpeed.name,
+                });
+            }
         }
 
         private void CreateCoinImpactEffect() {

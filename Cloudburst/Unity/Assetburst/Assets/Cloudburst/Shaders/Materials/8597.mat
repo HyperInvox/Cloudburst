@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 8597
-  m_Shader: {fileID: 4800000, guid: 40ffd5f56b51712488c311df2954e43b, type: 3}
+  m_Shader: {fileID: 4800000, guid: e54bfb10479231044b2b15865d889129, type: 3}
   m_ShaderKeywords: FADE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -72,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Ramp:
-        m_Texture: {fileID: 2800000, guid: 00201e7f3ab547d47958639d8b4d73cd, type: 3}
+        m_Texture: {fileID: 2800000, guid: e16c7078aee9c31478e4f4fec32ca74e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -89,11 +89,13 @@ Material:
     - _Edge: 0.1
     - _EmisIntensity: 3
     - _FADE: 1
+    - _GlitchTime: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _GlowBrightness: 3
     - _HARD: 0
+    - _HighlightOffset: 0.9
     - _INVERT: 0
     - _Metallic: 0
     - _Mode: 0
@@ -120,12 +122,16 @@ Material:
     - _SrcBlend: 1
     - _SrcFactor: 1
     - _UVSec: 0
+    - _WorldScale: 20
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color2: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _ColorR: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _HiColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimColor: {r: 0, g: 0.8, b: 0.8, a: 0}
+    - _RimColor: {r: 1, g: 0.03836772, b: 0, a: 0}
     - _RimColorMask: {r: 0, g: 0.19, b: 0.16, a: 0}
+    - _SpecuColor: {r: 1, g: 0.09474821, b: 0, a: 1}
+    - _TintColor: {r: 0, g: 0.5, b: 1, a: 1}

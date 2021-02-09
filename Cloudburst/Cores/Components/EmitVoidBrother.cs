@@ -18,10 +18,11 @@ namespace Cloudburst.Cores.Components
         private float stopwatch;
         private float stopwatch2;
 
-        bool phase4 = false;
+        bool phase4 = false; bool phase3 = false;
         bool spawned = false;
 
         private float limit = 3;
+        private float summonLimit = 60;
 
         public void Awake()
         {
@@ -36,14 +37,15 @@ namespace Cloudburst.Cores.Components
                 switch (PhaseCounter.instance.phase)
                 {
                     case 1:
-                        limit = 12;
+                        limit = 14;
                         break;
                     case 3:
-                        limit = 9;
+                        limit = 13;
+                        summonLimit = 50;
+                        phase3 = true;
                         break;
                     case 4:
-
-                            limit = 6;
+                            limit = 12;
                             phase4 = true;
 
                         break;
@@ -76,7 +78,7 @@ namespace Cloudburst.Cores.Components
             DirectorSpawnRequest directorSpawnRequest2 = directorSpawnRequest;
             directorSpawnRequest2.onSpawnedServer = (Action<SpawnCard.SpawnResult>)Delegate.Combine(directorSpawnRequest2.onSpawnedServer, new Action<SpawnCard.SpawnResult>(delegate (SpawnCard.SpawnResult spawnResult)
             {
-                spawnResult.spawnedInstance.GetComponent<Inventory>().GiveItem(ItemIndex.HealthDecay, 23);
+                spawnResult.spawnedInstance.GetComponent<Inventory>().GiveItem(ItemIndex.HealthDecay, 65);
             }));
             DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
         }
@@ -106,11 +108,29 @@ namespace Cloudburst.Cores.Components
             {
                 stopwatch += Time.deltaTime;
 
+
+                if (phase3) {
+                    stopwatch2 += Time.deltaTime;
+                    if (stopwatch2 >= 15 && spawned == false)
+                    {
+
+                        SpawnGlass();
+                        spawned = true;
+                    }
+                }
+
                 if (phase4)
                 {
+
                     stopwatch2 += Time.deltaTime;
-
-
+                    if (stopwatch2 >= 10 && spawned == false)
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            SpawnGlass();
+                        }
+                        spawned = true;
+                    }
                 }
 
                 if (PhaseCounter.instance && stopwatch >= limit)
@@ -118,11 +138,7 @@ namespace Cloudburst.Cores.Components
                     stopwatch = 0;
                     var target = SearchForTarget();
                     var pos = FindBestPosition(target);
-                    if (spawned == false)
-                    {
-                        SpawnGlass();
-                        spawned = true;
-                    }
+
                     if (Util.HasEffectiveAuthority(gameObject))
                     {
                         switch (PhaseCounter.instance.phase)
@@ -133,7 +149,7 @@ namespace Cloudburst.Cores.Components
                             case 2:
                                 break;
                             case 3:
-                                for (int i = 0; i < 3; i++)
+                                for (int i = 0; i < 2; i++)
                                 {
                                     Phase1(FindBestPosition(target), target);
                                     Phase3(pos, target);
