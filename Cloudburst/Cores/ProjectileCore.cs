@@ -16,6 +16,7 @@ namespace Cloudburst.Cores
 
         public static GameObject bombardierBombProjectile;
         public static GameObject bombardierFireBombProjectile;
+        public static GameObject wyattBlinkProjectile;
         public static GameObject bombardierSeekerBombProjectile;
 
         //public static GameObject mushrumDelaySproutingMushroom;
@@ -418,8 +419,8 @@ namespace Cloudburst.Cores
                 missileController.rollVelocity = 0;
                 missileController.acceleration = 3;
                 missileController.delayTimer = 0.1f;
-                missileController.giveupTimer = 2;
-                missileController.deathTimer = 2;
+                missileController.giveupTimer = 15;
+                missileController.deathTimer = 15;
                 missileController.turbulence = 0;
                 missileController.maxSeekDistance = 1000;
 
@@ -478,31 +479,25 @@ namespace Cloudburst.Cores
         {
             //wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("WyattMaid");
 
-            wyattMaidBubble = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Attempt4");
+            var goost = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Attempt5");
 
-            foreach (var thingie in wyattMaidBubble.GetComponent<ChildLocator>().transformPairs) {
-                GameObject gameObject = thingie.transform.gameObject;
-                switch (gameObject .name) {
-                    case "CounterBalance":
-                        var locator = gameObject.AddComponent<EntityLocator>();
-                        locator.entity = gameObject.transform.parent.gameObject;
+            goost.AddComponent<ProjectileGhostController>();
 
-                        gameObject.layer = LayerIndex.entityPrecise.intVal;
-                        break;
-                    case "FakeActorCollider":
-                        gameObject.layer = LayerIndex.fakeActor.intVal;
+            wyattBlinkProjectile = Resources.Load<GameObject>("prefabs/projectiles/CommandoGrenadeProjectile").InstantiateClone("WyattBlinkProjectile", true);
+            wyattBlinkProjectile.AddComponent<Blink>();
 
-                        break;
-                    case "GrappleCollider":
-                        gameObject.layer = LayerIndex.fakeActor.intVal;
+            wyattBlinkProjectile.GetComponent<ProjectileController>().ghostPrefab = goost;
+            Cloudburst.CloudburstPlugin.Destroy(wyattBlinkProjectile.GetComponent<ProjectileImpactExplosion>());
+            CloudUtils.RegisterNewProjectile(wyattBlinkProjectile);
 
-                        break;
-                }
 
-            }
 
-            CloudUtils.CreateValidProjectile(wyattMaidBubble, float.MaxValue, 0, true);
+            wyattMaidBubble = CloudUtils.CreateMAIDProjectile(goost);
+            CloudUtils.RegisterNewProjectile(wyattMaidBubble);
 
+
+
+            /*
             GameObject ward = Resources.Load<GameObject>("prefabs/networkedobjects/TimeBubbleWard");
             Transform origVisuals = ward.transform.Find("Visuals+Collider/Sphere");
             Renderer origRenderer = origVisuals.GetComponent<Renderer>();
@@ -816,6 +811,5 @@ namespace Cloudburst.Cores
             }
             else LogCore.LogF("FATAL ERROR:" + bombardierSeekerBombProjectile.name + " failed to register to the projectile catalog!");
         }
-        #endregion
     }
 }

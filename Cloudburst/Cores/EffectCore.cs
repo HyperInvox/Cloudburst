@@ -21,7 +21,19 @@ namespace Cloudburst.Cores
         public static GameObject magicRegen;
         public static GameObject magicAttackSpeed;
 
+        public static GameObject coolEffect;
+        public static GameObject reallyCoolEffect;
+        public static GameObject trulyCoolEffect;
+
+        public static GameObject maidCleanseEffect;
+
+
+        public static GameObject blackHoleIncisionEffect;
+
+        public static GameObject lumpkinEffect;
+
         public EffectCore() => Effects();
+
 
         protected void Effects() {
             LogCore.LogI("Initializing Core: " + base.ToString());
@@ -29,8 +41,43 @@ namespace Cloudburst.Cores
 
             CreateNewEffects();
             Repair();
+
+
+            blackHoleIncisionEffect = CreateAsset("UniversalIncison", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
+
         }
-        
+
+        private void CreateMAIDCleanseEffect()
+        {
+            maidCleanseEffect = CreateAsset("MAIDCleanEffect", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
+        }
+
+        private void CreateLumpkinEffect()
+        {
+            lumpkinEffect = CreateAsset("LumpkinScreamEffect", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
+            var component = lumpkinEffect.AddComponent<ShakeEmitter>();
+            var component2 = lumpkinEffect.AddComponent<DestroyOnTimer>();
+
+            component.wave = new Wave()
+            {
+                amplitude = 0.7f,
+                cycleOffset = 0,
+                frequency = 100,
+            };
+            component.duration = 2;
+            component.radius = 15;
+            component.amplitudeTimeDecay = true;
+            component2.duration = 2;
+        }
+
+        protected void CreateMagiciansEarringsEffects()
+        {
+            coolEffect = CreateAsset("HANDHeal", false, false, true, "", false, VFXAttributes.VFXIntensity.Low, VFXAttributes.VFXPriority.Medium);
+            reallyCoolEffect = CreateAsset("HANDArmor", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Medium);
+            trulyCoolEffect = CreateAsset("HANDAttackSpeed", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Medium);
+
+        }
+
         protected void Repair() {
             RepairAncientWispPillar();
             RepairHANDSwingEffect();
@@ -41,9 +88,11 @@ namespace Cloudburst.Cores
         protected void CreateNewEffects() {
             MakeHANDOrbEffect();
             CreateCoinImpactEffect();
+            CreateMAIDCleanseEffect();
             CreateOrbitalImpact();
             CreateMagicEffects();
-            CreateUnknownEliteEffect();
+            CreateMagiciansEarringsEffects();
+            CreateLumpkinEffect();
         }
 
         private void CreateOrbitalImpact() {
@@ -143,6 +192,33 @@ namespace Cloudburst.Cores
             }
         }
 
+        public static GameObject CreateAsset(string name, bool positionAtReferencedTransform, bool parentToReferencedTransform, bool applyScale, string soundName, bool disregardZScale, VFXAttributes.VFXIntensity intensity, VFXAttributes.VFXPriority priority)  {
+            GameObject obj = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(name);
+            EffectComponent effectComponent = obj.AddComponent<EffectComponent>();
+            VFXAttributes attributes = obj.AddComponent<VFXAttributes>();
+            DestroyOnParticleEnd destroyOnEnd = obj.AddComponent<DestroyOnParticleEnd>();
+
+            effectComponent.effectIndex = EffectIndex.Invalid;
+            effectComponent.positionAtReferencedTransform = positionAtReferencedTransform;
+            effectComponent.parentToReferencedTransform = parentToReferencedTransform;
+            effectComponent.applyScale = applyScale;
+            effectComponent.soundName = soundName;
+            effectComponent.disregardZScale = disregardZScale;
+
+            attributes.vfxIntensity = intensity;
+            attributes.vfxPriority = priority;
+
+
+            EffectAPI.AddEffect(new EffectDef()
+            {
+
+                prefab = obj,
+                prefabEffectComponent = obj.GetComponent<EffectComponent>(),
+                prefabVfxAttributes = obj.GetComponent<VFXAttributes>(),
+                prefabName = obj.name,
+            });
+            return obj;
+        }
         private void CreateCoinImpactEffect() {
             coinImpactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/AncientWispExplosion").InstantiateClone("CoinImpactEffect", false);
 

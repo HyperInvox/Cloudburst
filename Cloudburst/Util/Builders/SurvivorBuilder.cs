@@ -65,6 +65,8 @@ public abstract class SurvivorCreator
     public abstract Sprite defaultSkinColor { get; }
     public abstract Sprite masterySkinColor { get; }
 
+
+    public GameObject umbraMaster;
     public SurvivorDef def;
     public PrefabBuilder builder;
     public GameObject survivorUmbra;
@@ -83,10 +85,14 @@ public abstract class SurvivorCreator
         CreateLang();
         SetupCharacterBody(survivorBody.GetComponent<CharacterBody>());
         CreateSkills();
+        GenerateUmbra();
         Hooks();
         CreateSurvivorDef();
     }
 
+    public virtual void GenerateUmbra() {
+
+    }
 
     public virtual void SetupCharacterBody(CharacterBody characterBody) { }
 

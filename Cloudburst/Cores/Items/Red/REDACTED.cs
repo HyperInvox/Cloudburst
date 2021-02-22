@@ -74,24 +74,40 @@ Hold strong, and keep your heads up.
     public class RedactedBehavior : CharacterBody.ItemBehavior
     {
         private float timer;
-
+        private BullseyeSearch search = new BullseyeSearch();
+        private InputBankTest bank;
+        private void Awake() {
+            bank = GetComponent<InputBankTest>();
+        }
         private void YOUVEBEENSTRUCKBY(HurtBox box)
         {
             //A HEART ATTACK
-            if (Util.CheckRoll(30, body.master))
+            if (Util.CheckRoll(100, body.master))
             {
                 var health = box.healthComponent;
-                bool isFullHealth = health.combinedHealthFraction >= 0.8f;
-                if (health && !DotController.FindDotController(health.gameObject) && !isFullHealth)
-                {
-                    EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/HANDheal"), new EffectData()
+                LogCore.LogI("Tes0");
+                if (health)
+                {;
+                    LogCore.LogI("Tes1");
+                    bool isFullHealth = health.combinedHealthFraction >= 0.8f;
+                    bool hasDot = false;
+                    var dot = DotController.FindDotController(health.gameObject); //.HasDotActive(DoTCore.redactedIndex);
+                    if (dot)
                     {
-                        origin = box.transform.position,
-                        scale = 10,
-                        color = Color.red,
-                    }, true);
-                    Util.PlaySound("Play_item_proc_armorReduction_shatter", box.gameObject);
-                    DotController.InflictDot(health.gameObject, body.gameObject, DoTCore.redactedIndex, 8 + (stack * 2), 1);
+                        hasDot = dot.HasDotActive(DoTCore.redactedIndex);
+                    }
+                    if (hasDot == false && !isFullHealth)
+                    {
+                        LogCore.LogI("Tes2");
+                        EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/HANDheal"), new EffectData()
+                        {
+                            origin = box.transform.position,
+                            scale = 10,
+                            color = Color.red,
+                        }, true);
+                        Util.PlaySound("Play_item_proc_armorReduction_shatter", box.gameObject);
+                        DotController.InflictDot(health.gameObject, body.gameObject, DoTCore.redactedIndex, 8 + (stack * 2), 1);
+                    }
                 }
             }
         }
@@ -101,23 +117,24 @@ Hold strong, and keep your heads up.
             timer += Time.deltaTime;
             //LogCore.LogI(timer);
 
-            if (timer >= 3)
+            if (timer >= 1)
             {
-                BullseyeSearch bullseyeSearch = new BullseyeSearch();
-                bullseyeSearch.searchOrigin = transform.position;
-                bullseyeSearch.maxDistanceFilter = 120;
-                bullseyeSearch.teamMaskFilter = TeamMask.AllExcept(TeamIndex.Player);
-                bullseyeSearch.sortMode = BullseyeSearch.SortMode.Distance;
-                bullseyeSearch.filterByLoS = true;
-                bullseyeSearch.searchDirection = Vector3.up;
-                bullseyeSearch.RefreshCandidates();
-                bullseyeSearch.FilterOutGameObject(base.gameObject);
-                var list = bullseyeSearch.GetResults().ToList();
+                timer = 0;
 
-                for (int i = 0; i < list.Count; i++)
-                {
-                    YOUVEBEENSTRUCKBY(list[i]);
-                }
+                Ray aimRay = bank.GetAimRay();
+                this.search.teamMaskFilter = TeamMask.GetUnprotectedTeams(body.teamComponent.teamIndex);
+                this.search.filterByLoS = true;
+                this.search.searchOrigin = aimRay.origin;
+                this.search.searchDirection = aimRay.direction;
+                this.search.sortMode = BullseyeSearch.SortMode.Angle;
+                this.search.maxDistanceFilter = 40f;
+                this.search.maxAngleFilter = 20f;
+                this.search.RefreshCandidates();
+                this.search.FilterOutGameObject(base.gameObject);
+                this.search.GetResults().ToList().ForEach(YOUVEBEENSTRUCKBY);
+
+
+                    //YOUVEBEENSTRUCKBY(list[i]);
             }
         }
     }

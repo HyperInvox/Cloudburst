@@ -71,6 +71,7 @@ namespace Cloudburst.Cores.Components
     class WyattWinchManager : MonoBehaviour
     {
         private MAIDManager maidManager;
+        private GameObject maid;
         private ProjectileController controller = null;
         private ProjectileOwnerInfo owner = default;
 
@@ -94,6 +95,17 @@ namespace Cloudburst.Cores.Components
             {
                 trashOut.SetHookReference(base.gameObject);
                 //LogCore.LogI("check 1!");
+            }
+            else {
+                maid = owner.gameObject.GetComponent<MAIDManager>().GetWinch(this.gameObject);
+            }
+        }
+
+        public void FixedUpdate() {
+            if (maid)
+            {
+                base.transform.position = maid.transform.position;
+                //     base.transform.localRotation = Quaternion.identity;
             }
         }
 

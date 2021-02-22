@@ -7,7 +7,8 @@ using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.Skills
 {
-    public class BombardierStickySkillDef : SkillDef {
+    public class BombardierStickySkillDef : SkillDef
+    {
         private float timer;
         public override SkillDef.BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
         {
@@ -22,15 +23,18 @@ namespace Cloudburst.Cores.Skills
         public override void OnFixedUpdate([NotNull] GenericSkill skillSlot)
         {
             base.OnFixedUpdate(skillSlot);
-            if (!skillSlot.CanExecute()) {
+            if (!skillSlot.CanExecute())
+            {
                 timer += Time.deltaTime;
             }
-            else {
+            else
+            {
                 timer = 0;
             }
 
             InstanceData instanceData = (InstanceData)skillSlot.skillInstanceData;
-            if (!skillSlot.CanExecute() && timer > .2f && instanceData != null && instanceData.input && instanceData.input.skill2.down) {
+            if (!skillSlot.CanExecute() && timer > .2f && instanceData != null && instanceData.input && instanceData.input.skill2.down)
+            {
                 if (Util.HasEffectiveAuthority(instanceData.identity))
                 {
                     instanceData.stickyManager.PopStickiesAuthority();
@@ -45,4 +49,4 @@ namespace Cloudburst.Cores.Skills
             public BombardierStickyBombManager stickyManager;
         }
     }
-}
+}       

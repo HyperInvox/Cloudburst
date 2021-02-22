@@ -37,7 +37,7 @@ namespace Cloudburst.Cores.Components
                 switch (PhaseCounter.instance.phase)
                 {
                     case 1:
-                        limit = 14;
+                        limit = 16;
                         break;
                     case 3:
                         limit = 13;
@@ -45,7 +45,7 @@ namespace Cloudburst.Cores.Components
                         phase3 = true;
                         break;
                     case 4:
-                            limit = 12;
+                            limit = 10;
                             phase4 = true;
 
                         break;
@@ -109,15 +109,18 @@ namespace Cloudburst.Cores.Components
                 stopwatch += Time.deltaTime;
 
 
-                if (phase3) {
-                    stopwatch2 += Time.deltaTime;
-                    if (stopwatch2 >= 15 && spawned == false)
-                    {
 
+                stopwatch2 += Time.deltaTime;
+                if (stopwatch2 >= 15 && spawned == false)
+                {
+
+                    for (int i = 0; i < 2; i++)
+                    {
                         SpawnGlass();
-                        spawned = true;
                     }
+                    spawned = true;
                 }
+
 
                 if (phase4)
                 {

@@ -1,4 +1,5 @@
 ﻿using Cloudburst.Cores.Components;
+using EntityStates.BrotherMonster;
 using R2API;
 using RoR2;
 using RoR2.CharacterAI;
@@ -22,6 +23,34 @@ namespace Cloudburst.Cores
     class VoidCore
     {
         public VoidCore instance;
+
+        internal class MithrixWeaponHooks : EntityStateHook {
+            bool hasFired;
+            public override void Hook() {
+                base.Hook();
+
+            }
+
+
+            public override void Unhook()
+            {
+                base.Unhook();
+
+            }
+
+        }
+
+        internal class EntityStateHook {
+            public virtual void Hook()
+            {
+
+            }
+
+            public virtual void Unhook()
+            {
+
+            }
+        }
         /// <summary>
         /// https://cdn.discordapp.com/attachments/739717122229403740/804910319029321728/IMG_20210129_112137.jpg
         /// </summary>
@@ -201,12 +230,17 @@ namespace Cloudburst.Cores
             }*/
         }
 
+        public MithrixWeaponHooks hooks = new MithrixWeaponHooks();
+
         public VoidCore() => FindGod();
 
         public static bool spawnInfection;
         public static bool triggeredTrueInfection;
 
         public static Material voidMat;
+
+        bool hasFired = true;
+
 
         private GameObject infectionTrigger;
         private GameObject floatingPlatform;
@@ -222,10 +256,15 @@ namespace Cloudburst.Cores
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
             ArenaMissionController.onBeatArena += ArenaMissionController_onBeatArena;
             Run.onRunStartGlobal += Run_onRunStartGlobal;
-            //On.EntityStates.Missions.Arena.NullWard.Active.FixedUpdate += Active_FixedUpdate;
+
             On.EntityStates.BrotherMonster.WeaponSlam.OnEnter += WeaponSlam_OnEnter;
             On.EntityStates.BrotherMonster.HoldSkyLeap.OnEnter += HoldSkyLeap_OnEnter;
+            On.EntityStates.BrotherMonster.WeaponSlam.FixedUpdate += WeaponSlam_FixedUpdate;
+
+            //On.EntityStates.Missions.Arena.NullWard.Active.FixedUpdate += Active_FixedUpdate;
             CloudburstPlugin.start += CloudburstPlugin_start;
+
+
 
             golems = new VoidGolems();
             golems.Create();
@@ -237,6 +276,46 @@ namespace Cloudburst.Cores
             VoidGlass();
         }
 
+        private void WeaponSlam_FixedUpdate(On.EntityStates.BrotherMonster.WeaponSlam.orig_FixedUpdate orig, EntityStates.BrotherMonster.WeaponSlam self)
+        {
+            if (triggeredTrueInfection)
+            {
+                if (self.isAuthority)
+                {
+                    bool hasDoneBlastAttack = self.hasDoneBlastAttack;
+                    if (hasDoneBlastAttack)
+                    {
+                        //self.modelTransform;
+                        if (this.hasFired == false)
+                        {
+                            hasFired = true;
+                            float num = 360f / (float)ExitSkyLeap.waveProjectileCount;
+                            Vector3 point = Vector3.ProjectOnPlane(self.inputBank.aimDirection, Vector3.up);
+                            Vector3 footPosition = self.characterBody.footPosition;
+                            for (int i = 0; i < ExitSkyLeap.waveProjectileCount; i++)
+                            {
+                                Vector3 forward = Quaternion.AngleAxis(num * (float)i, Vector3.up) * point;
+                                if (self.isAuthority)
+                                {
+                                    ProjectileManager.instance.FireProjectile(ExitSkyLeap.waveProjectilePrefab, footPosition, Util.QuaternionSafeLookRotation(forward), self.gameObject, self.characterBody.damage * 3, ExitSkyLeap.waveProjectileForce, self.characterBody.RollCrit(), DamageColorIndex.Default, null, -1f);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            orig(self);
+        }
+
+        private void WeaponSlam_OnEnter(On.EntityStates.BrotherMonster.WeaponSlam.orig_OnEnter orig, EntityStates.BrotherMonster.WeaponSlam self)
+        {
+            orig(self);
+            hasFired = false;
+            if (triggeredTrueInfection)
+            {
+                self.weaponAttack.damageType = DamageType.Nullify;
+            }
+        }
         private void HoldSkyLeap_OnEnter(On.EntityStates.BrotherMonster.HoldSkyLeap.orig_OnEnter orig, EntityStates.BrotherMonster.HoldSkyLeap self)
         {
             orig(self);
@@ -270,14 +349,7 @@ namespace Cloudburst.Cores
 
         }
 
-        private void WeaponSlam_OnEnter(On.EntityStates.BrotherMonster.WeaponSlam.orig_OnEnter orig, EntityStates.BrotherMonster.WeaponSlam self)
-        {
-            orig(self);
-            if (triggeredTrueInfection)
-            {
-                self.weaponAttack.damageType = DamageType.Nullify;
-            }
-        }
+
 
         private void Run_onRunStartGlobal(Run obj)
         {
@@ -287,7 +359,6 @@ namespace Cloudburst.Cores
                 UndoMithrixReplacementLines();
                 EntityStates.BrotherMonster.HoldSkyLeap.duration = skyLeap;
             }
-
             spawnInfection = false;
             triggeredTrueInfection = false;
         }
@@ -341,7 +412,7 @@ namespace Cloudburst.Cores
         private void CreateInfection(GameObject re)
         {
             GameObject obj = re;
-
+            voidMat = obj.GetComponent<Renderer>().material;
             var identity = obj.AddComponent<NetworkIdentity>();
             var sate = obj.AddComponent<NetworkTransform>();
 
@@ -364,7 +435,27 @@ namespace Cloudburst.Cores
 
             rigid.useGravity = false;
 
+                        CapsuleCollider clayCollider = obj.AddComponent<CapsuleCollider>();
+            clayCollider.center -= new Vector3(0, 0.6f, 0);
+            clayCollider.height *= 0.25f;
+            clayCollider.radius *= 1.16f;
+            hb.isBullseye = true;
             hb.gameObject.layer = LayerIndex.entityPrecise.intVal;
+            hb.healthComponent = health;
+            hb.damageModifier = HurtBox.DamageModifier.Normal;
+            hb.hurtBoxGroup = hurtbox;
+            hb.indexInGroup = 0;
+
+            HurtBox[] clayHurtBoxArray = new HurtBox[]
+            {
+                hb
+            };
+
+            hurtbox.bullseyeCount = 1;
+            hurtbox.hurtBoxes = clayHurtBoxArray;
+            hurtbox.mainHurtBox = hb;
+
+            /*hb.gameObject.layer = LayerIndex.entityPrecise.intVal;
 
             hb.healthComponent = health;
             hb.isBullseye = true;
@@ -374,7 +465,7 @@ namespace Cloudburst.Cores
 
             hurtbox.hurtBoxes = new HurtBox[] { hb };
             hurtbox.mainHurtBox = hb;
-            hurtbox.bullseyeCount = 1;
+            hurtbox.bullseyeCount = 1;*/
 
             filter.teamIndex = TeamIndex.Monster;
 
@@ -418,13 +509,12 @@ namespace Cloudburst.Cores
 
             obj.AddComponent<InfestationTrigger>();
 
-            voidMat = obj.GetComponent<Renderer>().material;
 
             PrefabAPI.RegisterNetworkPrefab(obj);
             CloudUtils.RegisterNewBody(obj);
 
-            infectionTrigger = obj;
-        }
+            this.infectionTrigger = obj;
+          }
 
         private void CreateInfectionBubble(GameObject re)
         {
@@ -456,7 +546,7 @@ namespace Cloudburst.Cores
 
             rigid.useGravity = false;
 
-            hb.gameObject.layer = LayerIndex.entityPrecise.intVal;
+            /*hb.gameObject.layer = LayerIndex.entityPrecise.intVal;
 
             hb.healthComponent = health;
             hb.isBullseye = true;
@@ -466,7 +556,28 @@ namespace Cloudburst.Cores
 
             hurtbox.hurtBoxes = new HurtBox[] { hb };
             hurtbox.mainHurtBox = hb;
+            hurtbox.bullseyeCount = 1;*/
+
+            //HurtBoxGroup clayHurtBoxGroup = obj.AddComponent<HurtBoxGroup>();
+            CapsuleCollider clayCollider = obj.AddComponent<CapsuleCollider>();
+            clayCollider.center -= new Vector3(0, 0.6f, 0);
+            clayCollider.height *= 0.25f;
+            clayCollider.radius *= 1.16f;
+            hb.isBullseye = true;
+            hb.gameObject.layer = LayerIndex.entityPrecise.intVal;
+            hb.healthComponent = health;
+            hb.damageModifier = HurtBox.DamageModifier.Normal;
+            hb.hurtBoxGroup = hurtbox;
+            hb.indexInGroup = 0;
+
+            HurtBox[] clayHurtBoxArray = new HurtBox[]
+            {
+                hb
+            };
+
             hurtbox.bullseyeCount = 1;
+            hurtbox.hurtBoxes = clayHurtBoxArray;
+            hurtbox.mainHurtBox = hb;
 
             filter.teamIndex = TeamIndex.Monster;
 
@@ -637,9 +748,10 @@ namespace Cloudburst.Cores
 
             if (nameToken == "BROTHER_BODY_NAME")
             {
-                if (PhaseCounter.instance)  
+                if (PhaseCounter.instance)
                 {
-                    switch (PhaseCounter.instance.phase) {
+                    switch (PhaseCounter.instance.phase)
+                    {
                         case 1:
 
                             mdl.baseRendererInfos[1].defaultMaterial = voidMat;
@@ -668,6 +780,7 @@ namespace Cloudburst.Cores
                 }
             }
 
+
             if (nameToken == "LUNARWISP_BODY_NAME") {
                 mdl.baseRendererInfos[0].defaultMaterial = voidMat;
             }
@@ -678,6 +791,12 @@ namespace Cloudburst.Cores
         {
             if (self)
             {
+//                PostProcessProfile[] source = Resources.FindObjectsOfTypeAll<PostProcessProfile>();
+//                PostProcessProfile profile = (from p in source
+             //                                 where p.name == "ppSceneEclipseStandard"//"ppLocalUnderwater"
+             //                                 select p).FirstOrDefault<PostProcessProfile>();
+  //              CloudUtils.AlterCurrentPostProcessing(profile);
+                    
                 SpawnInfectionBazaar();
                 SpawnInfectionMoon();
                 if (triggeredTrueInfection)
@@ -793,7 +912,6 @@ namespace Cloudburst.Cores
 
 
             MithrixReplacementLines();
-
 
 
 

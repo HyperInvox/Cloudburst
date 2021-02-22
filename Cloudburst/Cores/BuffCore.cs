@@ -437,6 +437,7 @@ namespace Cloudburst.Cores
                 if (self && self.HasBuff(REDACTED)) {
                     self.moveSpeed -= (moveSpeed / 2);
                     self.attackSpeed -= (attackSpeed / 2);
+                    self.armor -= 20;
                 }
 
 
@@ -478,7 +479,6 @@ namespace Cloudburst.Cores
                     for (int i = 0; i < buffCount; i++)
                     {
                         self.moveSpeed = moveSpeed * (1f + (buffCount * 0.17f));
-                        self.regen = regen * (1f + (buffCount * 0.17f));
                     }
                 }
                 if (self && self.HasBuff(glassMithrix))

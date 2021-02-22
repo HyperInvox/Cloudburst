@@ -16,7 +16,7 @@ namespace Cloudburst.Cores.Items
         public override string ItemPickupDesc =>
             "Chance to spawn a void orb on hit.";
 
-        public override string ItemFullDescription => "8% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style>.";
+        public override string ItemFullDescription => "8% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> on impact. Shocks nearby enemies for <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> damage.";
 
         public override string ItemLore => "";
 

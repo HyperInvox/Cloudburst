@@ -23,10 +23,9 @@ namespace Cloudburst.Cores.States.Wyatt
                 outer.SetNextStateToMain();
             }
         }
-
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Any;
+            return InterruptPriority.PrioritySkill;
         }
     }
 }

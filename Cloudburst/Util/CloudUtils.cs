@@ -1,4 +1,6 @@
-﻿using R2API;
+﻿using Cloudburst.Cores;
+using Cloudburst.Cores.Components;
+using R2API;
 using R2API.Utils;
 using RoR2;
 using RoR2.CharacterAI;
@@ -84,11 +86,85 @@ public static class CloudUtils
     #region R2API Expanded
     #endregion
     #region Projectiles
-    /// <summary>
-    /// Creates a valid projectile from a GameObject 
-    /// </summary>
-    /// <param name="projectile"></param>
-    public static void CreateValidProjectile(GameObject projectile, float lifeTime, float velocity, bool updateAfterFiring)
+    public static GameObject CreateMAIDProjectile(GameObject projectile)
+    {
+        GameObject prefab = Resources.Load<GameObject>("prefabs/projectiles/Sawmerang").InstantiateClone("MAIDProjectile");
+        //GameObject hurtbox = new GameObject("TempHurtbox");
+
+
+        /*TeamComponent comp = prefab.AddComponent<TeamComponent>();
+        SkillLocator empt = prefab.AddComponent<SkillLocator>();
+        CharacterBody body = prefab.AddComponent<CharacterBody>();
+
+        HealthComponent health = prefab.AddComponent<HealthComponent>();
+
+       // body.name = prefabName;
+        body.bodyFlags = CharacterBody.BodyFlags.Masterless;
+        body.rootMotionInMainState = false;
+        body.mainRootSpeed = 0;
+        body.bodyIndex = -1;
+        //body.aimOriginTransform = aimOrigin.transform;
+        body.hullClassification = HullClassification.Human;
+
+        hurtbox.transform.SetParent(prefab.transform);*/
+        GameObject awful = new GameObject("Awful");
+        awful.transform.SetParent(prefab.transform);
+
+        awful.layer = LayerIndex.entityPrecise.intVal;
+
+        prefab.GetComponent<ProjectileController>().ghostPrefab = projectile;
+        prefab.GetComponent<ProjectileDotZone>().fireFrequency = 0.5f; ;
+        prefab.GetComponent<BoomerangProjectile>().distanceMultiplier = 0.2f;
+        prefab.AddComponent<MAID>();
+        awful.AddComponent<SphereCollider>().radius = 5;
+        awful.GetComponent<SphereCollider>().isTrigger = true;
+        prefab.GetComponent<ProjectileDotZone>().impactEffect = EffectCore.maidCleanseEffect;
+
+        var slow = awful.AddComponent<SlowDownProjectiles>();
+        slow.teamFilter = awful.GetComponent<TeamFilter>();
+        slow.maxVelocityMagnitude = 3;
+        slow.antiGravity = 1;
+
+        return prefab;
+        /*var networkIdentity = projectile.AddComponent<NetworkIdentity>();
+        var projectileController = projectile.AddComponent<ProjectileController>();
+        var rigidBody = projectile.AddComponent<Rigidbody>();
+        var networkTransform = projectile.AddComponent<ProjectileNetworkTransform>();
+        var projectileDamage = projectile.AddComponent<ProjectileDamage>();
+        var teamFilter = projectile.AddComponent<TeamFilter>();
+        var boomerrang = projectile.AddComponent<BoomerangProjectile>();
+
+        //setup the projectile controller
+        projectileController.allowPrediction = false;
+        projectileController.predictionId = 0;
+        projectileController.procCoefficient = 1;
+        projectileController.owner = null;
+
+        //setup the network transform
+        networkTransform.allowClientsideCollision = false;
+        networkTransform.interpolationFactor = 1;
+        networkTransform.positionTransmitInterval = 0.03333334f;
+
+        projectileDamage.damage = 0;
+        projectileDamage.crit = false;
+        projectileDamage.force = 0;
+        projectileDamage.damageColorIndex = DamageColorIndex.Default;
+        projectileDamage.damageType = DamageType.Shock5s;
+
+        boomerrang.travelSpeed = 60;
+        boomerrang.charge = 1;
+        boomerrang.transitionDuration = 1;
+        boomerrang.canHitCharacters = false;
+        boomerrang.canHitWorld = true;
+        boomerrang.distanceMultiplier = 0.6f;*/
+
+
+    }
+        /// <summary>
+        /// Creates a valid projectile from a GameObject 
+        /// </summary>
+        /// <param name="projectile"></param>
+        public static void CreateValidProjectile(GameObject projectile, float lifeTime, float velocity, bool updateAfterFiring)
     {
         var networkIdentity = projectile.AddComponent<NetworkIdentity>();
         var teamFilter = projectile.AddComponent<TeamFilter>();
@@ -252,8 +328,7 @@ public static class CloudUtils
     }
 
     public static ItemDisplayRuleSet.NamedRuleGroup CreateGenericDisplayRule(string itemName, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
-    {
-        LogCore.LogI("hi!!");
+    { 
         ItemDisplayRuleSet.NamedRuleGroup displayRule = new ItemDisplayRuleSet.NamedRuleGroup
         {
             name = itemName,

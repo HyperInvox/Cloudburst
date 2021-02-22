@@ -55,7 +55,7 @@ namespace Cloudburst.Cores.States.Wyatt
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {
                         crit = false,
-                        damage =0,
+                        damage = 0,
                         damageColorIndex = DamageColorIndex.Default,
                         force = 0f,
                         owner = base.gameObject,

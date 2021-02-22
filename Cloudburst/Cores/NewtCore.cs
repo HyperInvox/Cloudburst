@@ -15,14 +15,18 @@ namespace Cloudburst.Cores
 
         private void Newt()
         {
-            LanguageAPI.Add("NEWT_ANNOY_0", "<color=#50b8e7>[NEWT] Shape will shatter. Stop. </style>");
-            LanguageAPI.Add("NEWT_ANNOY_1", "<color=#50b8e7>[NEWT] Stop stop. Bad bad.</style>");
-            LanguageAPI.Add("NEWT_ANNOY_2", "<color=#50b8e7>[NEWT] Will shatter your shape. Bad.</style>");
-            LanguageAPI.Add("NEWT_ANNOY_3", "<color=#50b8e7>[NEWT] Bad. Will reshape into forget.</style>");
-            LanguageAPI.Add("NEWT_ANNOY_4", "<color=#50b8e7>[NEWT] Cease. Do not bother</style>");
-            LanguageAPI.Add("NEWT_ANNOY_5", "<color=#50b8e7>[NEWT] Reshape. Out of forever.</style>");
-            LanguageAPI.Add("NEWT_ANNOY_6", "<color=#50b8e7>[NEWT] Again again. Everytime.</style>");
-            LanguageAPI.Add("NEWT_KICK", "<color=#ff6961>[NEWT] Come. When reshape.</style>");
+            LanguageAPI.Add("NEWT_ANNOY_0", "Shape will shatter. Stop. ");
+            LanguageAPI.Add("NEWT_ANNOY_1", "Stop stop. Bad bad.");
+            LanguageAPI.Add("NEWT_ANNOY_2", "Will shatter your shape. Bad.");
+            LanguageAPI.Add("NEWT_ANNOY_3", "Bad. Will reshape into forget.");
+            LanguageAPI.Add("NEWT_ANNOY_4", "Cease. Do not bother");
+            LanguageAPI.Add("NEWT_ANNOY_5", "Reshape. Out of forever.");
+            LanguageAPI.Add("NEWT_ANNOY_6", "Again again. Everytime.");
+            LanguageAPI.Add("NEWT_KICK", "  Come. When reshape.");
+
+            //    LanguageAPI.Add("NEWT_KICK", "<color=#ff6961>[NEWT] Come. When reshape.</style>");
+            LanguageAPI.Add("NEWT_DIALOGUE_FORMAT", "<color=#50b8e7><size=120%>Newt: {0}</color></size>");
+            LanguageAPI.Add("NEWT_KICK_DIALOGUE_FORMAT", "<color=#ff6961><size=120%>Newt: {0}</color></size>");
 
             list.Add("NEWT_ANNOY_0");
             list.Add("NEWT_ANNOY_1");
@@ -39,10 +43,12 @@ namespace Cloudburst.Cores
         private void KickFromShop_OnExit(On.EntityStates.NewtMonster.KickFromShop.orig_OnExit orig, EntityStates.NewtMonster.KickFromShop self)
         {
             orig(self);
-            LogCore.LogI("hi");
-            Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+            Chat.SendBroadcastChat(new Chat.NpcChatMessage
             {
-                baseToken = "NEWT_KICK"
+                baseToken = "NEWT_KICK",
+                formatStringToken = "NEWT_KICK_DIALOGUE_FORMAT",
+                sender = self.gameObject,
+                sound = self.gameObject.GetComponent<SfxLocator>().barkSound
             });
         }
 
@@ -50,9 +56,12 @@ namespace Cloudburst.Cores
         {
             if (Util.CheckRoll(5, 0f, null))
             {
-                Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                Chat.SendBroadcastChat(new Chat.NpcChatMessage
                 {
                     baseToken = "NEWT_ANNOY_" + UnityEngine.Random.Range(0, list.Count),
+                    formatStringToken = "NEWT_DIALOGUE_FORMAT",
+                    sender = self.gameObject,
+                    sound = self.gameObject.GetComponent<SfxLocator>().barkSound
                 });
             }
         }

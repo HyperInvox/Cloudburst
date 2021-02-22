@@ -59,9 +59,9 @@ namespace Cloudburst.Cores.Items.Red
 
         public override ItemTier Tier => ItemTier.Tier3;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/Lemdog/IMDLLemDog.prefab";
+        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/Lemdog/LemDog_TexIcon.png";
+        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/Grinder/icon.png";
 
 
         public override void CreateConfig(ConfigFile config)

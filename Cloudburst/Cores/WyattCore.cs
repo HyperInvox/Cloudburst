@@ -120,7 +120,8 @@ She'll love this, I know.
             var con = other.gameObject.GetComponent<ProjectileController>();
             if (con)
             {
-                if (con.teamFilter && con.teamFilter.teamIndex == TeamIndex.Player) {
+                if (con.teamFilter && con.teamFilter.teamIndex == TeamIndex.Player)
+                {
                     shouldOrigSelf = false;
                 }
             }
@@ -289,44 +290,6 @@ She'll love this, I know.
                 }
             }
         }
-
-        private void BuffWard_BuffTeam(On.RoR2.BuffWard.orig_BuffTeam orig, BuffWard self, IEnumerable<TeamComponent> recipients, float radiusSqr, Vector3 currentPosition)
-        {
-            orig(self, recipients, radiusSqr, currentPosition);
-            var maid = self.GetComponent<MAID>();
-            foreach (TeamComponent teamComponent in recipients)
-            {
-                CharacterBody component = teamComponent.GetComponent<CharacterBody>();
-                bool isInRadius = (teamComponent.transform.position - currentPosition).sqrMagnitude <= radiusSqr;
-                if (component) {
-                    if (isInRadius && teamComponent.teamIndex != TeamIndex.Player && component.HasBuff(BuffCore.instance.antiGravIndex))
-                    {
-                        LogCore.LogI("entry");
-                        if (component && component.characterMotor)
-                        {
-                            LogCore.LogI("entry1");
-                            maid.OnEntry(component.characterMotor, null);
-                        }
-                        if (component && component.rigidbody && !component.characterMotor)
-                        {
-                            maid.OnEntry(null, component.rigidbody);
-                        }
-                        // self.GetComponent<MAID>().OnEntry(null, component.rigidbody);
-                    }
-                else if (!component.HasBuff(BuffCore.instance.antiGravIndex) && !isInRadius) {
-                        if (component.characterMotor)
-                        {
-                            maid.characterMotors.Remove(component.characterMotor);
-                        }
-                        if (component.rigidbody && !component.characterMotor)
-                        {
-                            maid.rigidBodies.Remove(component.rigidbody);
-                        }
-                    }
-                }
-            }
-        }
-
         private void Builder_GetAdditionalEquipmentDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
         {
             //LogCore.LogI("SETUP DISPLAY");

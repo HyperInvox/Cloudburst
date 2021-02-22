@@ -79,7 +79,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 this.attack.hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Hammer");
                 if (modelTransform.HasComponent<ChildLocator>())
                 {
-                   // this.hammerChildTransform = modelTransform.GetComponent<ChildLocator>().FindChild("SwingCenter");
+                    // this.hammerChildTransform = modelTransform.GetComponent<ChildLocator>().FindChild("SwingCenter");
                 }
             }
             if (this.modelAnimator)
@@ -109,8 +109,10 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (this.modelAnimator && this.modelAnimator.GetFloat("Hammer.hitBoxActive") > 0.5f&& isAuthority) {
-                if (!this.hasSwung) {
+            if (this.modelAnimator && this.modelAnimator.GetFloat("Hammer.hitBoxActive") > 0.5f && isAuthority)
+            {
+                if (!this.hasSwung)
+                {
                     //EffectManager.SimpleMuzzleFlash(swingEffectPrefab, base.gameObject, "SwingCenter", true);
                     Util.PlaySound("Play_MULT_shift_hit", base.gameObject);
                     this.hasSwung = true;
@@ -123,7 +125,8 @@ namespace Cloudburst.Cores.States.Wyatt
                 }
                 //this.attack.forceVector = this.hammerChildTransform.right * -forceMagnitude;
                 bool hit = this.attack.Fire(null);
-                if (hit) {
+                if (hit)
+                {
                     EnterHitPause();
                 }
             }
@@ -134,10 +137,12 @@ namespace Cloudburst.Cores.States.Wyatt
             }
             else
             {
-                if (base.isAuthority && this.enteredHitPause && this.hitPauseTimer > 0f) {
+                if (base.isAuthority && this.enteredHitPause && this.hitPauseTimer > 0f)
+                {
                     this.hitPauseTimer -= Time.fixedDeltaTime;
                     base.characterMotor.velocity = Vector3.zero;
-                    if (this.hitPauseTimer <= 0f) {
+                    if (this.hitPauseTimer <= 0f)
+                    {
                         this.ExitHitPause();
 
                     }

@@ -68,7 +68,6 @@ public static class ComponentHelpers
 
     public static T AddOrGetComponent<T>(this Transform t) where T : Component
     {
-        
         return (t.HasComponent<T>() ? t.GetComponent(typeof(T)) : t.gameObject.AddComponent(typeof(T))) as T;
     }
 }

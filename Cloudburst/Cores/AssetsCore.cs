@@ -1,4 +1,5 @@
 ﻿using R2API;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -49,6 +50,8 @@ namespace Cloudburst.Cores
         public static Material brickWall;
         public AssetsCore()
         {
+            CloudburstPlugin.postLoad += CloudburstPlugin_postLoad;
+            CloudburstPlugin.start += CloudburstPlugin_start;
             LogCore.LogI("Initializing Core: " + base.ToString());
 
             // populate ASSETS
@@ -89,6 +92,97 @@ namespace Cloudburst.Cores
             wyattUtilityAlt = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/utilityicon2.png");
             wyattSpecial = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon.png");
             wyattSpecial2 = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon2.png");
+        }
+
+        private void CloudburstPlugin_start()
+        {
+            Material[] source = Resources.FindObjectsOfTypeAll<Material>();
+            Material mfMat = Resources.Load<GameObject>("prefabs/temporaryvisualeffects/SlowDownTime").transform.Find("Visual/Mesh").GetComponent<Renderer>().material;
+
+            foreach (GameObject gameObject in mainAssetBundle.LoadAllAssets<GameObject>())
+            {
+                MaterialSwapper[] quickSwap = gameObject.GetComponentsInChildren<MaterialSwapper>();
+                foreach (MaterialSwapper swap in quickSwap)
+                {
+                    //LogCore.LogI(swap.gameObject.name);
+                    //LogCore.LogI(swap.materialName);
+
+                    Renderer renderer = swap.gameObject.GetComponent<Renderer>();
+                    if (renderer)
+                    {
+                        Material material = (from p in source
+                                             where p.name == swap.materialName//"ppLocalUnderwater"
+                                             select p).FirstOrDefault<Material>();
+                        if (swap.materialName == "matBaubleEffect") {
+                            material = mfMat;
+                        }
+                        if (material)
+                        {
+                            renderer.material = material;
+                            renderer.sharedMaterial = material;
+                        }
+
+
+                        else
+                        {
+                            LogCore.LogE(swap.materialName + " could not be found! Attempting alternative loading method!");
+                            Material newMat = Resources.Load<Material>("Material/" + swap.materialName);
+
+                            if (newMat)
+                            {
+
+                                renderer.material = newMat;
+                                renderer.sharedMaterial = newMat;
+                            }
+                            else
+                            {
+                                LogCore.LogE(swap.materialName + " cannot be found! Alternative loading method failed!");
+
+                            }
+                        }
+                    }
+                }
+                /*if (quicKSwap)
+                {
+                    LogCore.LogI(gameObject.name + " has a MaterialSwapper component attached.");
+
+                    LogCore.LogI(quicKSwap.materialName);
+                }
+                else {
+                    LogCore.LogI(gameObject.name + " does not have a MaterialSwapper component attached.");
+                }*/
+            }
+        }
+
+        private void CloudburstPlugin_postLoad()
+        {
+            /*Shader[] source = Resources.FindObjectsOfTypeAll<Shader>();
+            foreach (GameObject gameObject in mainAssetBundle.LoadAllAssets<GameObject>())
+            {
+                MaterialSwapper[] quickSwap = gameObject.GetComponentsInChildren<MaterialSwapper>();
+                foreach (MaterialSwapper swap in quickSwap)
+                {
+                    LogCore.LogI(swap.gameObject.name);
+                    LogCore.LogI(swap.materialName);
+
+                    Renderer renderer = swap.gameObject.GetComponent<Renderer>();
+                    if (renderer)
+                    {
+                        renderer.material.shader = (from p in source
+                                             where p.name == swap.materialName//"ppLocalUnderwater"
+                                             select p).FirstOrDefault<Shader>();
+                    }
+                }
+                /*if (quicKSwap)
+                {
+                    LogCore.LogI(gameObject.name + " has a MaterialSwapper component attached.");
+
+                    LogCore.LogI(quicKSwap.materialName);
+                }
+                else {
+                    LogCore.LogI(gameObject.name + " does not have a MaterialSwapper component attached.");
+                }*/
+            
         }
     }
 }

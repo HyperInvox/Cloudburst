@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2231478411
+CRC: 1112597121
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 94dbdc74947c194a21d96847a9221cf1
+    Hash: 5954003eb17e714d6afdc0ec13e11511
   TypeTreeHash:
     serializedVersion: 2
-    Hash: f6fb0e02a020d81af6a5bf5453857c8f
+    Hash: 268fb8fee3464d3834594001b2b26cb8
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -44,9 +44,15 @@ ClassTypes:
 - Class: 114
   Script: {instanceID: 0}
 - Class: 114
+  Script: {fileID: 11500000, guid: eb968ea025eecaa49a3b688ed588cc06, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: aaabc320440a02340b0239f0cf1745a2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 6f0a564b054df1e4795bd5f7ef9bebac, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fd1139d8af53657418e4496dbae82ed7, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 135
@@ -54,6 +60,10 @@ ClassTypes:
 - Class: 136
   Script: {instanceID: 0}
 - Class: 137
+  Script: {instanceID: 0}
+- Class: 198
+  Script: {instanceID: 0}
+- Class: 199
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
@@ -115,6 +125,7 @@ Assets:
 - Assets/Cloudburst/Items/Lemdog/IMDLLemDog.prefab
 - Assets/Cloudburst/EliteIcons/rallyingIcon.png
 - Assets/Cloudburst/BuffIcons/WyattVelocity.png
+- Assets/Cloudburst/Survivors/Wyatt/animation/Armature_BroomSwing2.anim
 - Assets/Cloudburst/Teaser/tex/Materials/axetexture.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/PassiveIcon.png
 - Assets/Cloudburst/Materials/DiaryTexture.mat
@@ -122,7 +133,10 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/satchel.blend
 - Assets/Cloudburst/Items/Earrings/IMDLEarrings.prefab
 - Assets/Cloudburst/Survivors/Wyatt/old/d_primaryicon.png
+- Assets/Cloudburst/Survivors/Wyatt/animation/Walk/Armature_Walk.FWD.anim
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattAnimator.controller
+- Assets/Cloudburst/Effects/Bases/ShieldMesh.asset
+- Assets/Cloudburst/Effects/HANDArmor.prefab
 - Assets/Cloudburst/753network/Crystallize/Pink HDR.mat
 - Assets/Cloudburst/Survivors/Bombardier/animExampleSurvivor.controller
 - Assets/Cloudburst/Enemies/FatWisp/GluttedWisp.fbx
@@ -147,12 +161,16 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnims.fbx
 - Assets/Cloudburst/Materials/T_Executor_Emissive.mat
 - Assets/Cloudburst/Shaders/8597.png
+- Assets/Cloudburst/Equipment/Lumpkin/IMDLLumpkin.prefab
+- Assets/Cloudburst/Effects/Bases/Dust (1).prefab
 - Assets/Cloudburst/Items/BrokenBodyArmor/brokenarmoricon.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattBroomSwingFast.anim
 - Assets/Cloudburst/753network/Crystallize/Ramp Rainbow.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 1.mat
+- Assets/Cloudburst/Survivors/Wyatt/animation/Walk/Armature_Walk.BWD.anim
 - Assets/Cloudburst/Items/TopazLense/Materials/mat.mat
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecutionerMaskUpper.mask
+- Assets/Cloudburst/Equipment/Lumpkin/icon.png
 - Assets/Cloudburst/Items/CarePackageRequester/3D_Printer.png
 - Assets/Cloudburst/Items/MechanicalTrinket/IMDLMechanicalTrinket.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Materials/icon.mat
@@ -163,9 +181,11 @@ Assets:
 - Assets/Cloudburst/Enemies/Boss/texExampleSurvivor.png
 - Assets/Cloudburst/Survivors/Wyatt/Attempt4.prefab
 - Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear 1.fbx
+- Assets/Cloudburst/Effects/Bases/Cube_3.asset
 - Assets/Cloudburst/Materials/texTrimSheetMetalVibrant.mat
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_texture_red.png
 - Assets/Cloudburst/Teaser/tex/Ice_Tool_Tex.png
+- Assets/Cloudburst/Effects/Bases/AACannonGhost.prefab
 - Assets/Cloudburst/Teaser/tex/axetexture.png
 - Assets/Cloudburst/Teaser/tex/DiaryTexture.png
 - Assets/Cloudburst/Items/Lemdog/Materials/LemDog_TexEmission.mat
@@ -181,9 +201,11 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/specialicon2.png
 - Assets/Cloudburst/Items/Grinder/icon.png
 - Assets/Cloudburst/Items/Cloak/JapeIcon.png
+- Assets/Cloudburst/Effects/Bases/SwingTrail.prefab
 - Assets/Cloudburst/Items/Earrings/Materials/Magicians_earrings.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Skill1Icon.png
 - Assets/Cloudburst/753network/Crystallize/Crystallize.shader
+- Assets/Cloudburst/Equipment/Lumpkin/Materials/Metal_Lung_Texture.mat
 - Assets/Cloudburst/Items/Earrings/Magicians_earrings.png
 - Assets/Cloudburst/Items/Harvester/Materials/HarvesterTex.mat
 - Assets/Cloudburst/Enemies/DeployedLamp/LampDelpoyed.fbx
@@ -194,6 +216,7 @@ Assets:
 - Assets/Cloudburst/Teaser/TEASER 1.fbx
 - Assets/Cloudburst/Items/MechanicalTrinket/Materials/Icon.mat
 - Assets/Cloudburst/Survivors/Wyatt/animation/wyattRIGGED_RIGSmear.blend
+- Assets/Cloudburst/Effects/MAIDCleanEffect.prefab
 - Assets/Cloudburst/Survivors/Wyatt/secondaryicon.png
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Falling.anim
 - Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking.jpg
@@ -207,16 +230,19 @@ Assets:
 - Assets/Cloudburst/Items/FabinhoruDagger/New Animator Controller.controller
 - Assets/Cloudburst/Survivors/Wyatt/utilityicon2.png
 - Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_M.jpg
+- Assets/Cloudburst/Effects/HANDAttackSpeed.prefab
 - Assets/Cloudburst/753network/Crystallize/Ice HDR.mat
 - Assets/Cloudburst/Survivors/Bombardier/ExecAnimsupdate(Updated)2.blend
 - Assets/Cloudburst/Items/Harvester/GLASSNormals.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorFallDown.anim
+- Assets/Cloudburst/Equipment/Lumpkin/Metal_Lung_Model.FBX
 - Assets/Cloudburst/Items/Dummies/texHuntressDiffuse.png
 - Assets/Cloudburst/753network/Crystallize/Ramp Blue.png
 - Assets/Cloudburst/Items/UESKeycard/Materials/keycard_gloss.mat
 - Assets/Cloudburst/Materials/Dormant_Fungus_Tex.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkLFT.anim
 - Assets/Cloudburst/Items/mdlExampleSurvivor.prefab
+- Assets/Cloudburst/Survivors/Wyatt/animation/Walk/wyattRIGGED_RIGSmeaREAL.fbx
 - Assets/Cloudburst/Items/Affixes/PickupAffixOrange.prefab
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattAnimator 1.controller
 - Assets/Cloudburst/Materials/axetexture.mat
@@ -234,6 +260,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/T_Executor_V2_Color.mat
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp War.mat
 - Assets/Cloudburst/Survivors/Wyatt/mdlWyatt.prefab
+- Assets/Cloudburst/Effects/HANDHeal.prefab
 - Assets/Cloudburst/753network/Crystallize/Ramp War.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Textures/texExampleSurvivor.png
 - Assets/Cloudburst/Items/CarePackageRequester/blastboots.png
@@ -246,6 +273,7 @@ Assets:
 - Assets/Cloudburst/Items/Dummies/ModelBase.prefab
 - Assets/Cloudburst/Items/BrokenBodyArmor/Just armor texture.obj
 - Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalNormal.mat
+- Assets/Cloudburst/Effects/UniversalIncison.prefab
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorRunRight.anim
 - Assets/Cloudburst/Survivors/Wyatt/old/mdlHANDWinch (1).fbx
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Idle.anim
@@ -272,6 +300,7 @@ Assets:
 - Assets/Cloudburst/Items/Harvester/GlassHarvesterV05.blend
 - Assets/Cloudburst/Items/CarePackageRequester/icon.png
 - Assets/Cloudburst/Survivors/Wyatt/passive.png
+- Assets/Cloudburst/Effects/Bases/Mesh.prefab
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattAim.mask
 - Assets/Cloudburst/Items/Dummies/CommandoMesh_0.asset
 - Assets/Cloudburst/Items/UESKeycard/keycard.fbx
@@ -281,14 +310,19 @@ Assets:
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorFallUp.anim
 - Assets/Cloudburst/Survivors/Wyatt/utilityicon.png
 - Assets/Cloudburst/Items/UESKeycard/Materials/keycard_texture_red.mat
+- Assets/Cloudburst/Items/Affixes/Ruby_Crown.FBX
 - Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Primary.anim
 - Assets/Cloudburst/Items/Harvester/DroneV02.blend
 - Assets/Cloudburst/753network/Crystallize/Ruby.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/fab_dagger.png
 - Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_r.jpg
+- Assets/Cloudburst/Survivors/Wyatt/animation/Walk/Armature_Walk.LFT.anim
 - Assets/Cloudburst/Items/Cloak/japes_cloak.png
+- Assets/Cloudburst/Effects/Bases/Particles.prefab
+- Assets/Cloudburst/Survivors/Wyatt/Attempt5.prefab
 - Assets/Cloudburst/Survivors/Wyatt/old/mdlHANDWinchAvatar.asset
+- Assets/Cloudburst/Effects/Bases/Stars.prefab
 - Assets/Cloudburst/Materials/Ice_Tool_Tex.mat
 - Assets/Cloudburst/Shaders/Metal.shader
 - Assets/Cloudburst/Survivors/Wyatt/WyattPortrait.png
@@ -297,7 +331,7 @@ Assets:
 - Assets/Cloudburst/BuffIcons/GlassShatter.png
 - Assets/Cloudburst/Items/Lemdog/Materials/LemDog_TexIcon.mat
 - Assets/Cloudburst/Items/Lemdog/Materials/LemDog_Tex.mat
-- Assets/Cloudburst/Items/UESKeycard/source/keycard.fbx
+- Assets/Cloudburst/Shaders/source/keycard.fbx
 - Assets/Cloudburst/Survivors/Bombardier/icon.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorSprint.anim
 - Assets/Cloudburst/Items/Harvester/Materials/GLASSNormals.mat
@@ -312,8 +346,10 @@ Assets:
 - Assets/Cloudburst/Items/Grinder/texExtractor.png
 - Assets/Cloudburst/Survivors/Wyatt/vroomba.obj
 - Assets/Cloudburst/Survivors/Wyatt/Materials/passive.mat
+- Assets/Cloudburst/Items/Affixes/RubyCrown.prefab
 - Assets/Cloudburst/Materials/brickwall.mat
 - Assets/Cloudburst/T_Wyatt_Color.png
+- Assets/Cloudburst/Effects/Bases/Sparks.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Animations/WalkFWD.anim
 - Assets/Cloudburst/Survivors/Bombardier/bombsAnims.blend
 - Assets/Cloudburst/Items/MechanicalTrinket/icon.png
@@ -321,6 +357,7 @@ Assets:
 - Assets/Cloudburst/Items/BrokenBodyArmor/Materials/broken armor.mat
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Sapphire.mat
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Emissive2.mat
+- Assets/Cloudburst/Effects/Bases/CleanseEffect.prefab
 - Assets/Cloudburst/Items/Harvester/HarvesterTex.png
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Executioner_Emissive.png
 - Assets/Cloudburst/Items/CarePackageRequester/Materials/blastboots.mat
@@ -329,10 +366,14 @@ Assets:
 - Assets/Cloudburst/BuffIcons/Charm.png
 - Assets/Cloudburst/Items/Grinder/Materials/texExtractor.mat
 - Assets/Cloudburst/Survivors/Wyatt/old/WinchGhost.prefab
+- Assets/Cloudburst/Effects/Bases/Dust.prefab
 - Assets/Cloudburst/Items/Dummies/HuntressMesh.asset
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnimsupdate(Updated)2.blend
 - Assets/Cloudburst/Teaser/tex/Materials/Detritive_Trematode_Tex.mat
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/axetexture.mat
+- Assets/Cloudburst/Effects/Bases/Ring.prefab
+- Assets/Cloudburst/Effects/LumpkinScreamEffect.prefab
+- Assets/Cloudburst/Effects/Bases/Debris.prefab
 - Assets/Cloudburst/Enemies/Boss/LampBoss.png
 - Assets/Cloudburst/Shaders/toonramp.png
 - Assets/Cloudburst/Items/CarePackageRequester/Materials/3D_Printer.mat
@@ -342,6 +383,7 @@ Assets:
 - Assets/Cloudburst/Items/BrokenBodyArmor/admn.mat
 - Assets/Cloudburst/Items/Dummies/mdlHuntress.prefab
 - Assets/Cloudburst/Survivors/Wyatt/LoaderPylon.prefab
+- Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear 3.fbx
 - Assets/Cloudburst/Items/Dummies/Materials/texCommandoPaletteDiffuse.mat
 - Assets/Cloudburst/Items/Lemdog/LemDog_TexEmission.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/Armature_CharSelect.anim
@@ -352,22 +394,28 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/Materials/texMetalTrimDiffuse.png
 - Assets/Cloudburst/Teaser/tex/Materials/texTrimSheetMetalVibrant.mat
 - Assets/Cloudburst/Items/Lemdog/LemDog.fbx
+- Assets/Cloudburst/Survivors/Wyatt/animation/animSniper.controller
 - Assets/Cloudburst/Shaders/Materials/8597.mat
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorDeath.anim
 - Assets/Cloudburst/753network/Crystallize/Ramp Orange.png
 - Assets/Cloudburst/Survivors/Wyatt/GameObject.prefab
+- Assets/Cloudburst/Effects/Bases/donut3Mesh.asset
 - Assets/Cloudburst/Survivors/Bombardier/Flan/bombsAnims.blend
 - Assets/Cloudburst/753network/Crystallize/Ramp Ruby.png
+- Assets/Cloudburst/Effects/Bases/AACannon.prefab
 - Assets/Cloudburst/Items/TopazLense/RabbitsFoot.obj
 - Assets/Cloudburst/Survivors/Wyatt/animation/Armature_M2.anim
 - Assets/Cloudburst/Items/Dummies/Materials/texHuntressDiffuse.mat
 - Assets/Cloudburst/Survivors/Wyatt/mdlWyattCSS.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Secondary.anim
+- Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear 2.fbx
+- Assets/Cloudburst/Survivors/Wyatt/animation/Walk/Armature_Walk.RHT.anim
 - Assets/Cloudburst/Survivors/Wyatt/GrappleCollider.prefab
 - Assets/Cloudburst/Teaser/tex/T_Executor_V2_Color.png
 - Assets/Cloudburst/Survivors/Bombardier/mdlBombardier.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 3.mat
 - Assets/Cloudburst/Items/TopazLense/mat.png
+- Assets/Cloudburst/Equipment/Lumpkin/Materials/Metal.mat
 - Assets/Cloudburst/Icons/Engineer/TR75_Immolator_Turret_2.png
 - Assets/Cloudburst/Survivors/Wyatt/old/d_secondaryicon.png
 - Assets/Cloudburst/Items/Harvester/DroneV02.fbx
@@ -385,6 +433,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/T_Bombardier_Color 3.mat
 - Assets/Cloudburst/Survivors/Bombardier/mdlSatchel.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Animations/CharSelect.anim
+- Assets/Cloudburst/Equipment/Lumpkin/Metal_Lung_Texture.png
 - Assets/Cloudburst/Survivors/Bombardier/Flan/axetexture.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 2.mat
 Dependencies: []

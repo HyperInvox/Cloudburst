@@ -42,11 +42,16 @@ namespace Cloudburst
     {
         //be unique, though you're the same here.
 
-        const string guid = "com.TeamCloudburst.Cloudburst";
-        const string modName = "Cloudburst";
-        const string version = "0.1.3";
+        public const string guid = "com.TeamCloudburst.Cloudburst";
+        public const string modName = "Cloudburst";
+        public const string version = "0.1.3";
 
         public static CloudburstPlugin instance;
+
+        /// <summary>
+        /// Called after the cores are loaded. Do not reboot a core or call its constructor.
+        /// </summary>
+        public static event Action postLoad;
 
         /// <summary>
         /// Called BEFORE the first frame of the game.
@@ -87,6 +92,17 @@ namespace Cloudburst
             }
             return enabled;
         }
+
+        public bool ValidateEquipment(EquipmentBuilder equipment, List<EquipmentBuilder> equipmentList)
+        {
+            if (Config.Bind<bool>("Equipment: " + equipment.EquipmentName, "Enable Equipment?", true, "Should this equipment appear in runs?").Value)
+            {
+                equipmentList.Add(equipment);
+                return true;
+            }
+            return false;
+        }
+
 
         public ConfigFile configFile
         {
@@ -205,7 +221,6 @@ namespace Cloudburst
             Enabled = Config.Bind("Cloudburst", "Enabled", true, "THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS. Enables the mod. Set to false to disable the mod entirely. THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS.");
         }
 
-
         private void InitializeCores()
         {
             if (Enabled.Value)
@@ -275,6 +290,10 @@ namespace Cloudburst
                     new Custodian().Init(Config);
                     //wyattCore = new WyattCore();
                 }
+                if (EnableVoid.Value)
+                {
+                    new VoidCore();
+                }
                 if (EnableRex.Value)
                 {
                     rexCore = new RexCore();
@@ -285,10 +304,7 @@ namespace Cloudburst
                 }
                 //On.RoR2.CharacterBody.AddTimedBuff += GlobalHooks.CharacterBody_AddTimedBuff;
                 //On.RoR2.HealthComponent.TakeDamage += GlobalHooks.HealthComponent_TakeDamage;
-                if (EnableVoid.Value)
-                {
-                    new VoidCore();
-                }
+
                 new NewtCore();
                 //and thus
                 //we reach the end
@@ -296,6 +312,8 @@ namespace Cloudburst
                 // mushrum = new MegaMushrum();
                 // ancientWisp = new AncientWispCore();
                 // bombManCore = new BombardierCore();
+                // new DebuggingCore();
+                postLoad?.Invoke();
 
                 //i'll follow you home when the night comes
                 R2API.Utils.CommandHelper.AddToConsoleWhenReady();

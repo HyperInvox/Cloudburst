@@ -43,7 +43,9 @@ namespace Cloudburst.Cores.States.Wyatt
         }
 
         private GameObject obj
-        { get {
+        {
+            get
+            {
                 if (this.isComboFinisher)
                 {
                     return EffectCore.wyattSwingTrail;
@@ -64,19 +66,21 @@ namespace Cloudburst.Cores.States.Wyatt
             this.duration = this.baseDuration / base.attackSpeedStat;
             this.hitPauseDuration = 0.1f;
             this.damageCoefficient = 2f;
+            this.procCoefficient = 1f;
             spawnEffect = false;
             //swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/GrandparentGroundSwipeTrailEffect");
             hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
             //swingEffectMuzzleString = "WinchHole";//"//SwingTrail";
 
-            LogCore.LogW(step);
+
+            //LogCore.LogW(step);
 
             if (isComboFinisher)
             {
-                LogCore.LogW("finisher");
+                // LogCore.LogW("finisher");
                 this.hitBoxGroupName = "TempHitbox";
                 forceVector = new Vector3(0, 1000, 0);
-                    //this.baseDuration = 1f;
+                //this.baseDuration = 1f;
                 //this.duration = this.baseDuration / base.attackSpeedStat;
                 this.hitPauseDuration = 0.2f;
                 this.damageCoefficient = 4f;
@@ -98,7 +102,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 EffectManager.SimpleMuzzleFlash(obj, base.gameObject, "SwingTrail", true);
             }
         }
-            
+
 
         public override void OnExit()
         {
@@ -116,6 +120,12 @@ namespace Cloudburst.Cores.States.Wyatt
 
         public override void PlayAnimation()
         {
+            /*EffectManager.SpawnEffect(EffectCore.blackHoleIncisionEffect, new EffectData()
+            {
+                origin = base.transform.position,
+                scale = 10,
+                rotation = Quaternion.identity, 
+            }, false);*/
             /*this.animationStateName = "";
             switch (this.step)
             {

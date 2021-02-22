@@ -22,7 +22,7 @@ namespace Cloudburst.Cores.Components
             }
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             if (!this.attachmentTransform)
             {

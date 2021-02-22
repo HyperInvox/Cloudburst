@@ -3,6 +3,8 @@ using RoR2;
 using RoR2.Projectile;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -67,110 +69,127 @@ namespace Cloudburst.Cores
         #region GameObjects
         private GameObject greaterWarbanner;
         //private GameObject molotovCocktailZone;
+        public List<EquipmentBuilder> Equipment = new List<EquipmentBuilder>();
+
         #endregion
         public EquipmentCore()
         {
             LogCore.LogI("Initializing Core: " + base.ToString());
+            var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(EquipmentBuilder)));
 
-            RegisterTokens();
+            foreach (var itemType in ItemTypes)
+            {
+                EquipmentBuilder item = (EquipmentBuilder)System.Activator.CreateInstance(itemType);
+                if (CloudburstPlugin.instance.ValidateEquipment(item, Equipment))
+                {
+                    item.Init(CloudburstPlugin.instance.GetConfig());
+                }
+            }
+        }
+    }
+}
 
-            #region Basic
-            var prefab = Resources.Load<GameObject>("Prefabs/PickupModels/PickupMystery");
-            var rule = new ItemDisplayRule
-            {
-                ruleType = ItemDisplayRuleType.ParentedPrefab,
-                followerPrefab = prefab,
-                childName = "Chest",
-                localScale = new Vector3(0f, 0, 0f),
-                localAngles = new Vector3(0f, 0f, 0f),
-                localPos = new Vector3(0, 0f, 0f)
-            };
-            string pickUpIconPath = "Textures/MiscIcons/texMysteryIcon";
-            string pickUpModelPath = "Prefabs/PickupModels/PickupMystery";
-            #endregion 
 
-            RegisterNewEquip(new EquipmentDef()
-            {
-                addressToken = "",
-                appearsInMultiPlayer = true,
-                appearsInSinglePlayer = true,
-                canDrop = true,
-                colorIndex = ColorCatalog.ColorIndex.Equipment,
-                cooldown = 30,
-                descriptionToken = "EQUIPMENT_LUMPKIN_DESC",
-                enigmaCompatible = true,
-                isBoss = false,
-                isLunar = false,
-                loreToken = "EQUIPMENT_LUMPKIN_LORE",
-                name = "Lumpkin",
-                nameToken = "EQUIPMENT_LUMPKIN_NAME",
-                pickupIconPath = pickUpIconPath,
-                pickupModelPath = pickUpModelPath,
-                pickupToken = "EQUIPMENT_LUMPKIN_PICKUP",
-                unlockableName = "",
-            });
-            RegisterNewEquip(new EquipmentDef()
-            {
-                addressToken = "",
-                appearsInMultiPlayer = true,
-                appearsInSinglePlayer = true,
-                canDrop = true,
-                colorIndex = ColorCatalog.ColorIndex.Equipment,
-                cooldown = 15,
-                descriptionToken = "EQUIPMENT_LUMPKIN_DESC",
-                enigmaCompatible = true,
-                isBoss = false,
-                isLunar = false,
-                loreToken = "",
-                name = "Reactor",
-                nameToken = "EQUIPMENT_UNSTABLEQUANTUMREACTOR_NAME",
-                pickupIconPath = pickUpIconPath,
-                pickupModelPath = pickUpModelPath,
-                pickupToken = "EQUIPMENT_UNSTABLEQUANTUMREACTOR_PICKUP",
-                unlockableName = "",
-            });
-            /*RegisterNewEquip(new EquipmentDef()
-            {
-                addressToken = "",
-                appearsInMultiPlayer = true,
-                appearsInSinglePlayer = true,
-                canDrop = true,
-                colorIndex = ColorCatalog.ColorIndex.Equipment,
-                cooldown = 25,
-                descriptionToken = "EQUIPMENT_ROCKFRUIT_DESC",
-                enigmaCompatible = true,
-                isBoss = false,
-                isLunar = true,
-                loreToken = "EQUIPMENT_ROCKFRUIT_LORE",
-                name = "RockFruit",
-                nameToken = "EQUIPMENT_ROCKFRUIT_NAME",
-                pickupIconPath = pickUpIconPath,
-                pickupModelPath = pickUpModelPath,
-                pickupToken = "EQUIPMENT_ROCKFRUIT_PICKUP",
-                unlockableName = "",
-            });
-            RegisterNewEquip(new EquipmentDef()
-            {
-                addressToken = "",
-                appearsInMultiPlayer = true,
-                appearsInSinglePlayer = true,
-                canDrop = true,
-                colorIndex = ColorCatalog.ColorIndex.Equipment,
-                cooldown = 15,
-                descriptionToken = "EQUIPMENT_MIRV_DESC",
-                enigmaCompatible = true,
-                isBoss = false,
-                isLunar = true,
-                loreToken = "EQUIPMENT_MIRV_LORE",
-                name = "MIRV",
-                nameToken = "EQUIPMENT_MIRV_NAME",
-                pickupIconPath = pickUpIconPath,
-                pickupModelPath = pickUpModelPath,
-                pickupToken = "EQUIPMENT_MIRV_PICKUP",
-                unlockableName = "",
-            });*/
 
-            On.RoR2.EquipmentSlot.PerformEquipmentAction += EquipmentSlot_PerformEquipmentAction;
+    /*RegisterTokens();
+
+    #region Basic
+    var prefab = Resources.Load<GameObject>("Prefabs/PickupModels/PickupMystery");
+    var rule = new ItemDisplayRule
+    {
+        ruleType = ItemDisplayRuleType.ParentedPrefab,
+        followerPrefab = prefab,
+        childName = "Chest",
+        localScale = new Vector3(0f, 0, 0f),
+        localAngles = new Vector3(0f, 0f, 0f),
+        localPos = new Vector3(0, 0f, 0f)
+    };
+    string pickUpIconPath = "Textures/MiscIcons/texMysteryIcon";
+    string pickUpModelPath = "Prefabs/PickupModels/PickupMystery";
+    #endregion 
+
+    RegisterNewEquip(new EquipmentDef()
+    {
+        addressToken = "",
+        appearsInMultiPlayer = true,
+        appearsInSinglePlayer = true,
+        canDrop = true,
+        colorIndex = ColorCatalog.ColorIndex.Equipment,
+        cooldown = 30,
+        descriptionToken = "EQUIPMENT_LUMPKIN_DESC",
+        enigmaCompatible = true,
+        isBoss = false,
+        isLunar = false,
+        loreToken = "EQUIPMENT_LUMPKIN_LORE",
+        name = "Lumpkin",
+        nameToken = "EQUIPMENT_LUMPKIN_NAME",
+        pickupIconPath = pickUpIconPath,
+        pickupModelPath = "@Cloudburst:Assets/Cloudburst/Equipment/Lumpkin/IMDLLumpkin.prefab",
+        pickupToken = "EQUIPMENT_LUMPKIN_PICKUP",
+        unlockableName = "",
+    });
+    RegisterNewEquip(new EquipmentDef()
+    {
+        addressToken = "",
+        appearsInMultiPlayer = true,
+        appearsInSinglePlayer = true,
+        canDrop = true,
+        colorIndex = ColorCatalog.ColorIndex.Equipment,
+        cooldown = 15,
+        descriptionToken = "EQUIPMENT_LUMPKIN_DESC",
+        enigmaCompatible = true,
+        isBoss = false,
+        isLunar = false,
+        loreToken = "",
+        name = "Reactor",
+        nameToken = "EQUIPMENT_UNSTABLEQUANTUMREACTOR_NAME",
+        pickupIconPath = pickUpIconPath,
+        pickupModelPath = pickUpModelPath,
+        pickupToken = "EQUIPMENT_UNSTABLEQUANTUMREACTOR_PICKUP",
+        unlockableName = "",
+    });
+    /*RegisterNewEquip(new EquipmentDef()
+    {
+        addressToken = "",
+        appearsInMultiPlayer = true,
+        appearsInSinglePlayer = true,
+        canDrop = true,
+        colorIndex = ColorCatalog.ColorIndex.Equipment,
+        cooldown = 25,
+        descriptionToken = "EQUIPMENT_ROCKFRUIT_DESC",
+        enigmaCompatible = true,
+        isBoss = false,
+        isLunar = true,
+        loreToken = "EQUIPMENT_ROCKFRUIT_LORE",
+        name = "RockFruit",
+        nameToken = "EQUIPMENT_ROCKFRUIT_NAME",
+        pickupIconPath = pickUpIconPath,
+        pickupModelPath = pickUpModelPath,
+        pickupToken = "EQUIPMENT_ROCKFRUIT_PICKUP",
+        unlockableName = "",
+    });
+    RegisterNewEquip(new EquipmentDef()
+    {
+        addressToken = "",
+        appearsInMultiPlayer = true,
+        appearsInSinglePlayer = true,
+        canDrop = true,
+        colorIndex = ColorCatalog.ColorIndex.Equipment,
+        cooldown = 15,
+        descriptionToken = "EQUIPMENT_MIRV_DESC",
+        enigmaCompatible = true,
+        isBoss = false,
+        isLunar = true,
+        loreToken = "EQUIPMENT_MIRV_LORE",
+        name = "MIRV",
+        nameToken = "EQUIPMENT_MIRV_NAME",
+        pickupIconPath = pickUpIconPath,
+        pickupModelPath = pickUpModelPath,
+        pickupToken = "EQUIPMENT_MIRV_PICKUP",
+        unlockableName = "",
+    });
+
+    On.RoR2.EquipmentSlot.PerformEquipmentAction += EquipmentSlot_PerformEquipmentAction;
 
         }
 
@@ -245,7 +264,7 @@ namespace Cloudburst.Cores
                 attacker = Screamer.gameObject,
                 attackerFiltering = AttackerFiltering.Default,
                 baseDamage = (5 * Screamer.damage) + (Screamer.maxHealth * 2),
-                baseForce = 5000, 
+                baseForce = 5000,
                 bonusForce = new Vector3(0, 5000, 0),
                 crit = false,
                 damageColorIndex = DamageColorIndex.CritHeal,
@@ -349,7 +368,7 @@ namespace Cloudburst.Cores
             }
 
             var FINALLY = GetRandomItem(list);
-            user.GiveItem(FINALLY);*/
+            user.GiveItem(FINALLY);
         }
 
         public List<PickupIndex> GetDropListListFromItemTier(ItemTier itemTier)
@@ -422,4 +441,4 @@ namespace Cloudburst.Cores
             ProjectileManager.instance.FireProjectile(projInfo);
         }
     }
-}
+}*/

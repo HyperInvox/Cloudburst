@@ -147,6 +147,11 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
+    <Compile Include="Cores\Components\Blink.cs" />
+    <Compile Include="Cores\Components\Class1.cs" />
+    <Compile Include="Cores\Components\SquashedComponent.cs" />
+    <Compile Include="Cores\Equipment\Lumpkin.cs" />
+    <Compile Include="Cores\Events.cs" />
     <Compile Include="Cores\Components\WyattSoap.cs" />
     <Compile Include="Cores\CustodianCore.cs" />
     <Compile Include="Cores\Components\Glass.cs" />
@@ -170,6 +175,7 @@
     <Compile Include="Cores\NewtCore.cs" />
     <Compile Include="Cores\States\Emotes\Emotes.cs" />
     <Compile Include="Cores\States\VoidGolems\Shell.cs" />
+    <Compile Include="Cores\States\Wyatt\DRIVEMETOTHEHIGHWAY.cs" />
     <Compile Include="Cores\States\Wyatt\WyattMain.cs" />
     <Compile Include="Cores\VoidCore.cs" />
     <Compile Include="Cores\Components\AntiGravityChecker.cs" />
@@ -179,10 +185,12 @@
     <Compile Include="Cores\States\Wyatt\WyattBaseMeleeAttack.cs" />
     <Compile Include="Cores\States\Wyatt\Cleanup.cs" />
     <Compile Include="Util\Builders\BuffBuilder.cs" />
+    <Compile Include="Util\Builders\EquipmentBuilder.cs" />
     <Compile Include="Util\Builders\FlierBuilder.cs" />
     <Compile Include="Util\Builders\SurvivorBuilder.cs" />
     <Compile Include="Util\Builders\ItemBuilder.cs" />
     <Compile Include="Util\Builders\EnemyBuilder.cs" />
+    <Compile Include="Util\MaterialSwapper.cs" />
     <Compile Include="Util\Listener.cs" />
     <Compile Include="Util\EnigmaticList.cs" />
     <Compile Include="Util\CloudUtils.cs" />

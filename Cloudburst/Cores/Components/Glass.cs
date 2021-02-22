@@ -17,6 +17,7 @@ namespace Cloudburst.Cores.Components
             if (damageReport.attacker = base.gameObject) {
 
                 EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/BrittleDeath"), new EffectData() { origin = base.transform.position, scale = 10, rotation = Quaternion.identity}, true);
+                damageReport.attackerBody.healthComponent.HealFraction(15, default);
                 damageReport.attackerBody.AddBuff(BuffCore.instance.glassMithrix);
             }
         }

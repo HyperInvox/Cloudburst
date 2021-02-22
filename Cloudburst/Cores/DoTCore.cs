@@ -41,54 +41,62 @@ namespace Cloudburst.Cores
         void RedactedBehaviour(DotController controller, DotController.DotStack stacks) {
             stacks.damageType = DamageType.NonLethal;
             var body = controller.victimBody;
+            LogCore.LogI("hi-3");
             if (body) {
+                LogCore.LogI("hi-2");
                 var healthComponent = body.healthComponent;
                 if (healthComponent) {
+                    LogCore.LogI("hi-1");
 
                     bool isFullHealth = body.healthComponent.combinedHealthFraction >= 1;
                     if (isFullHealth) {
                         stacks.damage = 0;
                     }
+                    LogCore.LogI("hi0");
+                    LogCore.LogI(healthComponent.combinedHealthFraction);
                     switch (healthComponent.combinedHealthFraction) {
                         case 0.9f:
+                            LogCore.LogI("hi1");
                             stacks.damage += 0.5f;
                             break;
                         case 0.8f:
+                            LogCore.LogI("hi2");
+
                             stacks.damage += 1f;
                             break;
                         case 0.7f:
+                            LogCore.LogI("hi3");
+
                             stacks.damage += 1.5f;
                             break;
                         case 0.6f:
+                            LogCore.LogI("hi4");
                             stacks.damage += 2f;
                             break;
                         case 0.5f:
+                            LogCore.LogI("hi5");
                             stacks.damage += 3f;
                             break;
                         case 0.4f:
+                            LogCore.LogI("hi6");
                             stacks.damage += 3.5f;
                             break;
                         case 0.3f:
+                            LogCore.LogI("hi7");
                             stacks.damage += 4f;
                             break;
                         case 0.2f:
+                            LogCore.LogI("hi8");
                             stacks.damage += 4.5f;
                             break;
                         case 0.1f:
+                            LogCore.LogI("hi9");
                             stacks.damage += 5f;
                             break;
                     }
                 }
             }
-        }
-
-        void CleanVisuals(DotController controller) {
-
-        }
-
-        protected internal DotIndex RegisterDoT(float interval, float damageCoeff, DamageColorIndex colorIndex, BuffIndex assocatedBuff)
-        {
-            return RegisterDotDef(interval, damageCoeff, colorIndex, assocatedBuff);
+            LogCore.LogI("hi!");
         }
     }
 }

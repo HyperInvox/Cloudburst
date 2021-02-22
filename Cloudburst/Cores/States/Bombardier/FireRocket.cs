@@ -5,6 +5,7 @@ using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.Networking;
+using EntityStates.Huntress.HuntressWeapon;
 
 namespace Cloudburst.Cores.States.Bombardier
 {
@@ -22,13 +23,14 @@ namespace Cloudburst.Cores.States.Bombardier
         public static float timeBeforeKnockback;
 
         private float duration;
+        private float stopwatch;
 
         public override void OnEnter()
         {
             base.OnEnter();
             this.duration = baseDuration / this.attackSpeedStat;
             base.StartAimMode(2f, false);
-            base.PlayCrossfade("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration, 0.05f);
+            base.PlayCrossfade("Fullbody, Override", "CoolSwing", "CoolSwing.playbackRate", this.duration, 0.05f);
 
             if (base.isAuthority)
             {
@@ -40,6 +42,28 @@ namespace Cloudburst.Cores.States.Bombardier
         {
 
             var aimRay = GetAimRay();
+            if (base.teamComponent.teamIndex == TeamIndex.Player)
+            {
+
+                Collider[] array = Physics.OverlapSphere(GetModelChildLocator().FindChild("TempHitboxSquish").position, 10, LayerIndex.defaultLayer.mask);
+                for (int i = 0; i < array.Length; i++)
+                {
+                    HealthComponent healthComponent = array[i].GetComponent<HealthComponent>();
+                    if (healthComponent)
+                    {
+                        var charb = healthComponent.body;
+                        if (charb && charb.modelLocator && charb != base.characterBody)
+                        {
+                            if (!charb.modelLocator.modelTransform.gameObject.GetComponent<SquashedComponent>())
+                            {
+                                charb.modelLocator.modelTransform.gameObject.AddComponent<SquashedComponent>().speed = 5f;
+                            }
+
+                        }
+                    }
+                }
+            }
+
 
             ProjectileManager.instance.FireProjectile(GetInfo(aimRay));
 
@@ -49,11 +73,11 @@ namespace Cloudburst.Cores.States.Bombardier
                 characterBody.AddSpreadBloom(GetBloom());
             }
 
-            //var isNeikOnCrack = Resources.Load<GameObject>("@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/MDLMechanicalTrinket.prefab");
-            //var isNeikOnCrackButReal = UnityEngine.Object.Instantiate<GameObject>(isNeikOnCrack);
-            //isNeikOnCrackButReal.transform.position = transform.position;
-            //isNeikOnCrackButReal.transform.localScale = new Vector3(50, 50, 50);
-            //NetworkServer.Spawn(isNeikOnCrackButReal);
+            /*var isNeikOnCrack = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("IMDLLumpkin");
+            var isNeikOnCrackButReal = UnityEngine.Object.Instantiate<GameObject>(isNeikOnCrack);
+            isNeikOnCrackButReal.transform.position = transform.position;
+            isNeikOnCrackButReal.transform.localScale = new Vector3(50, 50, 50);
+            NetworkServer.Spawn(isNeikOnCrackButReal);*/
 
         }
 
@@ -97,6 +121,8 @@ namespace Cloudburst.Cores.States.Bombardier
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            this.stopwatch += Time.fixedDeltaTime;
+            characterMotor.velocity.y = characterMotor.velocity.y + ThrowGlaive.antigravityStrength * Time.fixedDeltaTime * (1f - this.stopwatch / this.duration);
             if (base.fixedAge >= this.duration && base.isAuthority)
             {
                 this.outer.SetNextStateToMain();

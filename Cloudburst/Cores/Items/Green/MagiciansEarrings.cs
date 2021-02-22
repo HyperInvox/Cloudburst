@@ -44,6 +44,8 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
             BuffIndex.MedkitHeal,
             BuffIndex.HiddenInvincibility,
             BuffIndex.ElementalRingsCooldown,
+            BuffCore.instance.antiGravFriendlyIndex,
+            BuffIndex.EngiShield
         };
 
         public override void CreateConfig(ConfigFile config)
@@ -85,11 +87,13 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
                 var def = BuffCatalog.GetBuffDef(buffType);
                 var cSharpSucks = buffType;
 
-                bool blackListed = blackList.Contains(buffType) && def.isDebuff;
+                bool blackListed = blackList.Contains(buffType) || def.isDebuff;
+                LogCore.LogI("orig:" + buffType.ToString() + "isBlacklisted:" + blackListed.ToString());
 
-                if (earringsCount > 0 && !blackListed) 
+                if (earringsCount > 0 && blackListed == false) 
                 {
                     //do thing???
+                    LogCore.LogI("hit:" + buffType.ToString());
                     duration += 2 + (1 * earringsCount);
                 }
             }
@@ -100,6 +104,12 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
         private float timer = 0;
         private float oldCount;
         private Xoroshiro128Plus rng;
+        private EffectData effectData = new EffectData
+        {
+            //origin = body.transform.position,
+            rotation = Quaternion.identity,
+            scale = 20,
+        };
 
         public void Start()
         {
@@ -123,27 +133,38 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
                     {
                         count = rng.RangeInt(1, 3);
                     }
-                    EffectData effectData = new EffectData
-                    {
-                        origin = body.transform.position,
-                        rotation = Quaternion.identity,
-                        scale = 20,
-                    };
+                    effectData.origin = body.transform.position;
                     switch (count)
                     {
                         case 1:
                             EffectManager.SpawnEffect(EffectCore.magicArmor, effectData, true);
-                            Util.PlaySound("Play_item_use_gainArmor", base.gameObject);
-
+                            // Util.PlaySound("Play_item_use_gainArmor", base.gameObject);
+                            EffectManager.SpawnEffect(EffectCore.reallyCoolEffect, new EffectData()
+                            {
+                                origin = base.transform.position,
+                                scale = 10,
+                                rotation = Quaternion.identity,
+                            }, false);
                             body.AddBuff(BuffCore.instance.magicArmor);
                             break;
                         case 2:
                             EffectManager.SpawnEffect(EffectCore.magicAttackSpeed, effectData, true);
                             Util.PlaySound("Play_item_proc_crit_attack_speed1", base.gameObject);
-
+                            EffectManager.SpawnEffect(EffectCore.trulyCoolEffect, new EffectData()
+                            {
+                                origin = base.transform.position,
+                                scale = 10,
+                                rotation = Quaternion.identity,
+                            }, false);
                             body.AddBuff(BuffCore.instance.magicAttackSpeed);
                             break;
                         case 3:
+                            EffectManager.SpawnEffect(EffectCore.coolEffect, new EffectData()
+                            {
+                                origin = base.transform.position,
+                                scale = 10,
+                                rotation = Quaternion.identity,
+                            }, false);
                             EffectManager.SpawnEffect(EffectCore.magicRegen, effectData, true);
                             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/FruitHealEffect"), effectData, true);
                             Util.PlaySound("char_healing_drone_heal_02", base.gameObject);
