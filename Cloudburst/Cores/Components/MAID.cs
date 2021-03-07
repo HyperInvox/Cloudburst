@@ -20,7 +20,7 @@ namespace Cloudburst.Cores.Components
         private List<Rigidbody> bodies;
         public void Awake()
         {
-            bodies = new List<Rigidbody>(); 
+            bodies = new List<Rigidbody>();
             controller = base.gameObject.GetComponent<ProjectileController>();
             boomer = base.gameObject.GetComponent<BoomerangProjectile>();
             body = GetComponent<Rigidbody>();
@@ -51,10 +51,11 @@ namespace Cloudburst.Cores.Components
 
         public void FixedUpdate() {
 
-                    if (boomer.stopwatch >= boomer.maxFlyStopwatch && triggered == false)
+            if (boomer.stopwatch >= boomer.maxFlyStopwatch && triggered == false)
             {
                 triggered = true;
                 pause = true;
+                base.GetComponent<ProjectileProximityBeamController>().enabled = true;
                 base.GetComponent<BoomerangProjectile>().enabled = false;
                 return;
             }
@@ -71,14 +72,20 @@ namespace Cloudburst.Cores.Components
             }
         }
 
-        public void OnDestroy() {   
-            owner.gameObject?.GetComponent<MAIDManager>()?.GetMAID();
-           owner.gameObject?.GetComponent<SkillLocator>()?.special?.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Contextual); ; }
+        public void OnDestroy() {
 
+            owner.gameObject?.GetComponent<MAIDManager>()?.GetMAID();
+            LogCore.LogI(stop);
+
+            owner.gameObject.GetComponent<MAIDManager>().Invoke(stop);
+
+            //owner.gameObject?.GetComponent<SkillLocator>()?.special?.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Contextual); ; }
+        }
 
         public void Unpause()
         {
             pause = false;
+            base.GetComponent<ProjectileProximityBeamController>().enabled = false;
             base.GetComponent<BoomerangProjectile>().enabled = true;
         }
 

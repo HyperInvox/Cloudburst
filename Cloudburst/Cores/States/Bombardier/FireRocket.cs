@@ -57,6 +57,12 @@ namespace Cloudburst.Cores.States.Bombardier
                             if (!charb.modelLocator.modelTransform.gameObject.GetComponent<SquashedComponent>())
                             {
                                 charb.modelLocator.modelTransform.gameObject.AddComponent<SquashedComponent>().speed = 5f;
+                                EffectManager.SpawnEffect(EffectCore.willIsNotPoggers/*Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfx")*/, new EffectData()
+                                {
+                                    origin = charb.transform.position,
+                                    scale = 10,
+                                    rotation = Quaternion.identity,
+                                }, false);
                             }
 
                         }
@@ -65,7 +71,7 @@ namespace Cloudburst.Cores.States.Bombardier
             }
 
 
-            ProjectileManager.instance.FireProjectile(GetInfo(aimRay));
+            //ProjectileManager.instance.FireProjectile(GetInfo(aimRay));
 
 
             if (characterBody && ShouldApplyBloom())
@@ -73,10 +79,10 @@ namespace Cloudburst.Cores.States.Bombardier
                 characterBody.AddSpreadBloom(GetBloom());
             }
 
-            /*var isNeikOnCrack = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("IMDLLumpkin");
+            /*var isNeikOnCrack = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("banana for scale");
             var isNeikOnCrackButReal = UnityEngine.Object.Instantiate<GameObject>(isNeikOnCrack);
             isNeikOnCrackButReal.transform.position = transform.position;
-            isNeikOnCrackButReal.transform.localScale = new Vector3(50, 50, 50);
+            isNeikOnCrackButReal.transform.localScale = new Vector3(1, 1, 1);
             NetworkServer.Spawn(isNeikOnCrackButReal);*/
 
         }
@@ -128,6 +134,12 @@ namespace Cloudburst.Cores.States.Bombardier
                 this.outer.SetNextStateToMain();
                 return;
             }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

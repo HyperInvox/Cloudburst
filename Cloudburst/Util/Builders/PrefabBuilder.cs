@@ -346,7 +346,7 @@ public class PrefabBuilder
             {
                 if (child.name.Contains("Hitbox"))
                 {
-                    LogCore.LogI(child.name);
+                    //LogCore.LogI(child.name);
                     var hitBoxGroup = transform.AddComponent<HitBoxGroup>();
                     var hitBox = child.AddComponent<HitBox>();
                     hitBoxGroup.groupName = child.name;

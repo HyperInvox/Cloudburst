@@ -25,7 +25,7 @@ namespace Cloudburst.Cores.States.Wyatt
         private bool scaleHitPauseDurationAndVelocityWithAttackSpeed = true;
 
         public static GameObject swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/handslamtrail");
-        public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
+        public static GameObject hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfx");
 
         private Transform hammerChildTransform;
 

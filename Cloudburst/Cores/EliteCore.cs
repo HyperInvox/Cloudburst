@@ -553,7 +553,7 @@ namespace Cloudburst.Cores
         public CharacterBody body;
         public TemporaryOverlay effect;
         public void FixedUpdate() {
-            if (!body || !body.HasBuff(buff)) {
+            if (NetworkServer.active && !body || !body.HasBuff(buff)) {
                 Destroy(effect);
                 Destroy(this);
             }

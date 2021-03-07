@@ -49,4 +49,4 @@ namespace Cloudburst.Cores.Skills
             public BombardierStickyBombManager stickyManager;
         }
     }
-}       
+}

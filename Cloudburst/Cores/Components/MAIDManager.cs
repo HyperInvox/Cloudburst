@@ -9,15 +9,20 @@ namespace Cloudburst.Cores.Components
 {
     public class MAIDManager : NetworkBehaviour
     {
-        private GameObject maid;
-        private GameObject winch;
-        private bool startReel;
+        public GameObject maid;
+        public GameObject winch;
+        public bool startReel;
         private float _stopwatch = 0;
+
+        public event Action<bool, GenericSkill> OnRetrival;
+        public event Action<GenericSkill> OnDeploy;
+        public event Action sunset;
 
         private SkillLocator skillLocator;
         private CharacterBody body;
         private CharacterMotor characterMotor;
         private CharacterDirection characterDirection;
+
         public void Awake()
         {
             skillLocator = GetComponent<SkillLocator>();
@@ -27,6 +32,12 @@ namespace Cloudburst.Cores.Components
             //click and she's gone!
         }
 
+        public void Invoke(bool bo) {
+            if (NetworkServer.active) {
+                RpcSetDeploy(bo);
+            }
+        }
+
         private void FixedUpdate()
         {
             if (startReel == true && maid)
@@ -34,6 +45,8 @@ namespace Cloudburst.Cores.Components
                 body.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
                 Vector3 lossyScale = maid.transform.lossyScale;
                 var volume = lossyScale.x * 2f * (lossyScale.y * 2f) * (lossyScale.z * 2f);
+
+                _stopwatch += Time.fixedDeltaTime;
 
                 Vector3 velocity = (maid.transform.position - base.transform.position).normalized * 120f;
                 characterMotor.velocity = velocity;
@@ -47,7 +60,8 @@ namespace Cloudburst.Cores.Components
                     body.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
                     characterMotor.velocity = Vector3.zero;
                     startReel = false;
-                    RpcSetDeploy();
+                    sunset.Invoke();
+                    //RpcSetDeploy(true);
 
                 }
                 float distance = Vector3.Distance(base.transform.position, maid.transform.position);
@@ -59,7 +73,7 @@ namespace Cloudburst.Cores.Components
                     CloudburstPlugin.Destroy(winch);
                     characterMotor.velocity = Vector3.up * 30f;
                     startReel = false;
-                    RpcSetDeploy();
+                   // RpcSetDeploy(false);
                 }
             }
         }
@@ -85,8 +99,9 @@ namespace Cloudburst.Cores.Components
         }
 
         public void GetMAID() {
-            RpcSetRetrieve();
-            Destroy(winch);
+           // OnRetrival.Invoke(true, skillLocator.special);
+            //Destroy(winch);
+
         }
 
         [Server]
@@ -96,25 +111,7 @@ namespace Cloudburst.Cores.Components
             //    CloudburstPlugin.Destroy(winch);
             LogCore.LogI("Deployed maid!");
             this.maid = maid;
-            FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
-            {
-                crit = false,
-                damage = 0,
-                damageColorIndex = DamageColorIndex.Default,
-                force = 0f,
-                owner = base.gameObject,
-                position = maid.transform.position,
-                procChainMask = default(ProcChainMask),
-                projectilePrefab = ProjectileCore.winch,
-                rotation = Quaternion.identity,
-                target = maid.gameObject,
-                useSpeedOverride = true,
-                speedOverride = 500
-            };
-            EffectManager.SimpleMuzzleFlash(Resources.Load<GameObject>("prefabs/effects/muzzleflashes/MuzzleflashWinch"), base.gameObject, "WinchHole", true);
-            ProjectileManager.instance.FireProjectile(fireProjectileInfo);
             RpcSetRetrieve();
-            LogCore.LogI(skillLocator.special.skillDef.skillName);
         }
 
         [Command]
@@ -132,8 +129,8 @@ namespace Cloudburst.Cores.Components
             if (maid)
             {
                 LogCore.LogI("maid exists");
+                _stopwatch = 0;
                 startReel = true;
-                RpcSetDeploy();
                 maid.GetComponent<MAID>().FullStop();
                 //Destroy(maid);
             }
@@ -158,17 +155,17 @@ namespace Cloudburst.Cores.Components
 
 
         [ClientRpc]
-        private void RpcSetDeploy()
+        private void RpcSetDeploy(bool natRetrival)
         {
-            skillLocator.special.UnsetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);
-            skillLocator.special.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);
+            LogCore.LogI("invoke");
+            OnRetrival?.Invoke(natRetrival, skillLocator.special);
+            //  skillLocator.special.UnsetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);
+            //skillLocator.special.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);
         }
         [ClientRpc]
         private void RpcSetRetrieve()
         {
-            skillLocator.special.UnsetSkillOverride(this, Custodian.retrievePrimary, GenericSkill.SkillOverridePriority.Replacement);
-
-            skillLocator.special.SetSkillOverride(this, Custodian.retrievePrimary, GenericSkill.SkillOverridePriority.Replacement);
+            OnDeploy?.Invoke(skillLocator.special);
         }
     }
 }

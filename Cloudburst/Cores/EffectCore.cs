@@ -31,6 +31,7 @@ namespace Cloudburst.Cores
         public static GameObject blackHoleIncisionEffect;
 
         public static GameObject lumpkinEffect;
+        public static GameObject willIsNotPoggers;
 
         public EffectCore() => Effects();
 
@@ -50,6 +51,21 @@ namespace Cloudburst.Cores
         private void CreateMAIDCleanseEffect()
         {
             maidCleanseEffect = CreateAsset("MAIDCleanEffect", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
+        }
+
+        private void WillIsStillNotPoggers() {
+            willIsNotPoggers = CreateAsset("WillIsNotPoggers", false, false, true, "", false, VFXAttributes.VFXIntensity.Low, VFXAttributes.VFXPriority.Always);
+            var unfortunatelyWillIsStillNotPoggers = willIsNotPoggers.AddComponent<ShakeEmitter>();
+
+            unfortunatelyWillIsStillNotPoggers.wave = new Wave()
+            {
+                amplitude = 0.5f,
+                cycleOffset = 0,
+                frequency = 100,
+            };
+            unfortunatelyWillIsStillNotPoggers.duration = 0.5f;
+            unfortunatelyWillIsStillNotPoggers.radius = 51;
+            unfortunatelyWillIsStillNotPoggers.amplitudeTimeDecay = true;
         }
 
         private void CreateLumpkinEffect()
@@ -91,6 +107,7 @@ namespace Cloudburst.Cores
             CreateMAIDCleanseEffect();
             CreateOrbitalImpact();
             CreateMagicEffects();
+            WillIsStillNotPoggers();
             CreateMagiciansEarringsEffects();
             CreateLumpkinEffect();
         }

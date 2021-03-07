@@ -122,7 +122,7 @@ namespace Cloudburst.Cores.States.Wyatt
                                 inflictor = base.gameObject,
                                 teamIndex = base.GetTeam(),
                                 baseDamage = 5 * this.damageStat,
-                                attackerFiltering = default,
+                                attackerFiltering = AttackerFiltering.NeverHit,
                                 bonusForce = new Vector3(0, -3000, 0),
                                 damageType = DamageType.Stun1s | DamageTypeCore.spiked,
                                 crit = RollCrit(),

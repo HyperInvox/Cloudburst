@@ -112,6 +112,20 @@ public static class CloudUtils
 
         awful.layer = LayerIndex.entityPrecise.intVal;
 
+        var orb = prefab.AddComponent<ProjectileProximityBeamController>();
+        orb.attackFireCount = 2;
+        orb.attackInterval = 1;
+        orb.listClearInterval = 0.1f;
+        orb.attackRange = 25;
+        orb.minAngleFilter = 0;
+        orb.maxAngleFilter = 180;
+        orb.procCoefficient = 1f;
+        orb.damageCoefficient = 0.5f;
+        orb.bounces = 0;
+        orb.inheritDamageType = false;
+        orb.lightningType = RoR2.Orbs.LightningOrb.LightningType.Ukulele;
+        orb.enabled = false;
+
         prefab.GetComponent<ProjectileController>().ghostPrefab = projectile;
         prefab.GetComponent<ProjectileDotZone>().fireFrequency = 0.5f; ;
         prefab.GetComponent<BoomerangProjectile>().distanceMultiplier = 0.2f;
@@ -160,6 +174,8 @@ public static class CloudUtils
 
 
     }
+
+
         /// <summary>
         /// Creates a valid projectile from a GameObject 
         /// </summary>

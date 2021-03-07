@@ -91,6 +91,7 @@ namespace Cloudburst.Cores.States.Wyatt
                             };
             lightningOrb2.procChainMask = default;
             lightningOrb2.procCoefficient = 1;
+
             lightningOrb2.lightningType = LightningOrb.LightningType.Ukulele;
             lightningOrb2.damageColorIndex = DamageColorIndex.Default;
             lightningOrb2.range += 10;
@@ -101,7 +102,8 @@ namespace Cloudburst.Cores.States.Wyatt
                 lightningOrb2.target = hurtBox2;
                 OrbManager.instance.AddOrb(lightningOrb2);
             }
-        }
+        
+    }
 
         private void CreateBlinkEffect(Vector3 origin, Vector3 direction)
         {

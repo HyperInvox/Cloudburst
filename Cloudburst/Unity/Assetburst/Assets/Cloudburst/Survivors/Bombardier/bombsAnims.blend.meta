@@ -288,7 +288,62 @@ ModelImporter:
     10800000: Light
     13700000: Bombardier
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blackout
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Blue_Shaded
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark_Blue_Shaded
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark_G
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark_G_Flat
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark_G_Shaded
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark_Green_Shaded
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Orange_Emissive
+    second: {fileID: 2100000, guid: 5070dd7ccf53f9743a548d8cf082d5dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Piston_shaft
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: lambert1
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: pasted__Dark_Blue_Shaded
+    second: {fileID: 2100000, guid: f4293d8115c9b2e4985dd3f85e2836a1, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

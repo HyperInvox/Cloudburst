@@ -5,6 +5,7 @@ using Cloudburst.Cores.Components;
 using Cloudburst.Cores.HAND;
 using R2API.Utils;
 using RoR2;
+using RoR2.Audio;
 using RoR2.UI;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,8 @@ namespace Cloudburst
         "DotAPI",
         "EliteAPI",
         //gotta stop using this one, orbCore should be able to support itself.
-        "OrbAPI"
+        "OrbAPI",
+        "CommandHelper"
     })]
 
     public class CloudburstPlugin : BaseUnityPlugin
@@ -179,6 +181,18 @@ namespace Cloudburst
             LogCore.LogI("Cloudburst instance assigned.");
             //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
 
+
+            /*var state = Resources.Load<GameObject>("prefabs/characterbodies/LoaderBody").GetComponent<SetStateOnHurt>();
+            for (int i = 0; i < state.idleStateMachine.Length; i++)
+            {
+                LogCore.LogI("SetStateOnHurt: " + state.idleStateMachine[i].customName);
+            }
+            var machines = Resources.Load<GameObject>("prefabs/characterbodies/LoaderBody").GetComponent<NetworkStateMachine>().stateMachines;
+            for (int i = 0; i < machines.Length; i++)
+            {
+
+                LogCore.LogI("NetworkStateMachine: " + machines[i].customName);
+            }*/
             //important!!
             ErrorListener.vanillaErrors.addition += VanillaErrors_addition;
             ErrorListener.modErrors.addition += ModErrors_addition;
@@ -190,7 +204,15 @@ namespace Cloudburst
             LogCore.LogM("Cloudburst loaded!");
         }
 
- 
+        private void NetworkSoundEventCatalog_SetNetworkSoundEvents(On.RoR2.Audio.NetworkSoundEventCatalog.orig_SetNetworkSoundEvents orig, List<NetworkSoundEventDef> newEntriesList)
+        {
+            orig(newEntriesList);
+            newEntriesList.ForEach(LogSound);
+            void LogSound(NetworkSoundEventDef def) {
+                LogCore.LogI(def.eventName);
+            }
+        }
+
         private void ModErrors_addition(ErrorListener.LogMessage objectRemoved)
         {
             modErrors++;
@@ -268,6 +290,7 @@ namespace Cloudburst
                     equipCore = new EquipmentCore();
                 }
 
+    
 
                 if (EnableElites.Value)
                 {
@@ -288,6 +311,13 @@ namespace Cloudburst
                 if (EnableWyatt.Value)
                 {
                     new Custodian().Init(Config);
+                    try
+                    {
+                        new Lui().Init(Config);
+                    }
+                    catch (Exception e) {
+                        LogCore.LogI(e);
+                    }
                     //wyattCore = new WyattCore();
                 }
                 if (EnableVoid.Value)
@@ -327,6 +357,7 @@ namespace Cloudburst
                 LogCore.LogW("You have disabled ALL of Cloudburst. If this was not desired, you can re-enable it in Cloudburst's config file.");
             }
         }
+
 
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {

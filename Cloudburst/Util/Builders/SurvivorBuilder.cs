@@ -84,6 +84,7 @@ public abstract class SurvivorCreator
         Initialization();
         CreateLang();
         SetupCharacterBody(survivorBody.GetComponent<CharacterBody>());
+        AlterStatemachines(survivorBody.GetComponent<SetStateOnHurt>(), survivorBody.GetComponent<NetworkStateMachine>());
         CreateSkills();
         GenerateUmbra();
         Hooks();
@@ -91,6 +92,10 @@ public abstract class SurvivorCreator
     }
 
     public virtual void GenerateUmbra() {
+
+    }
+
+    public virtual void AlterStatemachines(SetStateOnHurt hurt, NetworkStateMachine network) {
 
     }
 

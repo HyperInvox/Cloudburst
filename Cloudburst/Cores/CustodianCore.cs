@@ -20,6 +20,9 @@ namespace Cloudburst.Cores
     {
         public override string SurvivorOutro => "...and so they left, a job well done";
 
+        public static SerializableEntityStateType Retrieve = new SerializableEntityStateType(typeof(RetrieveMaid));
+        public static SerializableEntityStateType Deploy = new SerializableEntityStateType(typeof(DeployMaid));
+
         public override string SurvivorLore => @"Can't stop now. Can't stop now. Every step I take is a step I can't take back. Come hell or high water I will find it.
 
 It's all a rhythm, just a rhythm. Every time I step out of line is a punishment. I will obey the groove. Nothing can stop me now.
@@ -121,6 +124,23 @@ She'll love this, I know.
         public static SkillDef retrievePrimary;
         public static SkillDef throwPrimary;
 
+        public override void AlterStatemachines(SetStateOnHurt hurt, NetworkStateMachine network)
+        {
+            base.AlterStatemachines(hurt, network);
+            var machine = survivorBody.AddComponent<EntityStateMachine>();
+            machine.customName = "MAID";
+            machine.initialStateType = new SerializableEntityStateType(typeof(EntityStates.Idle));
+            machine.mainStateType = new SerializableEntityStateType(typeof(EntityStates.Idle));
+
+            int l = hurt.idleStateMachine.Length;
+            Array.Resize<EntityStateMachine>(ref hurt.idleStateMachine, l + 1);
+            hurt.idleStateMachine[l] = machine;
+
+            int l2 = hurt.idleStateMachine.Length;
+            Array.Resize<EntityStateMachine>(ref network.stateMachines, l2 + 1);
+            network.stateMachines[l] = machine;
+        }
+
         public override void GenerateEquipmentDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
         {
             base.GenerateEquipmentDisplays(obj);
@@ -155,7 +175,7 @@ localPos = new Vector3(0.0098F, 0.0012F, -0.0002F),
 localAngles = new Vector3(9.6844F, 91.5572F, 181.5758F),
 localScale = new Vector3(0.001F, 0.001F, 0.001F)*/
             obj.Add(CloudUtils.CreateGenericDisplayRule("AffixWhite", "DisplayEliteIceCrown", "Head", new Vector3(0.0098F, 0.0012F, -0.0002F), new Vector3(9.6844F, 91.5572F, 181.5758F), new Vector3(0.001f, 0.001f, 0.001f)));
-            obj.Add(CloudUtils.CreateGenericDisplayRule("AffixPoison", "DisplayEliteUrchinCrown", "Head", new Vector3(0.0098F, 0.0012F, -0.0002F),new Vector3(9.6844F, 91.5572F, 181.5758F), new Vector3(0.001f, 0.001f, 0.001f)));
+            obj.Add(CloudUtils.CreateGenericDisplayRule("AffixPoison", "DisplayEliteUrchinCrown", "Head", new Vector3(0.0098F, 0.0012F, -0.0002F), new Vector3(9.6844F, 91.5572F, 181.5758F), new Vector3(0.001f, 0.001f, 0.001f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("AffixHaunted", "DisplayEliteStealthCrown", "Head", new Vector3(0.0098F, 0.0012F, -0.0002F), new Vector3(9.6844F, 91.5572F, 181.5758F), new Vector3(0.001f, 0.001f, 0.001f)));
             /*childName = "Head",
 localPos = new Vector3(0.0043F, 0.0071F, 0F),
@@ -196,8 +216,10 @@ localPos = new Vector3(0.0055F, 0.0048F, -0.0001F),
 localAngles = new Vector3(272.0249F, 67.564F, 203.6608F),
 localScale = new Vector3(0.01F, 0.01F, 0.0105F)*/
 
-            /*done*/obj.Add(CloudUtils.CreateGenericDisplayRule("CritGlasses", "DisplayGlasses", "Head", new Vector3(0.0055F, 0.0048F, -0.0001F), new Vector3(272.0249F, 67.564F, 203.6608F), new Vector3(0.01F, 0.01F, 0.0105F)));
-            /*done*/ obj.Add(CloudUtils.CreateGenericDisplayRule("Syringe", "DisplaySyringeCluster", "LowerBody", new Vector3(-0.0001F, 0.0007F, 0.0052F), new Vector3(65.2608F, 238.0223F, 263.2361F), new Vector3(0.005F, 0.005F, 0.005F)));
+            /*done*/
+            obj.Add(CloudUtils.CreateGenericDisplayRule("CritGlasses", "DisplayGlasses", "Head", new Vector3(0.0055F, 0.0048F, -0.0001F), new Vector3(272.0249F, 67.564F, 203.6608F), new Vector3(0.01F, 0.01F, 0.0105F)));
+            /*done*/
+            obj.Add(CloudUtils.CreateGenericDisplayRule("Syringe", "DisplaySyringeCluster", "LowerBody", new Vector3(-0.0001F, 0.0007F, 0.0052F), new Vector3(65.2608F, 238.0223F, 263.2361F), new Vector3(0.005F, 0.005F, 0.005F)));
             /*childName = "Broom3",
  localPos = new Vector3(0.0003F, -0.0182F, 0.0001F),
  localAngles = new Vector3(0F, 0F, 0F),
@@ -345,7 +367,7 @@ localScale = new Vector3(0.01F, 0.01F, 0.01F)*/
 localPos = new Vector3(0.0067F, 0.0007F, -0.0007F),
 localAngles = new Vector3(0F, 0F, 0F),
 localScale = new Vector3(0.01F, 0.01F, 0.01F)*/
-            obj.Add(CloudUtils.CreateGenericDisplayRule("EquipmentMagazine", "DisplayBattery", "UpperBody", new Vector3(0.0067F, 0.0007F, -0.0007F) , new Vector3(0, 0, 0), new Vector3(0.01f, 0.01f, 0.01f)));
+            obj.Add(CloudUtils.CreateGenericDisplayRule("EquipmentMagazine", "DisplayBattery", "UpperBody", new Vector3(0.0067F, 0.0007F, -0.0007F), new Vector3(0, 0, 0), new Vector3(0.01f, 0.01f, 0.01f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("Infusion", "DisplayInfusion", "Pelvis", new Vector3(0, 0.002f, 0.008f), new Vector3(0, 0, 0), new Vector3(0.02f, 0.02f, 0.02f)));
             /*childName = "UpperBody",
 localPos = new Vector3(0.0059F, 0.0084F, -0.0009F),
@@ -368,7 +390,7 @@ localScale = new Vector3(0.0035F, 0.0035F, 0.0035F)*/
 localPos = new Vector3(0.0014F, 0.0092F, -0.0077F),
 localAngles = new Vector3(0F, 270F, 0F),
 localScale = new Vector3(0.0035F, 0.0035F, 0.0035F)*/
-            obj.Add(CloudUtils.CreateGenericDisplayRule("BeetleGland", "DisplayBeetleGland", "UpperBody", new Vector3(0.0014F, 0.0092F, -0.0077F)   , new Vector3(0, 270, 0), new Vector3(0.0035f, 0.0035f, 0.0035f)));
+            obj.Add(CloudUtils.CreateGenericDisplayRule("BeetleGland", "DisplayBeetleGland", "UpperBody", new Vector3(0.0014F, 0.0092F, -0.0077F), new Vector3(0, 270, 0), new Vector3(0.0035f, 0.0035f, 0.0035f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("SprintBonus", "DisplaySoda", "Pelvis", new Vector3(0.004f, 0.002f, -0.005f), new Vector3(270, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("StickyBomb", "DisplayStickyBomb", "Pelvis", new Vector3(0.0025f, 0.002f, -0.008f), new Vector3(345, 15, 0), new Vector3(0.01f, 0.01f, 0.01f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("TreasureCache", "DisplayKey", "Pelvis", new Vector3(0.006f, 0.002f, -0.003f), new Vector3(0, 25, 270), new Vector3(0.03f, 0.03f, 0.03f)));
@@ -439,7 +461,7 @@ localScale = new Vector3(0.035F, 0.035F, 0.035F)*/
 localPos = new Vector3(0F, 0F, 0F),
 localAngles = new Vector3(0F, 0F, 0F),
 localScale = new Vector3(0.05F, 0.05F, 0.05F)*/
-            obj.Add(CloudUtils.CreateGenericDisplayRule("AlienHead", "DisplayAlienHead", "Hand.R", new Vector3(0F, 0F, 0F), new Vector3(0F, 0F, 0F) , new Vector3(0.05f, 0.05f, 0.05f)));
+            obj.Add(CloudUtils.CreateGenericDisplayRule("AlienHead", "DisplayAlienHead", "Hand.R", new Vector3(0F, 0F, 0F), new Vector3(0F, 0F, 0F), new Vector3(0.05f, 0.05f, 0.05f)));
             /*childName = "Head",
 localPos = new Vector3(0F, 0F, 0F),
 localAngles = new Vector3(0.1132F, 359.4611F, 294.4649F),
@@ -467,7 +489,7 @@ localScale = new Vector3(0.0025F, 0.005F, 0.005F)*/
 localPos = new Vector3(0.0074F, -0.041F, 0.0349F),
 localAngles = new Vector3(0F, 0F, 0F),
 localScale = new Vector3(0.015F, 0.015F, 0.015F)*/
-            obj.Add(CloudUtils.CreateGenericDisplayRule("LaserTurbine", "DisplayLaserTurbine", "Broom3", new Vector3(0.0074F, -0.041F, 0.0349F), new Vector3(0, 90, 0)  , new Vector3(0.015f, 0.015f, 0.015f)));
+            obj.Add(CloudUtils.CreateGenericDisplayRule("LaserTurbine", "DisplayLaserTurbine", "Broom3", new Vector3(0.0074F, -0.041F, 0.0349F), new Vector3(0, 90, 0), new Vector3(0.015f, 0.015f, 0.015f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("Incubator", "DisplayAncestralIncubator", "BroomModel", new Vector3(0, 0.012f, 0), new Vector3(90, 0, 0), new Vector3(0.0035f, 0.0035f, 0.0035f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("SiphonOnLowHealth", "DisplaySiphonOnLowHealth", "Pelvis", new Vector3(-0.006f, 0.004f, 0.006f), new Vector3(0, 315, 180), new Vector3(0.0035f, 0.0035f, 0.0035f)));
             obj.Add(CloudUtils.CreateGenericDisplayRule("BleedOnHitAndExplode", "DisplayBleedOnHitAndExplode", "UpperLeg.R", new Vector3(0.005f, 0.005f, 0), new Vector3(0, 0, 0), new Vector3(0.002f, 0.002f, 0.002f)));
@@ -705,7 +727,7 @@ localScale = new Vector3(0.015F, 0.015F, -0.015F),
             LoadoutAPI.AddSkill(typeof(FireRocket));
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            utilitySkillDef.activationState = new SerializableEntityStateType(typeof(DRIVEMETOTHEHIGHWAY));
+            utilitySkillDef.activationState = new SerializableEntityStateType(typeof(FireRocket));
             utilitySkillDef.activationStateMachineName = "Weapon";
             utilitySkillDef.baseMaxStock = 1;
             utilitySkillDef.baseRechargeInterval = 4f;
@@ -776,69 +798,36 @@ localScale = new Vector3(0.015F, 0.015F, -0.015F),
             LoadoutAPI.AddSkill(typeof(DeployMaid));
             LoadoutAPI.AddSkill(typeof(RetrieveMaid));
 
-            SkillDef specialSkillDef = ScriptableObject.CreateInstance<SkillDef>();
-            specialSkillDef.activationState = new SerializableEntityStateType(typeof(DeployMaid));
-            specialSkillDef.activationStateMachineName = "Weapon";
-            specialSkillDef.baseMaxStock = 1;
-            specialSkillDef.baseRechargeInterval = 3;
-            specialSkillDef.beginSkillCooldownOnSkillEnd = true;
-            specialSkillDef.canceledFromSprinting = false;
-            specialSkillDef.fullRestockOnAssign = true;
-            specialSkillDef.interruptPriority = InterruptPriority.PrioritySkill;
-            specialSkillDef.isBullets = false;
-            specialSkillDef.isCombatSkill = false;
-            specialSkillDef.mustKeyPress = true;
-            specialSkillDef.noSprint = false;
-            specialSkillDef.rechargeStock = 1;
-            specialSkillDef.requiredStock = 1;
-            specialSkillDef.shootDelay = 0.5f;
+            SkillDef specialSkillDef = ScriptableObject.CreateInstance<WyattMAIDSkillDef>();
+            CloudUtils.CopySkillDefSettings(Resources.Load<SkillDef>("skilldefs/loaderbody/FireYankHook"), specialSkillDef);
+
+            //specialSkillDef.stockToConsume = 1;
+            specialSkillDef.activationState = Deploy;
+            specialSkillDef.activationStateMachineName = "MAID";
+              specialSkillDef.baseRechargeInterval = 5;
             specialSkillDef.stockToConsume = 1;
             specialSkillDef.skillDescriptionToken = "WYATT_SPECIAL_DESCRIPTION";
-            specialSkillDef.skillName = "aaa";
             specialSkillDef.skillNameToken = "WYATT_SPECIAL_NAME";
             specialSkillDef.icon = AssetsCore.wyattSpecial;
             specialSkillDef.keywordTokens = new string[] {
                  "KEYWORD_WEIGHTLESS"
             };
 
+            //  ProjectileManager.instance.FireProjectile()
+
             throwPrimary = specialSkillDef;
 
-            SkillDef specialSkillDef2 = ScriptableObject.CreateInstance<SkillDef>();
-            specialSkillDef2.activationState = new SerializableEntityStateType(typeof(RetrieveMaid));
-            specialSkillDef2.activationStateMachineName = "Weapon";
-            specialSkillDef2.baseMaxStock = 1;
-            specialSkillDef2.baseRechargeInterval = 3;
-            specialSkillDef2.beginSkillCooldownOnSkillEnd = true;
-            specialSkillDef2.canceledFromSprinting = false;
-            specialSkillDef2.fullRestockOnAssign = true;
-            specialSkillDef2.interruptPriority = InterruptPriority.PrioritySkill;
-            specialSkillDef2.isBullets = false;
-            specialSkillDef2.isCombatSkill = false;
-            specialSkillDef2.mustKeyPress = true;
-            specialSkillDef2.noSprint = false;
-            specialSkillDef2.rechargeStock = 1;
-            specialSkillDef2.requiredStock = 1;
-            specialSkillDef2.shootDelay = 0.5f;
-            specialSkillDef2.stockToConsume = 1;
-            specialSkillDef2.skillDescriptionToken = "WYATT_SPECIAL2_DESCRIPTION";
-            specialSkillDef2.skillName = "aaa";
-            specialSkillDef2.skillNameToken = "WYATT_SPECIAL2_NAME";
-            specialSkillDef2.icon = AssetsCore.wyattSpecial2;
-            specialSkillDef2.keywordTokens = new string[] {
-                 "KEYWORD_WEIGHTLESS"
-            };
 
-            retrievePrimary = specialSkillDef2;
+        // /   retrievePrimary = specialSkillDef2;
 
-            LanguageAPI.Add(specialSkillDef.skillNameToken, "G22 MAID");
-            LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>pulls enemies</style> and <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
-
-            LanguageAPI.Add(specialSkillDef2.skillNameToken, "Retrival");
-            LanguageAPI.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
+         //   LanguageAPI.Add(specialSkillDef.skillNameToken, "G22 MAID");
+         //   LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>pulls enemies</style> and <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
+         //   LanguageAPI.Add(specialSkillDef2.skillNameToken, "Retrival");
+       //     LanguageAPI.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
 
 
             LoadoutAPI.AddSkillDef(specialSkillDef);
-            LoadoutAPI.AddSkillDef(specialSkillDef2);
+        //    LoadoutAPI.AddSkillDef(specialSkillDef2);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant

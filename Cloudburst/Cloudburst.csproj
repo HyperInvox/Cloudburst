@@ -147,9 +147,11 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
+    <Compile Include="Cores\Class1.cs" />
     <Compile Include="Cores\Components\Blink.cs" />
     <Compile Include="Cores\Components\Class1.cs" />
     <Compile Include="Cores\Components\SquashedComponent.cs" />
+    <Compile Include="Cores\Components\WyattMAIDSkillDef.cs" />
     <Compile Include="Cores\Equipment\Lumpkin.cs" />
     <Compile Include="Cores\Events.cs" />
     <Compile Include="Cores\Components\WyattSoap.cs" />
@@ -222,7 +224,6 @@
     <Compile Include="Cores\ClayMenCore.cs" />
     <Compile Include="Cores\CommandoCore.cs" />
     <Compile Include="Cores\CommonAssets.cs" />
-    <Compile Include="Cores\Components\BombardierSkillDef.cs" />
     <Compile Include="Cores\Components\BombardierStickyBombManager.cs" />
     <Compile Include="Cores\Components\BombardierStickySkillDef.cs" />
     <Compile Include="Cores\Components\BombardierTracker.cs" />

@@ -373,6 +373,7 @@ She'll love this, I know.
                         break;
                 }
             }
+            
             esmr[2] = mach;
             hurtState.idleStateMachine = esmr;
         }
