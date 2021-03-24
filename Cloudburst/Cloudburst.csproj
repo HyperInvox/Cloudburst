@@ -147,9 +147,9 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
-    <Compile Include="Cores\Class1.cs" />
     <Compile Include="Cores\Components\Blink.cs" />
-    <Compile Include="Cores\Components\Class1.cs" />
+    <Compile Include="Cores\Components\BasedDepartment.cs" />
+    <Compile Include="Cores\Components\CringeDepartment.cs" />
     <Compile Include="Cores\Components\SquashedComponent.cs" />
     <Compile Include="Cores\Components\WyattMAIDSkillDef.cs" />
     <Compile Include="Cores\Equipment\Lumpkin.cs" />
@@ -174,6 +174,7 @@
     <Compile Include="Cores\Items\Red\REDACTED.cs" />
     <Compile Include="Cores\Items\White\BrokenBodyArmor.cs" />
     <Compile Include="Cores\Items\White\GlassHarvester.cs" />
+    <Compile Include="Cores\Lui.cs" />
     <Compile Include="Cores\NewtCore.cs" />
     <Compile Include="Cores\States\Emotes\Emotes.cs" />
     <Compile Include="Cores\States\VoidGolems\Shell.cs" />

@@ -14,7 +14,7 @@ namespace Cloudburst.Cores.Components
         public bool startReel;
         private float _stopwatch = 0;
 
-        public event Action<bool, GenericSkill> OnRetrival;
+        public event Action<bool, GenericSkill, Vector3> OnRetrival;
         public event Action<GenericSkill> OnDeploy;
         public event Action sunset;
 
@@ -23,6 +23,8 @@ namespace Cloudburst.Cores.Components
         private CharacterMotor characterMotor;
         private CharacterDirection characterDirection;
 
+        private bool cachedOrigValue = false;
+        private Vector3 origDistance;
         public void Awake()
         {
             skillLocator = GetComponent<SkillLocator>();
@@ -32,9 +34,9 @@ namespace Cloudburst.Cores.Components
             //click and she's gone!
         }
 
-        public void Invoke(bool bo) {
+        public void Invoke(bool bo, Vector3 dis) {
             if (NetworkServer.active) {
-                RpcSetDeploy(bo);
+                RpcSetDeploy(bo, dis);
             }
         }
 
@@ -49,6 +51,7 @@ namespace Cloudburst.Cores.Components
                 _stopwatch += Time.fixedDeltaTime;
 
                 Vector3 velocity = (maid.transform.position - base.transform.position).normalized * 120f;
+
                 characterMotor.velocity = velocity;
                 characterDirection.forward = characterMotor.velocity.normalized;
                 //float distance = volume;
@@ -131,6 +134,13 @@ namespace Cloudburst.Cores.Components
                 LogCore.LogI("maid exists");
                 _stopwatch = 0;
                 startReel = true;
+
+                var modelAnimator = base.GetComponent<ModelLocator>().modelTransform.GetComponent<Animator>();
+                int layerIndex = modelAnimator.GetLayerIndex("Fullbody, Override");
+                modelAnimator.speed = 1f;
+                modelAnimator.Update(0f);
+                modelAnimator.PlayInFixedTime("kick", layerIndex, 0f);
+                //base.PlayAnimation("Fullbody, Override", "kick");
                 maid.GetComponent<MAID>().FullStop();
                 //Destroy(maid);
             }
@@ -155,10 +165,10 @@ namespace Cloudburst.Cores.Components
 
 
         [ClientRpc]
-        private void RpcSetDeploy(bool natRetrival)
+        private void RpcSetDeploy(bool natRetrival, Vector3 vector3)
         {
             LogCore.LogI("invoke");
-            OnRetrival?.Invoke(natRetrival, skillLocator.special);
+            OnRetrival?.Invoke(natRetrival, skillLocator.special, vector3);
             //  skillLocator.special.UnsetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);
             //skillLocator.special.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);
         }

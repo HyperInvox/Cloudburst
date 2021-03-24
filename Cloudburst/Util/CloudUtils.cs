@@ -130,14 +130,14 @@ public static class CloudUtils
         prefab.GetComponent<ProjectileDotZone>().fireFrequency = 0.5f; ;
         prefab.GetComponent<BoomerangProjectile>().distanceMultiplier = 0.2f;
         prefab.AddComponent<MAID>();
-        awful.AddComponent<SphereCollider>().radius = 5;
+        awful.AddComponent<SphereCollider>().radius = 3;
         awful.GetComponent<SphereCollider>().isTrigger = true;
         prefab.GetComponent<ProjectileDotZone>().impactEffect = EffectCore.maidCleanseEffect;
 
-        var slow = awful.AddComponent<SlowDownProjectiles>();
-        slow.teamFilter = awful.GetComponent<TeamFilter>();
-        slow.maxVelocityMagnitude = 3;
-        slow.antiGravity = 1;
+        //var slow = awful.AddComponent<SlowDownProjectiles>();
+        //slow.teamFilter = awful.GetComponent<TeamFilter>();
+        //slow.maxVelocityMagnitude = 3;
+        //slow.antiGravity = 1;
 
         return prefab;
         /*var networkIdentity = projectile.AddComponent<NetworkIdentity>();

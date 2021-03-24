@@ -51,7 +51,10 @@ namespace Cloudburst.Cores.Components.Wyatt
 
         public void OnDamageDealtServer(DamageReport damageReport)
         {
-            TriggerBehaviorInternal(1);
+            if (damageReport.damageInfo?.inflictor == base.gameObject)
+            {
+                TriggerBehaviorInternal(1);
+            }
         }
     }
 }

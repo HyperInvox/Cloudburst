@@ -20,7 +20,7 @@ namespace Cloudburst.Cores.States.HAND
         {
             get
             {
-                return base.characterBody && !base.characterBody.isSprinting;
+                return false;
             }
         }
 
@@ -48,10 +48,10 @@ namespace Cloudburst.Cores.States.HAND
             overlapAttack.damageType = DamageType.Generic;
         }
 
+        //public override void 
+
         public override void PlayAnimation()
         {
-            //this.animationStateName = "Secondary5";
-            //base.PlayAnimation("FullBody, Override", this.animationStateName, "GroundLight.playbackRate", this.duration);// ; (, this.animationStateName, , this.duration, 0.05f);
         }
 
         public override void OnMeleeHitAuthority()
@@ -64,16 +64,6 @@ namespace Cloudburst.Cores.States.HAND
         {
             //this.swingEffectMuzzleString = this.animationStateName;
             base.BeginMeleeAttackEffect();
-        }
-
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            base.OnSerialize(writer);
-        }
-
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

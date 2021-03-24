@@ -11,11 +11,11 @@ namespace Cloudburst.Cores.Components
 {
     public class VoidProjectile : MonoBehaviour
     {
-        private ProjectileOwnerInfo owner;
+        private BasicOwnerInfo owner;
         readonly BullseyeSearch bullseyeSearch = new BullseyeSearch();
 
         public void Start() {
-            owner = new ProjectileOwnerInfo(GetComponent<ProjectileController>().owner, "fug");
+            owner = new BasicOwnerInfo(GetComponent<ProjectileController>().owner, "fug");
             bullseyeSearch.searchOrigin = base.transform.position;
             bullseyeSearch.maxDistanceFilter = 500;
             bullseyeSearch.teamMaskFilter = TeamMask.AllExcept(owner.characterBody.teamComponent.teamIndex);

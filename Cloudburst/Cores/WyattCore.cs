@@ -703,8 +703,7 @@ She'll love this, I know.
             specialSkillDef.activationState = new SerializableEntityStateType(typeof(DeployMaid));
             specialSkillDef.activationStateMachineName = "Weapon";
             specialSkillDef.baseMaxStock = 1;
-            specialSkillDef.baseRechargeInterval = 3;
-            specialSkillDef.beginSkillCooldownOnSkillEnd = true;
+            specialSkillDef.baseRechargeInterval = 3; ;
             specialSkillDef.canceledFromSprinting = false;
             specialSkillDef.fullRestockOnAssign = true;
             specialSkillDef.interruptPriority = InterruptPriority.Any;
@@ -715,7 +714,7 @@ She'll love this, I know.
             specialSkillDef.rechargeStock = 1;
             specialSkillDef.requiredStock = 1;
             specialSkillDef.shootDelay = 0.5f;
-            specialSkillDef.stockToConsume = 1;
+            specialSkillDef.stockToConsume = 0;
             specialSkillDef.skillDescriptionToken = "WYATT_SPECIAL_DESCRIPTION";
             specialSkillDef.skillName = "aaa";
             specialSkillDef.skillNameToken = "WYATT_SPECIAL_NAME";

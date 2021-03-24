@@ -85,15 +85,12 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
             {
                 var earringsCount = GetCount(inv);
                 var def = BuffCatalog.GetBuffDef(buffType);
-                var cSharpSucks = buffType;
 
                 bool blackListed = blackList.Contains(buffType) || def.isDebuff;
-                LogCore.LogI("orig:" + buffType.ToString() + "isBlacklisted:" + blackListed.ToString());
 
                 if (earringsCount > 0 && blackListed == false) 
                 {
                     //do thing???
-                    LogCore.LogI("hit:" + buffType.ToString());
                     duration += 2 + (1 * earringsCount);
                 }
             }

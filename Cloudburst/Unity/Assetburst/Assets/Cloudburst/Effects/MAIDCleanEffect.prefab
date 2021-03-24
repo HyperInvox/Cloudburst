@@ -5073,7 +5073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb968ea025eecaa49a3b688ed588cc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  materialName: matSlow80Debuff
+  materialName: matSpark1
 --- !u!1 &7876324473318699086
 GameObject:
   m_ObjectHideFlags: 0

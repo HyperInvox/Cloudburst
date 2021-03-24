@@ -11,9 +11,9 @@ namespace Cloudburst.Cores.Items.Green
         public override string ItemName => "Blast Boots";
 
         public override string ItemLangTokenName => "BLASTBOOTS";
-        public override string ItemPickupDesc => "Using your secondary in midair propels you upwards and<style=cIsDamage> spawns an explosion around you and beneath you that both deal 250% <style=cStack>(250% per stack)</style> damage, and inflict burn</style>";
-
-        public override string ItemFullDescription => "On use of your secondary, spawn an explosion beneath you and around if in midair.";
+        public override string ItemPickupDesc => "On use of your secondary, spawn an explosion beneath you and around if in midair.";
+        //
+        public override string ItemFullDescription => "Using your secondary in midair propels you upwards and<style=cIsDamage> spawns an explosion around you and beneath you that both deal 250% <style=cStack>(250% per stack)</style> damage, and inflict burn</style>";
 
         public override string ItemLore => "";
 

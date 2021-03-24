@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using EntityStates.CaptainDefenseMatrixItem;
+using RoR2;
 using RoR2.Projectile;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,10 +15,11 @@ namespace Cloudburst.Cores.Components
         private float stopwatch = 0;
         private bool pause = false;
         private Rigidbody body;
-        private ProjectileOwnerInfo owner = default;
+        private BasicOwnerInfo owner = default;
         private BoomerangProjectile boomer;
         private float pauseStopwatch;
         private List<Rigidbody> bodies;
+        private Vector3 distance;
         public void Awake()
         {
             bodies = new List<Rigidbody>();
@@ -29,7 +31,7 @@ namespace Cloudburst.Cores.Components
 
         public void Start()
         {
-            owner = new ProjectileOwnerInfo(controller.owner, "");
+            owner = new BasicOwnerInfo(controller.owner, "");
 
             owner.gameObject.GetComponent<MAIDManager>().DeployMAIDAuthority(base.gameObject);
             boomer.onFlyBack.AddListener(OnHit);
@@ -39,14 +41,41 @@ namespace Cloudburst.Cores.Components
 
         }
 
-        private void OnTriggerEnter(Collider other) {
-            LogCore.LogI(other);
+        private bool PassesFilter(TeamFilter filter) {
+            if (filter.teamIndex != TeamIndex.Player) {
+                return true;
+            }
+            return false;
         }
 
-        public void OnTriggerExit(Collider other)
-        {
-            LogCore.LogI(other);
 
+        private void OnTriggerEnter(Collider other) {
+            Rigidbody component = other.GetComponent<Rigidbody>();
+            ProjectileController controller = other.GetComponent<ProjectileController>();
+            //prevent multiple cringes from being cringed!
+            if (component && controller && PassesFilter(controller.teamFilter) && !controller.gameObject.HasComponent<CringeDepartment>()) {
+                EffectData effectData = new EffectData
+                {
+                    origin = base.transform.position,
+                    //pls god
+                    start = component.transform.position
+                };
+                EffectManager.SpawnEffect(DefenseMatrixOn.tracerEffectPrefab, effectData, true);
+
+                EffectData nads = new EffectData
+                {
+                    origin = controller.transform.position,
+                    scale = 1,
+                    //pls vs
+                };
+                EffectManager.SpawnEffect(EffectCore.maidCleanseEffect, nads, true);
+
+                Util.PlaySound("step_land_shallow_water_01", component.gameObject);
+
+                var cing = controller.AddComponent<CringeDepartment>();
+                cing.maxVelocityMagnitude = 3;
+                cing.antiGravity = 1;
+            }
         }
 
         public void FixedUpdate() {
@@ -77,7 +106,7 @@ namespace Cloudburst.Cores.Components
             owner.gameObject?.GetComponent<MAIDManager>()?.GetMAID();
             LogCore.LogI(stop);
 
-            owner.gameObject.GetComponent<MAIDManager>().Invoke(stop);
+            owner.gameObject.GetComponent<MAIDManager>().Invoke(stop, distance);
 
             //owner.gameObject?.GetComponent<SkillLocator>()?.special?.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Contextual); ; }
         }
@@ -91,6 +120,7 @@ namespace Cloudburst.Cores.Components
 
         public void FullStop() {
             stop = true;
+            distance = (base.transform.position - owner.gameObject.transform.position).normalized;// * 120f;
             base.GetComponent<BoomerangProjectile>().enabled = false;
         }
     }

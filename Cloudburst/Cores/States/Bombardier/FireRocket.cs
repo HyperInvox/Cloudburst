@@ -6,6 +6,7 @@ using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.Networking;
 using EntityStates.Huntress.HuntressWeapon;
+using System.Collections.Generic;
 
 namespace Cloudburst.Cores.States.Bombardier
 {
@@ -25,12 +26,35 @@ namespace Cloudburst.Cores.States.Bombardier
         private float duration;
         private float stopwatch;
 
+        private OverlapAttack attack;
+
+
         public override void OnEnter()
         {
             base.OnEnter();
             this.duration = baseDuration / this.attackSpeedStat;
             base.StartAimMode(2f, false);
             base.PlayCrossfade("Fullbody, Override", "CoolSwing", "CoolSwing.playbackRate", this.duration, 0.05f);
+
+            attack = new OverlapAttack()
+            {
+                attacker = base.gameObject,
+                attackerFiltering = AttackerFiltering.Default,
+                damage = 2 * base.damageStat,
+                damageColorIndex = DamageColorIndex.Default,
+                damageType = DamageTypeCore.spiked, //overclock.GetDamageType(),
+                forceVector = new Vector3(0, -1000, 0),
+                hitEffectPrefab = null,
+                impactSound = RoR2.Audio.NetworkSoundEventIndex.Invalid,
+                inflictor = base.gameObject,
+                isCrit = base.RollCrit(),
+                maximumOverlapTargets = 100,
+                procChainMask = default,
+                procCoefficient = 1,
+                pushAwayForce = 100,
+                teamIndex = base.characterBody.teamComponent.teamIndex,
+                hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxLarge", base.GetModelTransform()),
+            };
 
             if (base.isAuthority)
             {
@@ -42,14 +66,18 @@ namespace Cloudburst.Cores.States.Bombardier
         {
 
             var aimRay = GetAimRay();
+
+            EffectManager.SimpleMuzzleFlash(Resources.Load<GameObject>("prefabs/effects/lemurianbitetrail"), base.gameObject, "SwingTrail", true);
+
+            var list = new List<HealthComponent>();
+            attack.Fire(list);
+
             if (base.teamComponent.teamIndex == TeamIndex.Player)
             {
-
-                Collider[] array = Physics.OverlapSphere(GetModelChildLocator().FindChild("TempHitboxSquish").position, 10, LayerIndex.defaultLayer.mask);
-                for (int i = 0; i < array.Length; i++)
+                for (int i = 0; i < list.Count; i++)
                 {
-                    HealthComponent healthComponent = array[i].GetComponent<HealthComponent>();
-                    if (healthComponent)
+                    HealthComponent healthComponent = list[i] ;
+                    if (healthComponent)    
                     {
                         var charb = healthComponent.body;
                         if (charb && charb.modelLocator && charb != base.characterBody)
@@ -70,7 +98,6 @@ namespace Cloudburst.Cores.States.Bombardier
                 }
             }
 
-
             //ProjectileManager.instance.FireProjectile(GetInfo(aimRay));
 
 
@@ -79,7 +106,7 @@ namespace Cloudburst.Cores.States.Bombardier
                 characterBody.AddSpreadBloom(GetBloom());
             }
 
-            /*var isNeikOnCrack = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("banana for scale");
+           /*var isNeikOnCrack = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlAudrey");
             var isNeikOnCrackButReal = UnityEngine.Object.Instantiate<GameObject>(isNeikOnCrack);
             isNeikOnCrackButReal.transform.position = transform.position;
             isNeikOnCrackButReal.transform.localScale = new Vector3(1, 1, 1);

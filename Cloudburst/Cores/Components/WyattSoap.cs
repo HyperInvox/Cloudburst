@@ -13,7 +13,7 @@ namespace Cloudburst.Cores.Components
     class WyattSoap : MonoBehaviour, IProjectileImpactBehavior
     {
         private ProjectileController controller = null;
-        private ProjectileOwnerInfo owner = default;
+        private BasicOwnerInfo owner = default;
 
         public void Awake()
         {
@@ -63,7 +63,7 @@ namespace Cloudburst.Cores.Components
 
         public void Start()
         {
-            owner = new ProjectileOwnerInfo(controller.owner, "Weapon");
+            owner = new BasicOwnerInfo(controller.owner, "Weapon");
         }
     }
 }

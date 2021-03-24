@@ -13,7 +13,6 @@ namespace Cloudburst.Cores.States.Wyatt
         private bool unstable = false;
         private MAIDManager blaseball = null;
         private bool solarEclipse = false;
-        private float recharge =0;
         public override void OnEnter()
         {
            // base.activatorSkillSlot.skillDef.baseRechargeInterval = 5;
@@ -34,16 +33,31 @@ namespace Cloudburst.Cores.States.Wyatt
             solarEclipse = true;
         }
 
-        private void Blaseball_OnRetrival(bool nat, GenericSkill arg2)
+        private void Blaseball_OnRetrival(bool nat, GenericSkill arg2, Vector3 dis)
         {
             solarEclipse = true;
-            if (!nat) {
-                base.activatorSkillSlot.skillDef.baseRechargeInterval = 10;
+            if (!nat)
+            {
+                base.activatorSkillSlot.finalRechargeInterval = 5;
             }
+            else
+            {
+                base.activatorSkillSlot.finalRechargeInterval = 10;
+                //who cares about underlying issues in my code
+                //no one's gonna read it anyways :^]]
+                    
+                if (!base.gameObject.HasComponent<BasedDepartment>()) { 
+                BasedDepartment based = base.gameObject.AddComponent<BasedDepartment>();
+                based.interval = 0.5f;
+                    LogCore.LogI(dis);
+                }
+            }
+        
             //else
             {//
              //   base.activatorSkillSlot.skillDef.baseRechargeInterval = 5;
-            }
+            }            
+            base.activatorSkillSlot.DeductStock(1);
         }
 
         public void FireProjectile() {
@@ -72,7 +86,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.FixedUpdate();
       
             theDevilHasSomeHardToReadFinePrint += Time.fixedDeltaTime;
-            if (base.isAuthority && base.IsKeyDownAuthority() && solarEclipse == false && unstable == false && theDevilHasSomeHardToReadFinePrint > 0.8f) {
+            if (base.isAuthority && base.IsKeyDownAuthority() && solarEclipse == false && unstable == false && theDevilHasSomeHardToReadFinePrint > 0.3f) {
                 blaseball.RetrieveMAIDAuthority();
                 unstable = true;
             }

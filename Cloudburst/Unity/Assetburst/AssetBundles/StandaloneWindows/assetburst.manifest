@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3013116938
+CRC: 3724616
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 7631bb1d5b38805bd80aeb7bc31d6b5d
+    Hash: 6f801219394280e2befbc68a51b94170
   TypeTreeHash:
     serializedVersion: 2
     Hash: 27a312d1da00ae4277143f07e6e3ff75
@@ -101,6 +101,7 @@ Assets:
 - Assets/Cloudburst/Teaser/tex/Materials/Dormant_Fungus_Tex.mat
 - Assets/Cloudburst/753network/Crystallize/Orange.mat
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Foil.mat
+- Assets/Cloudburst/Effects/Bases/Splash.prefab
 - Assets/Cloudburst/Survivors/OmoriShit/bat.png
 - Assets/Cloudburst/Enemies/FatWisp/matWisp1.mat
 - Assets/Cloudburst/Items/CarePackageRequester/blastboots.fbx

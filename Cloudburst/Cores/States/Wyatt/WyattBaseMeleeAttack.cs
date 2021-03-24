@@ -101,7 +101,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 spawnEffect = true;
                 if (base.isAuthority)
                 {
-                    
+
                     EffectManager.SimpleMuzzleFlash(obj, base.gameObject, "SwingTrail", true);
                 }
             }
