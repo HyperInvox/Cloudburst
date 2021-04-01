@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+
 using RoR2;
 using UnityEngine;
 
@@ -25,9 +25,9 @@ namespace Cloudburst.Cores.Items.Green
 
     public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/CarePackageRequester/IMDLCarePackageRequester.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/CarePackageRequester/IMDLCarePackageRequester.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/CarePackageRequester/icon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/CarePackageRequester/icon.png";
 
 
         public override void CreateConfig(ConfigFile config)
@@ -35,10 +35,10 @@ namespace Cloudburst.Cores.Items.Green
 
         }
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }
+        }*/
 
         protected override void Initialization()
         {

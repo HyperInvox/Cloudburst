@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+
 using RoR2;
 using UnityEngine;
 
@@ -25,9 +25,9 @@ namespace Cloudburst.Cores.Items.Green
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/icon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/FabinhoruDagger/icon.png";
 
 
         public override void CreateConfig(ConfigFile config)
@@ -35,9 +35,9 @@ namespace Cloudburst.Cores.Items.Green
 
         }
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            var fabDagMDL = Resources.Load<GameObject>("@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
+            var fabDagMDL = Resources.Load<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
             LogCore.LogI(fabDagMDL);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
             {
@@ -149,7 +149,7 @@ namespace Cloudburst.Cores.Items.Green
 
 
             return rules;
-        }
+        }*/
 
         protected override void Initialization()
         {
@@ -165,7 +165,7 @@ namespace Cloudburst.Cores.Items.Green
         {
             if (GetCount(onHitInfo.attackerBody) > 0 && Util.CheckRoll(8 * info.procCoefficient, onHitInfo.attackerMaster) && onHitInfo.attackerMaster && onHitInfo.victimBody)
             {
-                onHitInfo.victimBody.AddTimedBuff(BuffIndex.Cripple, 3 * GetCount(onHitInfo.attackerBody));
+                onHitInfo.victimBody.AddTimedBuff(RoR2Content.Buffs.Cripple, 3 * GetCount(onHitInfo.attackerBody));
             }
         }
     }

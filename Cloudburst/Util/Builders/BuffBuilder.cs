@@ -1,11 +1,10 @@
-﻿using R2API;
+﻿
 using RoR2;
 using UnityEngine;
 
 public abstract class BuffBuilder
 {
     public BuffDef buffDef;
-    public CustomBuff customBuff;
     public BuffIndex buffIndex;
 
     public abstract string IconPath { get; }
@@ -20,13 +19,11 @@ public abstract class BuffBuilder
 
     public virtual void CreateBuff() {
         buffDef = new BuffDef {
-            iconPath = IconPath,
+            //iconPath = IconPath,
             buffColor = BuffColor,
             canStack = CanStack,
             isDebuff = IsDebuff
         };
-        customBuff = new CustomBuff(buffDef);
-        buffIndex = BuffAPI.Add(customBuff);
     }
 
     public virtual void Hook() {

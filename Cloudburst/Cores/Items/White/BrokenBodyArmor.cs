@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+
 using RoR2;
 using UnityEngine;
 
@@ -8,34 +8,6 @@ namespace Cloudburst.Cores.Items.White
 
     public class BrokenBodyArmor : ItemBuilder
     {
-        internal class BrokenBodyArmorBuff : BuffBuilder
-        {
-            public ItemIndex itemIndex;
-
-            public override string IconPath => "@Cloudburst:Assets/Cloudburst/BuffIcons/Charm.png";
-
-            public override bool CanStack => false;
-
-            public override bool IsDebuff => false;
-
-            public override Color BuffColor => new Color32(219, 224, 198, byte.MaxValue);
-
-            public override void Hook()
-            {
-                base.Hook();
-                GlobalHooks.recalculateStats += GlobalHooks_recalculateStats;
-            }
-
-            private void GlobalHooks_recalculateStats(CharacterBody body)
-            {
-                if (GetCount(body)>0 && body.inventory) {
-                    int count = body.inventory.GetItemCount(itemIndex);
-                    body.armor = body.armor + (count * 8);
-                }
-            }
-        }
-
-        internal BrokenBodyArmorBuff armorBuff;
 
         public static BrokenBodyArmor instance;
 
@@ -53,9 +25,9 @@ namespace Cloudburst.Cores.Items.White
 
         public override ItemTier Tier => ItemTier.Tier1;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/IMDLBrokenBodyArmor.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/BrokenBodyArmor/IMDLBrokenBodyArmor.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/brokenarmoricon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/BrokenBodyArmor/brokenarmoricon.png";
 
 
         public override void CreateConfig(ConfigFile config)
@@ -63,7 +35,7 @@ namespace Cloudburst.Cores.Items.White
 
         }
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var bbaMDL = Resources.Load<GameObject>(ItemModelPath);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
@@ -80,12 +52,12 @@ namespace Cloudburst.Cores.Items.White
 }
             });
             return rules;
-        }
+        }*/
 
         protected override void Initialization()
         {
             //armorBuff = new BrokenBodyArmorBuff();
-            //armorBuff.itemIndex = Index;
+            //armorBuff.RoR2Content.Items = Index;
             //armorBuff.Init();
             //SingletonHelper.Assign<BrokenBodyArmor>(instance, this);
             instance = this;
@@ -109,7 +81,7 @@ namespace Cloudburst.Cores.Items.White
                 int count = GetCount(victimBody);
                 if (count > 0)
                 {
-                    victimBody.AddTimedBuff(BuffCore.instance.skinIndex, 5);
+                    victimBody.AddTimedBuff(BuffCore.instance.skin, 5);
                 }
             }
 

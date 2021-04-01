@@ -1,4 +1,5 @@
-﻿using R2API;
+﻿
+using EnigmaticThunder.Modules;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static R2API.DotAPI;
+//using static R2API.DotAPI;
 using static RoR2.DotController;
 
 namespace Cloudburst.Cores
@@ -27,26 +28,24 @@ namespace Cloudburst.Cores
             LogCore.LogI("Initializing Core: " + base.ToString());
 
             DotDef def = new DotDef() {
-                associatedBuff = BuffCore.instance.REDACTED,
+                associatedBuff = BuffCore.instance.wyattSuspension,
                 damageColorIndex = DamageColorIndex.DeathMark,
                 damageCoefficient = 1,
                 interval = 1,
             };
 
-            redactedIndex = RegisterDotDef(def, RedactedBehaviour, null);
-
+            redactedIndex = DoT.RegisterDot(def, RedactedBehaviour, null);
+            LogCore.LogI("Redacted index is: " + redactedIndex);
             //clean = RegisterDotDef(1, 0.5f, DamageColorIndex.WeakPoint, BuffCore.instance.cleanIndex, lmao, lol);
         }
 
         void RedactedBehaviour(DotController controller, DotController.DotStack stacks) {
             stacks.damageType = DamageType.NonLethal;
             var body = controller.victimBody;
-            LogCore.LogI("hi-3");
+            LogCore.LogI("gmc");
             if (body) {
-                LogCore.LogI("hi-2");
                 var healthComponent = body.healthComponent;
                 if (healthComponent) {
-                    LogCore.LogI("hi-1");
 
                     bool isFullHealth = body.healthComponent.combinedHealthFraction >= 1;
                     if (isFullHealth) {

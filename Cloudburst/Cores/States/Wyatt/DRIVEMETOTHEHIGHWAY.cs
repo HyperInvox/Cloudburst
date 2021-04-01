@@ -14,7 +14,7 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             if (_goodState == null)
             {
-                _goodState = Instantiate(typeof(AimStunDrone)) as AimStunDrone;
+                _goodState = EntityStateCatalog.InstantiateState(typeof(AimStunDrone)) as AimStunDrone;
             }
             maxDistance = 1000;
             rayRadius = _goodState.rayRadius;
@@ -23,7 +23,7 @@ namespace Cloudburst.Cores.States.Wyatt
             endpointVisualizerPrefab = _goodState.endpointVisualizerPrefab;
             endpointVisualizerRadiusScale = _goodState.endpointVisualizerRadiusScale;
             setFuse = false; //_goodSate.setFuse;
-            damageCoefficient = FireGrenade.damageCoefficient;
+            damageCoefficient = 5;
             baseMinimumDuration = 0.1f;
             //rayRadius = _goodState.rayRadius;
             //rayRadius = _goodState.rayRadius;
@@ -31,11 +31,6 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void ModifyProjectile(ref FireProjectileInfo fireProjectileInfo)
         {
             string muzzleName = "MuzzleCenter";
-
-            if (FireGrenade.effectPrefab)
-            {
-                EffectManager.SimpleMuzzleFlash(FireGrenade.effectPrefab, base.gameObject, muzzleName, false);
-            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

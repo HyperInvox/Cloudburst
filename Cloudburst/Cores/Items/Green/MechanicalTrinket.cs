@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -24,12 +24,12 @@ namespace Cloudburst.Cores.Items
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/IMDLMechanicalTrinket.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/MechanicalTrinket/IMDLMechanicalTrinket.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/Icon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/MechanicalTrinket/Icon.png";
 
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var mdl = Resources.Load<GameObject>(ItemModelPath);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
@@ -151,7 +151,7 @@ localScale = new Vector3(4F, 4F, 4F)
 
 
             return rules;
-        }
+        }*/
 
 
 
@@ -169,7 +169,7 @@ localScale = new Vector3(4F, 4F, 4F)
         }
         public void TeleporterInteractionOnTeleporterBeginChargingGlobal(TeleporterInteraction obj)
         {
-            int count = Util.GetItemCountForTeam(TeamIndex.Player, Index, false, true);
+            int count = Util.GetItemCountForTeam(TeamIndex.Player, Index.itemIndex, false, true);
             if (count > 0)
             {
                 obj.holdoutZoneController.baseRadius +=(count * 5);
@@ -203,8 +203,8 @@ localScale = new Vector3(4F, 4F, 4F)
                                     numButReal += Run.instance.difficultyCoefficient / 2f;
                                     numButReal *= Mathf.Pow((float)count, 1f);
                                     num2ButReal *= Mathf.Pow((float)count, 0.5f);
-                                    characterMaster.inventory.GiveItem(ItemIndex.BoostHp, Mathf.RoundToInt((numButReal - 1f) * 10f));
-                                    characterMaster.inventory.GiveItem(ItemIndex.BoostDamage, Mathf.RoundToInt((num2ButReal - 1f) * 10f));                                }
+                                    characterMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, Mathf.RoundToInt((numButReal - 1f) * 10f));
+                                    characterMaster.inventory.GiveItem(RoR2Content.Items.BoostDamage, Mathf.RoundToInt((num2ButReal - 1f) * 10f));                                }
                             }
                         }
                     }

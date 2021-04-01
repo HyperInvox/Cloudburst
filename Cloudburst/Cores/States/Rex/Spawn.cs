@@ -12,7 +12,7 @@ namespace Cloudburst.Cores.States.REX
             base.OnEnter();
             Util.PlaySound(EntityStates.Pounder.Spawn.spawnSoundString, gameObject);
             EffectManager.SimpleMuzzleFlash(EntityStates.Pounder.Spawn.spawnPrefab, gameObject, "Feet", false);
-            PlayAnimation("Base", "Spawn", "Spawn.playbackRate", duration);
+            //PlayAnimation("Base", RoR2Content.Items.Spawn", RoR2Content.Items.Spawn.playbackRate", duration);
         }
 
         public override void FixedUpdate()

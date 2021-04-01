@@ -18,7 +18,7 @@ namespace Cloudburst.Cores.States.HAND
         public static float radius = 3f;
         public static GameObject hitEffectPrefab;
         public static GameObject swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/HANDSlamTrail");
-        public static GameObject projectilePrefab = WyattCore.instance.sunder;
+      //  public static GameObject projectilePrefab = WyattCore.instance.sunder;
         private Transform hammerChildTransform;
         private OverlapAttack attack;
         private Animator modelAnimator;
@@ -76,7 +76,7 @@ namespace Cloudburst.Cores.States.HAND
                 {
                     Ray aimRay = base.GetAimRay();
                     EffectManager.SimpleMuzzleFlash(swingEffectPrefab, base.gameObject, "SwingCenter", true);
-                    ProjectileManager.instance.FireProjectile(projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageStat * earthquakeDamageCoefficient, forceMagnitude, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
+                   // ProjectileManager.instance.FireProjectile(projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, this.damageStat * earthquakeDamageCoefficient, forceMagnitude, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
                     this.hasSwung = true;
                 }
                 this.attack.forceVector = this.hammerChildTransform.right;

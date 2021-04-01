@@ -1,5 +1,5 @@
 ﻿using Cloudburst.Cores;
-using R2API;
+using EnigmaticThunder.Modules;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;

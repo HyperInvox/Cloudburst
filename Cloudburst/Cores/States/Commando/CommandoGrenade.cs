@@ -14,13 +14,13 @@ namespace Cloudburst.Cores.States.Commando
     {
         private float duration = 1;
         private AimStunDrone _goodState;
-        private FireGrenade _grenade;
+        //private FireGrenade _grenade;
         public CommandoGrenade()
         {
-            if (_goodState == null || _grenade == null)
+            if (_goodState == null)//|| _grenade == null)
             {
-                _goodState = Instantiate(typeof(AimStunDrone)) as AimStunDrone;
-                _grenade = Instantiate(typeof(FireGrenade)) as FireGrenade;
+                _goodState = EntityStateCatalog.InstantiateState(typeof(AimStunDrone)) as AimStunDrone;
+              //  _grenade = EntityStateCatalog.InstantiateState(typeof(FireGrenade)) as FireGrenade;
             }
             maxDistance = 1000;
             rayRadius = _goodState.rayRadius;
@@ -29,7 +29,7 @@ namespace Cloudburst.Cores.States.Commando
             endpointVisualizerPrefab = _goodState.endpointVisualizerPrefab;
             endpointVisualizerRadiusScale = _goodState.endpointVisualizerRadiusScale;
             setFuse = false; //_goodSate.setFuse;
-            damageCoefficient = FireGrenade.damageCoefficient;
+            damageCoefficient = 4;
             baseMinimumDuration = 0.1f;
             //rayRadius = _goodState.rayRadius;
             //rayRadius = _goodState.rayRadius;
@@ -38,10 +38,10 @@ namespace Cloudburst.Cores.States.Commando
         {
             string muzzleName = "MuzzleCenter";
 
-            if (FireGrenade.effectPrefab)
+            /*if (FireGrenade.effectPrefab)
             {
                 EffectManager.SimpleMuzzleFlash(FireGrenade.effectPrefab, base.gameObject, muzzleName, false);
-            }
+            }*/
 
             base.PlayAnimation("Gesture, Additive", "ThrowGrenade", "FireFMJ.playbackRate", duration * 2f);
             base.PlayAnimation("Gesture, Override", "ThrowGrenade", "FireFMJ.playbackRate", duration * 2f);

@@ -1,8 +1,10 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+using Cloudburst.Cores;
+using EnigmaticThunder.Modules;
 using RoR2;
+using UnityEngine;
 
-    public abstract class EquipmentBuilder
+public abstract class EquipmentBuilder
     {
         public abstract string EquipmentName { get; }
         public abstract string EquipmentLangTokenName { get; }
@@ -27,9 +29,9 @@ using RoR2;
 
         public virtual bool IsLunar { get; } = false;
 
-        public EquipmentIndex Index;
+        public EquipmentDef Index;
 
-        public abstract ItemDisplayRuleDict CreateItemDisplayRules();
+        //public abstract ItemDisplayRuleDict CreateItemDisplayRules();
 
         protected abstract void Initialization();
 
@@ -53,48 +55,46 @@ using RoR2;
         /// </summary>
         protected virtual void CreateLang()
         {
-            LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_NAME", EquipmentName);
-            LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_PICKUP", EquipmentPickupDesc);
-            LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION", EquipmentFullDescription);
-            LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_LORE", EquipmentLore);
+            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_NAME", EquipmentName);
+            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_PICKUP", EquipmentPickupDesc);
+            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION", EquipmentFullDescription);
+            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_LORE", EquipmentLore);
         }
 
         protected void CreateEquipment()
         {
-            EquipmentDef equipmentDef = new EquipmentDef()
-            {
-                name = "EQUIPMENT_" + EquipmentLangTokenName,
-                nameToken = "EQUIPMENT_" + EquipmentLangTokenName + "_NAME",
-                pickupToken = "EQUIPMENT_" + EquipmentLangTokenName + "_PICKUP",
-                descriptionToken = "EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION",
-                loreToken = "EQUIPMENT_" + EquipmentLangTokenName + "_LORE",
-                pickupModelPath = EquipmentModelPath,
-                pickupIconPath = EquipmentIconPath,
-                appearsInSinglePlayer = AppearsInSinglePlayer,
-                appearsInMultiPlayer = AppearsInMultiPlayer,
-                canDrop = CanDrop,
-                cooldown = Cooldown,
-                enigmaCompatible = EnigmaCompatible,
-                isBoss = IsBoss,
-                isLunar = IsLunar
-            };
-            var itemDisplayRules = CreateItemDisplayRules();
-            Index = ItemAPI.Add(new CustomEquipment(equipmentDef, itemDisplayRules));
-            On.RoR2.EquipmentSlot.PerformEquipmentAction += PerformEquipmentAction;
-        }
+        Index = ScriptableObject.CreateInstance<EquipmentDef>();
 
-        private bool PerformEquipmentAction(On.RoR2.EquipmentSlot.orig_PerformEquipmentAction orig, RoR2.EquipmentSlot self, EquipmentIndex equipmentIndex)
+        Index.name = "EQUIPMENT_" + EquipmentLangTokenName;
+        Index.nameToken = "EQUIPMENT_" + EquipmentLangTokenName + "_NAME";
+        Index.pickupToken = "EQUIPMENT_" + EquipmentLangTokenName + "_PICKUP";
+        Index.descriptionToken = "EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION";
+        Index.loreToken = "EQUIPMENT_" + EquipmentLangTokenName + "_LORE";
+        Index.pickupModelPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(EquipmentModelPath);
+        Index.pickupIconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>(EquipmentIconPath);
+        Index.appearsInSinglePlayer = AppearsInSinglePlayer;
+        Index.appearsInMultiPlayer = AppearsInMultiPlayer;
+        Index.canDrop = CanDrop;
+        Index.cooldown = Cooldown;
+        Index.enigmaCompatible = EnigmaCompatible;
+        Index.isBoss = IsBoss;
+        Index.isLunar = IsLunar;
+        //var itemDisplayRules = CreateItemDisplayRules();
+        EnigmaticThunder.Modules.Pickups.RegisterEquipment(Index);
+        On.RoR2.EquipmentSlot.PerformEquipmentAction += EquipmentSlot_PerformEquipmentAction; ;
+    }
+
+    private bool EquipmentSlot_PerformEquipmentAction(On.RoR2.EquipmentSlot.orig_PerformEquipmentAction orig, EquipmentSlot self, EquipmentDef equipmentDef)
+    {
+        if (equipmentDef == Index)
         {
-            if (equipmentIndex == Index)
-            {
-                return ActivateEquipment(self);
-            }
-            else
-            {
-                return orig(self, equipmentIndex);
-            }
+            return ActivateEquipment(self);
         }
-
+        else
+        {
+            return orig(self, equipmentDef);
+        }
+    }
         protected abstract bool ActivateEquipment(EquipmentSlot slot);
 
         public virtual void Hooks() { }

@@ -78,7 +78,7 @@ namespace Cloudburst.Cores.Components
             DirectorSpawnRequest directorSpawnRequest2 = directorSpawnRequest;
             directorSpawnRequest2.onSpawnedServer = (Action<SpawnCard.SpawnResult>)Delegate.Combine(directorSpawnRequest2.onSpawnedServer, new Action<SpawnCard.SpawnResult>(delegate (SpawnCard.SpawnResult spawnResult)
             {
-                spawnResult.spawnedInstance.GetComponent<Inventory>().GiveItem(ItemIndex.HealthDecay, 65);
+                spawnResult.spawnedInstance.GetComponent<Inventory>().GiveItem(RoR2Content.Items.HealthDecay, 65);
             }));
             DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
         }

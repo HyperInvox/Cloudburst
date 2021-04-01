@@ -44,10 +44,14 @@ class CommonAssets
         //parentSwingEffectMaterial = Resources.Load<GameObject>("prefabs/effects/GrandparentGroundSwipeTrailEffect").transform.Find("EnergyParticles/SwipeTrail").GetComponent<Renderer>().material;   
         ancientWispPillarEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/AncientWispPillar").transform.Find("Particles/Flames, Tube, CenterHuge").GetComponent<Renderer>().material;
 
-        PopulateDisplays();
+        Cloudburst.CloudburstPlugin.start += CloudburstPlugin_start;
         LogCore.LogI("Common assets loading finished!");
 
     }
+
+    private static void CloudburstPlugin_start()
+    {
+        PopulateDisplays();    }
 
     public static GameObject LoadDisplay(string name)
     {
@@ -61,65 +65,27 @@ class CommonAssets
         return null;
     }
 
-    private static void PopulateDisplays()
+
+    internal static void PopulateDisplays()
     {
         ItemDisplayRuleSet itemDisplayRuleSet = Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody").GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().itemDisplayRuleSet;
 
-        //LogCore.LogI("HELLO");
+        ItemDisplayRuleSet.KeyAssetRuleGroup[] item = itemDisplayRuleSet.keyAssetRuleGroups;
 
-        BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-        ItemDisplayRuleSet.NamedRuleGroup[] array = typeof(ItemDisplayRuleSet).GetField("namedItemRuleGroups", bindingAttr).GetValue(itemDisplayRuleSet) as ItemDisplayRuleSet.NamedRuleGroup[];
-        ItemDisplayRuleSet.NamedRuleGroup[] array2 = typeof(ItemDisplayRuleSet).GetField("namedEquipmentRuleGroups", bindingAttr).GetValue(itemDisplayRuleSet) as ItemDisplayRuleSet.NamedRuleGroup[];
-        ItemDisplayRuleSet.NamedRuleGroup[] array3 = array;
-
-        for (int i = 0; i < array3.Length; i++)
+        for (int i = 0; i < item.Length; i++)
         {
-            //LogCore.LogI("HELLO2");
+            ItemDisplayRule[] rules = item[i].displayRuleGroup.rules;
 
-            ItemDisplayRule[] rules = array3[i].displayRuleGroup.rules;
             for (int j = 0; j < rules.Length; j++)
             {
-                //LogCore.LogI("HELLO3");
-
                 GameObject followerPrefab = rules[j].followerPrefab;
-                if (!(followerPrefab == null))
+                if (followerPrefab)
                 {
-                    //LogCore.LogI("HELLO4");
-
                     string name = followerPrefab.name;
                     string key = (name != null) ? name.ToLower() : null;
                     if (!itemDisplayPrefabs.ContainsKey(key))
                     {
-                        //LogCore.LogI("HELLO5");
-
                         itemDisplayPrefabs[key] = followerPrefab;
-                    }
-                }
-            }
-        }
-
-        array3 = array2;
-        for (int i = 0; i < array3.Length; i++)
-        {
-            //LogCore.LogI("HELLO6");
-
-            ItemDisplayRule[] rules = array3[i].displayRuleGroup.rules;
-            for (int j = 0; j < rules.Length; j++)
-            {
-                //LogCore.LogI("HELLO7");
-
-                GameObject followerPrefab2 = rules[j].followerPrefab;
-                if (!(followerPrefab2 == null))
-                {
-                    //LogCore.LogI("HELLO8");
-
-                    string name2 = followerPrefab2.name;
-                    string key2 = (name2 != null) ? name2.ToLower() : null;
-                    if (!itemDisplayPrefabs.ContainsKey(key2))
-                    {
-                        //LogCore.LogI("HELLO9");
-
-                        itemDisplayPrefabs[key2] = followerPrefab2;
                     }
                 }
             }

@@ -31,7 +31,7 @@ namespace Cloudburst.Cores.States.VoidGolems
                 Util.PlaySound(Shell.shieldActivateSoundString, base.gameObject);
                 if (NetworkServer.active)
                 {
-                    base.characterBody.AddTimedBuff(BuffIndex.LunarShell, 25);
+                    base.characterBody.AddTimedBuff(RoR2.RoR2Content.Buffs.LunarShell, 25);
                 }
                 if (base.isAuthority)
                 {

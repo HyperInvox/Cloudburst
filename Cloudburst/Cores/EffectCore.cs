@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
-using R2API;
+
 using RoR2;
 using TMPro;
 using RoR2.UI;
+using EnigmaticThunder.Modules;
 
 namespace Cloudburst.Cores
 {
@@ -33,10 +34,10 @@ namespace Cloudburst.Cores
         public static GameObject lumpkinEffect;
         public static GameObject willIsNotPoggers;
 
-        public EffectCore() => Effects();
+        public EffectCore() => DoEffects();
 
 
-        protected void Effects() {
+        protected void DoEffects() {
             LogCore.LogI("Initializing Core: " + base.ToString());
             instance = this;
 
@@ -124,7 +125,7 @@ namespace Cloudburst.Cores
             debris2.gameObject.SetActive(false);
             sphere.gameObject.SetActive(false);
 
-            EffectAPI.AddEffect(orbitalImpact);
+            Effects.RegisterEffect(Effects.CreateGenericEffectDef(orbitalImpact));
         }
 
         private void CreateUnknownEliteEffect()
@@ -146,17 +147,22 @@ namespace Cloudburst.Cores
             AttackSpeed();
             void Armor() {
                 magicArmor = Resources.Load<GameObject>("Prefabs/Effects/BearProc").InstantiateClone("MagicEffectArmor", false);
+                LogCore.LogI("hi1");
                 var tmp = magicArmor.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<TextMeshPro>();
+                LogCore.LogI("hi2");
                 var langMeshController = magicArmor.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<LanguageTextMeshController>();
-
+                LogCore.LogI("hi3");
                 magicArmor.transform.Find("Fluff").gameObject.SetActive(false);
-
-                LanguageAPI.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
+                LogCore.LogI("hi4");
+               // Languages.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
+                LogCore.LogI("hi5");
 
                 tmp.text = "+Armor!";
+                LogCore.LogI("hi6");
                 langMeshController.token = "MAGIC_ARMOR_EFFECT";
+                LogCore.LogI("hi7");
 
-                EffectAPI.AddEffect(new EffectDef()
+                EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
                 {
 
                     prefab = magicArmor,
@@ -172,12 +178,12 @@ namespace Cloudburst.Cores
 
                 magicRegen.transform.Find("Fluff").gameObject.SetActive(false);
 
-                LanguageAPI.Add("MAGIC_REGEN_EFFECT", "+Regeneration!");
+                Languages.Add("MAGIC_REGEN_EFFECT", "+Regeneration!");
 
                 tmp.text = "+Regeneration!";
                 langMeshController.token = "MAGIC_REGEN_EFFECT";
 
-                EffectAPI.AddEffect(new EffectDef()
+                EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
                 {
 
                     prefab = magicRegen,
@@ -193,12 +199,12 @@ namespace Cloudburst.Cores
 
                 magicAttackSpeed.transform.Find("Fluff").gameObject.SetActive(false);
 
-                LanguageAPI.Add("MAGIC_ATKSPEED_EFFECT", "+Attack Speed!");
+                Languages.Add("MAGIC_ATKSPEED_EFFECT", "+Attack Speed!");
 
                 tmp.text = "+Attack Speed!";
                 langMeshController.token = "MAGIC_ATKSPEED_EFFECT";
 
-                EffectAPI.AddEffect(new EffectDef()
+                EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
                 {
 
                     prefab = magicAttackSpeed,
@@ -226,7 +232,7 @@ namespace Cloudburst.Cores
             attributes.vfxPriority = priority;
 
 
-            EffectAPI.AddEffect(new EffectDef()
+            EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
             {
 
                 prefab = obj,
@@ -282,9 +288,9 @@ namespace Cloudburst.Cores
             /*var flames = coinImpactEffect.transform.Find("Flames");
             flames.gameObject.SetActive(false);*/
 
-            //EffectAPI.AddEffect(coinImpactEffect);
+            //EnigmaticThunder.Modules.EffectDefs.Add(coinImpactEffect);
 
-            EffectAPI.AddEffect(coinImpactEffect);
+            //EnigmaticThunder.Modules.EffectDefs.Add(coinImpactEffect);
         }
 
             #region HAN-D
@@ -300,7 +306,7 @@ namespace Cloudburst.Cores
                 trail.GetComponent<Renderer>().material = Resources.Load<Material>("Materials/matLunarGolemShield");
             }
 
-            EffectAPI.AddEffect(HANDRetrivalOrb);
+            //EnigmaticThunder.Modules.EffectDefs.Add(HANDRetrivalOrb);
 
             //var core = HANDRetrivalOrb.transform.Find("VFX/Core");
             //var coreRenderer = core.GetComponent<Renderer>();
@@ -311,7 +317,7 @@ namespace Cloudburst.Cores
             //var trail = orbEffect.transform.Find("TrailParent/Trail");
             //var trailRenderer = trail.GetComponent<Renderer>();
             //trailRenderer.material = Resources.Load<Material>("materials/matGrandparentMeleeSwipe");
-            //EffectAPI.AddEffect(orbEffect);
+            //EnigmaticThunder.Modules.EffectDefs.Add(orbEffect);
         }
 
 
@@ -335,7 +341,7 @@ namespace Cloudburst.Cores
                 ringRenderer.material = CommonAssets.parentSwingEffectMaterial;
             }
 
-            EffectAPI.AddEffect(wyattSwingTrail);
+            Effects.RegisterEffect(Effects.CreateGenericEffectDef(wyattSwingTrail));
         }
         private void RepairWyattEPICSwingEffect()
         {
@@ -350,7 +356,7 @@ namespace Cloudburst.Cores
                 HANDrenderer.material = CommonAssets.lemurianSwingEffectMaterial;
             }
 
-            EffectAPI.AddEffect(wyatt2SwingTrail);
+            Effects.RegisterEffect(Effects.CreateGenericEffectDef(wyatt2SwingTrail));
         }
         #endregion
         #region AncientWisp

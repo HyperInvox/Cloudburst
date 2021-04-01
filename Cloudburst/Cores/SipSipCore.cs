@@ -1,4 +1,5 @@
-﻿using R2API;
+﻿
+using EnigmaticThunder.Modules;
 using RoR2;
 using System;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace Cloudburst.Cores
     public sealed class SipSipCore
     {
         public static SipSipCore instance;
+
+
 
         private GameObject sipSipBody;
         private GameObject sipSipMaster;
@@ -125,7 +128,7 @@ namespace Cloudburst.Cores
         }
 
         private void SetNameToken() {
-            LanguageAPI.Add("SCAVLUNAR5_BODY_NAME", "Sipsip The Greedy");
+            Languages.Add("SCAVLUNAR5_BODY_NAME", "Sipsip The Greedy");
             CharacterBody body = sipSipBody.GetComponent<CharacterBody>();
             body.baseNameToken = "SCAVLUNAR5_BODY_NAME";
         }

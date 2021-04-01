@@ -1,4 +1,5 @@
-﻿using R2API;
+﻿
+using EnigmaticThunder.Modules;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -15,18 +16,18 @@ namespace Cloudburst.Cores
 
         private void Newt()
         {
-            LanguageAPI.Add("NEWT_ANNOY_0", "Shape will shatter. Stop. ");
-            LanguageAPI.Add("NEWT_ANNOY_1", "Stop stop. Bad bad.");
-            LanguageAPI.Add("NEWT_ANNOY_2", "Will shatter your shape. Bad.");
-            LanguageAPI.Add("NEWT_ANNOY_3", "Bad. Will reshape into forget.");
-            LanguageAPI.Add("NEWT_ANNOY_4", "Cease. Do not bother");
-            LanguageAPI.Add("NEWT_ANNOY_5", "Reshape. Out of forever.");
-            LanguageAPI.Add("NEWT_ANNOY_6", "Again again. Everytime.");
-            LanguageAPI.Add("NEWT_KICK", "  Come. When reshape.");
+            Languages.Add("NEWT_ANNOY_0", "Shape will shatter. Stop. ");
+            Languages.Add("NEWT_ANNOY_1", "Stop stop. Bad bad.");
+            Languages.Add("NEWT_ANNOY_2", "Will shatter your shape. Bad.");
+            Languages.Add("NEWT_ANNOY_3", "Bad. Will reshape into forget.");
+            Languages.Add("NEWT_ANNOY_4", "Cease. Do not bother");
+            Languages.Add("NEWT_ANNOY_5", "Reshape. Out of forever.");
+            Languages.Add("NEWT_ANNOY_6", "Again again. Everytime.");
+            Languages.Add("NEWT_KICK", "  Come. When reshape.");
 
-            //    LanguageAPI.Add("NEWT_KICK", "<color=#ff6961>[NEWT] Come. When reshape.</style>");
-            LanguageAPI.Add("NEWT_DIALOGUE_FORMAT", "<color=#50b8e7><size=120%>Newt: {0}</color></size>");
-            LanguageAPI.Add("NEWT_KICK_DIALOGUE_FORMAT", "<color=#ff6961><size=120%>Newt: {0}</color></size>");
+            //    Languages.Add("NEWT_KICK", "<color=#ff6961>[NEWT] Come. When reshape.</style>");
+            Languages.Add("NEWT_DIALOGUE_FORMAT", "<color=#50b8e7><size=120%>Newt: {0}</color></size>");
+            Languages.Add("NEWT_KICK_DIALOGUE_FORMAT", "<color=#ff6961><size=120%>Newt: {0}</color></size>");
 
             list.Add("NEWT_ANNOY_0");
             list.Add("NEWT_ANNOY_1");

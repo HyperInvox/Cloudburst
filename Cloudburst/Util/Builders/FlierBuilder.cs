@@ -1,13 +1,12 @@
 ﻿using EntityStates;
 using KinematicCharacterController;
-using R2API;
 using RoR2;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.Networking;
+using EnigmaticThunder.Modules;
 
 /// <summary>
 /// Assists in the creation of survivors.
@@ -60,7 +59,7 @@ public class FlierBuilder
             prefabName = "RandomAssSurvivorBody";
         }
 
-        GameObject prefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), prefabName, true);
+        GameObject prefab = EnigmaticThunder.Modules.Prefabs.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), prefabName, true);
         prefab.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
 
         SetupModelBase();
@@ -170,7 +169,7 @@ public class FlierBuilder
             body.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
             body.rootMotionInMainState = false;
             body.mainRootSpeed = 0;
-            body.bodyIndex = -1;
+            body.bodyIndex = BodyIndex.None;
             body.aimOriginTransform = aimOrigin.transform;
             body.hullClassification = HullClassification.Human;
         }
@@ -356,13 +355,13 @@ public class FlierBuilder
 
         void SetupSkins()
         {
-            //LanguageAPI.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
+            //Languages.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
 
             var obj = transform.gameObject;
             var mdl = obj.GetComponent<CharacterModel>();
             var skinController = obj.AddComponent<ModelSkinController>();
 
-            LoadoutAPI.SkinDefInfo skinDefInfo = new LoadoutAPI.SkinDefInfo
+            Loadouts.SkinDefInfo skinDefInfo = new Loadouts.SkinDefInfo
             {
                 Name = "DEFAULT_SKIN",
                 NameToken = "DEFAULT_SKIN",
@@ -384,7 +383,7 @@ public class FlierBuilder
 
             array[0].defaultMaterial = masterySkinDelegate.Invoke();
 
-            LoadoutAPI.SkinDefInfo masteryInfo = new LoadoutAPI.SkinDefInfo
+            Loadouts.SkinDefInfo masteryInfo = new Loadouts.SkinDefInfo
             {
                 Name = "DEFAULT_SKIN",
                 NameToken = "DEFAULT_SKIN",
@@ -399,8 +398,8 @@ public class FlierBuilder
                 UnlockableName = masteryAchievementUnlockable
             };
 
-            SkinDef skinDefault = LoadoutAPI.CreateNewSkinDef(skinDefInfo);
-            SkinDef mastery = LoadoutAPI.CreateNewSkinDef(masteryInfo);
+            SkinDef skinDefault = EnigmaticThunder.Modules.Loadouts.CreateNewSkinDef(skinDefInfo);
+            SkinDef mastery = EnigmaticThunder.Modules.Loadouts.CreateNewSkinDef(masteryInfo);
 
             SkinDef[] skinDefs = new SkinDef[2]
             {

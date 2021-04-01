@@ -1,5 +1,5 @@
-﻿using EntityStates.Treebot.UnlockInteractable;
-using R2API;
+﻿/*using EntityStates.Treebot.UnlockInteractable;
+
 using RoR2;
 using System;
 
@@ -23,17 +23,17 @@ namespace Cloudburst.Achievements
         // The key of a prereq for unlocking this. Use "" for none.
         public override String PrerequisiteUnlockableIdentifier { get; } = "RescueTreebot";
 
-        // Language token for the achievement name.
+        // //Language token for the achievement name.
         public override String AchievementNameToken { get; } = "CLOUDBURST_PARADOX_ACHIEVEMENT_NAME";
 
-        // Language token for the achievement description.
+        // //Language token for the achievement description.
         public override String AchievementDescToken { get; } = "CLOUDBURST_PARADOX_ACHIEVEMENT_DESC";
 
-        // Language token for the unlockable name.
+        // //Language token for the unlockable name.
         public override String UnlockableNameToken { get; } = "CLOUDBURST_PARADOX_UNLOCKABLE_NAME";
 
         // The sprite provider.
-        protected override CustomSpriteProvider SpriteProvider { get; } = new CustomSpriteProvider("@Cloudburst:Assets/Cloudburst/Icons/REX/texTreebotHarvester.png");
+        protected override CustomSpriteProvider SpriteProvider { get; } = new CustomSpriteProvider("Assets/Cloudburst/Icons/REX/texTreebotHarvester.png");
         public override void OnInstall()
         {
             base.OnInstall();   
@@ -56,3 +56,4 @@ namespace Cloudburst.Achievements
         }
     }
 }
+*/

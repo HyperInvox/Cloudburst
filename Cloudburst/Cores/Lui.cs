@@ -7,8 +7,9 @@ using Cloudburst.Cores.HAND.Skills;
 using Cloudburst.Cores.Skills;
 using Cloudburst.Cores.States.Bombardier;
 using Cloudburst.Cores.States.Wyatt;
+using EnigmaticThunder.Modules;
 using EntityStates;
-using R2API;
+
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
@@ -39,11 +40,15 @@ namespace Cloudburst.Cores
 
         public override Color survivorDefColor => new Color(0.4862745098f, 0.94901960784f, 0.71764705882f);
 
-        public override Sprite defaultSkinColor => LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+        public override Sprite defaultSkinColor => EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
 
-        public override Sprite masterySkinColor => LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+        public override Sprite masterySkinColor => EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
 
         public override string SurvivorSubtitle => "Lean, Mean, Cleaning Machines";
+
+        public override UnlockableDef unlockableDef => throw new NotImplementedException();
+
+        public override float desiredSortPosition => throw new NotImplementedException();
 
         public override void Hooks()
         {
@@ -53,10 +58,10 @@ namespace Cloudburst.Cores
         public override void GenerateUmbra()
         {
             base.GenerateUmbra();
-            umbraMaster = Resources.Load<GameObject>("prefabs/charactermasters/LoaderMonsterMaster").InstantiateClone(BodyName + "MonsterMaster", true);
-            CloudUtils.RegisterNewMaster(umbraMaster);
+            //umbraMaster = Resources.Load<GameObject>("prefabs/charactermasters/LoaderMonsterMaster").InstantiateClone(BodyName + "MonsterMaster", true);
+            //CloudUtils.RegisterNewMaster(umbraMaster);
 
-            umbraMaster.GetComponent<CharacterMaster>().bodyPrefab = survivorBody;
+            //umbraMaster.GetComponent<CharacterMaster>().bodyPrefab = survivorBody;
         }
        
 
@@ -67,12 +72,12 @@ namespace Cloudburst.Cores
         }
 
 
-        public override void GenerateEquipmentDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
+        public override void GenerateEquipmentDisplays(List<ItemDisplayRuleSet.KeyAssetRuleGroup> obj)
         {
             base.GenerateEquipmentDisplays(obj);
         }
 
-        public override void GenerateItemDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
+        public override void GenerateItemDisplays(List<ItemDisplayRuleSet.KeyAssetRuleGroup> obj)
         {
             base.GenerateItemDisplays(obj);
         }
@@ -167,13 +172,11 @@ namespace Cloudburst.Cores
             primarySkillDef.canceledFromSprinting = false;
             primarySkillDef.fullRestockOnAssign = true;
             primarySkillDef.interruptPriority = InterruptPriority.Any;
-            primarySkillDef.isBullets = false;
             primarySkillDef.isCombatSkill = true;
             primarySkillDef.mustKeyPress = false;
-            primarySkillDef.noSprint = false;
+            primarySkillDef.cancelSprintingOnActivation = false;
             primarySkillDef.rechargeStock = 1;
             primarySkillDef.requiredStock = 1;
-            primarySkillDef.shootDelay = 0.1f;
             primarySkillDef.stockToConsume = 0;
             primarySkillDef.skillDescriptionToken = "WYATT_PRIMARY_DESCRIPTION";
             primarySkillDef.skillName = "WYATT_PRIMARY_NAME";
@@ -185,18 +188,17 @@ namespace Cloudburst.Cores
                  "KEYWORD_SPIKED",
             };
 
-            LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
-            LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
-            //LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
-            LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
+            Languages.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
+            Languages.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
+            //Languages.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
+            Languages.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
 
-            LoadoutAPI.AddSkillDef(primarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = primarySkillDef,
-                unlockableName = "",
                 viewableNode = new ViewablesCatalog.Node(primarySkillDef.skillNameToken, false, null)
 
             };
@@ -204,9 +206,9 @@ namespace Cloudburst.Cores
         public override void CreateSecondary(SkillLocator skillLocator, SkillFamily skillFamily)
         {
 
-            LoadoutAPI.AddSkill(typeof(TrashOut));
-            LoadoutAPI.AddSkill(typeof(TrashOut2));
-            //LoadoutAPI.AddSkill(typeof(TrashOut3));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut2));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut3));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(Uninitialized));
@@ -217,13 +219,11 @@ namespace Cloudburst.Cores
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = false;
             secondarySkillDef.interruptPriority = InterruptPriority.Skill;
-            secondarySkillDef.isBullets = false;
             secondarySkillDef.isCombatSkill = true;
             secondarySkillDef.mustKeyPress = true;
-            secondarySkillDef.noSprint = false;
+            secondarySkillDef.cancelSprintingOnActivation = false;
             secondarySkillDef.rechargeStock = 1;
             secondarySkillDef.requiredStock = 1;
-            secondarySkillDef.shootDelay = 0.08f;
             secondarySkillDef.dontAllowPastMaxStocks = true;
             secondarySkillDef.stockToConsume = 1;
             secondarySkillDef.skillDescriptionToken = "WYATT_SECONDARY_DESCRIPTION";
@@ -236,16 +236,15 @@ namespace Cloudburst.Cores
                 "KEYWORD_SPIKED"
              };
 
-            LanguageAPI.Add(secondarySkillDef.skillNameToken, "Trash Out");
-            LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
+            Languages.Add(secondarySkillDef.skillNameToken, "Trash Out");
+            Languages.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
 
-            LoadoutAPI.AddSkillDef(secondarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = secondarySkillDef,
-                unlockableName = "",
                 viewableNode = new ViewablesCatalog.Node(secondarySkillDef.skillNameToken, false, null)
 
             };
@@ -262,13 +261,11 @@ namespace Cloudburst.Cores
             utilitySkillDef.canceledFromSprinting = false;
             utilitySkillDef.fullRestockOnAssign = false;
             utilitySkillDef.interruptPriority = InterruptPriority.Skill;
-            utilitySkillDef.isBullets = false;
             utilitySkillDef.isCombatSkill = true;
             utilitySkillDef.mustKeyPress = false;
-            utilitySkillDef.noSprint = false;
+            utilitySkillDef.cancelSprintingOnActivation = false;
             utilitySkillDef.rechargeStock = 1;
             utilitySkillDef.requiredStock = 1;
-            utilitySkillDef.shootDelay = 0.08f;
             utilitySkillDef.stockToConsume = 1;
             utilitySkillDef.skillDescriptionToken = "WYATT_UTILITY_DESCRIPTION";
             utilitySkillDef.skillName = "aaa";
@@ -287,13 +284,11 @@ namespace Cloudburst.Cores
             utilitySkillDef2.canceledFromSprinting = false;
             utilitySkillDef2.fullRestockOnAssign = false;
             utilitySkillDef2.interruptPriority = InterruptPriority.Skill;
-            utilitySkillDef2.isBullets = false;
             utilitySkillDef2.isCombatSkill = true;
             utilitySkillDef2.mustKeyPress = false;
-            utilitySkillDef2.noSprint = false;
+            utilitySkillDef2.cancelSprintingOnActivation = false;
             utilitySkillDef2.rechargeStock = 1;
             utilitySkillDef2.requiredStock = 1;
-            utilitySkillDef2.shootDelay = 0.08f;
             utilitySkillDef2.stockToConsume = 1;
             utilitySkillDef2.skillDescriptionToken = "WYATT_UTILITY2_DESCRIPTION";
             utilitySkillDef2.skillName = "aaa";
@@ -306,7 +301,6 @@ namespace Cloudburst.Cores
             utilitySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = utilitySkillDef,
-                unlockableName = "",
                 viewableNode = new ViewablesCatalog.Node(utilitySkillDef.skillNameToken, false, null)
             };
         }
@@ -321,13 +315,11 @@ namespace Cloudburst.Cores
             specialSkillDef.canceledFromSprinting = false;
             specialSkillDef.fullRestockOnAssign = true;
             specialSkillDef.interruptPriority = InterruptPriority.PrioritySkill;
-            specialSkillDef.isBullets = false;
             specialSkillDef.isCombatSkill = false;
             specialSkillDef.mustKeyPress = true;
-            specialSkillDef.noSprint = false;
+            specialSkillDef.cancelSprintingOnActivation = false;
             specialSkillDef.rechargeStock = 1;
             specialSkillDef.requiredStock = 1;
-            specialSkillDef.shootDelay = 0.5f;
             specialSkillDef.stockToConsume = 0;
             specialSkillDef.skillDescriptionToken = "WYATT_SPECIAL_DESCRIPTION";
             specialSkillDef.skillName = "aaa";
@@ -337,12 +329,11 @@ namespace Cloudburst.Cores
                  "KEYWORD_WEIGHTLESS"
             };
 
-            LoadoutAPI.AddSkillDef(specialSkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
 
             skillLocator.special.skillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = specialSkillDef,
-                unlockableName = "",
                 viewableNode = new ViewablesCatalog.Node(specialSkillDef.skillNameToken, false, null)
             };
         }

@@ -1,9 +1,10 @@
 ﻿using Cloudburst.Cores.HAND.Components;
 using Cloudburst.Cores.Items.Green;
 using Cloudburst.Cores.Items.White;
-using R2API;
-using R2API.Utils;
+
+
 using RoR2;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -14,227 +15,191 @@ namespace Cloudburst.Cores
     {
         public static BuffCore instance;
 
-        protected internal BuffIndex skinIndex;
-        protected internal BuffIndex charmIndex;
-        protected internal BuffIndex antiGravIndex;
-        protected internal BuffIndex antiGravFriendlyIndex;
-        protected internal BuffIndex wyattCombatIndex;
-        protected internal BuffIndex japesCloak;
-        protected internal BuffIndex engageLunarShell;
-        protected internal BuffIndex REDACTED;
+        protected internal BuffDef skin;
+        protected internal BuffDef charm;
+        protected internal BuffDef antiGrav;
+        protected internal BuffDef wyattCombatIndex;
+        protected internal BuffDef japesCloak;
+        protected internal BuffDef engageLunarShell;
+        protected internal BuffDef REDACTED;
 
-        protected internal BuffIndex magicArmor;
-        protected internal BuffIndex magicRegen;
-        protected internal BuffIndex magicAttackSpeed;
+        protected internal BuffDef magicArmor;
+        protected internal BuffDef magicRegen;
+        protected internal BuffDef magicAttackSpeed;
 
+        protected internal BuffDef wyattSuspension;
 
-        protected internal BuffIndex glassMithrix;
+        protected internal BuffDef glassMithrix;
         internal bool Loaded { get; private set; } = false;
         public BuffCore() => RegisterBuffs();
 
+        internal class BuffBuilder
+        {
+
+            public Sprite iconSprite;
+
+            public Color buffColor = Color.white;
+
+            public bool canStack;
+
+            public EliteDef eliteDef;
+
+            public bool isDebuff;
+
+            public NetworkSoundEventDef startSfx;
+            public BuffDef BuildBuff()
+            {
+                //create buff
+                var buff = ScriptableObject.CreateInstance<BuffDef>();
+                buff.canStack = canStack;
+                buff.isDebuff = isDebuff;
+                buff.iconSprite = iconSprite; // AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Charm");
+                buff.buffColor = buffColor;
+                if (startSfx)
+                {
+                    buff.startSfx = startSfx;
+                }
+                if (eliteDef)
+                {
+                    buff.eliteDef = eliteDef;
+                }
+
+                //add again
+                EnigmaticThunder.Modules.Buffs.RegisterBuff(buff);
+                //add buff
+                /*BuffCatalog.modHelper.getAdditionalEntries += ModHelper_getAdditionalEntries;
+
+                void ModHelper_getAdditionalEntries(List<BuffDef> defs) {
+                    defs.Add(buff);
+                }*/
+                return buff;
+            }
+        }
         protected void RegisterBuffs()
         {
             LogCore.LogI("Initializing Core: " + base.ToString());
 
             instance = this;
 
-            /*RegisterBuff(new BuffDef
+            this.skin = new BuffBuilder()
             {
-                buffIndex = BuffIndex.Count,
-                //buffColor = Color.yellow,
-                canStack = true,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@EngimaHANDREBOOTED:Assets/Import/HAND_ICONS/Passive.png",
-                isDebuff = false,
-                name = "Drone",
-            });
 
-            RegisterBuff(new BuffDef
-            {
-                buffIndex = BuffIndex.Count,
                 canStack = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@EngimaHANDREBOOTED:Assets/Import/HAND_ICONS/OverclockBuff.png",
                 isDebuff = false,
-                name = "Overclock"
-            });
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Charm"),
+                //name = "SkinStack",
+                buffColor = new Color32(219, 224, 198, byte.MaxValue),
+            }.BuildBuff();
 
-            RegisterBuff(new BuffDef
+            this.antiGrav = new BuffBuilder()
             {
-                buffColor = new Color(0.3764706f, 0.84313726f, 0.8980392f),
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texbuffonfireicon",
-                isDebuff = false,
-                name = "Surge"
-            });
-
-            RegisterBuff(new BuffDef
-            {
-                buffColor = new Color(0.3764706f, 0.84313726f, 0.8980392f),
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texbuffonfireicon",
-                isDebuff = false,
-                name = "Sparkle"
-            });
-            RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texMovespeedBuffIcon",
-                name = "BombardierForce",
-                buffColor = new Color(0.8392157f, 0.7882353f, 0.22745098f)
-            });
-            RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
-                canStack = true,
-                isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texMovespeedBuffIcon",
-                name = "BaboonCharge",
-                buffColor = new Color(0.8392157f, 0.7882353f, 0.22745098f)
-            });*/
-            RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
                 canStack = false,
                 isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/Charm.png", //"Textures/BuffIcons/texBuffBodyArmorIcon",
-                name = "SkinStack",
-                buffColor = new Color32(219, 224, 198, byte.MaxValue)
-            });
-            RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texBuffPulverizeIcon",
-                name = "AntiGrav",
+                iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texBuffPulverizeIcon"),
                 buffColor = new Color(0.6784314f, 0.6117647f, 0.4117647f)
-            });
-            RegisterBuff(new BuffDef()
+            }.BuildBuff();
+
+            this.wyattCombatIndex = new BuffBuilder()
             {
-                buffIndex = BuffIndex.Count,
                 canStack = true,
                 isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/WyattVelocity.png",
-                name = "WyattCombat",
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("WyattVelocity"),
                 buffColor = new Color(1f, 0.7882353f, 0.05490196f)
-            });
-            RegisterBuff(new BuffDef()
+            }.BuildBuff();
+
+            this.japesCloak = new BuffBuilder()
             {
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "Textures/BuffIcons/texBuffGenericShield",
-                name = "AntiGravFriendly",
-                buffColor = new Color(0.6784314f, 0.6117647f, 0.4117647f)
-            });
-            RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
                 canStack = true,
                 isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/JapesCloakBuff.png",
-                name = "JapesCloak",
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("JapesCloakBuff"),
                 buffColor = new Color(1f, 0.7882353f, 0.05490196f)
-            });
-            RegisterBuff(new BuffDef()
+            }.BuildBuff();
+
+            this.REDACTED = new BuffBuilder()
             {
-                buffIndex = BuffIndex.Count,
                 canStack = false,
                 isDebuff = true,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/Redacted.png",
-                name = "REDACTED",
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Redacted"),
                 buffColor = new Color32(219, 224, 198, byte.MaxValue)
-            }); RegisterBuff(new BuffDef()
+            }.BuildBuff();
+
+            this.glassMithrix = new BuffBuilder()
             {
-                buffIndex = BuffIndex.Count,
                 canStack = true,
                 isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/GlassShatter.png",
-                name = "UnbrokenGlass",
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("GlassShatter"),
                 buffColor = CloudUtils.HexToColor("#50b8e7"),
-            });
-            RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/BaseMagicIcon.png",
-                name = "MagicianBuffRegen",
-                buffColor = CloudUtils.HexToColor("#3CB043"),
-            }); RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/BaseMagicIcon.png",
-                name = "MagicianBuffAttackspeed",
-                buffColor = CloudUtils.HexToColor("#FFA500"),
-            }); RegisterBuff(new BuffDef()
-            {
-                buffIndex = BuffIndex.Count,
-                canStack = false,
-                isDebuff = false,
-                eliteIndex = EliteIndex.None,
-                iconPath = "@Cloudburst:Assets/Cloudburst/BuffIcons/BaseMagicIcon.png",
-                name = "MagicianBuffArmor",
-                buffColor = CloudUtils.HexToColor("#4D516D"),
-            });
+            }.BuildBuff();
 
+            this.magicRegen = new BuffBuilder()
+            {
+                canStack = false,
+                isDebuff = false,
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("BaseMagicIcon"),
+                buffColor = CloudUtils.HexToColor("#3CB043"),
+            }.BuildBuff();
+
+            this.magicAttackSpeed = new BuffBuilder()
+            {
+                canStack = false,
+                isDebuff = false,
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("BaseMagicIcon"),
+                buffColor = CloudUtils.HexToColor("#FFA500"),
+            }.BuildBuff();
+
+            this.magicArmor = new BuffBuilder()
+            {
+                canStack = false,
+                isDebuff = false,
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("BaseMagicIcon"),
+                buffColor = CloudUtils.HexToColor("#4D516D"),
+            }.BuildBuff();
+
+            //I LOVE YOU
+            //ACTUALLY I DON'T
+
+            this.wyattSuspension = new BuffBuilder()
+            {
+                canStack = false,
+                isDebuff = true,
+                iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texBuffPulverizeIcon"),
+                buffColor = CloudUtils.HexToColor("#37323e"),
+            }.BuildBuff();
+
+            /*EnigmaticThunder.Modules.BuffDefs.Add(antiGrav);
+            EnigmaticThunder.Modules.BuffDefs.Add(charm);
+            EnigmaticThunder.Modules.BuffDefs.Add(engageLunarShell);
+            EnigmaticThunder.Modules.BuffDefs.Add(glassMithrix);
+            EnigmaticThunder.Modules.BuffDefs.Add(japesCloak);
+            EnigmaticThunder.Modules.BuffDefs.Add(magicArmor);
+            EnigmaticThunder.Modules.BuffDefs.Add(magicAttackSpeed);
+            EnigmaticThunder.Modules.BuffDefs.Add(magicRegen);
+            EnigmaticThunder.Modules.BuffDefs.Add(REDACTED);
+            EnigmaticThunder.Modules.BuffDefs.Add(skin);
+            EnigmaticThunder.Modules.BuffDefs.Add(wyattCombatIndex);*/
+
+            CloudburstPlugin.start += CloudburstPlugin_start;
 
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
-            On.RoR2.CharacterBody.OnBuffFirstStackGained += CharacterBody_OnBuffFirstStackGained;
             On.RoR2.CharacterBody.OnBuffFinalStackLost += CharacterBody_OnBuffFinalStackLost;
 
             //On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
             //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
             On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround; }
-    
+
+        private void CloudburstPlugin_start()
+        {
+            LogCore.LogI(antiGrav.buffIndex); 
+        }
 
         private void CharacterBody_OnBuffFinalStackLost(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
         {
             orig(self, buffDef);
             if (self)
             {
-                if (buffDef.buffIndex == antiGravFriendlyIndex && self)
-                {
-
-                    ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
-                    if (component != null)
-                    {
-                        CharacterFlightParameters flightParameters = component.flightParameters;
-                        flightParameters.channeledFlightGranterCount--;
-                        //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
-                        component.flightParameters = flightParameters;
-                    }
-                    ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
-                    if (component2 != null)
-                    {
-                        CharacterGravityParameters gravityParameters = component2.gravityParameters;
-                        gravityParameters.environmentalAntiGravityGranterCount--;
-                        //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
-                        component2.gravityParameters = gravityParameters;
-                    }
-                }
-                if (buffDef.buffIndex == antiGravIndex) {
+                if (buffDef == antiGrav) {
 
                     if (self.characterMotor) {
                         self.characterMotor.useGravity = true;
@@ -242,34 +207,6 @@ namespace Cloudburst.Cores
                     }
                 }
 
-            }
-        }
-
-        private void CharacterBody_OnBuffFirstStackGained(On.RoR2.CharacterBody.orig_OnBuffFirstStackGained orig, CharacterBody self, BuffDef buffDef)
-        {
-            orig(self, buffDef);
-            if (self)
-            {
-                if (buffDef.buffIndex == antiGravFriendlyIndex && self)
-                {
-
-                    ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
-                    if (component != null)
-                    {
-                        CharacterFlightParameters flightParameters = component.flightParameters;
-                        flightParameters.channeledFlightGranterCount++;
-                        //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
-                        component.flightParameters = flightParameters;
-                    }
-                    ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
-                    if (component2 != null)
-                    {
-                        CharacterGravityParameters gravityParameters = component2.gravityParameters;
-                        gravityParameters.environmentalAntiGravityGranterCount++;
-                        //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
-                        component2.gravityParameters = gravityParameters;
-                    }
-                }
             }
         }
 
@@ -282,7 +219,7 @@ namespace Cloudburst.Cores
         private void CharacterMotor_OnHitGround(On.RoR2.CharacterMotor.orig_OnHitGround orig, CharacterMotor self, CharacterMotor.HitGroundInfo hitGroundInfo)
         {
             orig(self, hitGroundInfo);
-            if (self.body && self.body.HasBuff(this.antiGravIndex)) {
+            if (self.body && self.body.HasBuff(this.antiGrav)) {
                 self.useGravity = false;
                 if (self.lastVelocity.y < -30)
                 {
@@ -313,74 +250,6 @@ namespace Cloudburst.Cores
                 }
             }
 
-        }
-
-
-        private void CharacterBody_AddBuff(On.RoR2.CharacterBody.orig_AddBuff orig, CharacterBody self, BuffIndex buffType)
-        {
-            orig(self, buffType);
-            if (self)
-            {
-                if (buffType == antiGravFriendlyIndex && self)
-                {
-
-                    ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
-                    if (component != null)
-                    {
-                        CharacterFlightParameters flightParameters = component.flightParameters;
-                        flightParameters.channeledFlightGranterCount++;
-                        //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
-                        component.flightParameters = flightParameters;
-                    }
-                    ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
-                    if (component2 != null)
-                    {
-                        CharacterGravityParameters gravityParameters = component2.gravityParameters;
-                        gravityParameters.environmentalAntiGravityGranterCount++;
-                        //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
-                        component2.gravityParameters = gravityParameters;
-                    }
-                }
-
-            }
-        }
-
-        private void CharacterBody_RemoveBuff(On.RoR2.CharacterBody.orig_RemoveBuff orig, CharacterBody self, BuffIndex buffType)
-        {
-            if (self)
-            {
-                if (buffType == antiGravIndex)
-                {
-                    if (self.characterMotor)
-                    {
-                        self.characterMotor.useGravity = true;
-                    }
-                }
-                if (buffType == antiGravFriendlyIndex)
-                {
-                    if (NetworkServer.active)
-                    {
-                        ICharacterFlightParameterProvider component = self.GetComponent<ICharacterFlightParameterProvider>();
-                        if (component != null)
-                        {
-                            CharacterFlightParameters flightParameters = component.flightParameters;
-                            flightParameters.channeledFlightGranterCount--;
-                            //LogCore.LogI("FLIGHT PARAMS: " + flightParameters.channeledFlightGranterCount);
-                            component.flightParameters = flightParameters;
-                        }
-                        ICharacterGravityParameterProvider component2 = self.GetComponent<ICharacterGravityParameterProvider>();
-                        if (component2 != null)
-                        {
-                            CharacterGravityParameters gravityParameters = component2.gravityParameters;
-                            gravityParameters.environmentalAntiGravityGranterCount--;
-                            //LogCore.LogI(gravityParameters.environmentalAntiGravityGranterCount);
-                            component2.gravityParameters = gravityParameters;
-                        }
-                    }
-                }
-
-            }
-            orig(self, buffType);
         }
 
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
@@ -423,7 +292,7 @@ namespace Cloudburst.Cores
                         }
                     }
                     if (BrokenBodyArmor.Enabled) {
-                        if (self && self.HasBuff(charmIndex))
+                        if (self && self.HasBuff(charm))
                         {
                             var vount = 0;
                             if (self.inventory)
@@ -441,14 +310,20 @@ namespace Cloudburst.Cores
                 }
 
 
-                if (self && self.HasBuff(BuffIndex.LunarShell)) {
+                if (self && self.HasBuff(RoR2.RoR2Content.Buffs.LunarShell)) {
                     self.attackSpeed += 3;
                     self.armor += 50;
-                    self.moveSpeed -= 1;
+                    self.moveSpeed -= 3;
                     self.regen += 3;
                     self.damage += 2;
                 }
 
+                if (self && self.HasBuff(wyattSuspension)) {
+                    //nice air movement, dumbfuck
+                    self.moveSpeed = 0f;
+                    self.acceleration = 80f;
+                    self.characterMotor?.ApplyForce(Vector3.zero, true, true);
+                }
 
 
                 if (self && self.HasBuff(japesCloak)) {
@@ -459,7 +334,7 @@ namespace Cloudburst.Cores
                         self.regen = regen + 0.1f;
                     }
                 }
-                if (self && self.HasBuff(antiGravIndex))
+                if (self && self.HasBuff(antiGrav))
                 {
                     if (self.characterMotor)
                     {
@@ -468,11 +343,7 @@ namespace Cloudburst.Cores
                     self.attackSpeed = attackSpeed -= (.5f * attackSpeed);
                     self.moveSpeed = moveSpeed -= (.5f * moveSpeed);
                 }
-                if (self && self.HasBuff(antiGravFriendlyIndex)) {
-                    //LogCore.LogI(self.moveSpeed);
-                    self.moveSpeed = moveSpeed += (.5f * moveSpeed);// self.acceleration += 1;
-                    //LogCore.LogI(self.moveSpeed);
-                }
+
                 if (self && self.HasBuff(wyattCombatIndex))
                 {
                     var buffCount = self.GetBuffCount(wyattCombatIndex);
@@ -494,55 +365,6 @@ namespace Cloudburst.Cores
                         self.armor = armor += 5 ;   
                     }
                 }
-            }
-        }
-
-        protected internal void RegisterBuff(BuffDef buffDef)
-        {
-            var customBuff = new CustomBuff(buffDef);
-            switch (buffDef.name)
-            {
-                case "SkinStack":
-                    skinIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "AntiGrav":
-                    antiGravIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "WyattCombat":
-                    wyattCombatIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "AntiGravFriendly":
-                    antiGravFriendlyIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "JapesCloak":
-                    japesCloak = BuffAPI.Add(customBuff);
-                    break;
-                case "Charm":
-                    charmIndex = BuffAPI.Add(customBuff);
-                    break;
-                case "EngageLunarShell":
-                    engageLunarShell = BuffAPI.Add(customBuff);
-                    break;
-                case "REDACTED":
-                    REDACTED = BuffAPI.Add(customBuff);
-                    break;
-                case "UnbrokenGlass":
-                    glassMithrix = BuffAPI.Add(customBuff);
-                    break;
-                case "MagicianBuffRegen":
-                    magicRegen = BuffAPI.Add(customBuff);
-                    break;
-                case "MagicianBuffAttackspeed":
-                    magicAttackSpeed = BuffAPI.Add(customBuff);
-                    break;
-                case "MagicianBuffArmor":
-                    magicArmor = BuffAPI.Add(customBuff);
-                    break;
-                //throw new System.NotImplementedException("not implemented yet!");
-                default:
-                    //feel my haunted lust
-                    LogCore.LogF(string.Format("{0} doesn't have a case!", buffDef.name));
-                    break;
             }
         }
     }

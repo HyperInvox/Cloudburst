@@ -1,6 +1,7 @@
 ﻿using Cloudburst.Cores.Components;
+using EnigmaticThunder.Modules;
 using EntityStates.BrotherMonster;
-using R2API;
+
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Navigation;
@@ -15,7 +16,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
-using static R2API.LanguageAPI;
+//using static R2API.LanguageAPI;
 using static RoR2.CharacterAI.AISkillDriver;
 
 namespace Cloudburst.Cores
@@ -146,12 +147,12 @@ namespace Cloudburst.Cores
 
                 CloudUtils.CopySkillDefSettings(origDef, def);
 
-                LoadoutAPI.AddSkillDef(def);
+                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
                     skillDef = def,
-                    unlockableName = "",
+    
                     viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
 
                 };
@@ -169,13 +170,13 @@ namespace Cloudburst.Cores
 
                 def.activationState = new EntityStates.SerializableEntityStateType(typeof(States.VoidGolems.EngageShell));
 
-                LoadoutAPI.AddSkillDef(def);
-                LoadoutAPI.AddSkill(typeof(States.VoidGolems.EngageShell));
+                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
+                EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(States.VoidGolems.EngageShell));
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
                     skillDef = def,
-                    unlockableName = "",
+    
                     viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
 
                 };
@@ -189,12 +190,12 @@ namespace Cloudburst.Cores
 
                 CloudUtils.CopySkillDefSettings(origDef, def);
 
-                LoadoutAPI.AddSkillDef(def);
+                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
                     skillDef = def,
-                    unlockableName = "",
+    
                     viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
 
                 };
@@ -208,12 +209,12 @@ namespace Cloudburst.Cores
 
                 CloudUtils.CopySkillDefSettings(origDef, def);
 
-                LoadoutAPI.AddSkillDef(def);
+                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
                     skillDef = def,
-                    unlockableName = "",
+    
                     viewableNode = new ViewablesCatalog.Node(def.skillNameToken, false, null)
 
                 };
@@ -269,7 +270,7 @@ namespace Cloudburst.Cores
             golems = new VoidGolems();
             golems.Create();
 
-            LanguageAPI.Add("TRIGGER_INFECTION", "A foul infection creeps into the exchange between time...");
+            Languages.Add("TRIGGER_INFECTION", "A foul infection creeps into the exchange between time...");
 
             FindAssets();
 
@@ -343,7 +344,7 @@ namespace Cloudburst.Cores
 
         public void VoidGlass() {
             var mdl = Resources.Load<GameObject>("prefabs/characterbodies/BrotherGlassBody").GetComponent<CharacterBody>();
-            Add("GLASS_BODY_NAME", "Shattering Clone");
+            Languages.Add("GLASS_BODY_NAME", "Shattering Clone");
             mdl.baseNameToken = "GLASS_BODY_NAME";
             mdl.gameObject.AddComponent<Glass>();
 
@@ -365,48 +366,48 @@ namespace Cloudburst.Cores
 
         private void UndoMithrixReplacementLines()
         {
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_1", "Pray.");
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_2", "Beg.");
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_3", "Die.");
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_4", "Be slaughtered.");
-            Language.CCLanguageReload(new ConCommandArgs());
+            Languages.Add("BROTHER_SPAWN_PHASE1_1", "Pray.");
+            Languages.Add("BROTHER_SPAWN_PHASE1_2", "Beg.");
+            Languages.Add("BROTHER_SPAWN_PHASE1_3", "Die.");
+            Languages.Add("BROTHER_SPAWN_PHASE1_4", "Be slaughtered.");
+            //Language.CCLanguageReload(new ConCommandArgs());
 
-            LanguageAPI.Add("BROTHER_KILL_1", "Return to dirt.");
-            LanguageAPI.Add("BROTHER_KILL_2", "Submit, vermin.");
-            LanguageAPI.Add("BROTHER_KILL_3", "Die, vermin.");
-            LanguageAPI.Add("BROTHER_KILL_4", "Die, weakling.");
-            LanguageAPI.Add("BROTHER_KILL_5", "Become memories.");
+            Languages.Add("BROTHER_KILL_1", "Return to dirt.");
+            Languages.Add("BROTHER_KILL_2", "Submit, vermin.");
+            Languages.Add("BROTHER_KILL_3", "Die, vermin.");
+            Languages.Add("BROTHER_KILL_4", "Die, weakling.");
+            Languages.Add("BROTHER_KILL_5", "Become memories.");
 
-            Language.CCLanguageReload(new ConCommandArgs());
+            //Language.CCLanguageReload(new ConCommandArgs());
 
 
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_1", "Bleed.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_2", "Now is the time for fear.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_3", "Weak.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_4", "Frail - and soft.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_5", "You are nothing.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_6", "Mistake.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_7", "Scream, vermin.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_8", "Break beneath me.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_9", "Slow.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_10", "Your body will shatter.");
-            Language.CCLanguageReload(new ConCommandArgs());
+            Languages.Add("BROTHER_DAMAGEDEALT_1", "Bleed.");
+            Languages.Add("BROTHER_DAMAGEDEALT_2", "Now is the time for fear.");
+            Languages.Add("BROTHER_DAMAGEDEALT_3", "Weak.");
+            Languages.Add("BROTHER_DAMAGEDEALT_4", "Frail - and soft.");
+            Languages.Add("BROTHER_DAMAGEDEALT_5", "You are nothing.");
+            Languages.Add("BROTHER_DAMAGEDEALT_6", "Mistake.");
+            Languages.Add("BROTHER_DAMAGEDEALT_7", "Scream, vermin.");
+            Languages.Add("BROTHER_DAMAGEDEALT_8", "Break beneath me.");
+            Languages.Add("BROTHER_DAMAGEDEALT_9", "Slow.");
+            Languages.Add("BROTHER_DAMAGEDEALT_10", "Your body will shatter.");
+            //Language.CCLanguageReload(new ConCommandArgs());
 
-            LanguageAPI.Add("BROTHER_KILL_1", "Return to dirt.");
-            LanguageAPI.Add("BROTHER_KILL_2", "Submit, vermin.");
-            LanguageAPI.Add("BROTHER_KILL_3", "Die, vermin.");
-            LanguageAPI.Add("BROTHER_KILL_4", "Die, weakling.");
-            LanguageAPI.Add("BROTHER_KILL_5", "Become memories.");
-            Language.CCLanguageReload(new ConCommandArgs());
+            Languages.Add("BROTHER_KILL_1", "Return to dirt.");
+            Languages.Add("BROTHER_KILL_2", "Submit, vermin.");
+            Languages.Add("BROTHER_KILL_3", "Die, vermin.");
+            Languages.Add("BROTHER_KILL_4", "Die, weakling.");
+            Languages.Add("BROTHER_KILL_5", "Become memories.");
+            //Language.CCLanguageReload(new ConCommandArgs());
 
-            LanguageAPI.Add("BROTHER_DEATH_1", "NO... NOT NOW...");
-            LanguageAPI.Add("BROTHER_DEATH_2", "WHY... WHY NOW...?");
-            LanguageAPI.Add("BROTHER_DEATH_3", "NO... NO...!");
-            LanguageAPI.Add("BROTHER_DEATH_4", "BROTHER... HELP ME...!");
-            LanguageAPI.Add("BROTHER_DEATH_5", "THIS PLANE GROWS DARK... BROTHER... I CANNOT SEE YOU... WHERE ARE YOU...?");
-            LanguageAPI.Add("BROTHER_DEATH_6", "BROTHER... PERHAPS... WE WILL GET IT RIGHT... NEXT TIME...");
+            Languages.Add("BROTHER_DEATH_1", "NO... NOT NOW...");
+            Languages.Add("BROTHER_DEATH_2", "WHY... WHY NOW...?");
+            Languages.Add("BROTHER_DEATH_3", "NO... NO...!");
+            Languages.Add("BROTHER_DEATH_4", "BROTHER... HELP ME...!");
+            Languages.Add("BROTHER_DEATH_5", "THIS PLANE GROWS DARK... BROTHER... I CANNOT SEE YOU... WHERE ARE YOU...?");
+            Languages.Add("BROTHER_DEATH_6", "BROTHER... PERHAPS... WE WILL GET IT RIGHT... NEXT TIME...");
 
-            Language.CCLanguageReload(new ConCommandArgs());
+            //Language.CCLanguageReload(new ConCommandArgs());
         }
 
         private void CreateInfection(GameObject re)
@@ -510,7 +511,7 @@ namespace Cloudburst.Cores
             obj.AddComponent<InfestationTrigger>();
 
 
-            PrefabAPI.RegisterNetworkPrefab(obj);
+            EnigmaticThunder.Modules.Prefabs.RegisterNetworkPrefab(obj);
             CloudUtils.RegisterNewBody(obj);
 
             this.infectionTrigger = obj;
@@ -623,7 +624,7 @@ namespace Cloudburst.Cores
 
             voidMat = obj.GetComponent<Renderer>().material;
 
-            PrefabAPI.RegisterNetworkPrefab(obj);
+            Prefabs.RegisterNetworkPrefab(obj);
             CloudUtils.RegisterNewBody(obj);
 
             infectionTrigger = obj;
@@ -921,63 +922,63 @@ namespace Cloudburst.Cores
 
         public static void MithrixReplacementLines()
         {
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_1", "Become one.");
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_2", "Embrace.");
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_3", "Fracture.");
-            LanguageAPI.Add("BROTHER_SPAWN_PHASE1_4", "Void.");
+            Languages.Add("BROTHER_SPAWN_PHASE1_1", "Become one.");
+            Languages.Add("BROTHER_SPAWN_PHASE1_2", "Embrace.");
+            Languages.Add("BROTHER_SPAWN_PHASE1_3", "Fracture.");
+            Languages.Add("BROTHER_SPAWN_PHASE1_4", "Void.");
 
             if (Util.CheckRoll(50))
             {
-                LanguageAPI.Add("BROTHER_KILL_1", "BE LOCKED AWAY.");
-                LanguageAPI.Add("BROTHER_KILL_2", "AND STAY DOWN.");
-                LanguageAPI.Add("BROTHER_KILL_3", "KNEEL BEFORE US.");
-                LanguageAPI.Add("BROTHER_KILL_4", "PATHETIC.");
-                LanguageAPI.Add("BROTHER_KILL_5", "YIELD.");
+                Languages.Add("BROTHER_KILL_1", "BE LOCKED AWAY.");
+                Languages.Add("BROTHER_KILL_2", "AND STAY DOWN.");
+                Languages.Add("BROTHER_KILL_3", "KNEEL BEFORE US.");
+                Languages.Add("BROTHER_KILL_4", "PATHETIC.");
+                Languages.Add("BROTHER_KILL_5", "YIELD.");
             }
             else
             {
-                LanguageAPI.Add("BROTHER_KILL_1", "OH WHEN WILL YOU COME BACK.");
-                LanguageAPI.Add("BROTHER_KILL_2", "FIRST TIME?");
-                LanguageAPI.Add("BROTHER_KILL_3", "NO ONE WILL HEAR YOU");
-                LanguageAPI.Add("BROTHER_KILL_4", "ENDLESS BAUBLES CANNOT SAVE YOU");
-                LanguageAPI.Add("BROTHER_KILL_5", "THERE IS NO END FOR YOU.");
+                Languages.Add("BROTHER_KILL_1", "OH WHEN WILL YOU COME BACK.");
+                Languages.Add("BROTHER_KILL_2", "FIRST TIME?");
+                Languages.Add("BROTHER_KILL_3", "NO ONE WILL HEAR YOU");
+                Languages.Add("BROTHER_KILL_4", "ENDLESS BAUBLES CANNOT SAVE YOU");
+                Languages.Add("BROTHER_KILL_5", "THERE IS NO END FOR YOU.");
             }
             if (Util.CheckRoll(0.1f))
             {
-                LanguageAPI.Add("BROTHER_DAMAGEDEALT_1", "HOT DAMN YOU PIECE OF SHIT, JUST WHEN WILL YOU GIVE UP, JUST WHEN WILL YOU QUIT? YOUR PARENTS DON'T LOVE YOU AND FOR WHAT IT'S WORTH THERE'S REASON TO SUGGEST YOU WERE DROPPED AT BIRTH.");
+                Languages.Add("BROTHER_DAMAGEDEALT_1", "HOT DAMN YOU PIECE OF SHIT, JUST WHEN WILL YOU GIVE UP, JUST WHEN WILL YOU QUIT? YOUR PARENTS DON'T LOVE YOU AND FOR WHAT IT'S WORTH THERE'S REASON TO SUGGEST YOU WERE DROPPED AT BIRTH.");
 
             }
             else {
-                LanguageAPI.Add("BROTHER_DAMAGEDEALT_1", "SUBMIT.");
+                Languages.Add("BROTHER_DAMAGEDEALT_1", "SUBMIT.");
 
             }
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_2", "CONCEDE YOUR EXISTENCE.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_3", "MAKE PEACE");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_4", "STOP RESISTING.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_5", "BE DETAINED.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_6", "ADMIT.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_7", "NO ONE WILL HEAR YOU SCREAM.");
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_8", "CONFESS, VERMIN.");
+            Languages.Add("BROTHER_DAMAGEDEALT_2", "CONCEDE YOUR EXISTENCE.");
+            Languages.Add("BROTHER_DAMAGEDEALT_3", "MAKE PEACE");
+            Languages.Add("BROTHER_DAMAGEDEALT_4", "STOP RESISTING.");
+            Languages.Add("BROTHER_DAMAGEDEALT_5", "BE DETAINED.");
+            Languages.Add("BROTHER_DAMAGEDEALT_6", "ADMIT.");
+            Languages.Add("BROTHER_DAMAGEDEALT_7", "NO ONE WILL HEAR YOU SCREAM.");
+            Languages.Add("BROTHER_DAMAGEDEALT_8", "CONFESS, VERMIN.");
             if (Util.CheckRoll(0.1f))
             {
-                LanguageAPI.Add("BROTHER_DAMAGEDEALT_9", "Heh, nice cock, vermin.");
+                Languages.Add("BROTHER_DAMAGEDEALT_9", "Heh, nice cock, vermin.");
             }
             else
             {
-                LanguageAPI.Add("BROTHER_DAMAGEDEALT_9", "PLANET PEST.");
+                Languages.Add("BROTHER_DAMAGEDEALT_9", "PLANET PEST.");
             }
-            LanguageAPI.Add("BROTHER_DAMAGEDEALT_10", "WHEN WILL YOU MAKE YOUR PEACE?");
+            Languages.Add("BROTHER_DAMAGEDEALT_10", "WHEN WILL YOU MAKE YOUR PEACE?");
 
-            Add("BROTHER_BODY_NAME", "Nilthnix");
-            Add("BROTHER_BODY_SUBTITLE", "Slave to Eternity.");
+            Languages.Add("BROTHER_BODY_NAME", "Nilthnix");
+            Languages.Add("BROTHER_BODY_SUBTITLE", "Slave to Eternity.");
 
-            LanguageAPI.Add("BROTHER_DEATH_1", "FUTILITY...");
-            LanguageAPI.Add("BROTHER_DEATH_2", "WE ARE NUMBERLESS...");
-            LanguageAPI.Add("BROTHER_DEATH_3", "THIS MATTERS NOT...!");
-            LanguageAPI.Add("BROTHER_DEATH_4", "YOU SHALL BE PURSUED, MY DEATH MEANS NOTH—");
-            LanguageAPI.Add("BROTHER_DEATH_5", "EXECUTE THEM, EXECUTE TH—");
-            LanguageAPI.Add("BROTHER_DEATH_6", "WE ARE A UNIVERSAL CONSTANT... YOU CANNOT KILL U-");
-            Language.CCLanguageReload(new ConCommandArgs());
+            Languages.Add("BROTHER_DEATH_1", "FUTILITY...");
+            Languages.Add("BROTHER_DEATH_2", "WE ARE NUMBERLESS...");
+            Languages.Add("BROTHER_DEATH_3", "THIS MATTERS NOT...!");
+            Languages.Add("BROTHER_DEATH_4", "YOU SHALL BE PURSUED, MY DEATH MEANS NOTH—");
+            Languages.Add("BROTHER_DEATH_5", "EXECUTE THEM, EXECUTE TH—");
+            Languages.Add("BROTHER_DEATH_6", "WE ARE A UNIVERSAL CONSTANT... YOU CANNOT KILL U-");
+            //Language.CCLanguageReload(new ConCommandArgs());
         }
 
         [ConCommand(commandName = "trigger_infection", flags = ConVarFlags.ExecuteOnServer, helpText = "Enables the void infection bubble to spawn.")]

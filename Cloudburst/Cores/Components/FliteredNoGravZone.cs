@@ -18,9 +18,7 @@ namespace RoR2
                 {
                     if (team.teamIndex == TeamIndex.Player)
                     {
-                        if (NetworkServer.active && !characterBody.HasBuff(BuffCore.instance.antiGravFriendlyIndex)) {
-                            characterBody.AddBuff(BuffCore.instance.antiGravFriendlyIndex);
-                        }
+
 
                         /*ICharacterGravityParameterProvider component = other.GetComponent<ICharacterGravityParameterProvider>();
                         if (component != null)
@@ -55,7 +53,6 @@ namespace RoR2
                         //is this not getting called?
                         //clients can't get the buff
                         //but the owner of the bubble can
-                        if (NetworkServer.active && characterBody.HasBuff(BuffCore.instance.antiGravFriendlyIndex)) { characterBody.RemoveBuff(BuffCore.instance.antiGravFriendlyIndex); }
 
                         /*ICharacterFlightParameterProvider component = other.GetComponent<ICharacterFlightParameterProvider>();
                         if (component != null)
@@ -89,7 +86,6 @@ namespace RoR2
                     {
                         if (team.teamIndex == TeamIndex.Player)
                         {
-                            if (characterBody.HasBuff(BuffCore.instance.antiGravFriendlyIndex)) { characterBody.RemoveBuff(BuffCore.instance.antiGravFriendlyIndex); }
                             /*ICharacterFlightParameterProvider component = other.GetComponent<ICharacterFlightParameterProvider>();
                             if (component != null)
                             {

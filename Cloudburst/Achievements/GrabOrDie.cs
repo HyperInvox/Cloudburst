@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿/*
 using RoR2;
 using System;
 
@@ -22,13 +22,13 @@ namespace Cloudburst.Achievements
         // The key of a prereq for unlocking this. Use "" for none.
         public override String PrerequisiteUnlockableIdentifier { get; } = "";
 
-        // Language token for the achievement name.
+        // //Language token for the achievement name.
         public override String AchievementNameToken { get; } = "CLOUDBURST_GRABORDIE_ACHIEVEMENT_NAME";
 
-        // Language token for the achievement description.
+        // //Language token for the achievement description.
         public override String AchievementDescToken { get; } = "CLOUDBURST_GRABORDIE_ACHIEVEMENT_DESC";
 
-        // Language token for the unlockable name.
+        // //Language token for the unlockable name.
         public override String UnlockableNameToken { get; } = "CLOUDBURST_GRABORDIE_UNLOCKABLE_NAME";
 
         // The sprite provider.
@@ -40,11 +40,11 @@ namespace Cloudburst.Achievements
             base.userProfile.onPickupDiscovered += UserProfile_onPickupDiscovered;
         }
 
-        private void UserProfile_onPickupDiscovered(PickupIndex obj)
+        private void UserProfile_onPickupDiscovered(PickupIndex pickupIndex)
         {
-            PickupDef pickupDef = PickupCatalog.GetPickupDef(obj);
+            PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
             ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
-            if (itemIndex != ItemIndex.None) {
+            if (itemIndex != ItemIndex.None && ItemCatalog.GetItemDef(itemIndex).tier == ItemTier.Tier1){
                 if (this.localUser.cachedBody && localUser.cachedBody.healthComponent.combinedHealthFraction < 0.3f) {
                     base.Grant();
                 }
@@ -59,3 +59,4 @@ namespace Cloudburst.Achievements
         }
     }
 }
+*/

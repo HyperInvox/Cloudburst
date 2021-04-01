@@ -1,4 +1,5 @@
 ﻿using EntityStates;
+using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,11 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void Update()
         {
             base.Update();
-
             if (base.isAuthority && base.characterMotor.isGrounded)
             {
                 if (Input.GetKeyDown(KeyCode.Y))
                 {
-                    this.outer.SetInterruptState(EntityState.Instantiate(new SerializableEntityStateType(typeof(BaseEmote.CustodianSickness))), InterruptPriority.Any);
+                    this.outer.SetInterruptState(EntityStateCatalog.InstantiateState(new SerializableEntityStateType(typeof(BaseEmote.CustodianSickness))), InterruptPriority.Any);
                     return;
                 }
             }

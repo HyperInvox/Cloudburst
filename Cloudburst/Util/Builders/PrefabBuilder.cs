@@ -1,6 +1,7 @@
-﻿using EntityStates;
+﻿using Cloudburst;
+using EntityStates;
 using KinematicCharacterController;
-using R2API;
+
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,8 @@ public class PrefabBuilder
     public Sprite defaultSkinIcon;
     public Sprite masterySkinIcon;
 
+    public ItemDisplayRuleSet itemDisplayRuleSet;
+
     public delegate Material MasterySkinMaterial();
 
     public MasterySkinMaterial masterySkinDelegate;
@@ -43,12 +46,12 @@ public class PrefabBuilder
 
     public event Action<List<CharacterModel.RendererInfo>, Transform> GetAdditionalRenderInfos;
 
-    public event Action<List<ItemDisplayRuleSet.NamedRuleGroup>> GetAdditionalItemDisplays;
-    public event Action<List<ItemDisplayRuleSet.NamedRuleGroup>> GetAdditionalEquipmentDisplays;
+    public event Action<List<ItemDisplayRuleSet.KeyAssetRuleGroup>> GetAdditionalItemDisplays;
 
-    public List<ItemDisplayRuleSet.NamedRuleGroup> itemRules;
-    public List<ItemDisplayRuleSet.NamedRuleGroup> equipmentRules;
+    public List<ItemDisplayRuleSet.KeyAssetRuleGroup> itemRules;
+    public List<ItemDisplayRuleSet.KeyAssetRuleGroup> equipmentRules;
 
+    private CharacterModel charModel;
     /// <summary>
     /// Create a survivor prefab from a model. Don't register the prefab that it outputs, because the method already does that for you.
     /// </summary>
@@ -61,7 +64,7 @@ public class PrefabBuilder
             prefabName = "RandomAssSurvivorBody";
         }
 
-        GameObject prefab = PrefabAPI.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), prefabName, true);
+        GameObject prefab = EnigmaticThunder.Modules.Prefabs.InstantiateClone(Resources.Load<GameObject>("Prefabs/CharacterBodies/CommandoBody"), prefabName, true);
         prefab.GetComponent<NetworkIdentity>().localPlayerAuthority = true;
 
         SetupModelBase();
@@ -108,7 +111,7 @@ public class PrefabBuilder
         CharacterMotor motor = prefab.GetComponent<CharacterMotor>();
         CameraTargetParams camParams = prefab.GetComponent<CameraTargetParams>();
         ModelLocator locator = prefab.GetComponent<ModelLocator>();
-        CharacterModel charModel = transform.AddComponent<CharacterModel>();
+        charModel = transform.AddComponent<CharacterModel>();
         ChildLocator childLoc = model.GetComponent<ChildLocator>();
 
         TeamComponent teamComponent = null;
@@ -145,7 +148,7 @@ public class PrefabBuilder
         SetupFootstep();
         SetupAimAnimator();
         SetupHitbox();
-        RegisterItemDisplays();
+        CloudburstPlugin.postStart += CloudburstPlugin_start; ;
 
         void SetupModelTransform()
         {
@@ -171,7 +174,7 @@ public class PrefabBuilder
             body.bodyFlags = CharacterBody.BodyFlags.ImmuneToExecutes;
             body.rootMotionInMainState = false;
             body.mainRootSpeed = 0;
-            body.bodyIndex = -1;
+            body.bodyIndex = BodyIndex.None;
             body.aimOriginTransform = aimOrigin.transform;
             body.hullClassification = HullClassification.Human;
         }
@@ -357,13 +360,13 @@ public class PrefabBuilder
 
         void SetupSkins()
         {
-            //LanguageAPI.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
+            //Languages.Add("NEMMANDO_DEFAULT_SKIN_NAME", "Default");
 
             var obj = transform.gameObject;
             var mdl = obj.GetComponent<CharacterModel>();
             var skinController = obj.AddComponent<ModelSkinController>();
 
-            LoadoutAPI.SkinDefInfo skinDefInfo = new LoadoutAPI.SkinDefInfo
+            EnigmaticThunder.Modules.Loadouts.SkinDefInfo skinDefInfo = new EnigmaticThunder.Modules.Loadouts.SkinDefInfo
             {
                 Name = "DEFAULT_SKIN",
                 NameToken = "DEFAULT_SKIN",
@@ -385,7 +388,7 @@ public class PrefabBuilder
 
             array[0].defaultMaterial = masterySkinDelegate.Invoke();
 
-            LoadoutAPI.SkinDefInfo masteryInfo = new LoadoutAPI.SkinDefInfo
+            EnigmaticThunder.Modules.Loadouts.SkinDefInfo masteryInfo = new EnigmaticThunder.Modules.Loadouts.SkinDefInfo
             {
                 Name = "DEFAULT_SKIN",
                 NameToken = "DEFAULT_SKIN",
@@ -400,8 +403,8 @@ public class PrefabBuilder
                 UnlockableName = masteryAchievementUnlockable
             };
 
-            SkinDef skinDefault = LoadoutAPI.CreateNewSkinDef(skinDefInfo);
-            SkinDef mastery = LoadoutAPI.CreateNewSkinDef(masteryInfo);
+            SkinDef skinDefault = EnigmaticThunder.Modules.Loadouts.CreateNewSkinDef(skinDefInfo);
+            SkinDef mastery = EnigmaticThunder.Modules.Loadouts.CreateNewSkinDef(masteryInfo);
 
             SkinDef[] skinDefs = new SkinDef[2]
             {
@@ -411,36 +414,35 @@ public class PrefabBuilder
 
             skinController.skins = skinDefs;
         }
-        void RegisterItemDisplays()
-        {
-            ItemDisplayRuleSet itemDisplayRuleSet = ScriptableObject.CreateInstance<ItemDisplayRuleSet>();
-
-            itemRules = new List<ItemDisplayRuleSet.NamedRuleGroup>();
-            equipmentRules = new List<ItemDisplayRuleSet.NamedRuleGroup>();
-
-
-            Action<List<ItemDisplayRuleSet.NamedRuleGroup>> action2 = this.GetAdditionalItemDisplays;
-
-            action2(itemRules);
-
-            Action<List<ItemDisplayRuleSet.NamedRuleGroup>> action3 = this.GetAdditionalEquipmentDisplays;
-
-            action3(equipmentRules);
-
-            BindingFlags bindingAttr = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-            ItemDisplayRuleSet.NamedRuleGroup[] item = itemRules.ToArray();
-            ItemDisplayRuleSet.NamedRuleGroup[] equip = equipmentRules.ToArray();
-            typeof(ItemDisplayRuleSet).GetField("namedItemRuleGroups", bindingAttr).SetValue(itemDisplayRuleSet, item);
-            typeof(ItemDisplayRuleSet).GetField("namedEquipmentRuleGroups", bindingAttr).SetValue(itemDisplayRuleSet, equip);
-
-            charModel.itemDisplayRuleSet = itemDisplayRuleSet;
-        }
 
 
         CloudUtils.RegisterNewBody(prefab);
 
         return prefab;
     }
+
+    private void CloudburstPlugin_start()
+
+    {
+        itemDisplayRuleSet = ScriptableObject.CreateInstance<ItemDisplayRuleSet>();
+
+        itemRules = new List<ItemDisplayRuleSet.KeyAssetRuleGroup>();
+
+        Action<List<ItemDisplayRuleSet.KeyAssetRuleGroup>> action2 = this.GetAdditionalItemDisplays;
+
+
+
+        action2?.Invoke(itemRules);
+        foreach (ItemDisplayRuleSet.KeyAssetRuleGroup a in itemRules)
+        {
+            LogCore.LogD(a.displayRuleGroup.rules[0].followerPrefab);
+        }
+        itemDisplayRuleSet.keyAssetRuleGroups = itemRules.ToArray();
+        charModel.itemDisplayRuleSet = itemDisplayRuleSet;
+        itemDisplayRuleSet.GenerateRuntimeValues();
+
+    }
+
     public SkinDef.GameObjectActivation[] GetActivations(GameObject[] allObjects, params GameObject[] activatedObjects)
     {
 

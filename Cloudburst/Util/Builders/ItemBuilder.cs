@@ -1,8 +1,11 @@
 ﻿using BepInEx.Configuration;
 using RoR2;
-using R2API;
+
 using System.Collections.Generic;
 using System;
+using UnityEngine;
+using Cloudburst.Cores;
+using EnigmaticThunder.Modules;
 
 public abstract class ItemBuilder<T> : ItemBuilder where T : ItemBuilder<T>
 {
@@ -29,13 +32,13 @@ public abstract class ItemBuilder
     public abstract string ItemModelPath { get; }
     public abstract string ItemIconPath { get; }
 
-    public ItemIndex Index;
+    public ItemDef Index;
 
     public virtual bool CanRemove { get; } = true;
 
     public virtual bool AIBlacklisted { get; set; } = false;
 
-    public virtual string UnlockString { get; set; } = "";
+    public virtual UnlockableDef UnlockDef { get; set; } = null;
 
     protected abstract void Initialization();
 
@@ -56,43 +59,41 @@ public abstract class ItemBuilder
 
     protected virtual void CreateLang()
     {
-        LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_NAME", ItemName);
-        LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_PICKUP", ItemPickupDesc);
-        LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_DESCRIPTION", ItemFullDescription);
-        LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_LORE", ItemLore);
+        Languages.Add("ITEM_" + ItemLangTokenName + "_NAME", ItemName);
+        Languages.Add("ITEM_" + ItemLangTokenName + "_PICKUP", ItemPickupDesc);
+        Languages.Add("ITEM_" + ItemLangTokenName + "_DESCRIPTION", ItemFullDescription);
+        Languages.Add("ITEM_" + ItemLangTokenName + "_LORE", ItemLore);
     }
 
-    public abstract ItemDisplayRuleDict CreateItemDisplayRules();
+    //public abstract ItemDisplayRuleDict CreateItemDisplayRules();
     protected void CreateItem()
     {
         if (AIBlacklisted)
         {
             ItemTags = new List<ItemTag>(ItemTags) { ItemTag.AIBlacklist }.ToArray();
         }
-        ItemDef itemDef = new ItemDef()
-        {
-            name = "ITEM_" + ItemLangTokenName,
-            nameToken = "ITEM_" + ItemLangTokenName + "_NAME",
-            pickupToken = "ITEM_" + ItemLangTokenName + "_PICKUP",
-            descriptionToken = "ITEM_" + ItemLangTokenName + "_DESCRIPTION",
-            loreToken = "ITEM_" + ItemLangTokenName + "_LORE",
-            pickupModelPath = ItemModelPath,
-            pickupIconPath = ItemIconPath,
-            hidden = false,
-            canRemove = CanRemove,
-
-            tier = Tier
-        };
+        Index = ScriptableObject.CreateInstance<ItemDef>();
+       
+            Index.name = "ITEM_" + ItemLangTokenName;
+            Index.nameToken = "ITEM_" + ItemLangTokenName + "_NAME";
+            Index.pickupToken = "ITEM_" + ItemLangTokenName + "_PICKUP";
+            Index.descriptionToken = "ITEM_" + ItemLangTokenName + "_DESCRIPTION";
+            Index.loreToken = "ITEM_" + ItemLangTokenName + "_LORE";
+            Index.pickupModelPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
+            Index.pickupIconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>(ItemIconPath);
+            Index.hidden = false;
+            Index.canRemove = CanRemove;
+            Index.tier = Tier;
         if (ItemTags.Length > 0)
         {
-            itemDef.tags = ItemTags;
+            Index.tags = ItemTags;
         }
-        if (!string.IsNullOrEmpty(UnlockString))
+        if (UnlockDef != null)
         {
-            itemDef.unlockableName = UnlockString;
+            Index.unlockableDef= UnlockDef;
         }
-        var itemDisplayRules = CreateItemDisplayRules();
-        Index = ItemAPI.Add(new CustomItem(itemDef, itemDisplayRules));
+        //var itemDisplayRules = CreateItemDisplayRules();
+        EnigmaticThunder.Modules.Pickups.RegisterItem(Index);
     }
 
     public virtual void Hooks() { }
@@ -119,10 +120,10 @@ public abstract class ItemBuilder
         return inv.GetItemCount(Index);
     }
 
-    public int GetCountSpecific(CharacterBody body, ItemIndex itemIndex)
+    public int GetCountSpecific(CharacterBody body, ItemDef Items)
     {
         if (!body || !body.inventory) { return 0; }
 
-        return body.inventory.GetItemCount(itemIndex);
+        return body.inventory.GetItemCount(Index);
     }
 }

@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -36,16 +36,15 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/Earrings/IMDLEarrings.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/Earrings/IMDLEarrings.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/Earrings/magicicon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/Earrings/magicicon.png";
 
-        public static List<BuffIndex> blackList = new List<BuffIndex> {
-            BuffIndex.MedkitHeal,
-            BuffIndex.HiddenInvincibility,
-            BuffIndex.ElementalRingsCooldown,
-            BuffCore.instance.antiGravFriendlyIndex,
-            BuffIndex.EngiShield
+        public static List<BuffDef> blackList = new List<BuffDef> {
+            RoR2Content.Buffs.MedkitHeal,
+            RoR2.RoR2Content.Buffs.HiddenInvincibility,
+            RoR2Content.Buffs.ElementalRingsCooldown,
+            RoR2Content.Buffs.EngiShield
         };
 
         public override void CreateConfig(ConfigFile config)
@@ -53,10 +52,10 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
 
         }
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }
+        }*/
 
         protected override void Initialization()
         {
@@ -78,16 +77,14 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
             }
         }
 
-        private void GlobalHooks_onAddTimedBuff(CharacterBody body, ref BuffIndex buffType, ref float duration)
+        private void GlobalHooks_onAddTimedBuff(CharacterBody body, ref BuffDef buffType, ref float duration)
         {
             var inv = body.inventory;
             if (inv)
             {
                 var earringsCount = GetCount(inv);
-                var def = BuffCatalog.GetBuffDef(buffType);
 
-                bool blackListed = blackList.Contains(buffType) || def.isDebuff;
-
+                bool blackListed = blackList.Contains(buffType) || buffType.isDebuff;
                 if (earringsCount > 0 && blackListed == false) 
                 {
                     //do thing???

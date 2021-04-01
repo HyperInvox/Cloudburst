@@ -32,11 +32,9 @@ using UnityEngine;
         if (this.duration > 0)
         {
             base.PlayAnimation("FullBody, Override", this.animString, "Emote.playbackRate", this.animDuration);
-            LogCore.LogI("hi");
         }
         else
         {
-            LogCore.LogI("fck");
             this.animator.SetFloat("Emote.playbackRate", 1f);
             base.PlayAnimation("FullBody, Override", this.animString);
         }

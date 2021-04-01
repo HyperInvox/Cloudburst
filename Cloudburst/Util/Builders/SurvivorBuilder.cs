@@ -1,5 +1,6 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+using Cloudburst;
+using EnigmaticThunder.Modules;
 using RoR2;
 using RoR2.Skills;
 using System;
@@ -36,7 +37,7 @@ public abstract class SurvivorCreator
     public abstract string SurvivorDescription { get; }
 
     /// <summary>
-    /// The survivor's name that's used in language tokens.
+    /// The survivor's name that's used in //Language tokens.
     /// </summary>
     public abstract string SurvivorInternalName { get; }
     /// <summary>
@@ -64,6 +65,8 @@ public abstract class SurvivorCreator
     public abstract Color survivorDefColor { get; }
     public abstract Sprite defaultSkinColor { get; }
     public abstract Sprite masterySkinColor { get; }
+    public abstract UnlockableDef unlockableDef { get; }
+    public abstract float desiredSortPosition { get; }
 
 
     public GameObject umbraMaster;
@@ -71,7 +74,6 @@ public abstract class SurvivorCreator
     public PrefabBuilder builder;
     public GameObject survivorUmbra;
     public GameObject survivorBody;
-
     protected abstract void Initialization();
 
     /// <summary>
@@ -89,6 +91,13 @@ public abstract class SurvivorCreator
         GenerateUmbra();
         Hooks();
         CreateSurvivorDef();
+        CloudburstPlugin.start += Start;
+    }
+
+    public virtual void Start() {
+        LogCore.LogD("this might not work");
+        builder.GetAdditionalItemDisplays += GenerateItemDisplays;
+        builder.GetAdditionalItemDisplays += GenerateEquipmentDisplays;
     }
 
     public virtual void GenerateUmbra() {
@@ -99,7 +108,7 @@ public abstract class SurvivorCreator
 
     }
 
-    public virtual void SetupCharacterBody(CharacterBody characterBody) { }
+    public virtual void SetupCharacterBody(CharacterBody characterBody) { characterBody.bodyColor = survivorDefColor;  }
 
     public abstract Material GetMasteryMat();
     #region Skills 
@@ -145,7 +154,7 @@ public abstract class SurvivorCreator
     #region PrefabBuilder
     protected void CreatePrefab()
     {
-        PrefabBuilder builder = new PrefabBuilder();
+        builder = new PrefabBuilder();
         builder.prefabName = BodyName + "Body";
         builder.masteryAchievementUnlockable = MasteryUnlockString;
         builder.model = survivorMdl;
@@ -153,15 +162,14 @@ public abstract class SurvivorCreator
         builder.masterySkinIcon = masterySkinColor;
         builder.masterySkinDelegate = GetMasteryMat;
         builder.GetAdditionalRenderInfos += GenerateRenderInfos;
-        builder.GetAdditionalItemDisplays += GenerateItemDisplays;
-        builder.GetAdditionalEquipmentDisplays += GenerateEquipmentDisplays; ;
+
 
         survivorBody = builder.CreatePrefab();
     }
-    public virtual void GenerateEquipmentDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
+    public virtual void GenerateEquipmentDisplays(List<ItemDisplayRuleSet.KeyAssetRuleGroup> obj)
     {
     }
-    public virtual void GenerateItemDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
+    public virtual void GenerateItemDisplays(List<ItemDisplayRuleSet.KeyAssetRuleGroup> obj)
     {
     }
     public virtual void GenerateRenderInfos(List<CharacterModel.RendererInfo> arg1, Transform arg2)
@@ -172,26 +180,28 @@ public abstract class SurvivorCreator
 
     protected virtual void CreateLang()
     {
-        LanguageAPI.Add(SurvivorInternalName + "_BODY_NAME", SurvivorName);
-        LanguageAPI.Add(SurvivorInternalName + "_DESCRIPTION", SurvivorDescription);
-        LanguageAPI.Add(SurvivorInternalName + "_OUTRO_FLAVOR", SurvivorOutro);
-        LanguageAPI.Add(SurvivorInternalName + "_BODY_LORE", SurvivorLore);
-        LanguageAPI.Add(SurvivorInternalName + "_BODY_SUBTITLE", SurvivorSubtitle);
+        Languages.Add(SurvivorInternalName + "_BODY_NAME", SurvivorName);
+        Languages.Add(SurvivorInternalName + "_DESCRIPTION", SurvivorDescription);
+        Languages.Add(SurvivorInternalName + "_OUTRO_FLAVOR", SurvivorOutro);
+        Languages.Add(SurvivorInternalName + "_BODY_LORE", SurvivorLore);
+        Languages.Add(SurvivorInternalName + "_BODY_SUBTITLE", SurvivorSubtitle);
     }
 
     protected void CreateSurvivorDef()
     {
-        SurvivorDef def = new SurvivorDef()
-        {
-            bodyPrefab = survivorBody,
-            descriptionToken = SurvivorInternalName + "_DESCRIPTION",
-            displayNameToken = SurvivorInternalName + "_BODY_NAME",
-            displayPrefab = survivorDisplay,
-            outroFlavorToken = SurvivorInternalName + "_OUTRO_FLAVOR",
-            primaryColor = survivorDefColor,
-            unlockableName = UnlockableString,
-        };
-        SurvivorAPI.AddSurvivor(def);
+        SurvivorDef def = ScriptableObject.CreateInstance<SurvivorDef>();
+ 
+            def.bodyPrefab = survivorBody;
+            def.descriptionToken = SurvivorInternalName + "_DESCRIPTION";
+            def.displayNameToken = SurvivorInternalName + "_BODY_NAME";
+            def.displayPrefab = survivorDisplay;
+            def.outroFlavorToken = SurvivorInternalName + "_OUTRO_FLAVOR";
+            def.primaryColor = survivorDefColor;
+            def.unlockableName = UnlockableString;
+        def.unlockableDef = unlockableDef;
+        def.desiredSortPosition = desiredSortPosition;
+
+        EnigmaticThunder.Modules.Loadouts.RegisterSurvivorDef(def);
     }
 
     public virtual void Hooks() { }

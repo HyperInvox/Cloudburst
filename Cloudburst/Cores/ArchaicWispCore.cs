@@ -1,5 +1,5 @@
-﻿//using Cloudburst.Cores.ArchaicWisp.Skills;
-using R2API;
+﻿/*using Cloudburst.Cores.ArchaicWisp.Skills;
+
 using RoR2;
 using RoR2.Skills;
 using System.Collections.Generic;
@@ -70,7 +70,7 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = archWisp.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                LanguageAPI.Add("ARCHAICWISP_BODY_NAME", "Archaic Wisp");
+                Languages.Add("ARCHAICWISP_BODY_NAME", "Archaic Wisp");
                 characterBody.baseAcceleration = 14f;
                 characterBody.baseArmor = 0; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -108,13 +108,12 @@ namespace Cloudburst.Cores
             SkillLocator skillLocator = archWisp.GetComponent<SkillLocator>();
             if (skillLocator)
             {
-                //LoadoutAPI.AddSkill(typeof(Summon));
-                //LoadoutAPI.AddSkill(typeof(ChargeSummon));
+                //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Summon));
+                //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ChargeSummon));
                 SkillFamily skillFamily = skillLocator.primary.skillFamily;
                 SkillDef primary = skillFamily.variants[skillFamily.defaultVariantIndex].skillDef;
 
                 primary.rechargeStock = 1;
-                primary.shootDelay = .3f;
                 primary.stockToConsume = 1;
                 primary.baseMaxStock = 3;
                 primary.baseRechargeInterval = 5;
@@ -123,3 +122,4 @@ namespace Cloudburst.Cores
         }
     }
 }
+*/

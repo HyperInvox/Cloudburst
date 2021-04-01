@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+
 using RoR2;
 using System.Linq;
 using UnityEngine;
@@ -41,6 +41,7 @@ Hold strong, and keep your heads up.
         public override string ItemModelPath => "prefabs/pickupmodels/PickupMystery";
 
         public override string ItemIconPath => "textures/miscicons/texMysteryIcon";
+        public static REDACTED instance;
 
 
         public override void CreateConfig(ConfigFile config)
@@ -48,14 +49,14 @@ Hold strong, and keep your heads up.
 
         }
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }
+        }*/
 
         protected override void Initialization()
         {
-
+            instance = this;
         }
 
         public override void Hooks()
@@ -91,11 +92,17 @@ Hold strong, and keep your heads up.
                     LogCore.LogI("Tes1");
                     bool isFullHealth = health.combinedHealthFraction >= 0.8f;
                     bool hasDot = false;
+
+                    LogCore.LogI(DoTCore.redactedIndex);
+
                     var dot = DotController.FindDotController(health.gameObject); //.HasDotActive(DoTCore.redactedIndex);
                     if (dot)
                     {
                         hasDot = dot.HasDotActive(DoTCore.redactedIndex);
                     }
+
+                    LogCore.LogI("Does not have DoT: "+ hasDot);
+
                     if (hasDot == false && !isFullHealth)
                     {
                         LogCore.LogI("Tes2");

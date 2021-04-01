@@ -1,6 +1,7 @@
 ﻿using Cloudburst.Cores.States.AncientWisp;
+using EnigmaticThunder.Modules;
 using EntityStates;
-using R2API;
+
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Skills;
@@ -88,7 +89,7 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = body.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                LanguageAPI.Add("ANCIENTWISP_BODY_NAME", "Ancient Wisp");
+                Languages.Add("ANCIENTWISP_BODY_NAME", "Ancient Wisp");
                 characterBody.baseAcceleration = 14f;
                 characterBody.baseArmor = 0; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -125,8 +126,8 @@ namespace Cloudburst.Cores
 
         private void CreatePrimary()
         {
-            LoadoutAPI.AddSkill(typeof(ChargeCannon));
-            LoadoutAPI.AddSkill(typeof(FireCannon));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ChargeCannon));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FireCannon));
 
             SkillDef primarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
 
@@ -138,13 +139,13 @@ namespace Cloudburst.Cores
             primarySkillDef.canceledFromSprinting = false;
             primarySkillDef.fullRestockOnAssign = true;
             primarySkillDef.interruptPriority = InterruptPriority.Any;
-            primarySkillDef.isBullets = false;
+
             primarySkillDef.isCombatSkill = true;
             primarySkillDef.mustKeyPress = false;
-            primarySkillDef.noSprint = false;
+            primarySkillDef.cancelSprintingOnActivation = false;
             primarySkillDef.rechargeStock = 1;
             primarySkillDef.requiredStock = 1;
-            primarySkillDef.shootDelay = 0.1f;
+
             primarySkillDef.stockToConsume = 0;
             primarySkillDef.skillDescriptionToken = "AAAAAAAAAAAAAA";
             primarySkillDef.skillName = "AAAAAAAAAAAAAAA";
@@ -152,13 +153,13 @@ namespace Cloudburst.Cores
             primarySkillDef.icon = null;
             primarySkillDef.keywordTokens = Array.Empty<string>();
 
-            LoadoutAPI.AddSkillDef(primarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = primarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(primarySkillDef.skillNameToken, false, null)
 
             };
@@ -166,7 +167,7 @@ namespace Cloudburst.Cores
 
         private void CreateSecondary()
         {
-            //LoadoutAPI.AddSkill(typeof(ChargeHomeRun));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ChargeHomeRun));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(ChargeCannon));
@@ -177,13 +178,13 @@ namespace Cloudburst.Cores
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = false;
             secondarySkillDef.interruptPriority = InterruptPriority.Skill;
-            secondarySkillDef.isBullets = false;
+
             secondarySkillDef.isCombatSkill = true;
             secondarySkillDef.mustKeyPress = false;
-            secondarySkillDef.noSprint = false;
+            secondarySkillDef.cancelSprintingOnActivation = false;
             secondarySkillDef.rechargeStock = 1;
             secondarySkillDef.requiredStock = 1;
-            secondarySkillDef.shootDelay = 0.08f;
+
             secondarySkillDef.stockToConsume = 1;
             secondarySkillDef.skillDescriptionToken = "aaaaaa";
             secondarySkillDef.skillName = "aaa";
@@ -191,13 +192,13 @@ namespace Cloudburst.Cores
             secondarySkillDef.icon = null;
             secondarySkillDef.keywordTokens = Array.Empty<string>();
 
-            LoadoutAPI.AddSkillDef(secondarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = secondarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(secondarySkillDef.skillNameToken, false, null)
 
             };
@@ -205,9 +206,9 @@ namespace Cloudburst.Cores
 
         private void CreateUtility()
         {
-            LoadoutAPI.AddSkill(typeof(StartRain));
-            LoadoutAPI.AddSkill(typeof(RAIN));
-            LoadoutAPI.AddSkill(typeof(EndRain));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(StartRain));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(RAIN));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(EndRain));
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(StartRain));
@@ -218,13 +219,13 @@ namespace Cloudburst.Cores
             utilitySkillDef.canceledFromSprinting = false;
             utilitySkillDef.fullRestockOnAssign = false;
             utilitySkillDef.interruptPriority = InterruptPriority.Skill;
-            utilitySkillDef.isBullets = false;
+
             utilitySkillDef.isCombatSkill = true;
             utilitySkillDef.mustKeyPress = false;
-            utilitySkillDef.noSprint = false;
+            utilitySkillDef.cancelSprintingOnActivation = false;
             utilitySkillDef.rechargeStock = 1;
             utilitySkillDef.requiredStock = 1;
-            utilitySkillDef.shootDelay = 0.08f;
+
             utilitySkillDef.stockToConsume = 1;
             utilitySkillDef.skillDescriptionToken = "AAAAAAAAAAAAAA";
             utilitySkillDef.skillName = "aaa";
@@ -232,20 +233,20 @@ namespace Cloudburst.Cores
             utilitySkillDef.icon = null;
             utilitySkillDef.keywordTokens = Array.Empty<string>();
 
-            LoadoutAPI.AddSkillDef(utilitySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(utilitySkillDef);
             SkillFamily utilitySkillFamily = skillLocator.utility.skillFamily;
 
             utilitySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = utilitySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(utilitySkillDef.skillNameToken, false, null)
             };
         }
 
         private void CreateSpecial()
         {
-            //LoadoutAPI.AddSkill(typeof(Drone));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Drone));
 
             SkillDef specialSkillDef = ScriptableObject.CreateInstance<SkillDef>();
             specialSkillDef.activationState = new SerializableEntityStateType(typeof(ChargeCannon));
@@ -256,13 +257,13 @@ namespace Cloudburst.Cores
             specialSkillDef.canceledFromSprinting = false;
             specialSkillDef.fullRestockOnAssign = true;
             specialSkillDef.interruptPriority = InterruptPriority.Skill;
-            specialSkillDef.isBullets = false;
+
             specialSkillDef.isCombatSkill = true;
             specialSkillDef.mustKeyPress = true;
-            specialSkillDef.noSprint = false;
+            specialSkillDef.cancelSprintingOnActivation = false;
             specialSkillDef.rechargeStock = 0;
             specialSkillDef.requiredStock = 1;
-            specialSkillDef.shootDelay = 0.5f;
+
             specialSkillDef.stockToConsume = 1;
             specialSkillDef.skillDescriptionToken = "AAAAAAAAAAAAAAAAAAA";
             specialSkillDef.skillName = "aaa";
@@ -270,13 +271,13 @@ namespace Cloudburst.Cores
             specialSkillDef.icon = null; 
             specialSkillDef.keywordTokens = Array.Empty<string>(); 
 
-            LoadoutAPI.AddSkillDef(specialSkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = specialSkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(specialSkillDef.skillNameToken, false, null)
             };
         }

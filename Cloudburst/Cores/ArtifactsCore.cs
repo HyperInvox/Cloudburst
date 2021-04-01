@@ -1,5 +1,6 @@
-﻿using KinematicCharacterController;
-using R2API;
+﻿using EnigmaticThunder.Modules;
+using KinematicCharacterController;
+
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,6 @@ namespace Cloudburst.Cores
             LogCore.LogI("Initializing Core: " + base.ToString());
             instance = this;
 
-            ArtifactCatalog.getAdditionalEntries += delegate (List<ArtifactDef> artifactDefs) {
-                artifactDefs.Add(ArtifactofDiminutive());
-                artifactDefs.Add(ArtifactofMass());
-            };
             Hook();
         }
 
@@ -41,10 +38,9 @@ namespace Cloudburst.Cores
             artifactDef.pickupModelPrefab = exampleDef.pickupModelPrefab;
             artifactDef.smallIconDeselectedSprite = exampleDef.smallIconDeselectedSprite;
             artifactDef.smallIconSelectedSprite= exampleDef.smallIconSelectedSprite;
-            artifactDef.unlockableName = "";
 
-            LanguageAPI.Add(artifactDef.nameToken, "Artifact of Diminutive");
-            LanguageAPI.Add(artifactDef.descriptionToken, "Every character is smaller.");
+            Languages.Add(artifactDef.nameToken, "Artifact of Diminutive");
+            Languages.Add(artifactDef.descriptionToken, "Every character is smaller.");
 
 
             smallDef = artifactDef;
@@ -60,10 +56,9 @@ namespace Cloudburst.Cores
             artifactDef.pickupModelPrefab = exampleDef.pickupModelPrefab;
             artifactDef.smallIconDeselectedSprite = exampleDef.smallIconDeselectedSprite;
             artifactDef.smallIconSelectedSprite = exampleDef.smallIconSelectedSprite;
-            artifactDef.unlockableName = "";
 
-            LanguageAPI.Add(artifactDef.nameToken, "Artifact of Mass");
-            LanguageAPI.Add(artifactDef.descriptionToken, "Every character is larger.");
+            Languages.Add(artifactDef.nameToken, "Artifact of Mass");
+            Languages.Add(artifactDef.descriptionToken, "Every character is larger.");
 
 
             massDef = artifactDef;

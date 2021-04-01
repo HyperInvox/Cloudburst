@@ -19,8 +19,8 @@ namespace Cloudburst.Cores.States.Bombardier
         {
             if (_goodState == null || _grenade == null)
             {
-                _goodState = Instantiate(typeof(AimStunDrone)) as AimStunDrone;
-                _grenade = Instantiate(typeof(ThrowGrenade)) as ThrowGrenade;
+                _goodState = EntityStateCatalog.InstantiateState(typeof(AimStunDrone)) as AimStunDrone;
+                _grenade = EntityStateCatalog.InstantiateState(typeof(ThrowGrenade)) as ThrowGrenade;
             }
             maxDistance = 1000;
             rayRadius = _goodState.rayRadius;

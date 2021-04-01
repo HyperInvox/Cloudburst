@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿/*
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace Cloudburst.Achievements
 
         public override int LookUpRequiredBodyIndex()
         {
-            return BodyCatalog.FindBodyIndex("WyattBody");
+            return -1; // BodyCatalog.FindBodyIndex("WyattBody");
         }
 
         public void ClearCheck(Run run, RunReport runReport)
@@ -60,3 +60,4 @@ namespace Cloudburst.Achievements
     }
 
 }
+*/

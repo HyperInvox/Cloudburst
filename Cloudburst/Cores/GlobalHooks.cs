@@ -23,7 +23,7 @@ namespace Cloudburst.Cores
 
         public delegate void DamageInfoCloudGate(ref DamageInfo info, GameObject victim, OnHitEnemy onHitInfo);
         public delegate void CharacterBodyCloudGate(CharacterBody body);
-        public delegate void CharacterBodyAddTimedBuffCloudGate(CharacterBody body, ref BuffIndex type, ref float duration);
+        public delegate void CharacterBodyAddTimedBuffCloudGate(CharacterBody body, ref BuffDef type, ref float duration);
         public delegate void CritCloudGate( CharacterBody attackerBody, CharacterMaster attackerMaster, float procCoeff, ProcChainMask procMask);
 
 
@@ -40,14 +40,13 @@ namespace Cloudburst.Cores
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             On.RoR2.GlobalEventManager.OnCrit += GlobalEventManager_OnCrit;
-            On.RoR2.CharacterBody.AddTimedBuff += CharacterBody_AddTimedBuff;
+            On.RoR2.CharacterBody.AddTimedBuff_BuffDef_float += CharacterBody_AddTimedBuff_BuffDef_float;//AddTimedBuff += CharacterBody_AddTimedBuff;
         }
 
-
-        private static void CharacterBody_AddTimedBuff(On.RoR2.CharacterBody.orig_AddTimedBuff orig, CharacterBody self, BuffIndex buffType, float duration)
+        private static void CharacterBody_AddTimedBuff_BuffDef_float(On.RoR2.CharacterBody.orig_AddTimedBuff_BuffDef_float orig, CharacterBody self, BuffDef buffDef, float duration)
         {
-            onAddTimedBuff.Invoke(self, ref buffType, ref duration);
-            orig(self, buffType, duration);
+            onAddTimedBuff.Invoke(self, ref buffDef, ref duration);
+            orig(self, buffDef, duration);
         }
 
         private static void GlobalEventManager_OnCrit(On.RoR2.GlobalEventManager.orig_OnCrit orig, GlobalEventManager self, CharacterBody body, CharacterMaster master, float procCoefficient, ProcChainMask procChainMask)

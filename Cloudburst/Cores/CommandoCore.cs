@@ -2,7 +2,7 @@
 using Cloudburst.Cores.States.REX;
 using EntityStates;
 using EntityStates.Treebot.Weapon;
-using R2API;
+
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
@@ -49,7 +49,7 @@ namespace Cloudburst.Cores
             body.levelArmor = 0;*/
             //I wanted to do a rebalance but decided against it
 
-            LoadoutAPI.AddSkill(typeof(CommandoGrenade));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(CommandoGrenade));
 
             var locator = commandoBody.GetComponent<SkillLocator>();
 

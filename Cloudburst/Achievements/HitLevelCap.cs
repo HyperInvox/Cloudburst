@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿/*
 using RoR2;
 using System;
 
@@ -22,13 +22,13 @@ namespace Cloudburst.Achievements
         // The key of a prereq for unlocking this. Use "" for none.
         public override String PrerequisiteUnlockableIdentifier { get; } = "";
 
-        // Language token for the achievement name.
+        // //Language token for the achievement name.
         public override String AchievementNameToken { get; } = "CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_NAME";
 
-        // Language token for the achievement description.
+        // //Language token for the achievement description.
         public override String AchievementDescToken { get; } = "CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_DESC";
 
-        // Language token for the unlockable name.
+        // //Language token for the unlockable name.
         public override String UnlockableNameToken { get; } = "CLOUDBURST_HITLEVELCAP_UNLOCKABLE_NAME";
 
         // The sprite provider.
@@ -66,3 +66,4 @@ namespace Cloudburst.Achievements
         }
     }
 }
+*/

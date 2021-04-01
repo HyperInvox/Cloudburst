@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿
 using RoR2;
 using RoR2.Orbs;
 using System;
@@ -17,11 +17,11 @@ namespace Cloudburst.Cores
             instance = this;
 
             LogCore.LogI("Initializing Core: " + base.ToString());
-            RegisterNewOrb(typeof(DroneAttackOrb));
+            //RegisterNewOrb(typeof(DroneAttackOrb));
         }
 
         protected internal void RegisterNewOrb(Type t) {
-            OrbAPI.AddOrb(t);
+            //OrbAPI.AddOrb(t);
             LogCore.LogI(string.Format("Added {0} to the OrbCatalog", t.Name));
         }
     }

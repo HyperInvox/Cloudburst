@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿
 using RoR2;
 using RoR2.Projectile;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace Cloudburst.Cores
         //Give equipment icons
         //(Post 1.0): Give them display rules.
 
-        private ItemIndex GetRandomItem(List<ItemIndex> items)
+        private ItemDef GetRandomItem(List<ItemDef> items)
         {
             bool isEmpty = items.Count <= 0;
             if (!isEmpty)
@@ -29,7 +29,7 @@ namespace Cloudburst.Cores
 
                 return items[itemID];
             }
-            else LogCore.LogE("SSSHIT!"); return ItemIndex.ShieldOnly;
+            else LogCore.LogE("SSSHIT!"); return RoR2Content.Items.ShieldOnly;
 
         }
 
@@ -124,7 +124,7 @@ namespace Cloudburst.Cores
         name = "Lumpkin",
         nameToken = "EQUIPMENT_LUMPKIN_NAME",
         pickupIconPath = pickUpIconPath,
-        pickupModelPath = "@Cloudburst:Assets/Cloudburst/Equipment/Lumpkin/IMDLLumpkin.prefab",
+        pickupModelPath = "Assets/Cloudburst/Equipment/Lumpkin/IMDLLumpkin.prefab",
         pickupToken = "EQUIPMENT_LUMPKIN_PICKUP",
         unlockableName = "",
     });
@@ -210,15 +210,15 @@ namespace Cloudburst.Cores
 
         protected internal void RegisterTokens()
         {
-            LanguageAPI.Add("EQUIPMENT_LUMPKIN_NAME", "The Lumpkin");
-            LanguageAPI.Add("EQUIPMENT_LUMPKIN_PICKUP", "And his screams were Brazilian...");
-            LanguageAPI.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does <style=cIsDamage>500% damage, and twice your maximum health for damage</style>.");
-            LanguageAPI.Add("EQUIPMENT_LUMPKIN_LORE", "\"Lumpkin, one of the many commanders in the War of 2019 possessed a scream that could deafen his oppenents. For many battles, it was a mystery how he his scream was so powerful. Until he was impaled in the final battle of WW19, and had his lungs ripped from his chest. \r\n\r\nHis lungs, pictured above, allowed him to scream loudly without injuring himself.\"\r\n\r\n-Exhibit at The National WW19 Museum");
+            Languages.Add("EQUIPMENT_LUMPKIN_NAME", "The Lumpkin");
+            Languages.Add("EQUIPMENT_LUMPKIN_PICKUP", "And his screams were Brazilian...");
+            Languages.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does <style=cIsDamage>500% damage, and twice your maximum health for damage</style>.");
+            Languages.Add("EQUIPMENT_LUMPKIN_LORE", "\"Lumpkin, one of the many commanders in the War of 2019 possessed a scream that could deafen his oppenents. For many battles, it was a mystery how he his scream was so powerful. Until he was impaled in the final battle of WW19, and had his lungs ripped from his chest. \r\n\r\nHis lungs, pictured above, allowed him to scream loudly without injuring himself.\"\r\n\r\n-Exhibit at The National WW19 Museum");
 
-            LanguageAPI.Add("EQUIPMENT_REACTOR_NAME", "Unstable Quantum Reactor");
-            LanguageAPI.Add("EQUIPMENT_REACTOR_PICKUP", "Fire a random projectile on use.");
-            LanguageAPI.Add("EQUIPMENT_REACTOR_DESC", "Fire a random projectile.");
-            //LanguageAPI.Add("EQUIPMENT_PRINTER_LORE", "Order: \u201CGreater Warbanner\u201D\r\nTracking Number: 72******\r\nEstimated Delivery: 08\\25\\2057\\\r\nShipping Method: High Priority\r\nShipping Address: 836 Lane, Lab [42], Mars\r\nShipping Details:\r\n\r\nI got this thing off of my dead grandmother, it's a relic from the great war of 2019. It  gives this aura of energy and motivation to do whatever someone desires! Anyways -- I'm passing it onto you, since I am dying to this cancer and I'd like you to have it before I go six feet under. Much love, Uncle Abe.\n");
+            Languages.Add("EQUIPMENT_REACTOR_NAME", "Unstable Quantum Reactor");
+            Languages.Add("EQUIPMENT_REACTOR_PICKUP", "Fire a random projectile on use.");
+            Languages.Add("EQUIPMENT_REACTOR_DESC", "Fire a random projectile.");
+            //Languages.Add("EQUIPMENT_PRINTER_LORE", "Order: \u201CGreater Warbanner\u201D\r\nTracking Number: 72******\r\nEstimated Delivery: 08\\25\\2057\\\r\nShipping Method: High Priority\r\nShipping Address: 836 Lane, Lab [42], Mars\r\nShipping Details:\r\n\r\nI got this thing off of my dead grandmother, it's a relic from the great war of 2019. It  gives this aura of energy and motivation to do whatever someone desires! Anyways -- I'm passing it onto you, since I am dying to this cancer and I'd like you to have it before I go six feet under. Much love, Uncle Abe.\n");
         }
 
         protected internal void RegisterNewEquip(EquipmentDef equipmentDef)
@@ -307,8 +307,8 @@ namespace Cloudburst.Cores
             //TODO:
             //This is horrible.
 
-            var allItems = new List<ItemIndex>();
-            for (var item = ItemIndex.Syringe; item < (ItemIndex)ItemCatalog.itemCount; item++)
+            var allItems = new List<RoR2Content.Items>();
+            for (var item = RoR2Content.Items.Syringe; item < (RoR2Content.Items)ItemCatalog.itemCount; item++)
             {
                 var def = ItemCatalog.GetItemDef(item);
                 if (def.tier != ItemTier.NoTier)
@@ -323,11 +323,11 @@ namespace Cloudburst.Cores
             var randoItem = GetRandomItem(allItems);
             user.RemoveItem(randoItem);
 
-            var itemIndex = ItemCatalog.GetItemDef(randoItem).tier;
+            var RoR2Content.Items = ItemCatalog.GetItemDef(randoItem).tier;
 
-            List<ItemIndex> list = new List<ItemIndex>();
+            List<RoR2Content.Items> list = new List<RoR2Content.Items>();
 
-            var dropList = GetDropListListFromItemTier(itemIndex);
+            var dropList = GetDropListListFromItemTier(RoR2Content.Items);
 
             if (dropList != null)
             {
@@ -337,7 +337,7 @@ namespace Cloudburst.Cores
                     var pickupDef = PickupCatalog.GetPickupDef(item);
                     if (pickupDef != null)
                     {
-                        list.Add(pickupDef.itemIndex);
+                        list.Add(pickupDef.RoR2Content.Items);
                         //YOOOOOOOOOOOOOOOOO    
                     }
                 }
@@ -350,7 +350,7 @@ namespace Cloudburst.Cores
             {
                 var randomItem = GetRandomItem(list);
 
-                if (user && randomItem != ItemIndex.None && !isEmpty)
+                if (user && randomItem != RoR2Content.Items.None && !isEmpty)
                 {
                     LogCore.LogI(randomItem);
                     user.GiveItem(randomItem);
@@ -360,11 +360,11 @@ namespace Cloudburst.Cores
             /*var itemDef = ItemCatalog.GetItemDef(randoItem);
             var itemTier = itemDef.tier;
 
-            List<ItemIndex> list = new List<ItemIndex>();
+            List<RoR2Content.Items> list = new List<RoR2Content.Items>();
 
             foreach (var item in GetDropListListFromItemTier(itemTier)) {
-                var newItemDef = ItemCatalog.GetItemDef(PickupCatalog.GetPickupDef(item).itemIndex);
-                list.Add(newItemDef.itemIndex);
+                var newItemDef = ItemCatalog.GetItemDef(PickupCatalog.GetPickupDef(item).RoR2Content.Items);
+                list.Add(newItemDef.RoR2Content.Items);
             }
 
             var FINALLY = GetRandomItem(list);
@@ -413,14 +413,14 @@ namespace Cloudburst.Cores
             if (inventory)
             {
                 inventory.CopyItemsFrom(user.inventory);
-                inventory.ResetItem(ItemIndex.WardOnLevel);
-                inventory.ResetItem(ItemIndex.BeetleGland);
-                inventory.ResetItem(ItemIndex.CrippleWardOnLevel);
-                inventory.ResetItem(ItemIndex.TPHealingNova);
-                inventory.ResetItem(ItemIndex.FocusConvergence);
-                inventory.ResetItem(ItemIndex.TitanGoldDuringTP);
-                inventory.GiveItem(ItemIndex.BoostDamage, 5);
-                inventory.GiveItem(ItemIndex.CutHp, 2);
+                inventory.ResetItem(RoR2Content.Items.WardOnLevel);
+                inventory.ResetItem(RoR2Content.Items.BeetleGland);
+                inventory.ResetItem(RoR2Content.Items.CrippleWardOnLevel);
+                inventory.ResetItem(RoR2Content.Items.TPHealingNova);
+                inventory.ResetItem(RoR2Content.Items.FocusConvergence);
+                inventory.ResetItem(RoR2Content.Items.TitanGoldDuringTP);
+                inventory.GiveItem(RoR2Content.Items.BoostDamage, 5);
+                inventory.GiveItem(RoR2Content.Items.CutHp, 2);
                 inventory.CopyEquipmentFrom(user.inventory);
             }
         }

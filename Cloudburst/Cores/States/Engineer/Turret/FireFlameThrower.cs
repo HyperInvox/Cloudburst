@@ -31,7 +31,7 @@ namespace Cloudburst.Cores.Engineer.ETStates
         public FireFlameThrower() {
             if (_goodState == null)
             {             
-                _goodState = Instantiate(typeof(FireBeam)) as FireBeam;
+                _goodState = EntityStateCatalog.InstantiateState(typeof(FireBeam)) as FireBeam;
             }
             this.bulletCount = _goodState.bulletCount;
             //this.bulletCountCurrent = _goodState.bulletCount;

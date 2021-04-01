@@ -19,7 +19,7 @@ namespace Cloudburst.Cores.States.HAND
 
             var childLocator = gameObject.AddOrGetComponent<ChildLocator>();
             childLocator.FindChild("ArmIK");
-            PlayAnimation("Gesture", "Slam", "Slam.playbackRate", duration * 2);
+            //PlayAnimation("Gesture", "Slam", RoR2Content.Items.Slam.playbackRate", duration * 2);
         }
 
         public override void FixedUpdate()

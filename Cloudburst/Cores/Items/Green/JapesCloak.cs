@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -44,16 +44,16 @@ Addendum: WHO. IN GOD ABOVE’S HOLY NAME. TOOK. MY. CIGARETTES??”""";
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/Cloak/IMDLCloak.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/Cloak/IMDLCloak.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/Cloak/JapeIcon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/Cloak/JapeIcon.png";
 
-        public override string UnlockString => AchievementCore.GetUnlockableString("GrabOrDie");
+        /*public override string UnlockString => AchievementCore.GetUnlockableString("GrabOrDie");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }
+        }*/
 
         protected override void Initialization()
         {

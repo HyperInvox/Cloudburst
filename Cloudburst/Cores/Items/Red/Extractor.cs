@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+
 using RoR2;
 using RoR2.Projectile;
 using System.Collections.Generic;
@@ -10,14 +10,14 @@ namespace Cloudburst.Cores.Items.Red
 
     public class Extractor : ItemBuilder
     {
-        public List<ItemIndex> bossitemList = new List<ItemIndex>{
-            ItemIndex.NovaOnLowHealth,
-            ItemIndex.Knurl,
-            ItemIndex.BeetleGland,
-            ItemIndex.TitanGoldDuringTP,
-            ItemIndex.SprintWisp,
-            ItemIndex.BleedOnHitAndExplode,
-            ItemIndex.FireballsOnHit 
+        public List<ItemDef> bossitemList = new List<ItemDef>{
+            RoR2Content.Items.NovaOnLowHealth,
+            RoR2Content.Items.Knurl,
+            RoR2Content.Items.BeetleGland,
+            RoR2Content.Items.TitanGoldDuringTP,
+            RoR2Content.Items.SprintWisp,
+            RoR2Content.Items.BleedOnHitAndExplode,
+            RoR2Content.Items.FireballsOnHit 
             //Excluding pearls because those aren't boss Item, they come from the Cleansing Pool 
         };
         public void DropShipCall(Transform transform, int itemCount)
@@ -35,7 +35,7 @@ namespace Cloudburst.Cores.Items.Red
             }, true);
         }
 
-        public ItemIndex GetRandomItem(List<ItemIndex> Item)
+        public ItemDef GetRandomItem(List<ItemDef> Item)
         {
             int itemID = UnityEngine.Random.Range(0, Item.Count);
             return Item[itemID];
@@ -59,9 +59,9 @@ namespace Cloudburst.Cores.Items.Red
 
         public override ItemTier Tier => ItemTier.Tier3;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/Grinder/icon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/Grinder/icon.png";
 
 
         public override void CreateConfig(ConfigFile config)
@@ -69,10 +69,10 @@ namespace Cloudburst.Cores.Items.Red
 
         }
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }
+        }*/
 
 
         protected override void Initialization()
@@ -103,7 +103,7 @@ namespace Cloudburst.Cores.Items.Red
                     };
                     LogCore.LogI("YOOOOOOOOOOO!");
                     EffectManager.SpawnEffect(EntityStates.Toolbot.ToolbotDash.knockbackEffectPrefab, data, true);
-                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(GetRandomItem(bossitemList)), victimBody.transform.position, new Vector3(0, 50, 0));
+                    PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(GetRandomItem(bossitemList).itemIndex), victimBody.transform.position, new Vector3(0, 50, 0));
                 }
                 Collider[] array = Physics.OverlapSphere(victimBody.transform.position, 10, LayerIndex.projectile.mask);
 

@@ -1,4 +1,4 @@
-﻿using R2API.Utils;
+﻿
 using RoR2;
 using System;
 using UnityEngine;
@@ -52,7 +52,7 @@ namespace Cloudburst.Cores
                     //implement alternate behavior if it's a flier
                     if (self.body.characterMotor)
                     {
-                        self.body.AddTimedBuff(BuffCore.instance.antiGravIndex, 5);
+                        self.body.AddTimedBuff(BuffCore.instance.antiGrav, 5);
 
                     }
 
@@ -100,7 +100,7 @@ namespace Cloudburst.Cores
 
                 }
             }
-            if (self.body.HasBuff(BuffCore.instance.antiGravIndex) && falldmgType)
+            if (self.body.HasBuff(BuffCore.instance.antiGrav) && falldmgType)
             {
                 damageInfo.damage *= 2;
                 //real good feeling.

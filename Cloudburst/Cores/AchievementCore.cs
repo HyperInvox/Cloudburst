@@ -1,5 +1,6 @@
-﻿using Cloudburst.Achievements;
-using R2API;
+﻿
+using EnigmaticThunder.Modules;
+using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,27 +27,23 @@ namespace Cloudburst.Cores
             //don'tcha think?
             AddTokens();
 
-            UnlockablesAPI.AddUnlockable<GrabOrDie>(true);
-            UnlockablesAPI.AddUnlockable<Paradox>(true);
-            UnlockablesAPI.AddUnlockable<HitLevelCap>(false);
-            UnlockablesAPI.AddUnlockable<WyattMasteryAchievement>(true);
         }
         protected void AddTokens() {
-            LanguageAPI.Add("CLOUDBURST_GRABORDIE_ACHIEVEMENT_NAME", "Grab or Die!");
-            LanguageAPI.Add("CLOUDBURST_GRABORDIE_UNLOCKABLE_NAME", "Grab or Die!");
-            LanguageAPI.Add("CLOUDBURST_GRABORDIE_ACHIEVEMENT_DESC", "Grab an item under 30% health.");
+            Languages.Add("CLOUDBURST_GRABORDIE_ACHIEVEMENT_NAME", "Grab or Die!");
+            Languages.Add("CLOUDBURST_GRABORDIE_UNLOCKABLE_NAME", "Grab or Die!");
+            Languages.Add("CLOUDBURST_GRABORDIE_ACHIEVEMENT_DESC", "Grab an item under 30% health.");
 
-            LanguageAPI.Add("CLOUDBURST_PARADOX_ACHIEVEMENT_NAME", "Paradox");
-            LanguageAPI.Add("CLOUDBURST_PARADOX_UNLOCKABLE_NAME", "Paradox");
-            LanguageAPI.Add("CLOUDBURST_PARADOX_ACHIEVEMENT_DESC", "As REX, repair the broken robot with an Escape Pod's Fuel Array.");
+            Languages.Add("CLOUDBURST_PARADOX_ACHIEVEMENT_NAME", "Paradox");
+            Languages.Add("CLOUDBURST_PARADOX_UNLOCKABLE_NAME", "Paradox");
+            Languages.Add("CLOUDBURST_PARADOX_ACHIEVEMENT_DESC", "As REX, repair the broken robot with an Escape Pod's Fuel Array.");
 
-            LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_NAME", "One with the Planet");
-            LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_UNLOCKABLE_NAME", "One with the Planet");
-            LanguageAPI.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_DESC", "In a single run, reach level 35");
+            Languages.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_NAME", "One with the Planet");
+            Languages.Add("CLOUDBURST_HITLEVELCAP_UNLOCKABLE_NAME", "One with the Planet");
+            Languages.Add("CLOUDBURST_HITLEVELCAP_ACHIEVEMENT_DESC", "In a single run, reach level 35");
 
-            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "Custodian: Mastery");
-            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "Custodian: Mastery");
-            LanguageAPI.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As Custodian, beat the game or obliterate on Monsoon.");
+            Languages.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_NAME", "Custodian: Mastery");
+            Languages.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_UNLOCKABLE_NAME", "Custodian: Mastery");
+            Languages.Add("CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_DESC", "As Custodian, beat the game or obliterate on Monsoon.");
         }
 
         public static string GetUnlockableString(string name) {

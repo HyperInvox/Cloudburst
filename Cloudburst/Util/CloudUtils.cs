@@ -1,12 +1,13 @@
 ﻿using Cloudburst.Cores;
 using Cloudburst.Cores.Components;
-using R2API;
-using R2API.Utils;
+using EnigmaticThunder.Modules;
+using EnigmaticThunder.Util;
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Projectile;
 using RoR2.Skills;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Rendering.PostProcessing;
@@ -26,7 +27,7 @@ public static class CloudUtils
     {
         if (projectileObject.HasComponent<ProjectileController>())
         {
-            ProjectileCatalog.getAdditionalEntries += list => list.Add(projectileObject);
+            EnigmaticThunder.Modules.Projectiles.RegisterProjectile(projectileObject);
             LogCore.LogD("Registered projectile " + projectileObject.name + " to the projectile catalog!");
             return true;
         }
@@ -44,7 +45,7 @@ public static class CloudUtils
     {
         if (bodyObject)
         {
-            BodyCatalog.getAdditionalEntries += list => list.Add(bodyObject);
+            EnigmaticThunder.Modules.Bodies.RegisterBody(bodyObject);// += list => list.Add(bodyObject);
             LogCore.LogD("Registered body " + bodyObject.name + " to the body catalog!");
             return true;
         }
@@ -62,7 +63,7 @@ public static class CloudUtils
     {
         if (master && master.HasComponent<CharacterMaster>())
         {
-            MasterCatalog.getAdditionalEntries += list => list.Add(master);
+            EnigmaticThunder.Modules.Masters.RegisterMaster(master);
             LogCore.LogD("Registered master " + master.name + " to the master catalog!");
             return true;
         }
@@ -176,11 +177,11 @@ public static class CloudUtils
     }
 
 
-        /// <summary>
-        /// Creates a valid projectile from a GameObject 
-        /// </summary>
-        /// <param name="projectile"></param>
-        public static void CreateValidProjectile(GameObject projectile, float lifeTime, float velocity, bool updateAfterFiring)
+    /// <summary>
+    /// Creates a valid projectile from a GameObject 
+    /// </summary>
+    /// <param name="projectile"></param>
+    public static void CreateValidProjectile(GameObject projectile, float lifeTime, float velocity, bool updateAfterFiring)
     {
         var networkIdentity = projectile.AddComponent<NetworkIdentity>();
         var teamFilter = projectile.AddComponent<TeamFilter>();
@@ -201,7 +202,7 @@ public static class CloudUtils
         networkTransform.positionTransmitInterval = 0.03333334f;
 
         //setup the projectile simple
-        projectileSimple.velocity = velocity;
+        projectileSimple.desiredForwardSpeed = velocity;
         projectileSimple.lifetime = lifeTime;
         projectileSimple.updateAfterFiring = updateAfterFiring;
         projectileSimple.enableVelocityOverLifetime = false;
@@ -280,7 +281,8 @@ public static class CloudUtils
     }
     #endregion
 
-    public static bool IsLogVanilla(LogMessage log) {
+    public static bool IsLogVanilla(LogMessage log)
+    {
         bool isVanilla = false;
         if (log.message.Contains("DroneFlamethrowerEffect"))
         {
@@ -302,7 +304,8 @@ public static class CloudUtils
         {
             isVanilla = true;
         }
-        if (SceneCatalog.availability.available != false && SceneCatalog.GetSceneDefForCurrentScene() && SceneCatalog.GetSceneDefForCurrentScene().baseSceneName == "lobby") {
+        if (SceneCatalog.availability.available != false && SceneCatalog.GetSceneDefForCurrentScene() && SceneCatalog.GetSceneDefForCurrentScene().baseSceneName == "lobby")
+        {
             isVanilla = true;
         }
         if (log.message.Contains("[Warning: Unity Log] Unregistered buff CrocoRegen!"))
@@ -343,11 +346,37 @@ public static class CloudUtils
         return result;
     }
 
-    public static ItemDisplayRuleSet.NamedRuleGroup CreateGenericDisplayRule(string itemName, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
-    { 
-        ItemDisplayRuleSet.NamedRuleGroup displayRule = new ItemDisplayRuleSet.NamedRuleGroup
+    public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateGenericItemDisplayRule(ItemDef def, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        ItemDisplayRuleSet.KeyAssetRuleGroup displayRule = new ItemDisplayRuleSet.KeyAssetRuleGroup
         {
-            name = itemName,
+            keyAsset = def,
+            displayRuleGroup = new DisplayRuleGroup
+            {
+
+                rules = new ItemDisplayRule[]
+                {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            childName = childName,
+                            followerPrefab = CommonAssets.LoadDisplay(prefabName),
+                            limbMask = LimbFlags.None,
+                            localPos = position,
+                            localAngles = rotation,
+                            localScale = scale
+                        }
+                }
+            }
+        };
+        return displayRule;
+    }
+
+    public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateGenericEquipmentDisplayRule(EquipmentDef def, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        ItemDisplayRuleSet.KeyAssetRuleGroup displayRule = new ItemDisplayRuleSet.KeyAssetRuleGroup
+        {
+            keyAsset = def,
             displayRuleGroup = new DisplayRuleGroup
             {
 
@@ -393,7 +422,7 @@ public static class CloudUtils
             ppv.priority /= ppv.priority;
             ppv.weight /= ppv.weight;
             ppv.blendDistance /= ppv.blendDistance;
-            
+
 
 
             ppvv.profile = profile;
@@ -403,8 +432,8 @@ public static class CloudUtils
         }
     }
 
-        public static PostProcessVolume FindCurrentPostProcessing()
-    {   
+    public static PostProcessVolume FindCurrentPostProcessing()
+    {
         PostProcessVolume postProcessVolume = null;
         SceneInfo instance = SceneInfo.instance;
 
@@ -435,7 +464,7 @@ public static class CloudUtils
         return postProcessVolume;
     }
 
-    public static  Vector3 FindBestPosition(HurtBox target)
+    public static Vector3 FindBestPosition(HurtBox target)
     {
         float radius = 15f;
         var originPoint = target.transform.position;
@@ -480,11 +509,52 @@ public static class CloudUtils
         return displayRule;
     }
 
-    public static ItemDisplayRuleSet.NamedRuleGroup CreateFollowerDisplayRule(string itemName, string prefabName, Vector3 position, Vector3 rotation, Vector3 scale)
+    public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateFollowerDisplayRule(ItemDef itemDef, string prefabName, Vector3 position, Vector3 rotation, Vector3 scale)
     {
-        ItemDisplayRuleSet.NamedRuleGroup displayRule = new ItemDisplayRuleSet.NamedRuleGroup
+        ItemDisplayRuleSet.KeyAssetRuleGroup displayRule = new ItemDisplayRuleSet.KeyAssetRuleGroup
         {
-            name = itemName,
+            keyAsset = itemDef,
+            displayRuleGroup = new DisplayRuleGroup
+            {
+                rules = new ItemDisplayRule[]
+                {
+                        new ItemDisplayRule
+                        {
+                            ruleType = ItemDisplayRuleType.ParentedPrefab,
+                            childName = "Base",
+                            followerPrefab = CommonAssets.LoadDisplay(prefabName),
+                            limbMask = LimbFlags.None,
+                            localPos = position,
+                            localAngles = rotation,
+                            localScale = scale
+                        }
+                }
+            }
+        };
+
+        return displayRule;
+    }
+
+    public static List<T> Join<T>(this List<T> first, List<T> second)
+    {
+        if (first == null)
+        {
+            return second;
+        }
+        if (second == null)
+        {
+            return first;
+        }
+
+        return first.Concat(second).ToList();
+    }
+
+
+    public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateFollowerDisplayRule(EquipmentDef itemDef, string prefabName, Vector3 position, Vector3 rotation, Vector3 scale)
+    {
+        ItemDisplayRuleSet.KeyAssetRuleGroup displayRule = new ItemDisplayRuleSet.KeyAssetRuleGroup
+        {
+            keyAsset = itemDef,
             displayRuleGroup = new DisplayRuleGroup
             {
                 rules = new ItemDisplayRule[]
@@ -587,7 +657,7 @@ public static class CloudUtils
     /// </summary>
     /// <param name="buffToRemove">The buff you want to safely remove</param>
     /// <param name="body">The body you safely want to remove a buff from.</param>
-    public static void SafeRemoveBuff(BuffIndex buffToRemove, CharacterBody body)
+    public static void SafeRemoveBuff(BuffDef buffToRemove, CharacterBody body)
     {
         if (body && body.HasBuff(buffToRemove))
         {
@@ -599,7 +669,7 @@ public static class CloudUtils
     /// </summary>
     /// <param name="buffToRemove">The buff you want to safely remove</param>
     /// <param name="body">The body you safely want to remove buffs from.</param>
-    public static void SafeRemoveBuffs(BuffIndex buffToRemove, CharacterBody body, int stacksToRemove)
+    public static void SafeRemoveBuffs(BuffDef buffToRemove, CharacterBody body, int stacksToRemove)
     {
         if (body)
         {
@@ -615,7 +685,7 @@ public static class CloudUtils
     /// </summary>
     /// <param name="buffToRemove">The buff you want to safely remove all of</param>
     /// <param name="body">The body you safely want to remove buffs from.</param>
-    public static void SafeRemoveAllOfBuff(BuffIndex buffToRemove, CharacterBody body)
+    public static void SafeRemoveAllOfBuff(BuffDef buffToRemove, CharacterBody body)
     {
         if (body)
         {
@@ -640,28 +710,28 @@ public static class CloudUtils
             skillLocator.primary = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            LoadoutAPI.AddSkillFamily(newFamily);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.primary.SetFieldValue("_skillFamily", newFamily);
         }
         {
             skillLocator.secondary = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            LoadoutAPI.AddSkillFamily(newFamily);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.secondary.SetFieldValue("_skillFamily", newFamily);
         }
         {
             skillLocator.utility = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            LoadoutAPI.AddSkillFamily(newFamily);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.utility.SetFieldValue("_skillFamily", newFamily);
         }
         {
             skillLocator.special = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            LoadoutAPI.AddSkillFamily(newFamily);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.special.SetFieldValue("_skillFamily", newFamily);
         }
     }
@@ -684,13 +754,12 @@ public static class CloudUtils
         copier.fullRestockOnAssign = beingCopiedFrom.fullRestockOnAssign;
         copier.icon = beingCopiedFrom.icon;
         copier.interruptPriority = beingCopiedFrom.interruptPriority;
-        copier.isBullets = beingCopiedFrom.isBullets;
         copier.isCombatSkill = beingCopiedFrom.isCombatSkill;
         copier.keywordTokens = beingCopiedFrom.keywordTokens;
         copier.mustKeyPress = beingCopiedFrom.mustKeyPress;
-        copier.noSprint = beingCopiedFrom.noSprint;
+        copier.canceledFromSprinting = beingCopiedFrom.canceledFromSprinting;
         copier.rechargeStock = beingCopiedFrom.rechargeStock;
-        copier.shootDelay = beingCopiedFrom.shootDelay;
+        copier.cancelSprintingOnActivation = beingCopiedFrom.cancelSprintingOnActivation;
         copier.skillDescriptionToken = beingCopiedFrom.skillDescriptionToken;
         copier.skillName = beingCopiedFrom.skillName;
         copier.skillNameToken = beingCopiedFrom.skillNameToken;

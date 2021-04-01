@@ -3,7 +3,7 @@ using BepInEx.Configuration;
 using Cloudburst.Cores;
 using Cloudburst.Cores.Components;
 using Cloudburst.Cores.HAND;
-using R2API.Utils;
+using EnigmaticThunder;
 using RoR2;
 using RoR2.Audio;
 using RoR2.UI;
@@ -16,29 +16,8 @@ using UnityEngine.UI;
 
 namespace Cloudburst
 {
-    [BepInDependency("com.bepis.r2api", BepInDependency.DependencyFlags.HardDependency)]
-    [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
+    [BepInDependency(EnigmaticThunderPlugin.guid, BepInDependency.DependencyFlags.HardDependency)]
     [BepInPlugin(guid, modName, version)]
-    [R2APISubmoduleDependency(new string[]
-    {
-        "ItemAPI",
-        "SurvivorAPI",
-        "ResourcesAPI",
-        "PrefabAPI",
-        "LanguageAPI",
-        "BuffAPI",
-        "EffectAPI",
-        "LoadoutAPI",
-        "DirectorAPI",
-        "LanguageAPI",
-        "ResourcesAPI",
-        "UnlockablesAPI",
-        "DotAPI",
-        "EliteAPI",
-        //gotta stop using this one, orbCore should be able to support itself.
-        "OrbAPI",
-        "CommandHelper"
-    })]
 
     public class CloudburstPlugin : BaseUnityPlugin
     {
@@ -63,6 +42,10 @@ namespace Cloudburst
         /// Called on the first frame of the game.
         /// </summary>
         public static event Action start;
+        /// <summary>
+        /// Called after the first frame of the game.
+        /// </summary>
+        public static event Action postStart;
         /// <summary>
         /// Called when the mod is enabled
         /// </summary>
@@ -128,7 +111,6 @@ namespace Cloudburst
         //Content Cores; Can be disabled
         private ItemCore itemCore;
         private EquipmentCore equipCore;
-        private WyattCore wyattCore;
         private EliteCore eliteCore;
         //private MegaMushrum mushrum;
         //private WyattCore han_dCore;
@@ -204,14 +186,6 @@ namespace Cloudburst
             LogCore.LogM("Cloudburst loaded!");
         }
 
-        private void NetworkSoundEventCatalog_SetNetworkSoundEvents(On.RoR2.Audio.NetworkSoundEventCatalog.orig_SetNetworkSoundEvents orig, List<NetworkSoundEventDef> newEntriesList)
-        {
-            orig(newEntriesList);
-            newEntriesList.ForEach(LogSound);
-            void LogSound(NetworkSoundEventDef def) {
-                LogCore.LogI(def.eventName);
-            }
-        }
 
         private void ModErrors_addition(ErrorListener.LogMessage objectRemoved)
         {
@@ -253,6 +227,9 @@ namespace Cloudburst
                 assetCore = new AssetsCore();
                 GlobalHooks.Init();
                 CommonAssets.Load();
+
+
+                RoR2.SplashScreenController.cvSplashSkip.defaultValue = "1";
 
                 var materials = AssetsCore.mainAssetBundle.LoadAllAssets<Material>();
                 for (int i = 0; i < materials.Length; i++)
@@ -311,13 +288,6 @@ namespace Cloudburst
                 if (EnableWyatt.Value)
                 {
                     new Custodian().Init(Config);
-                    try
-                    {
-                        new Lui().Init(Config);
-                    }
-                    catch (Exception e) {
-                        LogCore.LogI(e);
-                    }
                     //wyattCore = new WyattCore();
                 }
                 if (EnableVoid.Value)
@@ -345,8 +315,9 @@ namespace Cloudburst
                 // new DebuggingCore();
                 postLoad?.Invoke();
 
+                EnigmaticThunder.Modules.CommandHelper.AddToConsoleWhenReady();
+
                 //i'll follow you home when the night comes
-                R2API.Utils.CommandHelper.AddToConsoleWhenReady();
 #if DEBUG
                 //unlock!
                 debugCore = new DebuggingCore();
@@ -356,6 +327,20 @@ namespace Cloudburst
             {
                 LogCore.LogW("You have disabled ALL of Cloudburst. If this was not desired, you can re-enable it in Cloudburst's config file.");
             }
+        }
+
+        [ConCommand(commandName = "gmc", flags = ConVarFlags.ExecuteOnServer, helpText = "Good morning chat.")]
+        private static void GMC(ConCommandArgs arg)
+        {
+            arg.TryGetSenderBody().inventory.GiveItem(Cores.Items.Red.REDACTED.instance.Index);
+            /*foreach (ItemDef i in RoR2.RoR2Content.Items.itemDefs)
+            {
+                if (i.tier != ItemTier.NoTier && i.tier != ItemTier.Lunar)
+                {
+                    arg.TryGetSenderBody().inventory.GiveItem(i);
+                }
+            }*/
+
         }
 
 
@@ -372,12 +357,8 @@ namespace Cloudburst
 
                 var build = indicator.GetComponent<HGTextMeshProUGUI>();
 
-                build.fontSize += 6;
+                build.fontSize += 4;
                 build.text = build.text + Environment.NewLine + $"Cloudburst Version: {version}";
-                build.text = build.text + Environment.NewLine + $"R2API Version: { R2API.R2API.PluginVersion }";
-                build.text = build.text + Environment.NewLine + $"Vanilla Errors: {vanillaErrors.ToString()}";
-                build.text = build.text + Environment.NewLine + $"Mod Errors: {modErrors.ToString()}";
-
 
                 title.GetComponent<Image>().sprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/cloudburstlogo.png");
                 //LogCore.LogI(title.name);
@@ -419,12 +400,8 @@ namespace Cloudburst
 
         public void Start()
         {
-            Action awake = CloudburstPlugin.start;
-            if (awake == null)
-            {
-                return;
-            }
-            awake();
+            CloudburstPlugin.start();
+            CloudburstPlugin.postStart();
         }
 
         public void OnDisable()

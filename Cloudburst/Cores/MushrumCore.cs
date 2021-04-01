@@ -1,6 +1,6 @@
 ﻿using EntityStates;
 using Cloudburst.Cores.States.MegaMushrum;
-using R2API;
+
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Projectile;
@@ -12,7 +12,7 @@ using System;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using EntityStates.AI.Walker;
-using R2API.Utils;
+using EnigmaticThunder.Modules;
 
 namespace Cloudburst.Cores
 {
@@ -96,7 +96,7 @@ namespace Cloudburst.Cores
 
         private void BuildDirectorCard()
         {
-            On.RoR2.CharacterSpawnCard.Awake += GlobalHooks.CharacterSpawnCard_Awake;
+            /*On.RoR2.CharacterSpawnCard.Awake += GlobalHooks.CharacterSpawnCard_Awake;
             CharacterSpawnCard characterSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
             On.RoR2.CharacterSpawnCard.Awake -= GlobalHooks.CharacterSpawnCard_Awake;
 
@@ -127,8 +127,8 @@ namespace Cloudburst.Cores
             directorCard.spawnDistance = DirectorCore.MonsterSpawnDistance.Standard;
 
             directorCardHolder.Card = directorCard; 
-            directorCardHolder.InteractableCategory = DirectorAPI.InteractableCategory.None;
-            directorCardHolder.MonsterCategory = DirectorAPI.MonsterCategory.Champions;
+           // directorCardHolder.InteractableCategory = DirectorAPI.InteractableCategory.None;
+        //    directorCardHolder.MonsterCategory = DirectorAPI.MonsterCategory.Champions;
 
             DirectorAPI.MonsterActions += delegate (List<DirectorAPI.DirectorCardHolder> list, DirectorAPI.StageInfo stage)
             {
@@ -136,7 +136,7 @@ namespace Cloudburst.Cores
                 {
                     list.Add(directorCardHolder);
                 }
-            };
+            };*/
         }   
 
         private void BuildBody()
@@ -144,7 +144,7 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = megaMushrum.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                LanguageAPI.Add("MEGAMUSHRUM_BODY_NAME", "Mega Mushrum");
+                Languages.Add("MEGAMUSHRUM_BODY_NAME", "Mega Mushrum");
                 characterBody.baseAcceleration = 70f;
                 characterBody.baseArmor = 0; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -386,7 +386,7 @@ namespace Cloudburst.Cores
 
         private void CreatePrimary()
         {
-            LoadoutAPI.AddSkill(typeof(SporeGrenades));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(SporeGrenades));
 
             SkillDef primarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             primarySkillDef.activationState = new SerializableEntityStateType(typeof(SporeGrenades));
@@ -397,33 +397,33 @@ namespace Cloudburst.Cores
             primarySkillDef.canceledFromSprinting = false;
             primarySkillDef.fullRestockOnAssign = true;
             primarySkillDef.interruptPriority = InterruptPriority.PrioritySkill;
-            primarySkillDef.isBullets = false;
+
             primarySkillDef.isCombatSkill = true;
             primarySkillDef.mustKeyPress = false;
-            primarySkillDef.noSprint = false;
+            primarySkillDef.cancelSprintingOnActivation = false;
             primarySkillDef.rechargeStock = 1;
             primarySkillDef.requiredStock = 1;
-            primarySkillDef.shootDelay = 0.5f;
+
             primarySkillDef.stockToConsume = 1;
             primarySkillDef.skillDescriptionToken = "AAAAAAAAAAAAAAAAAAAAAA";
             primarySkillDef.skillName = "aaa";
             primarySkillDef.skillNameToken = "aa";
 
-            LoadoutAPI.AddSkillDef(primarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = primarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(primarySkillDef.skillNameToken, false, null)
 
             };
         }
         private void CreateSecondary()
         {
-            LoadoutAPI.AddSkill(typeof(Smashin));
-            LoadoutAPI.AddSkill(typeof(Planting));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Smashin));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Planting));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(Planting));
@@ -434,25 +434,25 @@ namespace Cloudburst.Cores
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = true;
             secondarySkillDef.interruptPriority = InterruptPriority.PrioritySkill;
-            secondarySkillDef.isBullets = false;
+
             secondarySkillDef.isCombatSkill = true;
             secondarySkillDef.mustKeyPress = false;
-            secondarySkillDef.noSprint = false;
+            secondarySkillDef.cancelSprintingOnActivation = false;
             secondarySkillDef.rechargeStock = 1;
             secondarySkillDef.requiredStock = 1;
-            secondarySkillDef.shootDelay = 0.5f;
+
             secondarySkillDef.stockToConsume = 1;
             secondarySkillDef.skillDescriptionToken = "AAAAAAAAAAAAAAAAAAAAAA";
             secondarySkillDef.skillName = "aaa";
             secondarySkillDef.skillNameToken = "aa";
 
-            LoadoutAPI.AddSkillDef(secondarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = secondarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(secondarySkillDef.skillNameToken, false, null)
 
             };
@@ -460,9 +460,9 @@ namespace Cloudburst.Cores
 
         private void CreateUtility()
         {
-            LoadoutAPI.AddSkill(typeof(Implant));
-            LoadoutAPI.AddSkill(typeof(Planted));
-            LoadoutAPI.AddSkill(typeof(Unplant));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Implant));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Planted));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Unplant));
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(Implant));
@@ -473,25 +473,25 @@ namespace Cloudburst.Cores
             utilitySkillDef.canceledFromSprinting = true;
             utilitySkillDef.fullRestockOnAssign = true;
             utilitySkillDef.interruptPriority = InterruptPriority.PrioritySkill;
-            utilitySkillDef.isBullets = false;
+
             utilitySkillDef.isCombatSkill = false;
             utilitySkillDef.mustKeyPress = false;
-            utilitySkillDef.noSprint = false;
+            utilitySkillDef.cancelSprintingOnActivation = false;
             utilitySkillDef.rechargeStock = 1;
             utilitySkillDef.requiredStock = 1;
-            utilitySkillDef.shootDelay = 0.5f;
+
             utilitySkillDef.stockToConsume = 1;
             utilitySkillDef.skillDescriptionToken = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
             utilitySkillDef.skillName = "AAAAAAAAAAAAAA";
             utilitySkillDef.skillNameToken = "AAAAAAAAAAAA";
 
-            LoadoutAPI.AddSkillDef(utilitySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(utilitySkillDef);
             SkillFamily utilitySkillFamily = skillLocator.utility.skillFamily;
 
             utilitySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = utilitySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(utilitySkillDef.skillNameToken, false, null)
 
             };
@@ -509,26 +509,26 @@ namespace Cloudburst.Cores
             specialSkillDef.canceledFromSprinting = false;
             specialSkillDef.fullRestockOnAssign = false;
             specialSkillDef.interruptPriority = InterruptPriority.Any;
-            specialSkillDef.isBullets = false;
+
             specialSkillDef.isCombatSkill = true;
             specialSkillDef.mustKeyPress = false;
-            specialSkillDef.noSprint = false;
+            specialSkillDef.cancelSprintingOnActivation = false;
             specialSkillDef.rechargeStock = 1;
             specialSkillDef.requiredStock = 1;
-            specialSkillDef.shootDelay = 1f;
+
             specialSkillDef.stockToConsume = 1;
             specialSkillDef.skillDescriptionToken = "AAAAAAAAAAAAAAAAAAAA";
             specialSkillDef.skillName = "AAAAAAAAAAAAA";
             specialSkillDef.skillNameToken = "AAAAAAAAAAAAAA";
 
-            LoadoutAPI.AddSkillDef(specialSkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = specialSkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(specialSkillDef.skillNameToken, false, null)
 
             };

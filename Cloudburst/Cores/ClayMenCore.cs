@@ -1,8 +1,10 @@
 ﻿using Cloudburst;
+using EnigmaticThunder.Modules;
+using EnigmaticThunder.Util;
 //using Cloudburst.Cores.ClayMan.Skills;
 using EntityStates;
-using R2API;
-using R2API.Utils;
+
+
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Skills;
@@ -52,7 +54,7 @@ namespace Cloudburst.Cores
             CharacterSpawnCard characterSpawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
             On.RoR2.CharacterSpawnCard.Awake -= GlobalHooks.CharacterSpawnCard_Awake;
 
-            DirectorAPI.DirectorCardHolder directorCardHolder = new DirectorAPI.DirectorCardHolder();
+            //DirectorAPI.DirectorCardHolder directorCardHolder = new DirectorAPI.DirectorCardHolder();
             DirectorCard directorCard = new DirectorCard();
 
             characterSpawnCard.directorCreditCost = 50;
@@ -75,20 +77,9 @@ namespace Cloudburst.Cores
             directorCard.spawnCard = characterSpawnCard;
             directorCard.spawnDistance = DirectorCore.MonsterSpawnDistance.Standard;
 
-            directorCardHolder.Card = directorCard;
-            directorCardHolder.InteractableCategory = DirectorAPI.InteractableCategory.None;
-            directorCardHolder.MonsterCategory = DirectorAPI.MonsterCategory.BasicMonsters;
-
-            DirectorAPI.MonsterActions += delegate (List<DirectorAPI.DirectorCardHolder> list, DirectorAPI.StageInfo stage)
-            {
-                if (stage.stage == DirectorAPI.Stage.SkyMeadow || stage.stage == DirectorAPI.Stage.AbandonedAqueduct || stage.stage == DirectorAPI.Stage.RallypointDelta || stage.stage == DirectorAPI.Stage.ScorchedAcres)
-                {
-                    if (!list.Contains(directorCardHolder))
-                    {
-                        list.Add(directorCardHolder);
-                    }
-                }
-            };
+            //directorCardHolder.Card = directorCard;
+            //directorCardHolder.InteractableCategory = DirectorAPI.InteractableCategory.None;
+            //directorCardHolder.MonsterCategory = DirectorAPI.MonsterCategory.BasicMonsters;
         }
         private void FixHurtBox()
         {
@@ -180,7 +171,7 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = clayMan.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                LanguageAPI.Add("CLAYMAN_BODY_TOKEN", "Clay Man");
+                Languages.Add("CLAYMAN_BODY_TOKEN", "Clay Man");
                 characterBody.baseAcceleration = 80f;
                 characterBody.baseArmor = 10; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -357,14 +348,14 @@ namespace Cloudburst.Cores
                 skillLocator.primary = clayMan.AddComponent<GenericSkill>();
                 SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
                 newFamily.variants = new SkillFamily.Variant[1];
-                LoadoutAPI.AddSkillFamily(newFamily);
+                EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
                 skillLocator.primary.SetFieldValue("_skillFamily", newFamily);
             }
             {
                 skillLocator.secondary = clayMan.AddComponent<GenericSkill>();
                 SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
                 newFamily.variants = new SkillFamily.Variant[1];
-                LoadoutAPI.AddSkillFamily(newFamily);
+                EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
                 skillLocator.secondary.SetFieldValue("_skillFamily", newFamily);
             }
         }
@@ -379,25 +370,25 @@ namespace Cloudburst.Cores
             primarySkillDef.canceledFromSprinting = false;
             primarySkillDef.fullRestockOnAssign = true;
             primarySkillDef.interruptPriority = InterruptPriority.PrioritySkill;
-            primarySkillDef.isBullets = false;
+
             primarySkillDef.isCombatSkill = true;
             primarySkillDef.mustKeyPress = false;
-            primarySkillDef.noSprint = false;
+            primarySkillDef.cancelSprintingOnActivation = false;
             primarySkillDef.rechargeStock = 1;
             primarySkillDef.requiredStock = 1;
-            primarySkillDef.shootDelay = 0.5f;
+
             primarySkillDef.stockToConsume = 1;
             primarySkillDef.skillDescriptionToken = "AAAAAAAAAAAAAAAAAAAAAA";
             primarySkillDef.skillName = "aaa";
             primarySkillDef.skillNameToken = "aa";
 
-            LoadoutAPI.AddSkillDef(primarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = primarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(primarySkillDef.skillNameToken, false, null)
 
             };
@@ -414,25 +405,25 @@ namespace Cloudburst.Cores
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = true;
             secondarySkillDef.interruptPriority = InterruptPriority.PrioritySkill;
-            secondarySkillDef.isBullets = false;
+
             secondarySkillDef.isCombatSkill = true;
             secondarySkillDef.mustKeyPress = false;
-            secondarySkillDef.noSprint = false;
+            secondarySkillDef.cancelSprintingOnActivation = false;
             secondarySkillDef.rechargeStock = 1;
             secondarySkillDef.requiredStock = 1;
-            secondarySkillDef.shootDelay = 0.5f;
+
             secondarySkillDef.stockToConsume = 1;
             secondarySkillDef.skillDescriptionToken = "AAAAAAAAAAAAAAAAAAAAAA";
             secondarySkillDef.skillName = "aaa";
             secondarySkillDef.skillNameToken = "aa";
 
-            LoadoutAPI.AddSkillDef(secondarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = secondarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(secondarySkillDef.skillNameToken, false, null)
 
             };

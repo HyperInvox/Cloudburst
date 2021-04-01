@@ -1,4 +1,4 @@
-﻿using R2API;
+﻿
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -22,15 +22,10 @@ namespace Cloudburst.Cores.Items
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/IMDLKeycard.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/UESKeycard/IMDLKeycard.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/icon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/UESKeycard/icon.png";
 
-
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
-        {
-            return new ItemDisplayRuleDict();
-        }
 
         protected override void Initialization()
         {

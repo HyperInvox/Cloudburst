@@ -69,14 +69,14 @@ namespace Cloudburst.Cores.States.Bombardier
 
             EffectManager.SimpleMuzzleFlash(Resources.Load<GameObject>("prefabs/effects/lemurianbitetrail"), base.gameObject, "SwingTrail", true);
 
-            var list = new List<HealthComponent>();
+            var list = new List<HurtBox>();
             attack.Fire(list);
 
             if (base.teamComponent.teamIndex == TeamIndex.Player)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    HealthComponent healthComponent = list[i] ;
+                    HealthComponent healthComponent = list[i].healthComponent;
                     if (healthComponent)    
                     {
                         var charb = healthComponent.body;

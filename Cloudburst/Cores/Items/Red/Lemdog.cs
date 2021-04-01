@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-using R2API;
+
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,14 +9,14 @@ namespace Cloudburst.Cores.Items.Red
 
     public class Lemdog : ItemBuilder
     {
-        public List<BuffIndex> lemdogList = new List<BuffIndex>{
-            BuffIndex.Warbanner,
-            //BuffIndex.Cloak,
-            BuffIndex.CloakSpeed,
-            //BuffIndex.EngiShield,
-            BuffIndex.MeatRegenBoost,
-            BuffIndex.WhipBoost,
-            BuffIndex.TeamWarCry,
+        public List<BuffDef> lemdogList = new List<BuffDef>{
+            RoR2Content.Buffs.Warbanner,
+            //RoR2Content.Buffs.Cloak,
+            RoR2Content.Buffs.CloakSpeed,
+            //RoR2Content.Buffs.EngiShield,
+            RoR2Content.Buffs.MeatRegenBoost,
+            RoR2Content.Buffs.WhipBoost,
+            RoR2Content.Buffs.TeamWarCry,
         };
         public override string ItemName => "Lemdog";
 
@@ -30,9 +30,9 @@ namespace Cloudburst.Cores.Items.Red
 
         public override ItemTier Tier => ItemTier.Tier3;
 
-        public override string ItemModelPath => "@Cloudburst:Assets/Cloudburst/Items/Lemdog/IMDLLemDog.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/Lemdog/IMDLLemDog.prefab";
 
-        public override string ItemIconPath => "@Cloudburst:Assets/Cloudburst/Items/Lemdog/LemDog_TexIcon.png";
+        public override string ItemIconPath => "Assets/Cloudburst/Items/Lemdog/LemDog_TexIcon.png";
 
 
         public override void CreateConfig(ConfigFile config)
@@ -40,7 +40,7 @@ namespace Cloudburst.Cores.Items.Red
 
         }
 
-        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        /* public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var lemdogMDL = Resources.Load<GameObject>(ItemModelPath);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
@@ -155,7 +155,7 @@ namespace Cloudburst.Cores.Items.Red
             });
 
             return rules;
-        }
+        }*/
 
 
         protected override void Initialization()
@@ -168,17 +168,15 @@ namespace Cloudburst.Cores.Items.Red
             GlobalHooks.onAddTimedBuff += GlobalHooks_onAddTimedBuff;
         }
 
-        private void GlobalHooks_onAddTimedBuff(CharacterBody body, ref BuffIndex buffType, ref float duration)
+        private void GlobalHooks_onAddTimedBuff(CharacterBody body, ref BuffDef buffType, ref float duration)
         {
             var inv = body.inventory;
             if (inv)
             {
                 var count = GetCount(inv);
-                var def = BuffCatalog.GetBuffDef(buffType);
-
                 if (count > 0)
                 {
-                    if (def.isDebuff && Util.CheckRoll(25 + (count * 2.5f), body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) ? null : body.master) && buffType != BuffIndex.NullSafeZone)
+                    if (buffType.isDebuff && Util.CheckRoll(25 + (count * 2.5f), body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) ? null : body.master) && buffType != RoR2Content.Buffs.NullSafeZone)
                     {
                         var random = UnityEngine.Random.Range(0, lemdogList.Count);
                         var buff = lemdogList[random];

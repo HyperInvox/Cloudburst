@@ -1,6 +1,6 @@
-﻿using EntityStates;
-using R2API;
-using R2API.Utils;
+﻿/*using EntityStates;
+
+
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
@@ -248,7 +248,7 @@ She'll love this, I know.
             missile.giveupTimer = 4;
             missile.giveupTimer = 25;
 
-            API.RegisterNewProjectile(this.winch);*/
+            API.RegisterNewProjectile(this.winch);
             #region Old
             #endregion
         }
@@ -260,8 +260,8 @@ She'll love this, I know.
                 builder.prefabName = "WyattBody";
                 builder.masteryAchievementUnlockable = AchievementCore.GetUnlockableString("WyattMastery");
                 builder.model = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyatt");
-                builder.defaultSkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
-                builder.masterySkinIcon = LoadoutAPI.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+                builder.defaultSkinIcon = EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+                builder.masterySkinIcon = EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
                 builder.masterySkinDelegate = material;
                 builder.GetAdditionalRenderInfos += Builder_getAdditionalEntries; ;
                 builder.GetAdditionalItemDisplays += Builder_GetAdditionalItemDisplays;
@@ -319,7 +319,7 @@ She'll love this, I know.
             script = wyattBody.AddComponent<WyattComboScript>();
             wyattBody.AddComponent<WyattWalkmanBehavior>();
             //kil
-            //LoadoutAPI.AddSkill(typeof(DeathState));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(DeathState));
             //characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(DeathState));
 
             //sfx
@@ -391,7 +391,7 @@ She'll love this, I know.
             characterBody.baseMaxShield = 0; //Base shield, basically the same as baseMaxHealth but with shields
             characterBody.baseMoveSpeed = 7; //Base move speed, this is usual 7
             characterBody.baseNameToken = "WYATT_BODY_NAME"; //The base name token. 
-            LanguageAPI.Add("WYATT_BODY_LORE", lore);
+            Languages.Add("WYATT_BODY_LORE", lore);
             characterBody.subtitleNameToken = "WYATT_BODY_SUBTITLE"; //Set this if its a boss
             characterBody.baseRegen = 1.5f; //Base health regen.
             characterBody.bodyFlags = (CharacterBody.BodyFlags.ImmuneToExecutes); ///Base body flags, should be self explanatory 
@@ -466,10 +466,10 @@ She'll love this, I know.
             {
                 ModelSkinController skinController = model.AddOrGetComponent<ModelSkinController>();
 
-                LoadoutAPI.SkinDefInfo defaultSkinInfo = default(LoadoutAPI.SkinDefInfo);
+                EnigmaticThunder.Modules.Loadouts.SkinDefInfo defaultSkinInfo = default(EnigmaticThunder.Modules.Loadouts.SkinDefInfo);
                 defaultSkinInfo.BaseSkins = Array.Empty<SkinDef>();
                 defaultSkinInfo.GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>();
-                defaultSkinInfo.Icon = LoadoutAPI.CreateSkinIcon(new Color(0f, 156f / 255f, 188f / 255f), new Color(186f / 255f, 128f / 255f, 52f / 255f), new Color(58f / 255f, 49f / 255f, 24f / 255f), new Color(2f / 255f, 29f / 255f, 55f / 255f));
+                defaultSkinInfo.Icon = EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(new Color(0f, 156f / 255f, 188f / 255f), new Color(186f / 255f, 128f / 255f, 52f / 255f), new Color(58f / 255f, 49f / 255f, 24f / 255f), new Color(2f / 255f, 29f / 255f, 55f / 255f));
 
                 defaultSkinInfo.MeshReplacements = new SkinDef.MeshReplacement[] {
                     new SkinDef.MeshReplacement {
@@ -488,7 +488,7 @@ She'll love this, I know.
 
                 //, ));
 
-                SkinDef defaultSkin = LoadoutAPI.CreateNewSkinDef(defaultSkinInfo);
+                SkinDef defaultSkin = EnigmaticThunder.Modules.Loadouts.CreateNewSkinDef(defaultSkinInfo);
 
                 skinController.skins = new SkinDef[1]
                 {
@@ -496,7 +496,7 @@ She'll love this, I know.
                 };
             }
 
-            CreateSkinInfo(FixRenderInfo());*/
+            CreateSkinInfo(FixRenderInfo());
         }
 
 
@@ -510,12 +510,12 @@ She'll love this, I know.
             passive.keywordToken = "KEYWORD_VELOCITY";
             passive.icon = AssetsCore.wyattPassive;
 
-            LanguageAPI.Add(passive.skillNameToken, "Walkman");
-            LanguageAPI.Add(passive.skillDescriptionToken, "On hit, gain a stack of <style=cIsUtility>Velocity</style>, up to 10. <style=cIsHealth>Lose two stacks every two seconds</style>");
+            Languages.Add(passive.skillNameToken, "Walkman");
+            Languages.Add(passive.skillDescriptionToken, "On hit, gain a stack of <style=cIsUtility>Velocity</style>, up to 10. <style=cIsHealth>Lose two stacks every two seconds</style>");
 
             skillLocator.passiveSkill = passive;
 
-            LanguageAPI.Add(passive.keywordToken, "<style=cKeywordName>Velocity</style><style=cSub>Increases movement speed by X% and health regeneration by X; all stacks lost when out of combat.</style>");
+            Languages.Add(passive.keywordToken, "<style=cKeywordName>Velocity</style><style=cSub>Increases movement speed by X% and health regeneration by X; all stacks lost when out of combat.</style>");
 
             /*var passiveFamily = ScriptableObject.CreateInstance<SkillFamily>();
 
@@ -534,7 +534,7 @@ She'll love this, I know.
             armorDef.isBullets = false;
             armorDef.isCombatSkill = true;
             armorDef.mustKeyPress = false;
-            armorDef.noSprint = false;
+            armorDef.cancelSprintingOnActivation = false;
             armorDef.rechargeStock = 1;
             armorDef.requiredStock = 1;
             armorDef.shootDelay = 0.1f;
@@ -555,15 +555,15 @@ She'll love this, I know.
                 },
             };
 
-            LoadoutAPI.AddSkillDef(armorDef);
-            LoadoutAPI.AddSkillFamily(passiveFamily);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(armorDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(passiveFamily);
 
             skillSlot.SetFieldValue("_skillFamily", passiveFamily);
 
             passiveContoller.armorDef = armorDef;
             passiveContoller.regenDef = regenDef;
             passiveContoller.speedDef = speedDef;
-            passiveContoller.passiveSkillSlot = skillSlot;*/
+            passiveContoller.passiveSkillSlot = skillSlot;
         }
 
         private void CreatePrimary()
@@ -576,10 +576,10 @@ She'll love this, I know.
             //makes it so you can't hold it down. Extremely obvious problem is obvious, but I have no idea how's to fix this.
             //FIX: Apparently I forgot to call base.FixedUpdate(n.k); in its FixedUpdate void, whoops!
 
-            LoadoutAPI.AddSkill(typeof(FullSwing));
-            LoadoutAPI.AddSkill(typeof(FullSwing2));
-            LoadoutAPI.AddSkill(typeof(Cleanup));
-            LoadoutAPI.AddSkill(typeof(WyattBaseMeleeAttack));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FullSwing));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FullSwing2));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Cleanup));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(WyattBaseMeleeAttack));
 
             SteppedSkillDef primarySkillDef = ScriptableObject.CreateInstance<SteppedSkillDef>();
 
@@ -592,13 +592,13 @@ She'll love this, I know.
             primarySkillDef.canceledFromSprinting = false;
             primarySkillDef.fullRestockOnAssign = true;
             primarySkillDef.interruptPriority = InterruptPriority.Any;
-            primarySkillDef.isBullets = false;
+
             primarySkillDef.isCombatSkill = true;
             primarySkillDef.mustKeyPress = false;
-            primarySkillDef.noSprint = false;
+            primarySkillDef.cancelSprintingOnActivation = false;
             primarySkillDef.rechargeStock = 1;
             primarySkillDef.requiredStock = 1;
-            primarySkillDef.shootDelay = 0.1f;
+
             primarySkillDef.stockToConsume = 0;
             primarySkillDef.skillDescriptionToken = "WYATT_PRIMARY_DESCRIPTION";
             primarySkillDef.skillName = "WYATT_PRIMARY_NAME";
@@ -610,18 +610,18 @@ She'll love this, I know.
                  "KEYWORD_SPIKED",
             };
 
-            LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
-            LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
-            //LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
-            LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
+            Languages.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
+            Languages.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
+            //Languages.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
+            Languages.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
 
-            LoadoutAPI.AddSkillDef(primarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = primarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(primarySkillDef.skillNameToken, false, null)
 
             };
@@ -629,12 +629,12 @@ She'll love this, I know.
 
         private void CreateSecondary()
         {
-            LoadoutAPI.AddSkill(typeof(ChargeHomeRun));
-            LoadoutAPI.AddSkill(typeof(HomeRun));
-            LoadoutAPI.AddSkill(typeof(AnimationTest));
-            LoadoutAPI.AddSkill(typeof(TrashOut));
-            LoadoutAPI.AddSkill(typeof(TrashOut2));
-            //LoadoutAPI.AddSkill(typeof(TrashOut3));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ChargeHomeRun));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(HomeRun));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(AnimationTest));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut2));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut3));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<HANDDroneSkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(TrashOut));
@@ -645,13 +645,13 @@ She'll love this, I know.
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = false;
             secondarySkillDef.interruptPriority = InterruptPriority.Skill;
-            secondarySkillDef.isBullets = false;
+
             secondarySkillDef.isCombatSkill = true;
             secondarySkillDef.mustKeyPress = true;
-            secondarySkillDef.noSprint = false;
+            secondarySkillDef.cancelSprintingOnActivation = false;
             secondarySkillDef.rechargeStock = 1;
             secondarySkillDef.requiredStock = 1;
-            secondarySkillDef.shootDelay = 0.08f;
+
             secondarySkillDef.dontAllowPastMaxStocks = true;
             secondarySkillDef.stockToConsume = 1;
             secondarySkillDef.skillDescriptionToken = "WYATT_SECONDARY_DESCRIPTION";
@@ -664,16 +664,16 @@ She'll love this, I know.
                 "KEYWORD_SPIKED"
              };
 
-            LanguageAPI.Add(secondarySkillDef.skillNameToken, "Trash Out");
-            LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
+            Languages.Add(secondarySkillDef.skillNameToken, "Trash Out");
+            Languages.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
 
-            LoadoutAPI.AddSkillDef(secondarySkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = secondarySkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(secondarySkillDef.skillNameToken, false, null)
 
             };
@@ -690,14 +690,14 @@ She'll love this, I know.
 
             int prevLength = utilitySkillFamily.variants.Length;
             Array.Resize<SkillFamily.Variant>(ref utilitySkillFamily.variants, prevLength + 1);
-            utilitySkillFamily.variants[prevLength] = variant;*/
+            utilitySkillFamily.variants[prevLength] = variant;
         }
 
         private void CreateSpecial()
         {
-            //LoadoutAPI.AddSkill(typeof(Drone));
-            LoadoutAPI.AddSkill(typeof(DeployMaid));
-            LoadoutAPI.AddSkill(typeof(RetrieveMaid));
+            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Drone));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(DeployMaid));
+            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(RetrieveMaid));
 
             SkillDef specialSkillDef = ScriptableObject.CreateInstance<SkillDef>();
             specialSkillDef.activationState = new SerializableEntityStateType(typeof(DeployMaid));
@@ -707,13 +707,13 @@ She'll love this, I know.
             specialSkillDef.canceledFromSprinting = false;
             specialSkillDef.fullRestockOnAssign = true;
             specialSkillDef.interruptPriority = InterruptPriority.Any;
-            specialSkillDef.isBullets = false;
+
             specialSkillDef.isCombatSkill = false;
             specialSkillDef.mustKeyPress = true;
-            specialSkillDef.noSprint = false;
+            specialSkillDef.cancelSprintingOnActivation = false;
             specialSkillDef.rechargeStock = 1;
             specialSkillDef.requiredStock = 1;
-            specialSkillDef.shootDelay = 0.5f;
+
             specialSkillDef.stockToConsume = 0;
             specialSkillDef.skillDescriptionToken = "WYATT_SPECIAL_DESCRIPTION";
             specialSkillDef.skillName = "aaa";
@@ -737,7 +737,7 @@ She'll love this, I know.
             specialSkillDef2.isBullets = false;
             specialSkillDef2.isCombatSkill = false;
             specialSkillDef2.mustKeyPress = true;
-            specialSkillDef2.noSprint = false;
+            specialSkillDef2.cancelSprintingOnActivation = false;
             specialSkillDef2.rechargeStock = 1;
             specialSkillDef2.requiredStock = 1;
             specialSkillDef2.shootDelay = 0.5f;
@@ -752,21 +752,21 @@ She'll love this, I know.
 
             retrievePrimary = specialSkillDef2;
 
-            LanguageAPI.Add(specialSkillDef.skillNameToken, "G22 MAID");
-            LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>pulls enemies</style> and <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
+            Languages.Add(specialSkillDef.skillNameToken, "G22 MAID");
+            Languages.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>pulls enemies</style> and <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
 
-            LanguageAPI.Add(specialSkillDef2.skillNameToken, "Retrival");
-            LanguageAPI.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
+            Languages.Add(specialSkillDef2.skillNameToken, "Retrival");
+            Languages.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
 
 
-            LoadoutAPI.AddSkillDef(specialSkillDef);
-            LoadoutAPI.AddSkillDef(specialSkillDef2);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
+            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef2);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = specialSkillDef,
-                unlockableName = "",
+
                 viewableNode = new ViewablesCatalog.Node(specialSkillDef.skillNameToken, false, null)
             };
         }
@@ -796,8 +796,8 @@ She'll love this, I know.
         #region Misc
         private void CreateTokens()
         {
-            LanguageAPI.Add("WYATT_BODY_NAME", "Custodian");
-            LanguageAPI.Add("WYATT_BODY_SUBTITLE", "Lean, Mean, Cleaning Machine");
+            Languages.Add("WYATT_BODY_NAME", "Custodian");
+            Languages.Add("WYATT_BODY_SUBTITLE", "Lean, Mean, Cleaning Machine");
 
         }
 
@@ -832,10 +832,10 @@ She'll love this, I know.
             desc = desc + "< ! > FINNA" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > *NAMEDROPS*" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > MAKE A MOD? SHIEEEEEEEEETTTTTTTTT" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *DIES*" + Environment.NewLine + Environment.NewLine;*/
+            desc = desc + "< ! > *DIES*" + Environment.NewLine + Environment.NewLine;
 
-            LanguageAPI.Add("WYATT_DESCRIPTION", desc);
-            LanguageAPI.Add("WYATT_OUTRO_FLAVOR", "...and so they left, a job well done.");
+            Languages.Add("WYATT_DESCRIPTION", desc);
+            Languages.Add("WYATT_OUTRO_FLAVOR", "...and so they left, a job well done.");
 
             SurvivorDef def = new SurvivorDef()
             {
@@ -846,10 +846,10 @@ She'll love this, I know.
                 name = "AAAAAAAAA",
                 outroFlavorToken = "WYATT_OUTRO_FLAVOR",
                 primaryColor = new Color(0.4862745098f, 0.94901960784f, 0.71764705882f),
-                unlockableName = "",
+
             };
             SurvivorAPI.AddSurvivor(def);
         }
         #endregion
     }
-}
+}*/

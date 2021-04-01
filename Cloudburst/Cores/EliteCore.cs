@@ -1,7 +1,7 @@
 ﻿using EntityStates.Destructible;
 using Cloudburst.Cores.Components;
-using R2API;
-using R2API.Utils;
+
+
 using RoR2;
 using System;
 using UnityEngine;
@@ -14,8 +14,9 @@ namespace Cloudburst.Cores
     class EliteCore
     {
         public static EliteCore instance;
-
-        //TODO:
+    }
+}
+        /*TODO:
         //Implement Lunar elites.
         //Figure out the color issue.
         protected BuffIndex voidIndex;
@@ -104,7 +105,7 @@ namespace Cloudburst.Cores
                         }
                     }
                 }
-            }*/
+            }
             if (self && self.inventory) {
                 var elite = EliteCatalog.GetEquipmentEliteIndex(self.inventory.GetEquipmentIndex());
                 var model = CloudUtils.GetCharacterModelFromCharacterBody(self);
@@ -165,7 +166,7 @@ namespace Cloudburst.Cores
                     rnion.AngleAxis(0f, up) * point;
                     ProjectileManager.instance.FireProjectile(ProjectileCore.eliteElectricProjectile, self.corePosition, Util.QuaternionSafeLookRotation(forward), self.gameObject, self.damage, 0f, Util.CheckRoll(self.crit, self.master), DamageColorIndex.Default, null, -1f);
                 }
-            }*/
+            }
         }
 
         private void CharacterBody_RecalculateStats(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
@@ -217,7 +218,7 @@ namespace Cloudburst.Cores
                 {
                     Util.PlaySound("Play_nullifier_attack1_root", victimBody.gameObject);
                     victimBody.AddTimedBuff(BuffIndex.NullifyStack, 10);
-                }*/
+                }
             }
 
             orig(self, damageInfo, victim);
@@ -268,19 +269,19 @@ namespace Cloudburst.Cores
             //this is bad, but it will have to do
             /*bool CanVoidSpawn() {
                 return KinIsntActive() && ProgressTracker.IsVoidComplete();
-            }*/
+            }
 
             //R2API is garbage
             //how the fuck do you make an api so shit
             //that it doesn't even fucking work
             //and you have to fucking do dirty hacks for it to work
             //fuck R2API 
-            /*EliteTierDef def = new EliteTierDef() {
+            EliteTierDef def = new EliteTierDef() {
                 costMultiplier = 6,
                 damageBoostCoefficient = 4,
                 healthBoostCoefficient = 2,
                 isAvailable = new Func<bool>(CanVoidSpawn)
-            };*/
+            }
 
             //voidTier = EliteAPI.AddCustomEliteTier(def);
 
@@ -300,10 +301,10 @@ namespace Cloudburst.Cores
             buffDef.eliteIndex = voidElite;
 
             //and finally, add a prefix
-            LanguageAPI.Add(eliteDef.modifierToken, "Void {0}");
-            LanguageAPI.Add(equipmentDef.nameToken, "Void's Embrace");
-            LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of Void");
-            LanguageAPI.Add(equipmentDef.descriptionToken, "");
+            Languages.Add(eliteDef.modifierToken, "Void {0}");
+            Languages.Add(equipmentDef.nameToken, "Void's Embrace");
+            Languages.Add(equipmentDef.pickupToken, "Become an aspect of Void");
+            Languages.Add(equipmentDef.descriptionToken, "");
         }
 
         protected internal void Lunar()
@@ -347,10 +348,10 @@ namespace Cloudburst.Cores
             equipmentDef.passiveBuff = lunarIndex;
             buffDef.eliteIndex = lunarElite;
 
-            LanguageAPI.Add(eliteDef.modifierToken, "Lunar {0}");
-            LanguageAPI.Add(equipmentDef.nameToken, "Moon's Embrace");
-            LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of the Moon");
-            LanguageAPI.Add(equipmentDef.descriptionToken, "");
+            Languages.Add(eliteDef.modifierToken, "Lunar {0}");
+            Languages.Add(equipmentDef.nameToken, "Moon's Embrace");
+            Languages.Add(equipmentDef.pickupToken, "Become an aspect of the Moon");
+            Languages.Add(equipmentDef.descriptionToken, "");
 
         }
 
@@ -369,7 +370,7 @@ namespace Cloudburst.Cores
             {
                 name = "AffixOrange",
                 cooldown = 10f,
-                pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Affixes/PickupAffixOrange.prefab",
+                pickupModelPath = "Assets/Cloudburst/Items/Affixes/PickupAffixOrange.prefab",
                 pickupIconPath = "",
                 nameToken = "EQUIPMENT_AFFIXORANGE_NAME",
                 pickupToken = "EQUIPMENT_AFFIXORANGE_PICKUP",
@@ -416,10 +417,10 @@ namespace Cloudburst.Cores
             equipmentDef.passiveBuff = warIndex;
             buffDef.eliteIndex = warElite;
 
-            LanguageAPI.Add(eliteDef.modifierToken, "Ruby {0}");
-            LanguageAPI.Add(equipmentDef.nameToken, "Ruby Corruption");
-            LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of Corruption");
-            LanguageAPI.Add(equipmentDef.descriptionToken, "");
+            Languages.Add(eliteDef.modifierToken, "Ruby {0}");
+            Languages.Add(equipmentDef.nameToken, "Ruby Corruption");
+            Languages.Add(equipmentDef.pickupToken, "Become an aspect of Corruption");
+            Languages.Add(equipmentDef.descriptionToken, "");
 
             warBubble = Resources.Load<GameObject>("Prefabs/NetworkedObjects/AffixHauntedWard").InstantiateClone("AffixWarWard", true);
             BuffWard ward = warBubble.GetComponent<BuffWard>();
@@ -510,10 +511,10 @@ namespace Cloudburst.Cores
             equipmentDef.passiveBuff = tarIndex;
             buffDef.eliteIndex = tarElite;
 
-            LanguageAPI.Add(eliteDef.modifierToken, "Tarborne {0}");
-            LanguageAPI.Add(equipmentDef.nameToken, "Their Embrace");
-            LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of Tar");
-            LanguageAPI.Add(equipmentDef.descriptionToken, "");
+            Languages.Add(eliteDef.modifierToken, "Tarborne {0}");
+            Languages.Add(equipmentDef.nameToken, "Their Embrace");
+            Languages.Add(equipmentDef.pickupToken, "Become an aspect of Tar");
+            Languages.Add(equipmentDef.descriptionToken, "");
         }
     }
     public class AffixWarBehavior : CharacterBody.ItemBehavior
@@ -562,4 +563,4 @@ namespace Cloudburst.Cores
 }
 //CULTURE'S NOT YOUR CULTURE
 //FUCK YOUR CULTURE
-//I AIN'T GOT NO CULTURE
+//I AIN'T GOT NO CULTURE*/

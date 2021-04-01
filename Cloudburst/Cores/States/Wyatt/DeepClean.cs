@@ -19,7 +19,7 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             base.OnEnter();
 
-            //var obj = Cloudburst.Instantiate<GameObject>(Resources.Load<GameObject>("@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/MDLBrokenBodyArmor.prefab"), transform.position, transform.rotation);
+            //var obj = Cloudburst.Instantiate<GameObject>(Resources.Load<GameObject>("Assets/Cloudburst/Items/BrokenBodyArmor/MDLBrokenBodyArmor.prefab"), transform.position, transform.rotation);
             //NetworkServer.Spawn(obj);
 
             attack = new OverlapAttack()

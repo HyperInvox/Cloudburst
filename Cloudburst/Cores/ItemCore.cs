@@ -11,37 +11,38 @@ namespace Cloudburst.Cores
     {
         public static ItemCore instance;
 
-        public List<ItemIndex> bossitemList = new List<ItemIndex>{
-            ItemIndex.NovaOnLowHealth,
-            ItemIndex.Knurl,
-            ItemIndex.BeetleGland,
-            ItemIndex.TitanGoldDuringTP,
-            ItemIndex.SprintWisp,
-            ItemIndex.BleedOnHitAndExplode,
-            ItemIndex.FireballsOnHit 
+        public List<ItemDef> bossitemList = new List<ItemDef>{
+            RoR2Content.Items.SiphonOnLowHealth,
+            RoR2Content.Items.NovaOnLowHealth,
+            RoR2Content.Items.Knurl,
+            RoR2Content.Items.BeetleGland,
+            RoR2Content.Items.TitanGoldDuringTP,
+            RoR2Content.Items.SprintWisp,
+            RoR2Content.Items.BleedOnHitAndExplode,
+            RoR2Content.Items.FireballsOnHit 
             //Excluding pearls because those aren't boss Item, they come from the Cleansing Pool 
         };
 
-        public List<BuffIndex> scpBuffList = new List<BuffIndex>{
-            BuffIndex.NullifyStack,
-            BuffIndex.ClayGoo,
-            BuffIndex.BeetleJuice,
-            BuffIndex.HealingDisabled
+        public List<BuffDef> scpBuffList = new List<BuffDef>{
+            RoR2Content.Buffs.NullifyStack,
+            RoR2Content.Buffs.ClayGoo,
+            RoR2Content.Buffs.BeetleJuice,
+            RoR2Content.Buffs.HealingDisabled
         };
-        public List<BuffIndex> eliteBuffList = new List<BuffIndex>{
-            BuffIndex.AffixPoison,
-            BuffIndex.AffixRed,
-            BuffIndex.AffixBlue,
-            BuffIndex.AffixWhite
+        public List<BuffDef> eliteBuffList = new List<BuffDef>{
+            RoR2Content.Buffs.AffixPoison,
+            RoR2Content.Buffs.AffixRed,
+            RoR2Content.Buffs.AffixBlue,
+            RoR2Content.Buffs.AffixWhite
         };
-        public List<BuffIndex> lemdogList = new List<BuffIndex>{
-            BuffIndex.Warbanner,
-            //BuffIndex.Cloak,
-            BuffIndex.CloakSpeed,
-            //BuffIndex.EngiShield,
-            BuffIndex.MeatRegenBoost,
-            BuffIndex.WhipBoost,
-            BuffIndex.TeamWarCry,
+        public List<BuffDef> lemdogList = new List<BuffDef>{
+            RoR2Content.Buffs.Warbanner,
+            //RoR2Content.Buffs.Cloak,
+            RoR2Content.Buffs.CloakSpeed,
+            //RoR2Content.Buffs.EngiShield,
+            RoR2Content.Buffs.MeatRegenBoost,
+            RoR2Content.Buffs.WhipBoost,
+            RoR2Content.Buffs.TeamWarCry,
         };
 
         public List<ItemBuilder> Items = new List<ItemBuilder>();
@@ -143,8 +144,8 @@ RegisterItem(new ItemDef
     loreToken = "ITEM_ITEMONCHAMPIONKILL_LORE",
     name = "ItemChampionOnKill",
     nameToken = "ITEM_ITEMONCHAMPIONKILL_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Grinder/icon.png", 
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/Grinder/icon.png", 
+    pickupModelPath = "Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab",
     pickupToken = "ITEM_ITEMONCHAMPIONKILL_PICKUP",
     tags = itemChampionOnKillTags,
     tier = ItemTier.Tier3,
@@ -163,8 +164,8 @@ RegisterItem(new ItemDef
     loreToken = "",
     name = "LargerTeleporterRadius",
     nameToken = "ITEM_LARGERTELEPORTERRADIUS_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/Icon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/MechanicalTrinket/IMDLMechanicalTrinket.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/MechanicalTrinket/Icon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/MechanicalTrinket/IMDLMechanicalTrinket.prefab",
     pickupToken = "ITEM_LARGERTELEPORTERRADIUS_PICKUP",
     tags = largerTeleporterRadiusTags,
     tier = ItemTier.Tier2,
@@ -182,8 +183,8 @@ RegisterItem(new ItemDef
     loreToken = "",
     name = "CrippleOnHit",
     nameToken = "ITEM_CRIPPLEONHIT_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/icon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/FabinhoruDagger/icon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab",
     pickupToken = "ITEM_CRIPPLEONHIT_PICKUP",
     tags = crippleOnHitTags,
     tier = ItemTier.Tier2,
@@ -202,8 +203,8 @@ RegisterItem(new ItemDef
     loreToken = "ITEM_CLOAKBUFFONINTERACTION_LORE",
     name = "CloakOnInteraction",
     nameToken = "ITEM_CLOAKBUFFONINTERACTION_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Cloak/JapeIcon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Cloak/IMDLCloak.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/Cloak/JapeIcon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/Cloak/IMDLCloak.prefab",
     pickupToken = "ITEM_CLOAKBUFFONINTERACTION_PICKUP",
     tags = cloakOnInteractionTags,
     tier = ItemTier.Tier2,
@@ -257,8 +258,8 @@ RegisterItem(new ItemDef
     loreToken = "",
     name = "MoneyOnInteraction",
     nameToken = "ITEM_MONEYONINTERACTION_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/icon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/UESKeycard/IMDLKeycard.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/UESKeycard/icon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/UESKeycard/IMDLKeycard.prefab",
     pickupToken = "ITEM_MONEYONINTERACTION_PICKUP",
     tags = moneyOnInteractionTags,
     tier = ItemTier.Tier2,
@@ -277,8 +278,8 @@ RegisterItem(new ItemDef
     loreToken = "",
     name = "BarrierOnCrit",
     nameToken = "ITEM_BARRIERONCRIT_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/TopazLense/icon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/TopazLense/IMDLRabbitFoot.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/TopazLense/icon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/TopazLense/IMDLRabbitFoot.prefab",
     pickupToken = "ITEM_BARRIERONCRIT_PICKUP",
     tags = barrierOnCritTags,
     tier = ItemTier.Tier2,
@@ -297,8 +298,8 @@ RegisterItem(new ItemDef
     loreToken = "",
     name = "BarrierOnLevel",
     nameToken = "ITEM_BARRIERONLEVEL_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/brokenarmoricon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/BrokenBodyArmor/IMDLBrokenBodyArmor.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/BrokenBodyArmor/brokenarmoricon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/BrokenBodyArmor/IMDLBrokenBodyArmor.prefab",
     pickupToken = "ITEM_BARRIERONLEVEL_PICKUP",
     tags = barrierOnLevelTags,
     tier = ItemTier.Tier1,
@@ -313,8 +314,8 @@ RegisterItem(new ItemDef
     loreToken = "",
     name = "ExperienceOnHit",
     nameToken = "ITEM_EXPERIENCEONHIT_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Harvester/icon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Harvester/IMDLHarvester.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/Harvester/icon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/Harvester/IMDLHarvester.prefab",
     pickupToken = "ITEM_EXPERIENCEONHIT_PICKUP",
     tags = experienceOnHitTags,
     tier = ItemTier.Tier1,
@@ -333,8 +334,8 @@ RegisterItem(new ItemDef
     loreToken = "",
     name = "Lemdog",
     nameToken = "ITEM_LEMDOG_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Lemdog/LemDog_TexIcon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Lemdog/IMDLLemDog.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/Lemdog/LemDog_TexIcon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/Lemdog/IMDLLemDog.prefab",
     pickupToken = "ITEM_LEMDOG_PICKUP",
     tags = betterCritsOnLowHealthTags,
     tier = ItemTier.Tier3,
@@ -353,8 +354,8 @@ RegisterItem(new ItemDef
     loreToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_LORE",
     name = "ExtendedEnemyBuffDuration",
     nameToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME",
-    pickupIconPath = "@Cloudburst:Assets/Cloudburst/Items/Earrings/magicicon.png",
-    pickupModelPath = "@Cloudburst:Assets/Cloudburst/Items/Earrings/IMDLEarrings.prefab",
+    pickupIconPath = "Assets/Cloudburst/Items/Earrings/magicicon.png",
+    pickupModelPath = "Assets/Cloudburst/Items/Earrings/IMDLEarrings.prefab",
     pickupToken = "ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP",
     tags = extendEnemyBuffDurationTags,
     tier = ItemTier.Tier2,
@@ -383,59 +384,59 @@ Hook();
 
 protected internal void RegisterTokens()
 {
-LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_NAME", "Extractor"); //model
-LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_DESC", "On boss death, <style=cIsUtility>25% chance <style=cStack>(+10% per stack)</style> for bosses to drop a random boss item when killed.</style> Nearby projectiles are also destroyed, gain 5 <style=cStack>(+5 per stack)</style> for each destroyed projectile. ");
-LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_PICKUP", "On death, bosses have a chance to drop an item. Nearby projectiles are also destroyed, gain barrier for each destroyed projectile.");
+Languages.Add("ITEM_ITEMONCHAMPIONKILL_NAME", "Extractor"); //model
+Languages.Add("ITEM_ITEMONCHAMPIONKILL_DESC", "On boss death, <style=cIsUtility>25% chance <style=cStack>(+10% per stack)</style> for bosses to drop a random boss item when killed.</style> Nearby projectiles are also destroyed, gain 5 <style=cStack>(+5 per stack)</style> for each destroyed projectile. ");
+Languages.Add("ITEM_ITEMONCHAMPIONKILL_PICKUP", "On death, bosses have a chance to drop an item. Nearby projectiles are also destroyed, gain barrier for each destroyed projectile.");
 
-LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_NAME", "Mechanical Trinket"); //model
-LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_DESC", "");
-LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_PICKUP", "Increase teleporter radius.");
+Languages.Add("ITEM_LARGERTELEPORTERRADIUS_NAME", "Mechanical Trinket"); //model
+Languages.Add("ITEM_LARGERTELEPORTERRADIUS_DESC", "");
+Languages.Add("ITEM_LARGERTELEPORTERRADIUS_PICKUP", "Increase teleporter radius.");
 
-LanguageAPI.Add("ITEM_CRIPPLEONHIT_NAME", "Fabinhoru's Dagger");
-LanguageAPI.Add("ITEM_CRIPPLEONHIT_DESC", "8% Chance to <style=cIsDamage>cripple enemies</style> for 3 <style=cStack>(+3 seconds per stack)</style> seconds.");
-LanguageAPI.Add("ITEM_CRIPPLEONHIT_PICKUP", "Chance to cripple enemies on hit.");
+Languages.Add("ITEM_CRIPPLEONHIT_NAME", "Fabinhoru's Dagger");
+Languages.Add("ITEM_CRIPPLEONHIT_DESC", "8% Chance to <style=cIsDamage>cripple enemies</style> for 3 <style=cStack>(+3 seconds per stack)</style> seconds.");
+Languages.Add("ITEM_CRIPPLEONHIT_PICKUP", "Chance to cripple enemies on hit.");
 
 
 //var nArmor = armor + (0.1f + (count * 0.2f));
 //var nRegen = regen + (0.1f + (count * 0.2f));
-LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_NAME", "Jape's Cloak");
-LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Gain a buff that grants you <style=cIsUtility>+5 armor</style> and <style=cIsHealing>30% healing</style> when picking up an item. Maximum cap of 3 buffs <style=cStack>(+2 per stack)</style>.");
-LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Gain a buff that grants armor and healing on item pickup.");
-LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_LORE", japesLor3);
+Languages.Add("ITEM_CLOAKBUFFONINTERACTION_NAME", "Jape's Cloak");
+Languages.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Gain a buff that grants you <style=cIsUtility>+5 armor</style> and <style=cIsHealing>30% healing</style> when picking up an item. Maximum cap of 3 buffs <style=cStack>(+2 per stack)</style>.");
+Languages.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Gain a buff that grants armor and healing on item pickup.");
+Languages.Add("ITEM_CLOAKBUFFONINTERACTION_LORE", japesLor3);
 
-//LanguageAPI.Add("ITEM_ITEMONLEVELUP_NAME", "Opportunists Charm");
-//LanguageAPI.Add("ITEM_ITEMONLEVELUP_DESC", "For each skill on cooldown, recieve an armor buff that gives you <style=cIsUtility>+10 <style=cStack>+10 chance per stack</style> armor</style>. ");
-//LanguageAPI.Add("ITEM_ITEMONLEVELUP_PICKUP", "Recieve armor for each skill on cooldown");
+//Languages.Add("ITEM_ITEMONLEVELUP_NAME", "Opportunists Charm");
+//Languages.Add("ITEM_ITEMONLEVELUP_DESC", "For each skill on cooldown, recieve an armor buff that gives you <style=cIsUtility>+10 <style=cStack>+10 chance per stack</style> armor</style>. ");
+//Languages.Add("ITEM_ITEMONLEVELUP_PICKUP", "Recieve armor for each skill on cooldown");
 
-LanguageAPI.Add("ITEM_EXPLOSIONGROUND_NAME", "Blastboot Shell");
-LanguageAPI.Add("ITEM_EXPLOSIONGROUND_DESC", "On use of your secondary, if in midair, to <style=cIsDamage>spawn an explosion beneath you</style> that does <style=cIsDamage>100%<style=cStack>+250% chance per stack</style> damage</style> and <style=cIsUtility>boosts you upwards</style>");
-LanguageAPI.Add("ITEM_EXPLOSIONGROUND_PICKUP", "");
+Languages.Add("ITEM_EXPLOSIONGROUND_NAME", "Blastboot Shell");
+Languages.Add("ITEM_EXPLOSIONGROUND_DESC", "On use of your secondary, if in midair, to <style=cIsDamage>spawn an explosion beneath you</style> that does <style=cIsDamage>100%<style=cStack>+250% chance per stack</style> damage</style> and <style=cIsUtility>boosts you upwards</style>");
+Languages.Add("ITEM_EXPLOSIONGROUND_PICKUP", "");
 
 
-LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_NAME", "[REDACTED]");
-LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_DESC", "In combat, nearby low health enemies have a 5% chance to become <style=cIsDamage>Overwhelmed, slowing them and inflicting them with a strong non-lethal Damage-Over-Time that does 200% damage every three seconds and becomes more potent the lower their health is</style> for 8 <style=cStack>(+3 seconds</style> .");
-LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_PICKUP", "Nearby enemies with low health have a chance to become overwhelmed, slowing them and inflicting with with a Damage-Over-Time");
-LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_LORE", redactedLore);
+Languages.Add("ITEM_RANDOMDEBUFFONHIT_NAME", "[REDACTED]");
+Languages.Add("ITEM_RANDOMDEBUFFONHIT_DESC", "In combat, nearby low health enemies have a 5% chance to become <style=cIsDamage>Overwhelmed, slowing them and inflicting them with a strong non-lethal Damage-Over-Time that does 200% damage every three seconds and becomes more potent the lower their health is</style> for 8 <style=cStack>(+3 seconds</style> .");
+Languages.Add("ITEM_RANDOMDEBUFFONHIT_PICKUP", "Nearby enemies with low health have a chance to become overwhelmed, slowing them and inflicting with with a Damage-Over-Time");
+Languages.Add("ITEM_RANDOMDEBUFFONHIT_LORE", redactedLore);
 
-LanguageAPI.Add("ITEM_MONEYONINTERACTION_NAME", "Enigmatic Keycard");
-LanguageAPI.Add("ITEM_MONEYONINTERACTION_DESC", "10% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style>.");
-LanguageAPI.Add("ITEM_MONEYONINTERACTION_PICKUP", "Chance to spawn a void orb on hit.");
+Languages.Add("ITEM_MONEYONINTERACTION_NAME", "Enigmatic Keycard");
+Languages.Add("ITEM_MONEYONINTERACTION_DESC", "10% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style>.");
+Languages.Add("ITEM_MONEYONINTERACTION_PICKUP", "Chance to spawn a void orb on hit.");
 
-LanguageAPI.Add("ITEM_BARRIERONCRIT_NAME", "Lucky Rabbit Foot");
-LanguageAPI.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.");
-LanguageAPI.Add("ITEM_BARRIERONCRIT_PICKUP", "Gain barrier on critical hits");
+Languages.Add("ITEM_BARRIERONCRIT_NAME", "Lucky Rabbit Foot");
+Languages.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.");
+Languages.Add("ITEM_BARRIERONCRIT_PICKUP", "Gain barrier on critical hits");
 
-LanguageAPI.Add("ITEM_BARRIERONLEVEL_NAME", "Broken Body Armor");
-LanguageAPI.Add("ITEM_BARRIERONLEVEL_DESC", "Gain a buff that grants 8 <style=cStack>(+8 per stack)</style> <style=cIsUtility>armor</style> when hurt.");
-LanguageAPI.Add("ITEM_BARRIERONLEVEL_PICKUP", "Gain an armor buff when hurt ");
+Languages.Add("ITEM_BARRIERONLEVEL_NAME", "Broken Body Armor");
+Languages.Add("ITEM_BARRIERONLEVEL_DESC", "Gain a buff that grants 8 <style=cStack>(+8 per stack)</style> <style=cIsUtility>armor</style> when hurt.");
+Languages.Add("ITEM_BARRIERONLEVEL_PICKUP", "Gain an armor buff when hurt ");
 
-LanguageAPI.Add("ITEM_EXPERIENCEONHIT_NAME", "Glass Harvester");
-LanguageAPI.Add("ITEM_EXPERIENCEONHIT_DESC", "Gain 3 <style=cStack>(+2 per stack)</style> <style=cIsUtility>experience</style> on hit.");
-LanguageAPI.Add("ITEM_EXPERIENCEONHIT_PICKUP", "");
+Languages.Add("ITEM_EXPERIENCEONHIT_NAME", "Glass Harvester");
+Languages.Add("ITEM_EXPERIENCEONHIT_DESC", "Gain 3 <style=cStack>(+2 per stack)</style> <style=cIsUtility>experience</style> on hit.");
+Languages.Add("ITEM_EXPERIENCEONHIT_PICKUP", "");
 
-LanguageAPI.Add("ITEM_LEMDOG_NAME", "Lemdog");
-LanguageAPI.Add("ITEM_LEMDOG_DESC", "25% <style=cStack>(+2.5% per stack)</style> chance for <style=cIsUtility>applied debuffs to become beneficial buffs</style>");
-LanguageAPI.Add("ITEM_LEMDOG_PICKUP", "Chance for debuffs to become beneficial buffs when applied");
+Languages.Add("ITEM_LEMDOG_NAME", "Lemdog");
+Languages.Add("ITEM_LEMDOG_DESC", "25% <style=cStack>(+2.5% per stack)</style> chance for <style=cIsUtility>applied debuffs to become beneficial buffs</style>");
+Languages.Add("ITEM_LEMDOG_PICKUP", "Chance for debuffs to become beneficial buffs when applied");
 
 /*                    if (self.HasBuff(magicArmor))
         {
@@ -457,16 +458,16 @@ desc = desc + "<style=cIsHealing>20% <style=cStack>(+20% per stack)</style> rege
 desc = desc + "<style=cIsDamage>10% <style=cStack>(+10% per stack)</style> attack speed</style>" + Environment.NewLine + Environment.NewLine;
 desc = desc + "Also extend <style=cIsUtility>positive buff duration</style> by 2 <style=cStack>(+1 per stack)</style> seconds." + Environment.NewLine + Environment.NewLine;
 
-LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME", "Magician's Earrings");
-LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC", desc);//"Every 15 seconds, gain a buff which can grant you one of the following: <style=cIsUtility>+8 <style=cStack>(+8 per stack)</style> armor, <style=cIsHealing>20% <style=cStack>(+20% per stack)</style> regeneration</style>, and <style=cIsDamage>10% <style=cStack>(+10% per stack)</style> attack speed</style>. Also extend <style=cIsUtility>positive buff duration</style> by 2<style=cStack>(+1 per stack)</style> seconds. ");
-LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP", "Every 15 seconds, gain a buff that can grant you armor, or regeneration, or attack speed. Also extend positive buff duration");
-LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_LORE", magicLore);
+Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME", "Magician's Earrings");
+Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC", desc);//"Every 15 seconds, gain a buff which can grant you one of the following: <style=cIsUtility>+8 <style=cStack>(+8 per stack)</style> armor, <style=cIsHealing>20% <style=cStack>(+20% per stack)</style> regeneration</style>, and <style=cIsDamage>10% <style=cStack>(+10% per stack)</style> attack speed</style>. Also extend <style=cIsUtility>positive buff duration</style> by 2<style=cStack>(+1 per stack)</style> seconds. ");
+Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP", "Every 15 seconds, gain a buff that can grant you armor, or regeneration, or attack speed. Also extend positive buff duration");
+Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_LORE", magicLore);
 
 
 
-LanguageAPI.Add("ITEM_WYATTWALKMAN_NAME", "Walkman");
-LanguageAPI.Add("ITEM_WYATTWALKMAN_DESC", "Gain <style=cIsUtility>+x% speed</style> and <style=cIsHealing>+x% regen</style> while in combat every 3 seconds. Maximum 10 stacks <style=cStack>(+1 per stack)</style>");
-LanguageAPI.Add("ITEM_WYATTWALKMAN_PICKUP", "Gain speed and regeneration while in combat");
+Languages.Add("ITEM_WYATTWALKMAN_NAME", "Walkman");
+Languages.Add("ITEM_WYATTWALKMAN_DESC", "Gain <style=cIsUtility>+x% speed</style> and <style=cIsHealing>+x% regen</style> while in combat every 3 seconds. Maximum 10 stacks <style=cStack>(+1 per stack)</style>");
+Languages.Add("ITEM_WYATTWALKMAN_PICKUP", "Gain speed and regeneration while in combat");
 
 }
 
@@ -1188,7 +1189,7 @@ if (timer >= 3)
         if (!fatalLogged)
         {
             fatalLogged = true;
-            LogCore.LogF(Language.GetString(body.baseNameToken) + " doesn't have a team component!");
+            LogCore.LogF(//Language.GetString(body.baseNameToken) + " doesn't have a team component!");
         }
     }
     timer = 0;

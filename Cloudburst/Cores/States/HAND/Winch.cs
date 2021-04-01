@@ -48,7 +48,7 @@ namespace Cloudburst.Cores.States.HAND
             {
                 FireProjectileInfo info = new FireProjectileInfo
                 {
-                    projectilePrefab = WyattCore.instance.winch,
+                   // projectilePrefab = WyattCore.instance.winch,
                     position = pos.position,
                     rotation = pos.rotation,
                     owner = base.characterBody.gameObject,
