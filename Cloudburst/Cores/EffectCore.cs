@@ -33,6 +33,8 @@ namespace Cloudburst.Cores
 
         public static GameObject lumpkinEffect;
         public static GameObject willIsNotPoggers;
+        public static GameObject willIsStillTotallyNotPoggers;
+        public static GameObject wyattSlam;
 
         public EffectCore() => DoEffects();
 
@@ -46,7 +48,7 @@ namespace Cloudburst.Cores
 
 
             blackHoleIncisionEffect = CreateAsset("UniversalIncison", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
-
+            wyattSlam = CreateEffect("DebugEffect");//, false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Medium);
         }
 
         private void CreateMAIDCleanseEffect()
@@ -54,9 +56,26 @@ namespace Cloudburst.Cores
             maidCleanseEffect = CreateAsset("MAIDCleanEffect", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
         }
 
-        private void WillIsStillNotPoggers() {
+        private void WillIsStillNotPoggers()
+        {
             willIsNotPoggers = CreateAsset("WillIsNotPoggers", false, false, true, "", false, VFXAttributes.VFXIntensity.Low, VFXAttributes.VFXPriority.Always);
             var unfortunatelyWillIsStillNotPoggers = willIsNotPoggers.AddComponent<ShakeEmitter>();
+
+            unfortunatelyWillIsStillNotPoggers.wave = new Wave()
+            {
+                amplitude = 0.5f,
+                cycleOffset = 0,
+                frequency = 100,
+            };
+            unfortunatelyWillIsStillNotPoggers.duration = 0.5f;
+            unfortunatelyWillIsStillNotPoggers.radius = 51;
+            unfortunatelyWillIsStillNotPoggers.amplitudeTimeDecay = true;
+        }
+
+        private void WillIsStillNotPoggersMonthsLater()
+        {
+            willIsStillTotallyNotPoggers = CreateAsset("WyattSuperJumpEffect", false, false, true, "", false, VFXAttributes.VFXIntensity.Low, VFXAttributes.VFXPriority.Always);
+            var unfortunatelyWillIsStillNotPoggers = willIsStillTotallyNotPoggers.AddComponent<ShakeEmitter>();
 
             unfortunatelyWillIsStillNotPoggers.wave = new Wave()
             {
@@ -108,6 +127,7 @@ namespace Cloudburst.Cores
             CreateMAIDCleanseEffect();
             CreateOrbitalImpact();
             CreateMagicEffects();
+            WillIsStillNotPoggersMonthsLater();
             WillIsStillNotPoggers();
             CreateMagiciansEarringsEffects();
             CreateLumpkinEffect();
@@ -215,6 +235,16 @@ namespace Cloudburst.Cores
             }
         }
 
+        public static GameObject CreateEffect(string name) { 
+            GameObject obj = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(name);
+
+            Effects.RegisterEffect(new EffectDef()
+            {
+                prefab = obj,
+            });
+            return obj;
+        }
+
         public static GameObject CreateAsset(string name, bool positionAtReferencedTransform, bool parentToReferencedTransform, bool applyScale, string soundName, bool disregardZScale, VFXAttributes.VFXIntensity intensity, VFXAttributes.VFXPriority priority)  {
             GameObject obj = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(name);
             EffectComponent effectComponent = obj.AddComponent<EffectComponent>();
@@ -232,7 +262,7 @@ namespace Cloudburst.Cores
             attributes.vfxPriority = priority;
 
 
-            EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
+            Effects.RegisterEffect(new EffectDef()
             {
 
                 prefab = obj,
@@ -242,6 +272,7 @@ namespace Cloudburst.Cores
             });
             return obj;
         }
+
         private void CreateCoinImpactEffect() {
             coinImpactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/AncientWispExplosion").InstantiateClone("CoinImpactEffect", false);
 

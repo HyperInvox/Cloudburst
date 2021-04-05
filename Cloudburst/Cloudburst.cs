@@ -4,6 +4,7 @@ using Cloudburst.Cores;
 using Cloudburst.Cores.Components;
 using Cloudburst.Cores.HAND;
 using EnigmaticThunder;
+using EnigmaticThunder.Modules;
 using RoR2;
 using RoR2.Audio;
 using RoR2.UI;
@@ -155,14 +156,13 @@ namespace Cloudburst
         private static int modErrors = 0;
 
         public CloudburstPlugin()
-        {
+        {   
             LogCore.logger = Logger;
             BepInEx.Logging.Logger.Listeners.Add(new ErrorListener());
 
             SingletonHelper.Assign<CloudburstPlugin>(ref CloudburstPlugin.instance, this);
             LogCore.LogI("Cloudburst instance assigned.");
             //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
-
 
             /*var state = Resources.Load<GameObject>("prefabs/characterbodies/LoaderBody").GetComponent<SetStateOnHurt>();
             for (int i = 0; i < state.idleStateMachine.Length; i++)
@@ -301,7 +301,9 @@ namespace Cloudburst
                 if (EnableWIP.Value)
                 {
                     wipCore = new HuntressCore();
+                    new EventsCore();
                 }
+
                 //On.RoR2.CharacterBody.AddTimedBuff += GlobalHooks.CharacterBody_AddTimedBuff;
                 //On.RoR2.HealthComponent.TakeDamage += GlobalHooks.HealthComponent_TakeDamage;
 
@@ -332,7 +334,8 @@ namespace Cloudburst
         [ConCommand(commandName = "gmc", flags = ConVarFlags.ExecuteOnServer, helpText = "Good morning chat.")]
         private static void GMC(ConCommandArgs arg)
         {
-            arg.TryGetSenderBody().inventory.GiveItem(Cores.Items.Red.REDACTED.instance.Index);
+            NetworkManager.singleton.ServerChangeScene("goolake");
+            //arg.TryGetSenderBody().inventory.GiveItem(Cores.Items.Red.REDACTED.instance.Index);
             /*foreach (ItemDef i in RoR2.RoR2Content.Items.itemDefs)
             {
                 if (i.tier != ItemTier.NoTier && i.tier != ItemTier.Lunar)

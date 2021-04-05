@@ -32,7 +32,7 @@ namespace Cloudburst.Cores
 
         public override string UnlockableString => "";
 
-        public override string MasteryUnlockString => "";
+        public override UnlockableDef MasteryUnlockString => null;
 
         public override GameObject survivorDisplay => AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdLui");//("mdLui");
 

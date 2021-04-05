@@ -91,9 +91,9 @@ Hold strong, and keep your heads up.
                 {;
                     LogCore.LogI("Tes1");
                     bool isFullHealth = health.combinedHealthFraction >= 0.8f;
-                    bool hasDot = false;
+                    bool hasDot = health.body.HasBuff(BuffCore.instance.REDACTED);
 
-                    LogCore.LogI(DoTCore.redactedIndex);
+                    /*LogCore.LogI(DoTCore.redactedIndex);
 
                     var dot = DotController.FindDotController(health.gameObject); //.HasDotActive(DoTCore.redactedIndex);
                     if (dot)
@@ -101,10 +101,10 @@ Hold strong, and keep your heads up.
                         hasDot = dot.HasDotActive(DoTCore.redactedIndex);
                     }
 
-                    LogCore.LogI("Does not have DoT: "+ hasDot);
+                    LogCore.LogI("Does not have DoT: "+ hasDot);*/
 
                     if (hasDot == false && !isFullHealth)
-                    {
+                    {   
                         LogCore.LogI("Tes2");
                         EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/HANDheal"), new EffectData()
                         {
@@ -113,7 +113,8 @@ Hold strong, and keep your heads up.
                             color = Color.red,
                         }, true);
                         Util.PlaySound("Play_item_proc_armorReduction_shatter", box.gameObject);
-                        DotController.InflictDot(health.gameObject, body.gameObject, DoTCore.redactedIndex, 8 + (stack * 2), 1);
+                        health.body.AddTimedBuff(BuffCore.instance.REDACTED, 15);
+                        //DotController.InflictDot(health.gameObject, body.gameObject, DoTCore.redactedIndex, 8 + (stack * 2), 1);
                     }
                 }
             }

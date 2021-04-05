@@ -199,7 +199,7 @@ namespace Cloudburst.Cores
             orig(self, buffDef);
             if (self)
             {
-                if (buffDef == antiGrav) {
+                if (buffDef == antiGrav || buffDef == wyattSuspension) {
 
                     if (self.characterMotor) {
                         self.characterMotor.useGravity = true;
@@ -219,7 +219,7 @@ namespace Cloudburst.Cores
         private void CharacterMotor_OnHitGround(On.RoR2.CharacterMotor.orig_OnHitGround orig, CharacterMotor self, CharacterMotor.HitGroundInfo hitGroundInfo)
         {
             orig(self, hitGroundInfo);
-            if (self.body && self.body.HasBuff(this.antiGrav)) {
+            if (self.body && self.body.HasBuff(this.antiGrav) || self.body.HasBuff(this.wyattSuspension) ) {
                 self.useGravity = false;
                 if (self.lastVelocity.y < -30)
                 {
@@ -307,6 +307,7 @@ namespace Cloudburst.Cores
                     self.moveSpeed -= (moveSpeed / 2);
                     self.attackSpeed -= (attackSpeed / 2);
                     self.armor -= 20;
+                    self.regen -= 20;
                 }
 
 
@@ -334,7 +335,7 @@ namespace Cloudburst.Cores
                         self.regen = regen + 0.1f;
                     }
                 }
-                if (self && self.HasBuff(antiGrav))
+                if (self && self.HasBuff(antiGrav) || self.HasBuff(wyattSuspension)) 
                 {
                     if (self.characterMotor)
                     {

@@ -102,8 +102,8 @@ namespace Cloudburst.Cores.States.Wyatt
                 lightningOrb2.target = hurtBox2;
                 OrbManager.instance.AddOrb(lightningOrb2);
             }
-        
-    }
+
+        }
 
         private void CreateBlinkEffect(Vector3 origin, Vector3 direction)
         {
@@ -117,5 +117,7 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             return InterruptPriority.PrioritySkill;
         }
+
+
     }
 }

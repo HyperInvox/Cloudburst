@@ -1,4 +1,5 @@
 ﻿
+using Cloudburst.Achievements;
 using EnigmaticThunder.Modules;
 using RoR2;
 using System;
@@ -17,12 +18,15 @@ namespace Cloudburst.Cores
         //you better have one hell of a plan
         public static AchievementCore instance;
 
+        public static UnlockableDef WyattMastery;
+
         public AchievementCore() => AddAchivements();
 
         protected void AddAchivements() {
             instance = this;
             LogCore.LogI("Initializing Core: " + base.ToString());
 
+            WyattMastery = Unlockables.AddUnlockable<WyattMasteryAchievement>(false, null);
             //a normal human being wouldn't have to pretend to be normal
             //don'tcha think?
             AddTokens();

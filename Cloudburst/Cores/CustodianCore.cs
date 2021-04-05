@@ -56,7 +56,7 @@ She'll love this, I know.
 
         public override string UnlockableString => "";
 
-        public override string MasteryUnlockString => "CLOUDBURST_WYATT_MONSOONUNLOCKABLE_REWARD_ID";
+        public override UnlockableDef MasteryUnlockString => AchievementCore.WyattMastery;
 
         public override GameObject survivorDisplay => AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattCSS");
 
@@ -73,6 +73,8 @@ She'll love this, I know.
         public override UnlockableDef unlockableDef => null;
 
         public override float desiredSortPosition => 6;
+
+        //public override UnlockableDef MasteryUnlockString => throw new NotImplementedException();
 
         public override void Hooks()
         {
@@ -141,9 +143,23 @@ She'll love this, I know.
             Array.Resize<EntityStateMachine>(ref hurt.idleStateMachine, l + 1);
             hurt.idleStateMachine[l] = machine;
 
-            int l2 = hurt.idleStateMachine.Length;
+            int l2 = network.stateMachines.Length;
             Array.Resize<EntityStateMachine>(ref network.stateMachines, l2 + 1);
-            network.stateMachines[l] = machine;
+            network.stateMachines[l2] = machine;
+
+
+            var machine2 = survivorBody.AddComponent<EntityStateMachine>();
+            machine2.customName = "SuperMarioJump";
+            machine2.initialStateType = new SerializableEntityStateType(typeof(EntityStates.Idle));
+            machine2.mainStateType = new SerializableEntityStateType(typeof(EntityStates.Idle));
+
+            l = hurt.idleStateMachine.Length;
+            Array.Resize<EntityStateMachine>(ref hurt.idleStateMachine, l + 1);
+            hurt.idleStateMachine[l] = machine2;
+
+            l2 = network.stateMachines.Length;
+            Array.Resize<EntityStateMachine>(ref network.stateMachines, l2 + 1);
+            network.stateMachines[l2] = machine2;
         }
 
         public override void GenerateEquipmentDisplays(List<ItemDisplayRuleSet.KeyAssetRuleGroup> obj)
@@ -733,9 +749,9 @@ localScale = new Vector3(0.015F, 0.015F, -0.015F),
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(YeahDudeIBetterBeOrYouCanFuckinKissMyAssHumanCentipede));
-            utilitySkillDef.activationStateMachineName = "Weapon";
+            utilitySkillDef.activationStateMachineName = "SuperMarioJump";
             utilitySkillDef.baseMaxStock = 1;
-            utilitySkillDef.baseRechargeInterval = 4f;
+            utilitySkillDef.baseRechargeInterval = 7f;
             utilitySkillDef.beginSkillCooldownOnSkillEnd = true;
             utilitySkillDef.canceledFromSprinting = false;
             utilitySkillDef.fullRestockOnAssign = false;
@@ -804,7 +820,7 @@ localScale = new Vector3(0.015F, 0.015F, -0.015F),
             //specialSkillDef.stockToConsume = 1;
             specialSkillDef.activationState = Deploy;
             specialSkillDef.activationStateMachineName = "MAID";
-              specialSkillDef.baseRechargeInterval = 5;
+            specialSkillDef.baseRechargeInterval = 5;
             specialSkillDef.stockToConsume = 0;
             specialSkillDef.skillDescriptionToken = "WYATT_SPECIAL_DESCRIPTION";
             specialSkillDef.skillNameToken = "WYATT_SPECIAL_NAME";
@@ -818,16 +834,16 @@ localScale = new Vector3(0.015F, 0.015F, -0.015F),
             throwPrimary = specialSkillDef;
 
 
-        // /   retrievePrimary = specialSkillDef2;
+            // /   retrievePrimary = specialSkillDef2;
 
-         //   Languages.Add(specialSkillDef.skillNameToken, "G22 MAID");
-         //   Languages.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>pulls enemies</style> and <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
-         //   Languages.Add(specialSkillDef2.skillNameToken, "Retrival");
-       //     Languages.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
+            //   Languages.Add(specialSkillDef.skillNameToken, "G22 MAID");
+            //   Languages.Add(specialSkillDef.skillDescriptionToken, "Deploy a floating MAID unit that generates an anti-gravity bubble that <style=cIsUtility>pulls enemies</style> and <style=cIsUtility>applies Weightless</style> to all enemies, <style=cIsUtility>while giving Survivors free movement</style>.");
+            //   Languages.Add(specialSkillDef2.skillNameToken, "Retrival");
+            //     Languages.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
 
 
             Loadouts.RegisterSkillDef(specialSkillDef);
-        //    Loadouts.RegisterSkillDef(specialSkillDef2);
+            //    Loadouts.RegisterSkillDef(specialSkillDef2);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant
@@ -861,5 +877,66 @@ localScale = new Vector3(0.015F, 0.015F, -0.015F),
             tracker.trackerUpdateFrequency = 5;
             tracker.indicatorPrefab = Resources.Load<GameObject>("Prefabs/EngiShieldRetractIndicator");
         }
+        /*private void CharacterBody_Update(On.RoR2.CharacterBody.orig_Update orig, CharacterBody self)
+        {
+            CharacterModel GetCharacterModelFromCharacterBody(CharacterBody body)
+            {
+                var modelLocator = body.modelLocator;
+                if (modelLocator)
+                {
+                    var modelTransform = body.modelLocator.modelTransform;
+                    if (modelTransform)
+                    {
+                        var model = modelTransform.GetComponent<CharacterModel>();
+                        if (model)
+                        {
+                            return model;
+                        }
+                    }
+
+                }
+                return null;
+            }
+
+            if (self && self.inventory)
+            {
+                CharacterModel model = GetCharacterModelFromCharacterBody(self);
+
+                //LogCore.LogI(elite);
+                //spawn_ai beetle 1 6 0 2
+                if (self.HasBuff(myBuff) && !self.gameObject.GetComponent<DestroyEffectOnBuffEnd>() && model)
+                {
+                    //LogCore.LogI("war elite");
+                    var tracker = self.gameObject.AddComponent<DestroyEffectOnBuffEnd>();
+                    tracker.body = self;
+                    tracker.buff = myBuff;
+
+                    TemporaryOverlay overlay = model.gameObject.AddComponent<TemporaryOverlay>();
+                    overlay.duration = float.PositiveInfinity;
+                    overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                    overlay.animateShaderAlpha = true;
+                    overlay.destroyComponentOnEnd = true;
+                    overlay.originalMaterial = putYourEffectPrefabHere;
+                    overlay.AddToCharacerModel(model);
+                    tracker.effect = overlay;
+                }
+            }
+        }
+        public class DestroyEffectOnBuffEnd : MonoBehaviour
+        {
+            public BuffDef buff;
+            public CharacterBody body;
+            public TemporaryOverlay effect;
+            public void Update()
+            {
+                if (!body || !body.HasBuff(buff))
+                {
+                    Destroy(effect);
+                    Destroy(this);
+                }
+            }
+        }*/
+
+        //every fiber of my being hates you with a passion that burns brighter than the hottest star in the universe
     }
 }

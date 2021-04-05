@@ -77,7 +77,7 @@ namespace Cloudburst.Cores.States.Wyatt
         }
 
         public void SetHookReference(GameObject winch) {
-            LogCore.LogI("got winch!");
+            //LogCore.LogI("got winch!");
             _winch = winch;
         }
 
@@ -105,7 +105,7 @@ namespace Cloudburst.Cores.States.Wyatt
                             this.activatorSkillSlot.AddOneStock();
                             CloudburstPlugin.Destroy(_winch);
                             characterMotor.velocity = Vector3.zero;
-                            LogCore.LogW("Can't reach target, skill refunded!");
+                            //LogCore.LogW("Can't reach target, skill refunded!");
                             this.outer.SetNextStateToMain();
                         }
 
@@ -167,7 +167,7 @@ namespace Cloudburst.Cores.States.Wyatt
             }
             else
             {
-                LogCore.LogE("Something is seriously fucked. Stage: " + stage.ToString());
+                //LogCore.LogE("Something is seriously fucked. Stage: " + stage.ToString());
 
                 characterMotor.velocity = Vector3.zero;
                 this.outer.SetNextStateToMain();

@@ -12,7 +12,7 @@ namespace Cloudburst.Cores.States.Wyatt
     public class WyattMain : GenericCharacterMain
     {
         public override void Update()
-        {
+        { 
             base.Update();
             if (base.isAuthority && base.characterMotor.isGrounded)
             {

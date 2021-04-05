@@ -372,7 +372,23 @@ public static class CloudUtils
         return displayRule;
     }
 
-    public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateGenericEquipmentDisplayRule(EquipmentDef def, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
+    public static void RefreshALLBuffStacks(CharacterBody body, BuffDef def, float duration)
+    {
+        int num6 = 0;
+        for (int j = 0; j < body.timedBuffs.Count; j++)
+        {
+            if (body.timedBuffs[j].buffIndex == def.buffIndex)
+            {
+                num6++;
+                if (body.timedBuffs[j].timer < duration)
+                {
+                    body.timedBuffs[j].timer = duration;
+                }
+            }
+        }
+    }
+
+        public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateGenericEquipmentDisplayRule(EquipmentDef def, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
     {
         ItemDisplayRuleSet.KeyAssetRuleGroup displayRule = new ItemDisplayRuleSet.KeyAssetRuleGroup
         {

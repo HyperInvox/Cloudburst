@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
 using Cloudburst.Cores.Components;
+using System.Collections;
 
 namespace Cloudburst.Cores.States.Wyatt
 {
@@ -29,8 +30,26 @@ namespace Cloudburst.Cores.States.Wyatt
         }
 
         private void Blaseball_sunset()
-        {   
+        {
             solarEclipse = true;
+        }
+
+        IEnumerator Wait ()
+        {
+            base.characterMotor.useGravity = false;
+            base.characterMotor.velocity = new Vector3(0, 0, 0);
+            // suspend execution for 5 seconds
+            yield return new WaitForSeconds(0.5f);
+            base.characterMotor.velocity = new Vector3(0, 0, 0);
+            if (!base.gameObject.HasComponent<BasedDepartment>())
+            {
+                BasedDepartment based = base.gameObject.AddComponent<BasedDepartment>();
+                based.interval = 1f;
+                //LogCore.LogI(dis);
+            }
+            base.PlayAnimation("Fullbody, Override", "kick");
+
+            base.characterMotor.useGravity = true;
         }
 
         private void Blaseball_OnRetrival(bool nat, GenericSkill arg2, Vector3 dis)
@@ -45,12 +64,10 @@ namespace Cloudburst.Cores.States.Wyatt
                 base.activatorSkillSlot.finalRechargeInterval = 10;
                 //who cares about underlying issues in my code
                 //no one's gonna read it anyways :^]]
-                    
-                if (!base.gameObject.HasComponent<BasedDepartment>()) { 
-                BasedDepartment based = base.gameObject.AddComponent<BasedDepartment>();
-                based.interval = 0.5f;
-                    LogCore.LogI(dis);
-                }
+
+                CloudburstPlugin.instance.StartCoroutine(Wait());
+
+
             }
         
             //else

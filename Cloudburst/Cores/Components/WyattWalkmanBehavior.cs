@@ -6,11 +6,17 @@ using UnityEngine.Networking;
 
 namespace Cloudburst.Cores.Components.Wyatt
 {
-    public class WyattWalkmanBehavior : NetworkBehaviour, IOnDamageDealtServerReceiver {
+    public class WyattWalkmanBehavior : NetworkBehaviour, IOnDamageDealtServerReceiver
+    {
         private CharacterBody characterBody;
 
+        private bool loseStacks { get { return stopwatch >= 3; } }
 
+        [SyncVar]
         private float stopwatch = 0;
+
+        [SyncVar]
+        private float drainTimer = 0;
         private void Awake()
         {
             this.characterBody = base.GetComponent<CharacterBody>();
@@ -27,13 +33,12 @@ namespace Cloudburst.Cores.Components.Wyatt
 
         private void ServerFixedUpdate()
         {
-            stopwatch += Time.deltaTime;
-            if (stopwatch >= 2)
-            {
-                stopwatch = 0;
-                if (characterBody)
-                {
+            stopwatch += Time.fixedDeltaTime;
+            if (loseStacks) {
+                drainTimer += Time.fixedDeltaTime;
+                if (drainTimer >= 0.5f) {
                     CloudUtils.SafeRemoveBuffs(BuffCore.instance.wyattCombatIndex, characterBody, 2);
+                    drainTimer = 0;
                 }
             }
         }
@@ -47,6 +52,7 @@ namespace Cloudburst.Cores.Components.Wyatt
                 characterBody.AddBuff(BuffCore.instance.wyattCombatIndex);
                 //characterBody.AddTimedBuff(BuffCore.instance.wyattCombatIndex, 3);
             }
+            stopwatch = 0;
         }
 
         public void OnDamageDealtServer(DamageReport damageReport)

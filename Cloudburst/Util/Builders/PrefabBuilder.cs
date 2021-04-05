@@ -42,7 +42,7 @@ public class PrefabBuilder
 
     public MasterySkinMaterial masterySkinDelegate;
 
-    public string masteryAchievementUnlockable;
+    public UnlockableDef masteryAchievementUnlockable;
 
     public event Action<List<CharacterModel.RendererInfo>, Transform> GetAdditionalRenderInfos;
 
@@ -400,7 +400,7 @@ public class PrefabBuilder
                 BaseSkins = Array.Empty<SkinDef>(),
                 MinionSkinReplacements = Array.Empty<SkinDef.MinionSkinReplacement>(),
                 ProjectileGhostReplacements = Array.Empty<SkinDef.ProjectileGhostReplacement>(),
-                UnlockableName = masteryAchievementUnlockable
+                UnlockableDef = masteryAchievementUnlockable
             };
 
             SkinDef skinDefault = EnigmaticThunder.Modules.Loadouts.CreateNewSkinDef(skinDefInfo);

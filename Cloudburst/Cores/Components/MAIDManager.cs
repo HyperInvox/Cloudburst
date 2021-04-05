@@ -112,7 +112,7 @@ namespace Cloudburst.Cores.Components
         {
             //      CloudburstPlugin.Destroy(this.maid);
             //    CloudburstPlugin.Destroy(winch);
-            LogCore.LogI("Deployed maid!");
+           //  LogCore.LogI("Deployed maid!");
             this.maid = maid;
             RpcSetRetrieve();
         }
@@ -128,10 +128,10 @@ namespace Cloudburst.Cores.Components
         [Server]
         private void RetrieveMAIDInternal()
         {
-            LogCore.LogI("Retrieved maid!");
+            //LogCore.LogI("Retrieved maid!");
             if (maid)
             {
-                LogCore.LogI("maid exists");
+                //LogCore.LogI("maid exists");
                 _stopwatch = 0;
                 startReel = true;
 
@@ -167,7 +167,7 @@ namespace Cloudburst.Cores.Components
         [ClientRpc]
         private void RpcSetDeploy(bool natRetrival, Vector3 vector3)
         {
-            LogCore.LogI("invoke");
+            //  LogCore.LogI("invoke");
             OnRetrival?.Invoke(natRetrival, skillLocator.special, vector3);
             //  skillLocator.special.UnsetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);
             //skillLocator.special.SetSkillOverride(this, Custodian.throwPrimary, GenericSkill.SkillOverridePriority.Replacement);

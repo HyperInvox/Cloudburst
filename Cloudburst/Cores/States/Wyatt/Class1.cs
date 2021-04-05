@@ -16,7 +16,18 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void OnEnter()
         {
             base.OnEnter();
+
+            EffectManager.SpawnEffect(EffectCore.willIsStillTotallyNotPoggers/*Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfx")*/, new EffectData()
+            {
+                origin = characterBody.footPosition,
+                scale = 10,
+                rotation = Quaternion.identity,
+            }, false);
+            characterMotor.velocity = Vector3.up * (this.moveSpeedStat * 5);// * 100;
+            characterMotor.Motor.ForceUnground();
             GatherNiggas();
+            //base.characterMotor.Motor.ForceUnground();
+            //base.characterMotor.ApplyForce(, true, false);
         }
 
         public void GatherNiggas()
@@ -65,8 +76,8 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            base.characterMotor.rootMotion += Vector3.up * (this.moveSpeedStat * 5 * Time.fixedDeltaTime);
-            base.characterMotor.velocity.y = 0f;
+            // base.characterMotor.velocity +=
+            // base.characterMotor.velocity.y = 0f;
             if (base.isAuthority)
             {
                 foreach (CharacterBody niggaBody in negros)
@@ -92,10 +103,7 @@ namespace Cloudburst.Cores.States.Wyatt
                         var a = niggaMotor.Motor.GetState();
                         a.BaseVelocity = Vector3.zero;
                         niggaMotor.Motor.ApplyState(a);
-                        if (NetworkServer.active)
-                        {
-                            niggaBody.AddTimedBuff(BuffCore.instance.antiGrav, 5);
-                        }
+ 
                         niggaMotor.velocity = Vector3.zero;
                     }
                 }

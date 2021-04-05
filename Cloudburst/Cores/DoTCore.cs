@@ -17,7 +17,7 @@ namespace Cloudburst.Cores
         //1:53.
         public static DoTCore instance;
 
-        public static DotIndex redactedIndex;
+        //public static DotIndex redactedIndex;
 
         public DoTCore() => RegisterDoTs();
 
@@ -34,8 +34,6 @@ namespace Cloudburst.Cores
                 interval = 1,
             };
 
-            redactedIndex = DoT.RegisterDot(def, RedactedBehaviour, null);
-            LogCore.LogI("Redacted index is: " + redactedIndex);
             //clean = RegisterDotDef(1, 0.5f, DamageColorIndex.WeakPoint, BuffCore.instance.cleanIndex, lmao, lol);
         }
 
@@ -99,3 +97,4 @@ namespace Cloudburst.Cores
         }
     }
 }
+    

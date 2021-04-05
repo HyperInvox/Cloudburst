@@ -51,7 +51,7 @@ public abstract class SurvivorCreator
     /// <summary>
     /// The survivor's mastery unlock string.
     /// </summary>
-    public abstract string MasteryUnlockString { get; }
+    public abstract UnlockableDef MasteryUnlockString { get; }
     /// <summary>
     /// The survivor's subtitle.
     /// </summary>
