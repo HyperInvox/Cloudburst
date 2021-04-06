@@ -1,4 +1,5 @@
-﻿using EntityStates;
+﻿using Cloudburst.Cores.Components.Wyatt;
+using EntityStates;
 using RoR2;
 using RoR2.Projectile;
 using System.Collections.Generic;
@@ -17,8 +18,10 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             base.OnEnter();
 
-            EffectManager.SpawnEffect(EffectCore.willIsStillTotallyNotPoggers/*Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfx")*/, new EffectData()
-            {
+            base.GetComponent<WyattWalkmanBehavior>().ActivateFlowAuthority();
+
+            //EffectManager.SpawnEffect(EffectCore.willIsStillTotallyNotPoggers/*Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfx")*/, new EffectData()
+            /*{
                 origin = characterBody.footPosition,
                 scale = 10,
                 rotation = Quaternion.identity,
@@ -27,7 +30,7 @@ namespace Cloudburst.Cores.States.Wyatt
             characterMotor.Motor.ForceUnground();
             GatherNiggas();
             //base.characterMotor.Motor.ForceUnground();
-            //base.characterMotor.ApplyForce(, true, false);
+            //base.characterMotor.ApplyForce(, true, false);*/
         }
 
         public void GatherNiggas()
@@ -78,7 +81,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.FixedUpdate();
             // base.characterMotor.velocity +=
             // base.characterMotor.velocity.y = 0f;
-            if (base.isAuthority)
+            /*if (base.isAuthority)
             {
                 foreach (CharacterBody niggaBody in negros)
                 {
@@ -88,10 +91,10 @@ namespace Cloudburst.Cores.States.Wyatt
                         niggaMotor.ApplyForce(new Vector3(0, niggaMotor.mass, 0), true, true);
                     }
                 }
-            }
+            }*/
             if (fixedAge >= baseDuration)
             {
-                foreach (CharacterBody niggaBody in negros)
+                /*foreach (CharacterBody niggaBody in negros)
                 {
                     CharacterMotor niggaMotor = niggaBody.characterMotor;
                     if (niggaBody && niggaMotor)
@@ -106,7 +109,7 @@ namespace Cloudburst.Cores.States.Wyatt
  
                         niggaMotor.velocity = Vector3.zero;
                     }
-                }
+                }*/
                 if (isAuthority)
                 {
                     outer.SetNextStateToMain();

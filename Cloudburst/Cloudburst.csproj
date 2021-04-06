@@ -151,6 +151,7 @@
     <Compile Include="Cores\Components\Blink.cs" />
     <Compile Include="Cores\Components\BasedDepartment.cs" />
     <Compile Include="Cores\Components\CringeDepartment.cs" />
+    <Compile Include="Cores\Components\MaterialControllerComponents.cs" />
     <Compile Include="Cores\Components\SquashedComponent.cs" />
     <Compile Include="Cores\Components\WyattMAIDSkillDef.cs" />
     <Compile Include="Cores\Equipment\Lumpkin.cs" />

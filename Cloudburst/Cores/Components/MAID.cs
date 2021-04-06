@@ -60,7 +60,7 @@ namespace Cloudburst.Cores.Components
                     //pls god
                     start = component.transform.position
                 };
-                EffectManager.SpawnEffect(DefenseMatrixOn.tracerEffectPrefab, effectData, true);
+                EffectManager.SpawnEffect(/*DefenseMatrixOn.tracerEffectPrefab*/EffectCore.maidTouchEffect, effectData, true);
 
                 EffectData nads = new EffectData
                 {

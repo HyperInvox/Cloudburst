@@ -24,7 +24,8 @@ namespace Cloudburst.Cores
         public delegate void DamageInfoCloudGate(ref DamageInfo info, GameObject victim, OnHitEnemy onHitInfo);
         public delegate void CharacterBodyCloudGate(CharacterBody body);
         public delegate void CharacterBodyAddTimedBuffCloudGate(CharacterBody body, ref BuffDef type, ref float duration);
-        public delegate void CritCloudGate( CharacterBody attackerBody, CharacterMaster attackerMaster, float procCoeff, ProcChainMask procMask);
+        public delegate void CritCloudGate(CharacterBody attackerBody, CharacterMaster attackerMaster, float procCoeff, ProcChainMask procMask);
+        public delegate void FinalBuffStackLostCloudGate(CharacterBody body, BuffDef def);
 
 
         public static event DamageInfoCloudGate onHitEnemy;
@@ -33,6 +34,7 @@ namespace Cloudburst.Cores
         public static event CharacterBodyCloudGate onInventoryChanged;
         public static event CharacterBodyAddTimedBuffCloudGate onAddTimedBuff;
         public static event CharacterBodyCloudGate recalculateStats;
+        public static event FinalBuffStackLostCloudGate onFinalBuffStackLost;
 
         public static void Init()
         {
@@ -41,6 +43,14 @@ namespace Cloudburst.Cores
             On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             On.RoR2.GlobalEventManager.OnCrit += GlobalEventManager_OnCrit;
             On.RoR2.CharacterBody.AddTimedBuff_BuffDef_float += CharacterBody_AddTimedBuff_BuffDef_float;//AddTimedBuff += CharacterBody_AddTimedBuff;
+            On.RoR2.CharacterBody.OnBuffFinalStackLost += CharacterBody_OnBuffFinalStackLost;
+        }
+
+        private static void CharacterBody_OnBuffFinalStackLost(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
+        {
+            onFinalBuffStackLost.Invoke(self, buffDef);
+            orig(self, buffDef);
+                
         }
 
         private static void CharacterBody_AddTimedBuff_BuffDef_float(On.RoR2.CharacterBody.orig_AddTimedBuff_BuffDef_float orig, CharacterBody self, BuffDef buffDef, float duration)

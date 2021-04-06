@@ -28,6 +28,9 @@ namespace Cloudburst.Cores
 
         public static GameObject maidCleanseEffect;
 
+        public static GameObject maidTouchEffect;
+
+        public static GameObject shaderEffect;
 
         public static GameObject blackHoleIncisionEffect;
 
@@ -49,6 +52,10 @@ namespace Cloudburst.Cores
 
             blackHoleIncisionEffect = CreateAsset("UniversalIncison", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
             wyattSlam = CreateEffect("DebugEffect");//, false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Medium);
+            maidTouchEffect = CreateEffect("TracerCaptainDefenseMatrix");
+            shaderEffect = CreateEffect("ShaderTest");
+
+            shaderEffect.AddComponent<Components.MaterialControllerComponents.HGControllerFinder>().Material = shaderEffect.transform.Find("Flames").GetComponent<ParticleSystemRenderer>().material;
         }
 
         private void CreateMAIDCleanseEffect()
@@ -179,6 +186,8 @@ namespace Cloudburst.Cores
 
                 tmp.text = "+Armor!";
                 LogCore.LogI("hi6");
+                Languages.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
+
                 langMeshController.token = "MAGIC_ARMOR_EFFECT";
                 LogCore.LogI("hi7");
 

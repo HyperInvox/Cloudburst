@@ -28,11 +28,22 @@ namespace Cloudburst.Cores.Components
 
         }
 
+        private void SetToEmpty()
+        {
+            var thing = base.GetComponent<ModelLocator>().modelTransform.GetComponent<Animator>();
+            thing.speed = 1f;
+            thing.Update(0f);
+            int layerIndex = thing.GetLayerIndex("Fullbody, Override");
+            thing.CrossFadeInFixedTime("BuffEmpty", 0.5f, layerIndex);
+        }
+
         void Motor_onHitGround(ref CharacterMotor.HitGroundInfo hitGroundInfo)
         {
+            SetToEmpty();
+
             EffectManager.SpawnEffect(EffectCore.wyattSlam, new EffectData
             {
-                scale = 5,
+                scale = 10,
                 rotation = Quaternion.identity,
                 origin = hitGroundInfo.position,
             }, true);
@@ -51,11 +62,7 @@ namespace Cloudburst.Cores.Components
             }, true);*/
 
 
-var thing = base.GetComponent<ModelLocator>().modelTransform.GetComponent<Animator>();
-            thing.speed = 1f;
-            thing.Update(0f);
-            int layerIndex = thing.GetLayerIndex("Fullbody, Override");
-            thing.CrossFadeInFixedTime("BuffEmpty", 0.5f, layerIndex);
+
 
 
             new BlastAttack
@@ -74,7 +81,7 @@ var thing = base.GetComponent<ModelLocator>().modelTransform.GetComponent<Animat
                 falloffModel = BlastAttack.FalloffModel.None,
                 //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
                 procCoefficient = 0,
-                radius = 10
+                radius = 15
             }.Fire();
 
             var sphere = Physics.OverlapSphere(transform.position, 10);
@@ -83,9 +90,9 @@ var thing = base.GetComponent<ModelLocator>().modelTransform.GetComponent<Animat
                 var cb = body.gameObject.GetComponentInParent<CharacterBody>();
                 if (cb)
                 {
-                    if (cb.characterMotor && cb != info.characterBody)
+                    if (cb.characterMotor && cb != info.characterBody && cb.isChampion == false)
                     {
-                        CloudUtils.AddExplosionForce(cb.characterMotor, cb.characterMotor.mass * 10, transform.position, 25, 5);
+                        CloudUtils.AddExplosionForce(cb.characterMotor, cb.characterMotor.mass * 25, transform.position, 25, 5, false);
                     }
                 }
             }
@@ -97,15 +104,17 @@ var thing = base.GetComponent<ModelLocator>().modelTransform.GetComponent<Animat
 
         public void OnDestroy() {
             motor.onHitGround -= Motor_onHitGround;
-        }
+        } 
 
         public void FixedUpdate() {
             stopwatch += Time.fixedDeltaTime;
+            if (stopwatch >= (interval - 0.001f)) {
+                motor.ApplyForce((direction * 125 * Assaulter2.speedCoefficient), true, false);
+                characterDirection.forward = motor.rootMotion.normalized;
+            }
+
             if (stopwatch >= interval) {
-
-                LogCore.LogI("hi");
-                motor.ApplyForce(direction * 3700, true, false);
-
+                SetToEmpty();
                 //		protected void PlayCrossfade(string layerName, string animationStateName, float crossfadeDuration)
                 Destroy(this);
                 //base.PlayCrossfade("Fullbody, Override", "BufferEmpty", 0.5f);

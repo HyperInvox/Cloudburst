@@ -14,6 +14,8 @@ namespace Cloudburst.Cores.States.Wyatt
         private bool unstable = false;
         private MAIDManager blaseball = null;
         private bool solarEclipse = false;
+        private Coroutine co = null;
+        private bool runnin;
         public override void OnEnter()
         {
            // base.activatorSkillSlot.skillDef.baseRechargeInterval = 5;
@@ -34,22 +36,48 @@ namespace Cloudburst.Cores.States.Wyatt
             solarEclipse = true;
         }
 
-        IEnumerator Wait ()
+        IEnumerator Wait()
         {
             base.characterMotor.useGravity = false;
             base.characterMotor.velocity = new Vector3(0, 0, 0);
+            bool stopped = false;
             // suspend execution for 5 seconds
-            yield return new WaitForSeconds(0.5f);
-            base.characterMotor.velocity = new Vector3(0, 0, 0);
-            if (!base.gameObject.HasComponent<BasedDepartment>())
-            {
-                BasedDepartment based = base.gameObject.AddComponent<BasedDepartment>();
-                based.interval = 1f;
-                //LogCore.LogI(dis);
-            }
-            base.PlayAnimation("Fullbody, Override", "kick");
 
-            base.characterMotor.useGravity = true;
+
+            if (base.IsKeyDownAuthority() && stopped == false)
+            {
+                base.characterMotor.useGravity = true;
+                if (!base.gameObject.HasComponent<BasedDepartment>())
+                {
+                    BasedDepartment based = base.gameObject.AddComponent<BasedDepartment>();
+                    based.interval = 1f;
+                    //LogCore.LogI(dis);
+                }
+                base.PlayAnimation("Fullbody, Override", "kick");
+                stopped = true;
+                LogCore.LogI("stopped");
+                //yield return true;
+            }
+
+            LogCore.LogI("did not stop");
+
+            yield return new WaitForSeconds(0.5f);
+
+            if (stopped != true)
+            {
+                base.characterMotor.velocity = new Vector3(0, 0, 0);
+
+
+                if (!base.gameObject.HasComponent<BasedDepartment>())
+                {
+                    BasedDepartment based = base.gameObject.AddComponent<BasedDepartment>();
+                    based.interval = 1f;
+                    //LogCore.LogI(dis);
+                }
+                base.PlayAnimation("Fullbody, Override", "kick");
+
+                base.characterMotor.useGravity = true;
+            }
         }
 
         private void Blaseball_OnRetrival(bool nat, GenericSkill arg2, Vector3 dis)
@@ -66,6 +94,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 //no one's gonna read it anyways :^]]
 
                 CloudburstPlugin.instance.StartCoroutine(Wait());
+                
 
 
             }

@@ -261,12 +261,20 @@ public static class CloudUtils
     }
     #endregion
     #region UNITY2ROR2
-    public static void AddExplosionForce(CharacterMotor body, float explosionForce, Vector3 explosionPosition, float explosionRadius, float upliftModifier = 0)
+    public static void AddExplosionForce(CharacterMotor body, float explosionForce, Vector3 explosionPosition, float explosionRadius, float upliftModifier = 0, bool useWearoff = false) 
     {
         var dir = (body.transform.position - explosionPosition);
-        float wearoff = 1 - (dir.magnitude / explosionRadius);
 
-        Vector3 baseForce = dir.normalized * explosionForce * wearoff;
+        Vector3 baseForce = Vector3.zero;
+
+        if (useWearoff)
+        {
+            float wearoff = 1 - (dir.magnitude / explosionRadius);
+            baseForce = dir.normalized * explosionForce * wearoff; 
+        }
+        else {
+            baseForce = dir.normalized * explosionForce;
+        }
         //baseForce.z = 0;
         body.ApplyForce(baseForce);
 

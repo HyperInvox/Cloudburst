@@ -72,6 +72,10 @@ namespace Cloudburst.Cores.States.Wyatt
             hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
             //swingEffectMuzzleString = "WinchHole";//"//SwingTrail";
 
+            /*EffectManager.SpawnEffect(EffectCore.shaderEffect, new EffectData()
+            {
+                origin = base.transform.position,
+            }, false);*/
 
             //LogCore.LogW(step);
 

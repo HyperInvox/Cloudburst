@@ -29,7 +29,7 @@ namespace Cloudburst.Cores.HAND.Components
             body = base.GetComponent<CharacterBody>();
             skillLocator = base.GetComponent<SkillLocator>();
             tracker = base.GetComponent<HANDDroneTracker>();
-        }   
+        }
 
         public void FireDroneAuthority()
         {
@@ -40,6 +40,14 @@ namespace Cloudburst.Cores.HAND.Components
             }
             CmdFireDrone();
         }
+
+        [Command]
+        private void CmdFireDrone()
+        {
+            FireDroneInternal();
+        }
+
+
         private void FireDroneInternal() {
             HurtBox initialOrbTarget = tracker.GetTrackingTarget();
             bool isCrit = false;
@@ -58,10 +66,6 @@ namespace Cloudburst.Cores.HAND.Components
 
                 OrbManager.instance.AddOrb(genericDamageOrb);
             }
-        }
-        [Command]
-        private void CmdFireDrone() {
-            FireDroneInternal();
         }
 
     }

@@ -28,6 +28,7 @@ namespace Cloudburst.Cores
         protected internal BuffDef magicAttackSpeed;
 
         protected internal BuffDef wyattSuspension;
+        protected internal BuffDef wyattFlow;
 
         protected internal BuffDef glassMithrix;
         internal bool Loaded { get; private set; } = false;
@@ -107,6 +108,14 @@ namespace Cloudburst.Cores
                 buffColor = new Color(1f, 0.7882353f, 0.05490196f)
             }.BuildBuff();
 
+            this.wyattFlow = new BuffBuilder()
+            {
+                canStack = true,
+                isDebuff = false,
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("WyattFlow"),
+                buffColor = CloudUtils.HexToColor("#37323e"),
+            }.BuildBuff();
+
             this.japesCloak = new BuffBuilder()
             {
                 canStack = true,
@@ -182,26 +191,22 @@ namespace Cloudburst.Cores
 
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
-            On.RoR2.CharacterBody.OnBuffFinalStackLost += CharacterBody_OnBuffFinalStackLost;
+            GlobalHooks.onFinalBuffStackLost += GlobalHooks_onFinalBuffStackLost;
 
             //On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
             //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
             On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround; }
 
-        private void CloudburstPlugin_start()
+        private void GlobalHooks_onFinalBuffStackLost(CharacterBody self, BuffDef buffDef)
         {
-            LogCore.LogI(antiGrav.buffIndex); 
-        }
-
-        private void CharacterBody_OnBuffFinalStackLost(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
-        {
-            orig(self, buffDef);
             if (self)
             {
-                if (buffDef == antiGrav || buffDef == wyattSuspension) {
+                if (buffDef == antiGrav || buffDef == wyattSuspension)
+                {
 
-                    if (self.characterMotor) {
+                    if (self.characterMotor)
+                    {
                         self.characterMotor.useGravity = true;
                         self.characterMotor.velocity = Vector3.zero;
                     }
@@ -209,6 +214,12 @@ namespace Cloudburst.Cores
 
             }
         }
+
+        private void CloudburstPlugin_start()
+        {
+            LogCore.LogI(antiGrav.buffIndex); 
+        }
+
 
         private void CharacterMotor_OnDeathStart(On.RoR2.CharacterMotor.orig_OnDeathStart orig, CharacterMotor self)
         {
@@ -353,6 +364,18 @@ namespace Cloudburst.Cores
                         self.moveSpeed = moveSpeed * (1f + (buffCount * 0.17f));
                     }
                 }
+                if (self && self.HasBuff(wyattFlow))
+                {
+                    //ebb and flow
+                    SkillLocator locator = self.skillLocator;
+                    locator.secondary.flatCooldownReduction = 1;
+                    locator.special.flatCooldownReduction = 1;
+                    self.maxJumpCount++;
+                    self.moveSpeed = moveSpeed * (1f + 0.3f);
+                    //self.moveSpeed = moveSpeed * (1f + (moveSpeed * 0.3f));
+                }
+
+
                 if (self && self.HasBuff(glassMithrix))
                 {
                     var buffCount = self.GetBuffCount(glassMithrix);

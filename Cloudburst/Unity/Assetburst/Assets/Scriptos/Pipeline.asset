@@ -31,11 +31,11 @@ MonoBehaviour:
   Errored: 0
   ErrorMessage: 
   Active: 1
-  AssetBundleBuildOptions: 1
+  AssetBundleBuildOptions: 0
   buildTarget: 5
   recurseDirectories: 0
   simulate: 0
-  BundleArtifactPath: <AssetBundleStaging>
+  BundleArtifactPath: C:\Users\kurog\source\repos\Cloudburst\Cloudburst
 --- !u!114 &114845480221044840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,6 +52,6 @@ MonoBehaviour:
   ErrorMessage: 
   Active: 0
   stageDebugDatabases: 0
-  Group: 0
+  Group: 1
   ScriptCompilationOptions: 0
-  Target: 0
+  Target: 19

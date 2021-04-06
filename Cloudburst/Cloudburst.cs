@@ -238,8 +238,18 @@ namespace Cloudburst
                     {
                         materials[i].shader = Resources.Load<Shader>("shaders/deferred/hgstandard");
                     }
-                    if (materials[i].name.Contains("GLASS")) {
+                    if (materials[i].name.Contains("GLASS"))
+                    {
                         materials[i].shader = Resources.Load<Shader>("shaders/fx/hgintersectioncloudremap");
+                    }
+                    switch (materials[i].shader.name)
+                    {
+
+                        case "Hopoo Games/FX/Cloud Remap Proxy":
+                            LogCore.LogI("material");
+                            materials[i].shader = Resources.Load<Shader>("shaders/fx/hgcloudremap");
+                            LogCore.LogI(materials[i].shader.name);
+                            break;
                     }
                 }
 
