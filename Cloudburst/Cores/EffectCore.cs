@@ -4,6 +4,8 @@ using RoR2;
 using TMPro;
 using RoR2.UI;
 using EnigmaticThunder.Modules;
+using UnityEngine.Rendering.PostProcessing;
+using System.Linq;
 
 namespace Cloudburst.Cores
 {
@@ -39,6 +41,7 @@ namespace Cloudburst.Cores
         public static GameObject willIsStillTotallyNotPoggers;
         public static GameObject wyattSlam;
 
+        public static GameObject gooEffect;
         public EffectCore() => DoEffects();
 
 
@@ -49,6 +52,7 @@ namespace Cloudburst.Cores
             CreateNewEffects();
             Repair();
 
+            CreateGooEffect();
 
             blackHoleIncisionEffect = CreateAsset("UniversalIncison", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
             wyattSlam = CreateEffect("DebugEffect");//, false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Medium);
@@ -56,11 +60,28 @@ namespace Cloudburst.Cores
             shaderEffect = CreateEffect("ShaderTest");
 
             shaderEffect.AddComponent<Components.MaterialControllerComponents.HGControllerFinder>().Material = shaderEffect.transform.Find("Flames").GetComponent<ParticleSystemRenderer>().material;
+            Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact").GetComponent<EffectComponent>().applyScale = true;
         }
 
         private void CreateMAIDCleanseEffect()
         {
             maidCleanseEffect = CreateAsset("MAIDCleanEffect", false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Always);
+        }
+
+        private void CreateGooEffect()
+        {
+            gooEffect = Resources.Load<GameObject>("Prefabs/TemporaryVisualEffects/NoCooldownEffect").InstantiateClone("RiverGooEffect", false);
+            foreach (var fuck in gooEffect.GetComponents<DetachParticleOnDestroyAndEndEmission>()) {
+                CloudburstPlugin.Destroy(fuck);
+            };
+            CloudburstPlugin.Destroy( gooEffect.transform.Find("Visual").gameObject);
+            PostProcessProfile[] source = Resources.FindObjectsOfTypeAll<PostProcessProfile>();
+            PostProcessProfile profile = (from p in source
+                                          where p.name == "ppLocalGoo"//"ppLocalUnderwater"
+                                          select p).FirstOrDefault<PostProcessProfile>();
+
+            gooEffect.transform.Find("CameraEffect").Find("PP").GetComponent<PostProcessVolume>().sharedProfile = profile;
+
         }
 
         private void WillIsStillNotPoggers()

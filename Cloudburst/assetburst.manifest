@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1209670850
+CRC: 410945971
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 85c47dd5fb5b1df01f6c2d98e2d57a48
+    Hash: dcdf0fcca8d280e7bef97b503fd5646f
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 619bb26b60736ee41529111c78914c23
+    Hash: 234ea93d93fabd6703f8fc1c86fc46c1
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -46,27 +46,27 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 91b84fd2a11fecd45bccb3cc77aacc36, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 9658ba6378f201d438a997ea6f5d1a19, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: cd19c593fbe4a124c8cb981faafb9a69, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 67079b849227b734694872d8810229b8, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: ce3a75b5dae03c04a9a9ce242969f469, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 6900f1d6280d53a46bc2073e17a88cc5, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 40dc170b1051d314797c3f876b8feab7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe12c28eaffbe654b852fa706be753ba, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 69b0162ff32352c4e9635a94621a390d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0e8b9aff5b1f23c499ac29c068a39060, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 6f0a564b054df1e4795bd5f7ef9bebac, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fd1139d8af53657418e4496dbae82ed7, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 40dc170b1051d314797c3f876b8feab7, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 9658ba6378f201d438a997ea6f5d1a19, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 6900f1d6280d53a46bc2073e17a88cc5, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 0e8b9aff5b1f23c499ac29c068a39060, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: fe12c28eaffbe654b852fa706be753ba, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 120
@@ -363,6 +363,7 @@ Assets:
 - Assets/Cloudburst/Effects/Bases/Dust,Edge.prefab
 - Assets/Cloudburst/Items/Dummies/CommandoMesh_0.asset
 - Assets/Cloudburst/Survivors/TheSurvivor/animS/Armature_Default.anim
+- Assets/Cloudburst/StageVariants/TarBox.prefab
 - Assets/Cloudburst/Items/UESKeycard/keycard.fbx
 - Assets/Cloudburst/Survivors/TheSurvivor/animS/Armature_Death1.anim
 - Assets/Cloudburst/753network/Crystallize/Sapphire.mat
@@ -514,6 +515,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Flan/T_Bombardier_Color 3.mat
 - Assets/Cloudburst/BuffIcons/WyattFlow.png
 - Assets/Cloudburst/Survivors/Bombardier/mdlSatchel.prefab
+- Assets/Cloudburst/StageVariants/Single Floating Particle.prefab
 - Assets/Cloudburst/Equipment/Lumpkin/Metal_Lung_Texture.png
 - Assets/AssetBundleBrowser/Documentation/images/ABundleBrowserIconY1756Scene.png
 - Assets/Cloudburst/Survivors/TheSurvivor/Arm2CLR.png

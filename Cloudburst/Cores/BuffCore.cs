@@ -11,6 +11,57 @@ using UnityEngine.SceneManagement;
 
 namespace Cloudburst.Cores
 {
+    public class DestroyEffectOnBuffEnd : MonoBehaviour
+    {
+        public BuffDef buff;
+        public CharacterBody body;
+        public TemporaryOverlay effect;
+        public void Update()
+        {
+            if (!body || !body.HasBuff(buff))
+            {
+                Destroy(effect);
+                Destroy(this);
+            }
+        }
+    }
+
+    public class DestroyCameraTargetEffectOnBuffEnd : MonoBehaviour
+    {
+        public BuffDef buff;
+        public CharacterBody body;
+        public GameObject ppv;
+        private float FUCKUNITY = 0;
+        public void SetShit(BuffDef def, CharacterBody bbody, GameObject pppv) {
+            LogCore.LogI(def);
+            LogCore.LogI(bbody);
+            LogCore.LogI(pppv);
+            buff = def;
+            body = bbody;
+            ppv = pppv;
+            LogCore.LogI(buff);
+            LogCore.LogI(body);
+            LogCore.LogI(ppv);
+        }
+
+        public void Update()
+        {
+            LogCore.LogI(ppv);
+            LogCore.LogI(body);
+            LogCore.LogI(buff);
+            FUCKUNITY += Time.fixedDeltaTime;
+            if (FUCKUNITY >= 2)
+            {
+                ppv.transform.position = body.transform.position;
+                if (!body || !body.HasBuff(buff))
+                {
+                    //Destroy(ppv);
+                    Destroy(this);
+                }
+            }
+        }
+    }
+
     public class BuffCore
     {
         public static BuffCore instance;
@@ -31,6 +82,8 @@ namespace Cloudburst.Cores
         protected internal BuffDef wyattFlow;
 
         protected internal BuffDef glassMithrix;
+
+        protected internal BuffDef riverGoo;
         internal bool Loaded { get; private set; } = false;
         public BuffCore() => RegisterBuffs();
 
@@ -110,7 +163,7 @@ namespace Cloudburst.Cores
 
             this.wyattFlow = new BuffBuilder()
             {
-                canStack = true,
+                canStack = false,
                 isDebuff = false,
                 iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("WyattFlow"),
                 buffColor = CloudUtils.HexToColor("#37323e"),
@@ -175,6 +228,14 @@ namespace Cloudburst.Cores
                 buffColor = CloudUtils.HexToColor("#37323e"),
             }.BuildBuff();
 
+            this.riverGoo = new BuffBuilder()
+            {
+                canStack = false,
+                isDebuff = true,
+                iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texBuffSlow50Icon"),
+                buffColor = CloudUtils.HexToColor("#331717"),
+            }.BuildBuff();
+
             /*EnigmaticThunder.Modules.BuffDefs.Add(antiGrav);
             EnigmaticThunder.Modules.BuffDefs.Add(charm);
             EnigmaticThunder.Modules.BuffDefs.Add(engageLunarShell);
@@ -187,8 +248,6 @@ namespace Cloudburst.Cores
             EnigmaticThunder.Modules.BuffDefs.Add(skin);
             EnigmaticThunder.Modules.BuffDefs.Add(wyattCombatIndex);*/
 
-            CloudburstPlugin.start += CloudburstPlugin_start;
-
             On.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats;
 
             GlobalHooks.onFinalBuffStackLost += GlobalHooks_onFinalBuffStackLost;
@@ -196,7 +255,9 @@ namespace Cloudburst.Cores
             //On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
             //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
-            On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround; }
+            On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround;
+        }
+
 
         private void GlobalHooks_onFinalBuffStackLost(CharacterBody self, BuffDef buffDef)
         {
@@ -213,11 +274,6 @@ namespace Cloudburst.Cores
                 }
 
             }
-        }
-
-        private void CloudburstPlugin_start()
-        {
-            LogCore.LogI(antiGrav.buffIndex); 
         }
 
 
@@ -359,19 +415,26 @@ namespace Cloudburst.Cores
                 if (self && self.HasBuff(wyattCombatIndex))
                 {
                     var buffCount = self.GetBuffCount(wyattCombatIndex);
-                    for (int i = 0; i < buffCount; i++)
-                    {
-                        self.moveSpeed = moveSpeed * (1f + (buffCount * 0.17f));
-                    }
+                        
+                    LogCore.LogI("SPEED BEFORE INCREASE: " + self.moveSpeed);
+
+                    float increase = buffCount * .6f;
+                    LogCore.LogI($"INCREASE: " + increase + $" : AMOUNT OF BUFFS: {buffCount}" );
+
+                    self.moveSpeed = moveSpeed + increase;
+                    LogCore.LogI("SPEED AFTER INCREASE: " + self.moveSpeed);
+                    //moveSpeed * (1f + (buffCount * 0.17f));
                 }
                 if (self && self.HasBuff(wyattFlow))
                 {
                     //ebb and flow
                     SkillLocator locator = self.skillLocator;
-                    locator.secondary.flatCooldownReduction = 1;
-                    locator.special.flatCooldownReduction = 1;
+                    if (!self.HasBuff(RoR2Content.Buffs.NoCooldowns))
+                    {
+                        locator.secondary.flatCooldownReduction += 0.3f;
+                        locator.special.flatCooldownReduction += 0.3f;
+                    }
                     self.maxJumpCount++;
-                    self.moveSpeed = moveSpeed * (1f + 0.3f);
                     //self.moveSpeed = moveSpeed * (1f + (moveSpeed * 0.3f));
                 }
 

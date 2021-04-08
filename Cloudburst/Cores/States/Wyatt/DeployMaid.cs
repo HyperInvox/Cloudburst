@@ -111,7 +111,7 @@ namespace Cloudburst.Cores.States.Wyatt
             FireProjectileInfo info = new FireProjectileInfo()
             {
                 crit = RollCrit(),
-                damage = 5 * damageStat,
+                damage = (5f + (characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) * .25f))* damageStat,
                 damageColorIndex = RoR2.DamageColorIndex.Default,
                 damageTypeOverride = DamageType.Generic,
                 force = 0,

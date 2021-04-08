@@ -65,7 +65,7 @@ namespace Cloudburst.Cores.States.Wyatt
             this.baseDuration = 0.69f;
             this.duration = this.baseDuration / base.attackSpeedStat;
             this.hitPauseDuration = 0.1f;
-            this.damageCoefficient = 2f;
+            this.damageCoefficient = (2f + (characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) * 0.1f));
             this.procCoefficient = 1f;
             spawnEffect = false;
             //swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/GrandparentGroundSwipeTrailEffect");

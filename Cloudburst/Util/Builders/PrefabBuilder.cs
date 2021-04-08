@@ -433,10 +433,7 @@ public class PrefabBuilder
 
 
         action2?.Invoke(itemRules);
-        foreach (ItemDisplayRuleSet.KeyAssetRuleGroup a in itemRules)
-        {
-            LogCore.LogD(a.displayRuleGroup.rules[0].followerPrefab);
-        }
+
         itemDisplayRuleSet.keyAssetRuleGroups = itemRules.ToArray();
         charModel.itemDisplayRuleSet = itemDisplayRuleSet;
         itemDisplayRuleSet.GenerateRuntimeValues();

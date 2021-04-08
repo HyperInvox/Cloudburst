@@ -6,6 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
+using EnigmaticThunder.Modules;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
 namespace Cloudburst.Cores
@@ -52,18 +55,140 @@ namespace Cloudburst.Cores
 
         internal class TarRiver : Event
         {
+            public static GameObject ppv;
+            internal static List<Vector3> safeLocals = new List<Vector3>()
+            {
+                new Vector3(191.3f, -115.1f, 124.0f),
+                new Vector3(232.7f, -118.0f, 104.7f),
+                new Vector3(77.0f, -119.1f, 145.0f),
+                new Vector3(211.7f, -111.0f, 138.1f),
+                new Vector3(120.1f, -119.6f, 119.4f),
+                new Vector3(109.6f, -76.9f, -183.7f),
+                new Vector3(75.6f, -119.8f, 139.2f),
+                new Vector3(175.0f, -74.8f, -158.6f),
+                new Vector3(58.3f, -118.3f, 15.7f),
+                new Vector3(135.1f, -79.1f, -152.2f),
+                new Vector3(69.6f, -120.8f, 123.6f),
+                new Vector3(84.1f, -120.4f, 141.0f),
+                new Vector3(196.5f  , -122.1f, 67.1f),
+                new Vector3(186.7f, -114.7f, 129.7f),
+                new Vector3(139.2f, -117.2f, 82.0f),
+                new Vector3(78.6f, -120.2f, 111.8f),
+                new Vector3(254.5f, -118.2f, 105.0f),
+                new Vector3(-24.6f, -109.9f, -162.1f),
+                new Vector3(146.1f, -79.4f, -137.2f),
+                new Vector3(211.6f, -121.6f, 73.8f),
+                new Vector3(164.9f, -120.1f, 79.3f),
+                new Vector3(62.9f, -123.5f, 201.3f),
+                new Vector3(12.8f, -127.0f, 73.8f),
+                new Vector3(258.3f, -117.5f, 116.8f),
+            };
+
             internal class TarRiverSlow : MonoBehaviour {
+                public static GameObject entryEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact");
+                private List<CharacterBody> bodies = new List<CharacterBody>();
+                private float stopwatch = 0;
                 public void OnTriggerEnter(Collider collider)
                 {
                     LogCore.LogI(collider);
+                    if (NetworkServer.active)
+                    {
+                        TeleporterInteraction tp = collider.GetComponentInParent<TeleporterInteraction>();
+                        if (tp)
+                        {
+                            LogCore.LogE("Teleporter found, replacing!");
+                            Xoroshiro128Plus rng = new Xoroshiro128Plus((ulong)DateTime.UtcNow.Ticks);
+                            int roll = rng.RangeInt(0, safeLocals.Count);
+                            tp.transform.position = safeLocals[roll];
+                            gameObject.layer = LayerIndex.defaultLayer.intVal;
+                        }
+                        gameObject.layer = LayerIndex.defaultLayer.intVal;
+                        CharacterBody body = collider.GetComponentInParent<CharacterBody>();
+                        if (body)
+                        {
+                            EffectManager.SpawnEffect(entryEffect, new EffectData()
+                            {
+                                origin = body.transform.position,
+                                scale = 25,
+                            }, true);
+                            bodies.Add(body);
+
+                            /*var thingie = body.GetComponent<DestroyCameraTargetEffectOnBuffEnd>();
+                            LogCore.LogI(thingie);
+                            if (!thingie) {
+                                LogCore.LogI(thingie);
+                                thingie = body.AddComponent<DestroyCameraTargetEffectOnBuffEnd>();
+                                thingie.SetShit(RoR2Content.Buffs.ClayGoo, body, CloudburstPlugin.Instantiate<GameObject>(obj, body.transform.position, body.transform.rotation));
+                            }*/
+                        }
+                    }
                 }
+
+                public void FixedUpdate() {
+                    if (NetworkServer.active)
+                    {
+                        stopwatch += Time.fixedDeltaTime;
+                        if (stopwatch >= 0.1f)
+                        {
+                            foreach (CharacterBody body in bodies)
+                            {
+                                body.AddTimedBuff(RoR2Content.Buffs.ClayGoo/*BuffCore.instance.riverGoo/*RoR2Content.Buffs.ClayGoo*/, 3);
+                            }
+                            stopwatch = 0;
+                        }
+                    }
+                }
+
                 public void OnTriggerExit(Collider collider)
                 {
                     LogCore.LogI(collider);
+                    if (NetworkServer.active)
+                    {
+                        CharacterBody body = collider.GetComponentInParent<CharacterBody>();
+                        if (body)
+                        {
+                            bodies.Remove(body);
+                        }
+                    }
+                }
+
+                public void OnDestroy() {
+                    bodies.Clear();
                 }
             }
 
             public override float chance => 100;
+
+            public static GameObject obj;
+            public override void Init()
+            {
+                base.Init();
+                var asyncStageLoad = SceneManager.LoadSceneAsync("goolake", LoadSceneMode.Additive);
+                asyncStageLoad.allowSceneActivation = false;
+                GameObject yo = null;
+                asyncStageLoad.completed += ___ =>
+                {
+                    var scene = SceneManager.GetSceneByName("goolake"); ;
+                    var root = scene.GetRootGameObjects();
+
+                    for (int i = 0; i < root.Length; i++)
+                    {
+                        GameObject obja = root[i];
+                        if (obja.name == "HOLDER: GameplaySpace")
+                        {
+                            yo = obja.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("DEBUFF ZONE: Waterfall").Find("PP Goo").gameObject.InstantiateClone("PPVThingie", false);                            //LogCore.LogI("found");
+                            //goo = obja.transform.Find("GooPlane, High");
+                        }
+                    }
+                };
+                obj = yo;
+            }
+
+            public override void Start()
+            {
+                base.Start();
+
+            }
 
             public override void OnEnable()
             {
@@ -72,6 +197,7 @@ namespace Cloudburst.Cores
                 var scene = SceneManager.GetActiveScene();
 
                 GameObject parent = null;
+                GameObject particles = null;
                 foreach (GameObject obja in scene.GetRootGameObjects())
                 {
                     //LogCore.LogI(obj);
@@ -81,11 +207,17 @@ namespace Cloudburst.Cores
                         //LogCore.LogI("found");
                         //goo = obja.transform.Find("GooPlane, High");
                     }
+                    if (obja.name == "HOLDER: GameplaySpace")
+                    {
+                        particles = obja;
+                        //LogCore.LogI("found");
+                        //goo = obja.transform.Find("GooPlane, High");
+                    }
                 }
 
                 AddGoo();
                 AddWarnigSigns();
-
+                AddPPVs();
                 /*
                 goo.localScale = new Vector3(42.92972f, 1, 42.04618f);
                 goo.gameObject.SetActive(true);
@@ -94,12 +226,38 @@ namespace Cloudburst.Cores
                 col.isTrigger = true;
                 goo.AddComponent<TarRiverSlow>();*/
 
+                void AddPPVs() {
+                    ppv = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("DEBUFF ZONE: Waterfall").Find("PP Goo").gameObject;
+                    //CloudburstPlugin.Instantiate<GameObject>(ppBase, new Vector3(201.7f, -139.5f, 246.2f), Quaternion.Euler(new Vector3(1, 1, 1))).GetComponent<PostProcessVolume>().blendDistance = 20;
+                    //CloudburstPlugin.Instantiate<GameObject>(ppBase, new Vector3(307.5f, -135.1f, 174.2f), Quaternion.Euler(new Vector3(1, 1, 1))).GetComponent<PostProcessVolume>().blendDistance = 20;
+                    //CloudburstPlugin.Instantiate<GameObject>(ppBase, new Vector3(260.9f, -135.7f, 42.8f), Quaternion.Euler(new Vector3(1, 1, 1))).GetComponent<PostProcessVolume>().blendDistance = 20;
+
+                }
+
                 void AddGoo()
                 {
                     Transform goo = parent.transform.Find("GooPlane, High");
-    
 
-                    GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    if (NetworkServer.active) {
+
+                       LogCore.LogI("hi");
+                       var obj =  CloudburstPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarBox"), new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
+
+                        obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
+
+                        obj.AddComponent<TarRiverSlow>();
+                       obj.layer = LayerIndex.world.intVal;
+                       obj.transform.position = new Vector3(201f, -134.1f, 143f);
+                       obj.transform.rotation = Quaternion.Euler(0, -43.019f, 0);
+                       obj.transform.localScale = new Vector3(429.2972f, 10, 420.4618f);
+                       obj.GetComponent<Renderer>().material = goo.GetComponent<Renderer>().material;
+                       obj.AddComponent<NetworkIdentity>();
+                       obj.AddComponent<NetworkTransform>();
+
+                        NetworkServer.Spawn(obj);
+                    }
+
+                    /*GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
                     obj.transform.position = new Vector3(201f, -134.1f, 143f);
                     obj.transform.rotation = Quaternion.Euler(0, -43.019f, 0);
                     obj.transform.localScale = new Vector3(429.2972f, 10, 420.4618f);
@@ -108,7 +266,7 @@ namespace Cloudburst.Cores
                     renderer.material = goo.GetComponent<Renderer>().material;
 
                     BoxCollider collider = obj.AddOrGetComponent<BoxCollider>();
-                    collider.isTrigger = true;
+                    collider.isTrigger = true;*/
                 }
                 void AddWarnigSigns() {
                     Transform warningParent =  parent.transform.Find("Warning Signs");
@@ -168,7 +326,12 @@ namespace Cloudburst.Cores
 
             public virtual void Init()
             {
+                CloudburstPlugin.start += Start;
+            }
 
+            public virtual void Start()
+            {
+                //throw new NotImplementedException();
             }
 
             public virtual void OnEnable()

@@ -26,7 +26,7 @@ namespace Cloudburst
 
         public const string guid = "com.TeamCloudburst.Cloudburst";
         public const string modName = "Cloudburst";
-        public const string version = "0.1.3";
+        public const string version = "0.1.8    ";
 
         public static CloudburstPlugin instance;
 
@@ -314,6 +314,8 @@ namespace Cloudburst
                     new EventsCore();
                 }
 
+                new EventsCore();
+
                 //On.RoR2.CharacterBody.AddTimedBuff += GlobalHooks.CharacterBody_AddTimedBuff;
                 //On.RoR2.HealthComponent.TakeDamage += GlobalHooks.HealthComponent_TakeDamage;
 
@@ -401,7 +403,9 @@ namespace Cloudburst
 
         public void FixedUpdate()
         {
-
+            if (Input.GetKeyDown(KeyCode.F)) {
+                LogCore.LogI(LocalUserManager.localUsersList[0].cachedBody.transform.position);
+            }
             
                 Action fixedUpdate = CloudburstPlugin.onFixedUpdate;    
             if (fixedUpdate == null)

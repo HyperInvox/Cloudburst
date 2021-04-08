@@ -51,11 +51,11 @@ namespace Cloudburst.Cores.Items.Red
 
         public override string ItemLangTokenName => "EXTRACTINGMOMENT";
 
-        public override string ItemPickupDesc => "Chance for debuffs to become beneficial buffs when applied";
+        public override string ItemPickupDesc => "On death, bosses have a chance to drop an item. Nearby projectiles are also destroyed, gain barrier for each destroyed projectile.";
         //
         public override string ItemFullDescription => "On boss death, <style=cIsUtility>25% chance <style=cStack>(+10% per stack)</style> for bosses to drop a random boss item when killed.</style> Nearby projectiles are also destroyed, gain 5 <style=cStack>(+5 per stack)</style> barrier for each destroyed projectile. ";
 
-        public override string ItemLore => "On death, bosses have a chance to drop an item. Nearby projectiles are also destroyed, gain barrier for each destroyed projectile.";
+        public override string ItemLore => "";
 
         public override ItemTier Tier => ItemTier.Tier3;
 

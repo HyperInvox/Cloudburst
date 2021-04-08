@@ -10,7 +10,7 @@ namespace Cloudburst.Cores.Components.Wyatt
     {
         private CharacterBody characterBody;
 
-        private bool loseStacks { get { return stopwatch >= 3; } }
+        private bool loseStacks { get { return stopwatch >= 3 && !flowing; } }
 
         private float stopwatch = 0;
 
@@ -30,8 +30,9 @@ namespace Cloudburst.Cores.Components.Wyatt
 
         private void GlobalHooks_onFinalBuffStackLost(CharacterBody body, BuffDef def)
         {
-            if (flowing && NetworkServer.active) {
+            if (flowing && NetworkServer.active && characterBody == body) {
                 //flowing has stopped
+                CloudUtils.SafeRemoveAllOfBuff(BuffCore.instance.wyattCombatIndex, characterBody);
                 flowing = false;
             }
         }
@@ -113,7 +114,6 @@ namespace Cloudburst.Cores.Components.Wyatt
                     duration += 0.4f;
                 }
             }
-            CloudUtils.SafeRemoveAllOfBuff(BuffCore.instance.wyattCombatIndex, characterBody);
 
             characterBody.AddTimedBuff(BuffCore.instance.wyattFlow, duration);
             flowing = true;
