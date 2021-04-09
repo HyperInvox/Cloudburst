@@ -241,18 +241,18 @@ namespace Cloudburst.Cores
                     if (NetworkServer.active) {
 
                        LogCore.LogI("hi");
-                       var obj =  CloudburstPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarBox"), new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
+                        var obj = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarBox"), new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
 
                         obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
 
                         obj.AddComponent<TarRiverSlow>();
-                       obj.layer = LayerIndex.world.intVal;
-                       obj.transform.position = new Vector3(201f, -134.1f, 143f);
-                       obj.transform.rotation = Quaternion.Euler(0, -43.019f, 0);
-                       obj.transform.localScale = new Vector3(429.2972f, 10, 420.4618f);
-                       obj.GetComponent<Renderer>().material = goo.GetComponent<Renderer>().material;
-                       obj.AddComponent<NetworkIdentity>();
-                       obj.AddComponent<NetworkTransform>();
+                        obj.layer = LayerIndex.world.intVal;
+                        obj.transform.position = new Vector3(201f, -134.1f, 143f);
+                        obj.transform.rotation = Quaternion.Euler(0, -43.019f, 0);
+                        obj.transform.localScale = new Vector3(429.2972f, 10, 420.4618f);
+                        obj.GetComponent<Renderer>().material = goo.GetComponent<Renderer>().material;
+                        obj.AddComponent<NetworkIdentity>();
+                        obj.AddComponent<NetworkTransform>();
 
                         NetworkServer.Spawn(obj);
                     }

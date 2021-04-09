@@ -1,9 +1,10 @@
 ﻿using Cloudburst.Cores.HAND.Components;
 using Cloudburst.Cores.Items.Green;
 using Cloudburst.Cores.Items.White;
-
-
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using RoR2;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -256,8 +257,53 @@ namespace Cloudburst.Cores
             //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
             On.RoR2.CharacterMotor.OnHitGround += CharacterMotor_OnHitGround;
+            IL.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats1;
         }
 
+        private void CharacterBody_RecalculateStats1(MonoMod.Cil.ILContext il)
+        {
+            ILCursor c = new ILCursor(il);
+
+            CharacterBody charBody = null;
+
+            c.Emit(OpCodes.Ldarg_0);
+            c.EmitDelegate<Action<CharacterBody>>((cb) => {
+                charBody = cb;
+            });
+
+            int locBaseSpeedIndex = -1;
+            int locSpeedMultIndex = -1;
+            int locSpeedDivIndex = -1;
+            bool ILFound = c.TryGotoNext(
+                x => x.MatchLdfld<CharacterBody>("baseMoveSpeed"),
+                x => x.MatchLdarg(0),
+                x => x.MatchLdfld<CharacterBody>("levelMoveSpeed"))
+                && c.TryGotoNext(
+                x => x.MatchStloc(out locBaseSpeedIndex))
+                && c.TryGotoNext(
+                    x => x.MatchLdloc(locBaseSpeedIndex),
+                    x => x.MatchLdloc(out locSpeedMultIndex),
+                    x => x.MatchLdloc(out locSpeedDivIndex),
+                    x => x.MatchDiv(),
+                    x => x.MatchMul(),
+                    x => x.MatchStloc(locBaseSpeedIndex));
+
+            if (ILFound)
+            {
+                c.GotoPrev(x => x.MatchLdfld<CharacterBody>("levelMoveSpeed"));
+                c.GotoNext(x => x.MatchStloc(locBaseSpeedIndex));
+                /*c.EmitDelegate<Func<float, float>>((origBaseMoveSpeed) => {
+                    return origBaseMoveSpeed + statMods.baseMoveSpeedAdd;
+                });*/
+                c.GotoNext(x => x.MatchStloc(locSpeedMultIndex));
+                c.EmitDelegate<Func<float, float>>((origMoveSpeedMult) => {
+                    return origMoveSpeedMult + (0.3f * charBody.GetBuffCount(wyattCombatIndex));
+                });
+            }
+            else
+            {
+            }
+        }
 
         private void GlobalHooks_onFinalBuffStackLost(CharacterBody self, BuffDef buffDef)
         {
@@ -412,7 +458,7 @@ namespace Cloudburst.Cores
                     self.moveSpeed = moveSpeed -= (.5f * moveSpeed);
                 }
 
-                if (self && self.HasBuff(wyattCombatIndex))
+                /*if (self && self.HasBuff(wyattCombatIndex))
                 {
                     var buffCount = self.GetBuffCount(wyattCombatIndex);
                         
@@ -424,7 +470,7 @@ namespace Cloudburst.Cores
                     self.moveSpeed = moveSpeed + increase;
                     LogCore.LogI("SPEED AFTER INCREASE: " + self.moveSpeed);
                     //moveSpeed * (1f + (buffCount * 0.17f));
-                }
+                }*/
                 if (self && self.HasBuff(wyattFlow))
                 {
                     //ebb and flow

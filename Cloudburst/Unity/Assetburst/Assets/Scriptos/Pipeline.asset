@@ -35,7 +35,7 @@ MonoBehaviour:
   buildTarget: 5
   recurseDirectories: 0
   simulate: 0
-  BundleArtifactPath: C:\Users\kurog\source\repos\Cloudburst\Cloudburst
+  BundleArtifactPath: E:\ok
 --- !u!114 &114845480221044840
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -52,6 +52,4 @@ MonoBehaviour:
   ErrorMessage: 
   Active: 0
   stageDebugDatabases: 0
-  Group: 1
-  ScriptCompilationOptions: 0
-  Target: 19
+  preferPlayerBuilds: 0

@@ -16,7 +16,7 @@ MonoBehaviour:
   - {fileID: 114544279799432128}
   - {fileID: 114164169038411516}
   - {fileID: 114799486472824280}
-  Identity: {fileID: 114544279799432128}
+  identity: {fileID: 114544279799432128}
 --- !u!114 &114164169038411516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -70,7 +70,7 @@ MonoBehaviour:
   Errored: 0
   ErrorMessage: 
   StagingPaths:
-  - E:\DevelopmentRiskofRain2\
+  - C:\Users\kurog\source\repos\Cloudburst\Cloudburst
   assetBundles:
   - assetBundleName: assetburst
     assets:

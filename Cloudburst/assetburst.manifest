@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 410945971
+CRC: 990148466
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: dcdf0fcca8d280e7bef97b503fd5646f
+    Hash: 53091e3f82389dfdb739a034e6f4e105
   TypeTreeHash:
     serializedVersion: 2
     Hash: 234ea93d93fabd6703f8fc1c86fc46c1
@@ -136,6 +136,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_BombardierM2_color.mat
 - Assets/Cloudburst/Survivors/OmoriShit/Materials/bg.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Armature_Idle.anim
+- Assets/Materials/Materials/1967480.mat
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/fab_dagger.mat
 - Assets/Cloudburst/Items/BrokenBodyArmor/broken armor.png
@@ -209,6 +210,7 @@ Assets:
 - Assets/Cloudburst/Items/TopazLense/Materials/mat.mat
 - Assets/Cloudburst/Survivors/OmoriShit/omori-aubrey.fbx
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecutionerMaskUpper.mask
+- Assets/Cloudburst/Enemies/SpittinNigga/Cum.png
 - Assets/Cloudburst/Shaders/shaders/deferred/hgtriplanarterrainblend.shader
 - Assets/Cloudburst/Equipment/Lumpkin/icon.png
 - Assets/Cloudburst/Items/CarePackageRequester/3D_Printer.png
@@ -306,6 +308,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/T_BombardierM2_color.png
 - Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_n.jpg
 - Assets/Cloudburst/Items/UESKeycard/IMDLKeycard.prefab
+- Assets/Cloudburst/Enemies/SpittinNigga/mdlSpitter.prefab
 - Assets/Cloudburst/Survivors/Wyatt/old/texHandDiffuse.png
 - Assets/Cloudburst/Survivors/Wyatt/soap.blend
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Materials/T_Executor_V2_Color.mat
@@ -359,11 +362,13 @@ Assets:
 - Assets/Cloudburst/Items/CarePackageRequester/icon.png
 - Assets/Cloudburst/Survivors/Wyatt/passive.png
 - Assets/Cloudburst/Effects/Bases/Mesh.prefab
+- Assets/Cloudburst/Effects/WyattGrooveEffect.prefab
 - Assets/Cloudburst/Survivors/Wyatt/animation/WyattAim.mask
 - Assets/Cloudburst/Effects/Bases/Dust,Edge.prefab
 - Assets/Cloudburst/Items/Dummies/CommandoMesh_0.asset
 - Assets/Cloudburst/Survivors/TheSurvivor/animS/Armature_Default.anim
 - Assets/Cloudburst/StageVariants/TarBox.prefab
+- Assets/Cloudburst/Effects/Bases/MusicEffect.prefab
 - Assets/Cloudburst/Items/UESKeycard/keycard.fbx
 - Assets/Cloudburst/Survivors/TheSurvivor/animS/Armature_Death1.anim
 - Assets/Cloudburst/753network/Crystallize/Sapphire.mat
@@ -381,6 +386,7 @@ Assets:
 - Assets/Cloudburst/Survivors/TheSurvivor/Materials/Arm2CLR.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/fab_dagger.png
 - Assets/Cloudburst/Effects/Bases/Debris 1.prefab
+- Assets/Materials/1967480.png
 - Assets/Cloudburst/Effects/Bases/AreaIndicatorRing, Billboard (1).prefab
 - Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_r.jpg
 - Assets/Cloudburst/Survivors/TheSurvivor/Materials/Arm2EM.mat
@@ -409,6 +415,7 @@ Assets:
 - Assets/Cloudburst/753network/Crystallize/Ramp Gold.png
 - Assets/Cloudburst/Items/TopazLense/IMDLRabbitFoot.prefab
 - Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear.fbx
+- Assets/Cloudburst/Enemies/SpittinNigga/cloudburst.blend
 - Assets/Cloudburst/753network/Crystallize/Ramp Pink.png
 - Assets/Cloudburst/Items/Grinder/texExtractor.png
 - Assets/Cloudburst/Survivors/OmoriShit/Materials/face.mat
@@ -518,6 +525,7 @@ Assets:
 - Assets/Cloudburst/StageVariants/Single Floating Particle.prefab
 - Assets/Cloudburst/Equipment/Lumpkin/Metal_Lung_Texture.png
 - Assets/AssetBundleBrowser/Documentation/images/ABundleBrowserIconY1756Scene.png
+- Assets/Cloudburst/Enemies/SpittinNigga/Materials/Cum.mat
 - Assets/Cloudburst/Survivors/TheSurvivor/Arm2CLR.png
 - Assets/Cloudburst/Survivors/Bombardier/Flan/axetexture.png
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 2.mat

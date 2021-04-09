@@ -261,7 +261,7 @@ public static class CloudUtils
     }
     #endregion
     #region UNITY2ROR2
-    public static void AddExplosionForce(CharacterMotor body, float explosionForce, Vector3 explosionPosition, float explosionRadius, float upliftModifier = 0, bool useWearoff = false) 
+    public static void AddExplosionForce(CharacterMotor body, float explosionForce, Vector3 explosionPosition, float explosionRadius, float upliftModifier = 0, bool useWearoff = false)
     {
         var dir = (body.transform.position - explosionPosition);
 
@@ -270,9 +270,10 @@ public static class CloudUtils
         if (useWearoff)
         {
             float wearoff = 1 - (dir.magnitude / explosionRadius);
-            baseForce = dir.normalized * explosionForce * wearoff; 
+            baseForce = dir.normalized * explosionForce * wearoff;
         }
-        else {
+        else
+        {
             baseForce = dir.normalized * explosionForce;
         }
         //baseForce.z = 0;
@@ -396,7 +397,7 @@ public static class CloudUtils
         }
     }
 
-        public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateGenericEquipmentDisplayRule(EquipmentDef def, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
+    public static ItemDisplayRuleSet.KeyAssetRuleGroup CreateGenericEquipmentDisplayRule(EquipmentDef def, string prefabName, string childName, Vector3 position, Vector3 rotation, Vector3 scale)
     {
         ItemDisplayRuleSet.KeyAssetRuleGroup displayRule = new ItemDisplayRuleSet.KeyAssetRuleGroup
         {

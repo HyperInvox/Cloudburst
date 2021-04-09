@@ -40,6 +40,7 @@ namespace Cloudburst.Cores
         public static GameObject willIsNotPoggers;
         public static GameObject willIsStillTotallyNotPoggers;
         public static GameObject wyattSlam;
+        public static GameObject wyattGrooveEffect;
 
         public static GameObject gooEffect;
         public EffectCore() => DoEffects();
@@ -58,9 +59,10 @@ namespace Cloudburst.Cores
             wyattSlam = CreateEffect("DebugEffect");//, false, false, true, "", false, VFXAttributes.VFXIntensity.Medium, VFXAttributes.VFXPriority.Medium);
             maidTouchEffect = CreateEffect("TracerCaptainDefenseMatrix");
             shaderEffect = CreateEffect("ShaderTest");
+            wyattGrooveEffect = CreateEffect("WyattGrooveEffect");
 
-            shaderEffect.AddComponent<Components.MaterialControllerComponents.HGControllerFinder>().Material = shaderEffect.transform.Find("Flames").GetComponent<ParticleSystemRenderer>().material;
-            Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact").GetComponent<EffectComponent>().applyScale = true;
+            //shaderEffect.AddComponent<Components.MaterialControllerComponents.HGControllerFinder>().Material = shaderEffect.transform.Find("Flames").GetComponent<ParticleSystemRenderer>().material;
+            //Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact").GetComponent<EffectComponent>().applyScale = true;
         }
 
         private void CreateMAIDCleanseEffect()

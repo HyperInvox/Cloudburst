@@ -9,7 +9,9 @@ namespace Cloudburst.Cores.Components.Wyatt
     public class WyattWalkmanBehavior : NetworkBehaviour, IOnDamageDealtServerReceiver
     {
         private CharacterBody characterBody;
-
+        private ParticleSystem grooveEffect;
+        private ParticleSystem grooveEffect2;
+        private ChildLocator childLocator;
         private bool loseStacks { get { return stopwatch >= 3 && !flowing; } }
 
         private float stopwatch = 0;
@@ -21,7 +23,13 @@ namespace Cloudburst.Cores.Components.Wyatt
 
         private void Awake()
         {
-            this.characterBody = base.GetComponent<CharacterBody>();
+            characterBody = base.GetComponent<CharacterBody>();
+            childLocator = base.gameObject.GetComponentInChildren<ChildLocator>();
+
+            grooveEffect = childLocator.FindChild("MusicEffect1").GetComponent<ParticleSystem>();
+            grooveEffect2 = childLocator.FindChild("MusicEffect2").GetComponent<ParticleSystem>();
+
+            //.GetComponent<ParticleSystem>();
         }
 
         private void Start() {
@@ -76,7 +84,15 @@ namespace Cloudburst.Cores.Components.Wyatt
             var cap = 9 + stacks;
             if (characterBody && characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) < cap)
             {
-                characterBody.AddBuff(BuffCore.instance.wyattCombatIndex);
+
+                grooveEffect2.Play();
+                grooveEffect.Play();
+                /*EffectManager.SpawnEffect(EffectCore.wyattGrooveEffect, new EffectData()
+                {
+                    scale = 1,
+                    origin = grooveEffect.transform.position
+                }, true);*/
+                    characterBody.AddBuff(BuffCore.instance.wyattCombatIndex);
                 //characterBody.AddTimedBuff(BuffCore.instance.wyattCombatIndex, 3);
             }
             stopwatch = 0;
