@@ -72,11 +72,12 @@ namespace Cloudburst.Cores.States.Wyatt
             hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
             //swingEffectMuzzleString = "WinchHole";//"//SwingTrail";
 
-            var obj = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlSpitter"), new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
+            /*var obj = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlSpitter"), new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
 
             obj.layer = LayerIndex.world.intVal;
             obj.transform.position = base.transform.position;
-            obj.transform.localScale = new Vector3(10, 10, 10);            NetworkServer.Spawn(obj);
+            obj.transform.localScale = new Vector3(10, 10, 10);
+            NetworkServer.Spawn(obj);*/
 
             /*EffectManager.SpawnEffect(EffectCore.shaderEffect, new EffectData()
             {

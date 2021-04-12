@@ -674,7 +674,7 @@ localScale = new Vector3(0.015F, 0.015F, -0.015F),
                  "KEYWORD_AGILE",
                  "KEYWORD_WEIGHTLESS",
                  "KEYWORD_SPIKED",
-            };
+            };  
 
             Languages.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
             Languages.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");

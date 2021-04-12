@@ -55,11 +55,9 @@ namespace Cloudburst.Cores.States.Wyatt
                 }
                 base.PlayAnimation("Fullbody, Override", "kick");
                 stopped = true;
-                LogCore.LogI("stopped");
-                //yield return true;
-            }
 
-            LogCore.LogI("did not stop");
+                //yield return true
+            }
 
             yield return new WaitForSeconds(0.5f);
 

@@ -82,7 +82,7 @@ namespace Cloudburst.Cores.Skills
                     return false;
             }
         }
-
+            
         public override bool IsReady([NotNull] GenericSkill skillSlot)
         {
             return base.HasRequiredStockAndDelay(skillSlot) && this.DetermineExecution(skillSlot);

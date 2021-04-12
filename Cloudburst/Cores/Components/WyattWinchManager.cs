@@ -34,6 +34,11 @@ namespace Cloudburst.Cores.Components
         public readonly Rigidbody rigidbody;
 
         /// <summary>
+        /// The owner's health component
+        /// </summary>
+        public readonly HealthComponent healthComponent;
+
+        /// <summary>
         /// The owner's selected statemachine
         /// </summary>
         public readonly EntityStateMachine stateMachine;
@@ -57,6 +62,7 @@ namespace Cloudburst.Cores.Components
                 inputBank = characterBody.inputBank;
                 this.characterMotor = this.gameObject.GetComponent<CharacterMotor>();
                 this.rigidbody = this.gameObject.GetComponent<Rigidbody>();
+                healthComponent = gameObject.GetComponent<HealthComponent>();
                 this.hasEffectiveAuthority = Util.HasEffectiveAuthority(this.gameObject);
                 EntityStateMachine[] components = characterBody.GetComponent<SetStateOnHurt>().idleStateMachine;
                 for (int i = 0; i < components.Length; i++)
