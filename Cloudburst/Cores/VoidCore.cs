@@ -333,7 +333,10 @@ namespace Cloudburst.Cores
                 bullseyeSearch.FilterOutGameObject(self.gameObject);
                 var target = bullseyeSearch.GetResults().FirstOrDefault<HurtBox>();
 
-                self.characterMotor.Motor.SetPositionAndRotation(target.transform.position, Quaternion.identity, true);
+                if (target)
+                {
+                    self.characterMotor.Motor.SetPositionAndRotation(target.transform.position, Quaternion.identity, true);
+                }
             }
         }
 

@@ -112,8 +112,9 @@ namespace Cloudburst.Cores.States.Wyatt
 
                         if (Vector3.Distance(base.transform.position, target.transform.position) < distance + 5f && target)
                         {
+                            base.PlayAnimation("Fullbody, Override", "kickSwing");
 
-                            base.PlayCrossfade("Fullbody, Override", "BufferEmpty", 0.5f);
+
                             new BlastAttack
                             {
                                 position = target.transform.position,

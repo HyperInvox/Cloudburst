@@ -52,6 +52,7 @@ namespace Cloudburst.Cores
         {
             CloudburstPlugin.postLoad += CloudburstPlugin_postLoad;
             CloudburstPlugin.start += CloudburstPlugin_start;
+            RoR2.ContentManagement.ContentManager.onContentPacksAssigned += ContentManager_onContentPacksAssigned;
             LogCore.LogI("Initializing Core: " + base.ToString());
 
             // populate ASSETS
@@ -94,7 +95,7 @@ namespace Cloudburst.Cores
             wyattSpecial2 = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon2.png");
         }
 
-        private void CloudburstPlugin_start()
+        private void ContentManager_onContentPacksAssigned(HG.ReadOnlyArray<RoR2.ContentManagement.ReadOnlyContentPack> obj)
         {
             Material[] source = Resources.FindObjectsOfTypeAll<Material>();
             Material mfMat = Resources.Load<GameObject>("prefabs/temporaryvisualeffects/SlowDownTime").transform.Find("Visual/Mesh").GetComponent<Renderer>().material;
@@ -113,7 +114,8 @@ namespace Cloudburst.Cores
                         Material material = (from p in source
                                              where p.name == swap.materialName//"ppLocalUnderwater"
                                              select p).FirstOrDefault<Material>();
-                        if (swap.materialName == "matBaubleEffect") {
+                        if (swap.materialName == "matBaubleEffect")
+                        {
                             material = mfMat;
                         }
                         if (material)
@@ -125,7 +127,7 @@ namespace Cloudburst.Cores
 
                         else
                         {
-                            LogCore.LogE(swap.materialName + " could not be found! Attempting alternative loading method!");
+                            LogCore.LogE(swap.materialName + $" could not be found! Attempting alternative loading method! GameObject: {swap.gameObject}");
                             Material newMat = Resources.Load<Material>("Material/" + swap.materialName);
 
                             if (newMat)
@@ -152,6 +154,11 @@ namespace Cloudburst.Cores
                     LogCore.LogI(gameObject.name + " does not have a MaterialSwapper component attached.");
                 }*/
             }
+        }
+
+        private void CloudburstPlugin_start()
+        {
+
         }
 
         private void CloudburstPlugin_postLoad()

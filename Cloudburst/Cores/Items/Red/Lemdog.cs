@@ -9,15 +9,7 @@ namespace Cloudburst.Cores.Items.Red
 
     public class Lemdog : ItemBuilder
     {
-        public List<BuffDef> lemdogList = new List<BuffDef>{
-            RoR2Content.Buffs.Warbanner,
-            //RoR2Content.Buffs.Cloak,
-            RoR2Content.Buffs.CloakSpeed,
-            //RoR2Content.Buffs.EngiShield,
-            RoR2Content.Buffs.MeatRegenBoost,
-            RoR2Content.Buffs.WhipBoost,
-            RoR2Content.Buffs.TeamWarCry,
-        };
+        public List<BuffDef> lemdogList;
         public override string ItemName => "Lemdog";
 
         public override string ItemLangTokenName => "LEMMYDOGS";
@@ -160,7 +152,20 @@ namespace Cloudburst.Cores.Items.Red
 
         protected override void Initialization()
         {
+            RoR2.ContentManagement.ContentManager.onContentPacksAssigned += ContentManager_onContentPacksAssigned;
+        }
 
+        private void ContentManager_onContentPacksAssigned(HG.ReadOnlyArray<RoR2.ContentManagement.ReadOnlyContentPack> obj)
+        {
+            lemdogList = new List<BuffDef>{
+            RoR2Content.Buffs.Warbanner,
+            //RoR2Content.Buffs.Cloak,
+            RoR2Content.Buffs.CloakSpeed,
+            //RoR2Content.Buffs.EngiShield,
+            RoR2Content.Buffs.MeatRegenBoost,
+            RoR2Content.Buffs.WhipBoost,
+            RoR2Content.Buffs.TeamWarCry,
+        };
         }
 
         public override void Hooks()

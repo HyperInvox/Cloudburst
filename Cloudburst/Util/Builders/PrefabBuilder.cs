@@ -148,7 +148,7 @@ public class PrefabBuilder
         SetupFootstep();
         SetupAimAnimator();
         SetupHitbox();
-        CloudburstPlugin.postStart += CloudburstPlugin_start; ;
+        RoR2.ContentManagement.ContentManager.onContentPacksAssigned += ContentManager_onContentPacksAssigned; ; ;
 
         void SetupModelTransform()
         {
@@ -421,8 +421,7 @@ public class PrefabBuilder
         return prefab;
     }
 
-    private void CloudburstPlugin_start()
-
+    private void ContentManager_onContentPacksAssigned(HG.ReadOnlyArray<RoR2.ContentManagement.ReadOnlyContentPack> obj)
     {
         itemDisplayRuleSet = ScriptableObject.CreateInstance<ItemDisplayRuleSet>();
 
@@ -430,14 +429,15 @@ public class PrefabBuilder
 
         Action<List<ItemDisplayRuleSet.KeyAssetRuleGroup>> action2 = this.GetAdditionalItemDisplays;
 
-
+        LogCore.LogI(itemRules.Count);
 
         action2?.Invoke(itemRules);
+
+        LogCore.LogI(itemRules.Count);
 
         itemDisplayRuleSet.keyAssetRuleGroups = itemRules.ToArray();
         charModel.itemDisplayRuleSet = itemDisplayRuleSet;
         itemDisplayRuleSet.GenerateRuntimeValues();
-
     }
 
     public SkinDef.GameObjectActivation[] GetActivations(GameObject[] allObjects, params GameObject[] activatedObjects)

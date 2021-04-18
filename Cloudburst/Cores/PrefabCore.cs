@@ -23,13 +23,13 @@ namespace Cloudburst.Cores
 
         public void CreateMushrumPillarEffect()
         {
-            pillar = EntityStates.AncientWispMonster.ChannelRain.delayPrefab; //.InstantiateClone("AncientWispPillarExplosion", true);
+            //pillar = EntityStates.AncientWispMonster.ChannelRain.delayPrefab; //.InstantiateClone("AncientWispPillarExplosion", true);
 
-            var centralRing = pillar.transform.Find("Particles/Ring, Center");
+            //var centralRing = pillar.transform.Find("Particles/Ring, Center");
 
             //centralRing.gameObject.GetComponent<Renderer>().material = Resources.Load<GameObject>("prefabs/projectileghosts/AncientWispCannonGhost").transform.Find("Particles/FireSphere").GetComponent<Renderer>().material;
             //centralRing.GetComponent<Renderer>().material = Resources.Load<GameObject>("prefabs/effects/impacteffects/AncientWispPillar").transform.Find("Particles/Flames, Tube, CenterHuge").GetComponent<Renderer>().material;
-            centralRing.GetComponent<Renderer>().material = Resources.Load<GameObject>("prefabs/effects/ParentPodHatchEffect").transform.Find("Particles/EnergyInitialParticle (1)").GetComponent<Renderer>().material;
+            //centralRing.GetComponent<Renderer>().material = Resources.Load<GameObject>("prefabs/effects/ParentPodHatchEffect").transform.Find("Particles/EnergyInitialParticle (1)").GetComponent<Renderer>().material;
         }
     }
 }
