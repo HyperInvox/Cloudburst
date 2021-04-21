@@ -263,6 +263,7 @@ namespace Cloudburst
                 prefabCore = new PrefabCore();
                 projectileCore = new ProjectileCore();
                 achiveCore = new AchievementCore();
+                //new CaptainCore();
 
                 //got this feeling
                 //i'm losing you

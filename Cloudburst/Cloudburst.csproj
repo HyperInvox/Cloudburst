@@ -148,6 +148,7 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
+    <Compile Include="Cores\CaptainCore.cs" />
     <Compile Include="Cores\Components\Blink.cs" />
     <Compile Include="Cores\Components\BasedDepartment.cs" />
     <Compile Include="Cores\Components\CringeDepartment.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Cores\Items\White\GlassHarvester.cs" />
     <Compile Include="Cores\Lui.cs" />
     <Compile Include="Cores\NewtCore.cs" />
+    <Compile Include="Cores\States\Captain\CallOrbitalLaser.cs" />
     <Compile Include="Cores\States\Emotes\Emotes.cs" />
     <Compile Include="Cores\States\VoidGolems\Shell.cs" />
     <Compile Include="Cores\States\Wyatt\Class1.cs" />

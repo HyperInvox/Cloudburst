@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3732735411
+CRC: 788865458
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5f13a693cb6438e909b8e5d5a3728a0f
+    Hash: 9c39b2fd31bc38453f9b5de9b80ecb90
   TypeTreeHash:
     serializedVersion: 2
     Hash: 234ea93d93fabd6703f8fc1c86fc46c1
@@ -228,6 +228,7 @@ Assets:
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorIdle.anim
 - Assets/Cloudburst/Items/CarePackageRequester/carepackage.fbx
 - Assets/Cloudburst/Survivors/OmoriShit/mdlAudrey.prefab
+- Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear(1).fbx
 - Assets/Cloudburst/Effects/Bases/Flames.prefab
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature_JogW.anim
 - Assets/Cloudburst/Shaders/shaders/deferred/hgstandard.shader
@@ -263,6 +264,7 @@ Assets:
 - Assets/Cloudburst/Shaders/shaders/postprocess/hgscreendamage.shader
 - Assets/Cloudburst/Equipment/Lumpkin/Materials/Metal_Lung_Texture.mat
 - Assets/Cloudburst/Items/Earrings/Magicians_earrings.png
+- Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear(2).fbx
 - Assets/Cloudburst/Items/Harvester/Materials/HarvesterTex.mat
 - Assets/Cloudburst/Enemies/DeployedLamp/LampDelpoyed.fbx
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/Materials/SurvivorCLR.mat
@@ -337,6 +339,7 @@ Assets:
 - Assets/Cloudburst/Items/CarePackageRequester/blastboots.png
 - Assets/Cloudburst/Items/FabinhoruDagger/icon.png
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/SurvivorCLR.png
+- Assets/Scriptos/wyattRIGGED_RIGSmear(3).fbx
 - Assets/Cloudburst/Shaders/shaders/postprocess/hgscopeshader.shader
 - Assets/Cloudburst/Items/FabinhoruDagger/fab_dagger.fbx
 - Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab
