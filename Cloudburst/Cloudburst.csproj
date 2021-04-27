@@ -151,6 +151,7 @@
     <Compile Include="Cores\CaptainCore.cs" />
     <Compile Include="Cores\Components\Blink.cs" />
     <Compile Include="Cores\Components\BasedDepartment.cs" />
+    <Compile Include="Cores\Components\Class1.cs" />
     <Compile Include="Cores\Components\CringeDepartment.cs" />
     <Compile Include="Cores\Components\MaterialControllerComponents.cs" />
     <Compile Include="Cores\Components\SquashedComponent.cs" />
@@ -183,6 +184,7 @@
     <Compile Include="Cores\States\Emotes\Emotes.cs" />
     <Compile Include="Cores\States\VoidGolems\Shell.cs" />
     <Compile Include="Cores\States\Wyatt\Class1.cs" />
+    <Compile Include="Cores\States\Wyatt\Class2.cs" />
     <Compile Include="Cores\States\Wyatt\DRIVEMETOTHEHIGHWAY.cs" />
     <Compile Include="Cores\States\Wyatt\WyattMain.cs" />
     <Compile Include="Cores\VoidCore.cs" />

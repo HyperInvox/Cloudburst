@@ -33,6 +33,7 @@ namespace Cloudburst.Cores.States.Wyatt
         }
 
         private bool spawnEffect = false;
+        private string animationStateName;
 
         public override bool allowExitFire
         {
@@ -141,17 +142,17 @@ namespace Cloudburst.Cores.States.Wyatt
                 scale = 10,
                 rotation = Quaternion.identity, 
             }, false);*/
-            /*this.animationStateName = "";
+            this.animationStateName = "";
             switch (this.step)
             {
                 case 0:
-                    this.animationStateName = "Primary1";
+                    this.animationStateName = "Swing1";
                     break;
                 case 1:
-                    this.animationStateName = "Primary2";
+                    this.animationStateName = "Swing2";
                     break;
                 case 2:
-                    this.animationStateName = "Primary3";
+                    this.animationStateName = "Swing3";
                     break;
             }
             bool @bool = this.animator.GetBool("isMoving");
@@ -159,14 +160,14 @@ namespace Cloudburst.Cores.States.Wyatt
 
             if (!@bool && bool2)
             {
-                base.PlayCrossfade("FullBody, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
+                base.PlayCrossfade("Gesture, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
             }
             else
             {
-                base.PlayCrossfade("UpperBody, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
-            }*/
+                base.PlayCrossfade("Gesture, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
+            }
 
-            base.PlayCrossfade("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration, 0.05f);
+            //base.PlayCrossfade("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration, 0.05f);
         }
 
         public override void OnMeleeHitAuthority()

@@ -42,6 +42,8 @@ namespace Cloudburst.Cores
         public static GameObject wyattSlam;
         public static GameObject wyattGrooveEffect;
 
+        public static GameObject ericAndreMoment;
+
         public static GameObject gooEffect;
         public EffectCore() => DoEffects();
 
@@ -60,6 +62,7 @@ namespace Cloudburst.Cores
             maidTouchEffect = CreateEffect("TracerCaptainDefenseMatrix");
             shaderEffect = CreateEffect("ShaderTest");
             wyattGrooveEffect = CreateEffect("WyattGrooveEffect");
+            ericAndreMoment = CreateEffect("WyattHitEffect");
 
             //shaderEffect.AddComponent<Components.MaterialControllerComponents.HGControllerFinder>().Material = shaderEffect.transform.Find("Flames").GetComponent<ParticleSystemRenderer>().material;
             //Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact").GetComponent<EffectComponent>().applyScale = true;

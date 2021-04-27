@@ -14,7 +14,7 @@ namespace Cloudburst.Cores.Components
         private BasicOwnerInfo info;
         private Vector3 direction;
         private CharacterMotor motor;
-                private CharacterDirection characterDirection;
+        private CharacterDirection characterDirection;
         private OverlapAttack attack = new OverlapAttack();
 
         public float interval = 0;
@@ -33,23 +33,24 @@ namespace Cloudburst.Cores.Components
 
             attack = new OverlapAttack()
             {
-                 attacker = base.gameObject,
-                 attackerFiltering = AttackerFiltering.Default,
-                 damage = 8 * info.characterBody.damage,
-                 damageColorIndex = DamageColorIndex.Default,
-                 damageType = DamageTypeCore.antiGrav, //overclock.GetDamageType(),
-                 //forceVector = new Vector3(0, force, 0),
-                 //hitEffectPrefab = hitEffectPrefab,
-                 impactSound = RoR2.Audio.NetworkSoundEventIndex.Invalid,
-                 inflictor = base.gameObject,
-                 isCrit = info.characterBody.RollCrit(),
-                 maximumOverlapTargets = 100,
-                 procChainMask = default,
-                 procCoefficient = 1,
-                 pushAwayForce = 3500,
-                  hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxLunge", info.characterBody. modelLocator.modelTransform),
-                 teamIndex = info.characterBody.teamComponent.teamIndex
-             };
+                attacker = base.gameObject,
+                attackerFiltering = AttackerFiltering.Default,
+                damage = 8 * info.characterBody.damage,
+                damageColorIndex = DamageColorIndex.Default,
+                damageType = DamageTypeCore.antiGrav, //overclock.GetDamageType(),
+                                                      //forceVector = new Vector3(0, force, 0),
+                                                      //hitEffectPrefab = hitEffectPrefab,
+                impactSound = RoR2.Audio.NetworkSoundEventIndex.Invalid,
+                inflictor = base.gameObject,
+                isCrit = info.characterBody.RollCrit(),
+                maximumOverlapTargets = 100,
+                procChainMask = default,
+                procCoefficient = 1,
+                //pushAwayForce = 3500,
+                forceVector = direction * 30000,
+                hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxLunge", info.characterBody.modelLocator.modelTransform),
+                teamIndex = info.characterBody.teamComponent.teamIndex
+            };
 
             motor.onHitGround += Motor_onHitGround;
 
@@ -118,13 +119,15 @@ namespace Cloudburst.Cores.Components
                 if (cb)
                 {
                     bool cannotHit = false;
-                    if (cb.isChampion) {
+                    if (cb.isChampion)
+                    {
                         cannotHit = true;
                     }
-                    if (cb.baseNameToken == "BROTHER_BODY_NAME") {
-                        cannotHit = false;  
+                    if (cb.baseNameToken == "BROTHER_BODY_NAME")
+                    {
+                        cannotHit = false;
                     }
-                    if (cb.characterMotor && cb != info.characterBody && cannotHit== false)
+                    if (cb.characterMotor && cb != info.characterBody && cannotHit == false)
                     {
                         CloudUtils.AddExplosionForce(cb.characterMotor, cb.characterMotor.mass * 25, transform.position, 25, 5, false);
                     }
@@ -136,7 +139,8 @@ namespace Cloudburst.Cores.Components
             Destroy(this);
         }
 
-        public void OnDestroy() {
+        public void OnDestroy()
+        {
             motor.onHitGround -= Motor_onHitGround;
         }
 
@@ -164,8 +168,16 @@ namespace Cloudburst.Cores.Components
                 motor.rootMotion += wow;
                 characterDirection.forward = motor.rootMotion.normalized;
 
-                if (attack.Fire(victimsStruck)) {
-                    info.healthComponent.TakeDamageForce(direction * -2000,  true, false);
+                if (attack.Fire(victimsStruck))
+                {
+                    motor.Motor.ForceUnground();
+                    info.healthComponent.TakeDamageForce(direction * -2000, true, false);
+                    EffectManager.SpawnEffect(EffectCore.ericAndreMoment, new EffectData
+                    {
+                        scale = 10,
+                        rotation = Quaternion.identity,
+                        origin = victimsStruck[0].transform.position,
+                    }, true);
                     //motor.ApplyForce(-(direction * 125 * Assaulter2.speedCoefficient), true, false);
                     SetToEmpty();
                     //		protected void PlayCrossfade(string layerName, string animationStateName, float crossfadeDuration)

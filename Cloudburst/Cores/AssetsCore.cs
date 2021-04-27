@@ -1,6 +1,9 @@
 ﻿
+using HG;
+using RoR2.ContentManagement;
 using System.Linq;
 using System.Reflection;
+using ThreeEyedGames;
 using UnityEngine;
 
 namespace Cloudburst.Cores
@@ -95,7 +98,7 @@ namespace Cloudburst.Cores
             wyattSpecial2 = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon2.png");
         }
 
-        private void ContentManager_onContentPacksAssigned(HG.ReadOnlyArray<RoR2.ContentManagement.ReadOnlyContentPack> obj)
+        private void ContentManager_onContentPacksAssigned(ReadOnlyArray<ReadOnlyContentPack> obj)
         {
             Material[] source = Resources.FindObjectsOfTypeAll<Material>();
             Material mfMat = Resources.Load<GameObject>("prefabs/temporaryvisualeffects/SlowDownTime").transform.Find("Visual/Mesh").GetComponent<Renderer>().material;
@@ -107,41 +110,49 @@ namespace Cloudburst.Cores
                 {
                     //LogCore.LogI(swap.gameObject.name);
                     //LogCore.LogI(swap.materialName);
+                    Material material = (from p in source
+                                         where p.name == swap.materialName//"ppLocalUnderwater"
+                                         select p).FirstOrDefault<Material>();
 
-                    Renderer renderer = swap.gameObject.GetComponent<Renderer>();
-                    if (renderer)
+                    Decal decal = swap.GetComponent<Decal>();
+                    if (!decal)
                     {
-                        Material material = (from p in source
-                                             where p.name == swap.materialName//"ppLocalUnderwater"
-                                             select p).FirstOrDefault<Material>();
-                        if (swap.materialName == "matBaubleEffect")
+                        Renderer renderer = swap.gameObject.GetComponent<Renderer>();
+                        if (renderer)
                         {
-                            material = mfMat;
-                        }
-                        if (material)
-                        {
-                            renderer.material = material;
-                            renderer.sharedMaterial = material;
-                        }
-
-
-                        else
-                        {
-                            LogCore.LogE(swap.materialName + $" could not be found! Attempting alternative loading method! GameObject: {swap.gameObject}");
-                            Material newMat = Resources.Load<Material>("Material/" + swap.materialName);
-
-                            if (newMat)
+                            if (swap.materialName == "matBaubleEffect")
                             {
-
-                                renderer.material = newMat;
-                                renderer.sharedMaterial = newMat;
+                                material = mfMat;
                             }
+                            if (material)
+                            {
+                                renderer.material = material;
+                                renderer.sharedMaterial = material;
+                            }
+
+
                             else
                             {
-                                LogCore.LogE(swap.materialName + " cannot be found! Alternative loading method failed!");
+                                LogCore.LogE(swap.materialName + $" could not be found! Attempting alternative loading method! GameObject: {swap.gameObject}");
+                                Material newMat = Resources.Load<Material>("Material/" + swap.materialName);
 
+                                if (newMat)
+                                {
+
+                                    renderer.material = newMat;
+                                    renderer.sharedMaterial = newMat;
+                                }
+                                else
+                                {
+                                    LogCore.LogE(swap.materialName + " cannot be found! Alternative loading method failed!");
+
+                                }
                             }
                         }
+                    }
+                    else {
+                        decal.Material = material;
+                        LogCore.LogI(decal.gameObject);
                     }
                 }
                 /*if (quicKSwap)

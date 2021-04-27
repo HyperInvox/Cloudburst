@@ -256,44 +256,7 @@ namespace Cloudburst.Cores
             //On.RoR2.CharacterBody.RemoveBuff += CharacterBody_RemoveBuff;
             //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
-            On.RoR2.CharacterMotor.OnHitGroundServer += CharacterMotor_OnHitGroundServer;
             IL.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats1;
-        }
-
-        private void CharacterMotor_OnHitGroundServer(On.RoR2.CharacterMotor.orig_OnHitGroundServer orig, CharacterMotor self, CharacterMotor.HitGroundInfo hitGroundInfo)
-        {
-            orig(self, hitGroundInfo);
-            if (self.body && self.body.HasBuff(this.antiGrav) || self.body.HasBuff(this.wyattSuspension))
-            {
-                self.useGravity = false;
-                if (self.lastVelocity.y < -30)
-                {
-                    EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleGuardGroundSlam"), new EffectData
-                    {
-                        scale = 10,
-                        rotation = Quaternion.identity,
-                        origin = hitGroundInfo.position,
-                    }, true);
-                    new BlastAttack
-                    {
-                        position = hitGroundInfo.position,
-                        //baseForce = 3000,
-                        attacker = null,
-                        inflictor = null,
-                        teamIndex = TeamIndex.Player,
-                        baseDamage = self.body.maxHealth / 5,
-                        attackerFiltering = default,
-                        //bonusForce = new Vector3(0, -3000, 0),
-                        damageType = DamageType.Stun1s | DamageType.NonLethal, //| DamageTypeCore.spiked,
-                        crit = false,
-                        damageColorIndex = DamageColorIndex.Default,
-                        falloffModel = BlastAttack.FalloffModel.None,
-                        //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
-                        procCoefficient = 0,
-                        radius = 10
-                    }.Fire();
-                }
-            }
         }
 
         private void CharacterBody_RecalculateStats1(MonoMod.Cil.ILContext il)

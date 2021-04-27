@@ -99,7 +99,12 @@ namespace Cloudburst.Cores.States.Wyatt
                         base.characterDirection.forward = base.characterMotor.velocity.normalized;
                         float distance = Util.SphereVolumeToRadius(target.volume);
 
-                        if (_stopwatch > 2)
+                        if (Vector3.Distance(base.transform.position, target.transform.position) < distance + 5f && target)
+                        {
+                            base.PlayAnimation("Fullbody, Override", "kickSwing");
+                        }
+
+                            if (_stopwatch > 2)
                         {
                             //LogCore.LogI(stopwatch);
                             this.activatorSkillSlot.AddOneStock();
@@ -112,7 +117,7 @@ namespace Cloudburst.Cores.States.Wyatt
 
                         if (Vector3.Distance(base.transform.position, target.transform.position) < distance + 5f && target)
                         {
-                            base.PlayAnimation("Fullbody, Override", "kickSwing");
+                            //base.PlayAnimation("Fullbody, Override", "kickSwing");
 
 
                             new BlastAttack
@@ -124,8 +129,8 @@ namespace Cloudburst.Cores.States.Wyatt
                                 teamIndex = base.GetTeam(),
                                 baseDamage = (5 + (characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) * .25f)) * this.damageStat,
                                 attackerFiltering = AttackerFiltering.NeverHit,
-                                bonusForce = new Vector3(0, -3000, 0),
-                                damageType = DamageType.Stun1s | DamageTypeCore.spiked,
+                               // bonusForce = new Vector3(0, -3000, 0),
+                                damageType = DamageType.Stun1s,// | DamageTypeCore.spiked,
                                 crit = RollCrit(),
                                 damageColorIndex = DamageColorIndex.Default,
                                 falloffModel = BlastAttack.FalloffModel.None,
@@ -133,6 +138,14 @@ namespace Cloudburst.Cores.States.Wyatt
                                 procCoefficient = 1f,
                                 radius = 5
                             }.Fire();
+
+
+                            if (target.healthComponent.HasComponent<CharacterMotor>() && !target.healthComponent.body.characterMotor.isGrounded && !target.healthComponent.HasComponent<SpikingComponent>())
+                            {
+                                SpikingComponent based = target.healthComponent.AddComponent<SpikingComponent>();
+                                based.interval = 1f;
+                                based.originalSpiker = this.gameObject;
+                            }
 
                             //LogCore.LogI("called onhit!!!");
                             CloudburstPlugin.Destroy(_winch);

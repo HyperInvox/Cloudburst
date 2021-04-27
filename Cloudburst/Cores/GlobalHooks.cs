@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using Cloudburst.Cores.Components;
+using RoR2;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -44,6 +45,14 @@ namespace Cloudburst.Cores
             On.RoR2.GlobalEventManager.OnCrit += GlobalEventManager_OnCrit;
             On.RoR2.CharacterBody.AddTimedBuff_BuffDef_float += CharacterBody_AddTimedBuff_BuffDef_float;//AddTimedBuff += CharacterBody_AddTimedBuff;
             On.RoR2.CharacterBody.OnBuffFinalStackLost += CharacterBody_OnBuffFinalStackLost;
+            On.RoR2.GlobalEventManager.OnCharacterHitGroundServer += GlobalEventManager_OnCharacterHitGroundServer;
+        }
+
+        private static void GlobalEventManager_OnCharacterHitGroundServer(On.RoR2.GlobalEventManager.orig_OnCharacterHitGroundServer orig, GlobalEventManager self, CharacterBody characterBody, Vector3 impactVelocity)
+        {
+            if (!characterBody.HasComponent<SpikingComponent>()) {
+                orig(self, characterBody, impactVelocity);
+            }
         }
 
         private static void CharacterBody_OnBuffFinalStackLost(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)

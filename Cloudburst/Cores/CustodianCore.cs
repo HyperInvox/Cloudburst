@@ -60,7 +60,7 @@ She'll love this, I know.
 
         public override GameObject survivorDisplay => AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattCSS");
 
-        public override GameObject survivorMdl => AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattBUTHOLYSHITJUSTWORK");
+        public override GameObject survivorMdl => AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattAIC");
 
         public override Color survivorDefColor => new Color(0.4862745098f, 0.94901960784f, 0.71764705882f);
 
@@ -247,7 +247,7 @@ localPos = new Vector3(0.0034F, 0.0079F, 0.002F),
 localAngles = new Vector3(45F, 180F, 0F),
 localScale = new Vector3(0.005F, 0.005F, 0.005F)*/
             obj.Add(CloudUtils.CreateGenericEquipmentDisplayRule(RoR2Content.Equipment.LifestealOnHit, "DisplayLifestealOnHit", "Head", new Vector3(0.0034F, 0.0079F, 0.002F), new Vector3(45F, 180F, 0F), new Vector3(0.005f, 0.005f, 0.005f)));
-            obj.Add(CloudUtils.CreateGenericEquipmentDisplayRule(RoR2Content.Equipment.TeamWarCry, "DisplayTeamWarCry", "Pelvis", new Vector3(0.01f, 0.003f, 0), new Vector3(10, 90, 0), new Vector3(0.0035f, 0.0035f, 0.0035f)));
+            obj.Add(CloudUtils.CreateGenericEquipmentDisplayRule(RoR2Content.Equipment.TeamWarCry, "DisplayTeamWarCry", "Pelvis", new Vector3(0.009672F, 0.213739F, -0.717588F), new Vector3(18.79459F, 176.7826F, 1.458205F), new Vector3(0.2F, 0.2F, 0.2F)));
 
             obj.Add(CloudUtils.CreateFollowerDisplayRule(RoR2Content.Equipment.Saw, "DisplaySawmerang", new Vector3(0.06f, 0.02f, 0), new Vector3(90, 0, 0), new Vector3(0.25f, 0.25f, 0.25f)));
             obj.Add(CloudUtils.CreateFollowerDisplayRule(RoR2Content.Equipment.Meteor, "DisplayMeteor", new Vector3(0.05f, 0.02f, 0), new Vector3(90, 0, 0), new Vector3(1, 1, 1)));
@@ -255,28 +255,28 @@ localScale = new Vector3(0.005F, 0.005F, 0.005F)*/
 
 
             /*childName = "Head",
-localPos = new Vector3(0.0004F, 0.0058F, 0.0052F),
-localAngles = new Vector3(284.9193F, 44.4778F, 132.5897F),
-localScale = new Vector3(0.01F, 0.01F, 0.0105F)*/
+localPos = new Vector3(0.0142F, 0.6222F, 0.5267F),
+localAngles = new Vector3(273.3598F, 75.2117F, 107.0705F),
+localScale = new Vector3(0.8F, 0.8F, 0.8F)*/
 
             /*done*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.CritGlasses, "DisplayGlasses", "Head", new Vector3(0.0004F, 0.0058F, 0.0052F), new Vector3(284.9193F, 44.4778F, 132.5897F), new Vector3(0.01F, 0.01F, 0.0105F)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.CritGlasses, "DisplayGlasses", "Head", new Vector3(0.0142F, 0.6222F, 0.5267F), new Vector3(273.3598F, 75.2117F, 107.0705F), new Vector3(0.8F, 0.8F, 0.8F)));
             /*childName = "LowerBody",
 localPos = new Vector3(-0.0058F, 0.0037F, 0.0015F),
-localAngles = new Vector3(69.0152F, 187.046F, 261.7581F),
+localAngles = new Vector3(69.0152F, 187.046F, 261.7581F)
 localScale = new Vector3(0.005F, 0.005F, 0.005F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.Syringe, "DisplaySyringeCluster", "LowerBody", new Vector3(-0.0058F, 0.0037F, 0.0015F), new Vector3(69.0152F, 187.046F, 261.7581F), new Vector3(0.005F, 0.005F, 0.005F)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.Syringe, "DisplaySyringeCluster", "Neck", new Vector3(-0.220076F, 0.290355F, 0.128224F), new Vector3(53.72817F, 232.3132F, 328.412F), new Vector3(0.5F, 0.5F, 0.5F)));
             /*childName = RoR2Content.Items.Broom3",
  localPos = new Vector3(0.0003F, -0.0182F, 0.0001F),
  localAngles = new Vector3(0F, 0F, 0F),
  localScale = new Vector3(0.005F, 0.005F, 0.005F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.NearbyDamageBonus, "DisplayDiamond", "Broom3", new Vector3(0.0003F, -0.0182F, 0.0001F), new Vector3(0, 0, 0), new Vector3(0.005f, 0.005f, 0.005f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.NearbyDamageBonus, "DisplayDiamond", "GyroBall", new Vector3(0.014831F, 0.006201F, 0.010713F), new Vector3(333.5044F, 123.4042F, 17.2751F), new Vector3(0.25F, 0.25F, 0.25F)));
             /*childName = RoR2Content.Items.Broom3",
 localPos = new Vector3(0.0023F, 0.0571F, 0.0006F),
 localAngles = new Vector3(274.0766F, 66.9896F, 295.4782F),
 localScale = new Vector3(0.0175F, 0.0175F, 0.0175F)*/
             /*odd*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.ArmorReductionOnHit, "DisplayWarhammer", "Broom3", new Vector3(0.0023F, 0.0571F, 0.0006F), new Vector3(274.0766F, 66.9896F, 295.4782F), new Vector3(0.0175F, 0.0175F, 0.0175F)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.ArmorReductionOnHit, "DisplayWarhammer", "Broom3", new Vector3(0.009617F, 3.189145F, -0.043662F), new Vector3(271.2599F, 228.7159F, 130.642F), new Vector3(1F, 1F, 1F)));
             /*childName = RoR2Content.Items.Broom3",
 localPos = new Vector3(0.0009F, 0F, 0.0012F),
 localAngles = new Vector3(70F, 0F, 180F),
@@ -288,7 +288,7 @@ localPos = new Vector3(0.0001F, 0.0009F, -0.0018F),
 localAngles = new Vector3(347.2675F, 171.081F, 164.3253F),
 localScale = new Vector3(0.005F, 0.005F, 0.005F)*/
 
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.Bear, "DisplayBear", "Zipper", new Vector3(0.0001F, 0.0009F, -0.0018F), new Vector3(347.2675F, 171.081F, 164.3253F), new Vector3(0.005F, 0.005F, 0.005F)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.Bear, "DisplayBear", "UpperBody", new Vector3(0.102427F, 1.343844F, 0.119726F), new Vector3(12.28595F, 174.9624F, 355.2533F), new Vector3(1.022359F, 1.121412F, 1.022359F)));
             /*childName = "Pelvis",
 localPos = new Vector3(0.0002F, 0.0028F, 0.0036F),
 localAngles = new Vector3(18.9127F, 281.0396F, 184.2924F),
@@ -328,8 +328,8 @@ localScale = new Vector3(0.0175F, 0.0175F, 0.0175F)*/
 localPos = new Vector3(0.0011F, 0.0031F, -0.0047F),
 localAngles = new Vector3(285.629F, 202.3053F, 143.9489F),
 localScale = new Vector3(0.025F, 0.025F, 0.025F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.WarCryOnMultiKill, "DisplayPauldron", "UpperBody", new Vector3(0.0011F, 0.0031F, -0.0047F), new Vector3(285.629F, 202.3053F, 143.9489F), new Vector3(0.03f, 0.03f, 0.03f)));
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.SprintArmor, "DisplayBuckler", "LowerArm.L", new Vector3(0.002f, 0.005f, 0), new Vector3(0, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.WarCryOnMultiKill, "DisplayPauldron", "Collar.R", new Vector3(-0.143662F, 0.519012F, -0.012151F), new Vector3(359.2599F, 308.4473F, 145.5516F), new Vector3(0.75F, 0.75F, 0.75F)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.SprintArmor, "DisplayBuckler", "LowerArm.R", new Vector3(0.002f, 0.005f, 0), new Vector3(0, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
             /*childName = "GyroRing",
 localPos = new Vector3(0F, 0F, 0F),
 localAngles = new Vector3(270F, 90F, 0F),
@@ -361,10 +361,10 @@ localAngles = new Vector3(2.0048F, 359.2651F, 178.9463F),
 localScale = new Vector3(0.09F, 0.09F, 0.09F)*/
             obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.ChainLightning, "DisplayUkulele", "Broom3", new Vector3(0.0021F, 0.0167F, -0.0024F), new Vector3(2.0048F, 359.2651F, 178.9463F), new Vector3(0.09F, 0.09F, 0.09F)));
             /*childName = "Head",
-localPos = new Vector3(-0.0001F, 0.0037F, 0.0049F),
-localAngles = new Vector3(282.9242F, 63.8287F, 115.1599F),
-localScale = new Vector3(0.02F, 0.02F, 0.02F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.GhostOnKill, "DisplayMask", "Head", new Vector3(-0.0001F, 0.0037F, 0.0049F), new Vector3(282.9242F, 63.8287F, 115.1599F), new Vector3(0.02f, 0.02f, 0.02f)));
+localPos = new Vector3(0.03F, 0.4189F, 0.5159F),
+localAngles = new Vector3(275.36F, 198.4852F, 342.2571F),
+localScale = new Vector3(1.7F, 1.7F, 1.7F)*/
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.GhostOnKill, "DisplayMask", "Head", new Vector3(0.03F, 0.4189F, 0.5159F), new Vector3(275.36F, 198.4852F, 342.2571F), new Vector3(1.7F, 1.7F, 1.7F)));
             /*childName = "Collar.L",
 localPos = new Vector3(0F, 0.0121F, -0.0034F),
 localAngles = new Vector3(349.4365F, 123.2711F, 75.3896F),
@@ -374,7 +374,7 @@ localScale = new Vector3(0.0035F, 0.0035F, 0.0035F)*/
 localPos = new Vector3(0.0002F, 0.0026F, 0.0105F),
 localAngles = new Vector3(287.2566F, 341.5681F, 194.5766F),
 localScale = new Vector3(0.015F, 0.015F, 0.015F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.AttackSpeedOnCrit, "DisplayWolfPelt", "Head", new Vector3(0.0002F, 0.0026F, 0.0105F), new Vector3(287.2566F, 341.5681F, 194.5766F), new Vector3(0.015f, 0.015f, 0.015f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.AttackSpeedOnCrit, "DisplayWolfPelt", "Collar.L", new Vector3(0.000794F, 0.753816F, 0.147341F), new Vector3(277.3531F, 237.849F, 304.8341F), new Vector3(1.279801F, 1.228338F, 1.310545F)));
             /*childName = "Broom3",
 localPos = new Vector3(0.0001F, -0.0538F, -0.0008F),
 localAngles = new Vector3(85.9469F, 181.6289F, 349.8526F),
@@ -389,12 +389,12 @@ localScale = new Vector3(0.01F, 0.01F, 0.01F)*/
 localPos = new Vector3(0.0107F, 0.0053F, 0.0016F),
 localAngles = new Vector3(25.7662F, 357.8116F, 19.4318F),
 localScale = new Vector3(0.0035F, 0.0035F, 0.0035F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.HealWhileSafe, "DisplaySnail", "UpperBody", new Vector3(0.0107F, 0.0053F, 0.0016F), new Vector3(25.7662F, 357.8116F, 19.4318F), new Vector3(0.0035f, 0.0035f, 0.0035f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.HealWhileSafe, "DisplaySnail", "Head", new Vector3(-0.009932F, 0.156171F, 0.986855F), new Vector3(278.7867F, 299.9488F, 241.61F), new Vector3(0.25F, 0.25F, 0.25F)));
             /*childName = "UpperBody",
 localPos = new Vector3(0.001F, 0.0083F, -0.0033F),
 localAngles = new Vector3(284.1014F, 42.8073F, 280.8434F),
 localScale = new Vector3(0.02F, 0.02F, 0.02F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.Clover, "DisplayClover", "UpperBody", new Vector3(0.001F, 0.0083F, -0.0033F), new Vector3(284.1014F, 42.8073F, 280.8434F), new Vector3(0.02f, 0.02f, 0.02f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.Clover, "DisplayClover", "Head", new Vector3(-0.230584F, 0.513138F, 0.823247F), new Vector3(56.75823F, 333.8656F, 357.9174F), new Vector3(1F, 1F, 1F)));
             /*childName = "Head",
 localPos = new Vector3(-0.0008F, 0.0013F, 0.0084F),
 localAngles = new Vector3(294.6417F, 30.514F, 144.012F),
@@ -404,8 +404,9 @@ localScale = new Vector3(0.035F, 0.035F, 0.035F)*/
 localPos = new Vector3(0.0037F, -0.0006F, -0.0046F),
 localAngles = new Vector3(298.2337F, 52.7536F, 108.3291F),
 localScale = new Vector3(0.025F, 0.025F, 0.025F)*/
+
             obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.JumpBoost, "DisplayWaxBird", "Head", new Vector3(0.0037F, -0.0006F, -0.0046F), new Vector3(298.2337F, 52.7536F, 108.3291F), new Vector3(0.025f, 0.025f, 0.025f)));
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.ArmorPlate, "DisplayRepulsionArmorPlate", "UpperLeg.L", new Vector3(-0.003f, 0.0075f, 0.001f), new Vector3(90, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.ArmorPlate, "DisplayRepulsionArmorPlate", "Pelvis", new Vector3(-0.9153F, 0.2416F, -0.1152F), new Vector3(82.5424F, 125.5413F, 50.2729F), new Vector3(0.8492F, 0.8492F, 0.8492F)));
             /*childName = "LowerArm.L",
 localPos = new Vector3(0.0019F, 0.0034F, -0.0008F),
 localAngles = new Vector3(0F, 0F, 270F),
@@ -425,7 +426,7 @@ localScale = new Vector3(0.01F, 0.01F, 0.01F)*/
 localPos = new Vector3(0.0006F, -0.0028F, -0.0038F),
 localAngles = new Vector3(358.8678F, 83.5013F, 309.2877F),
 localScale = new Vector3(0.007F, 0.007F, 0.007F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.EquipmentMagazine, "DisplayBattery", "UpperBody", new Vector3(0.0006F, -0.0028F, -0.0038F), new Vector3(358.8678F, 83.5013F, 309.2877F), new Vector3(0.007F, 0.007F, 0.007F)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.EquipmentMagazine, "DisplayBattery", "Pelvis", new Vector3(-0.436813F, 0.472419F, 0.357303F), new Vector3(85.98849F, 320.2064F, 79.23889F), new Vector3(0.437541F, 0.42765F, 0.43462F)));
             /*childName = "Pelvis",
 localPos = new Vector3(-0.0055F, 0.0025F, 0.0033F),
 localAngles = new Vector3(0.2051F, 342.8358F, 1.3584F),
@@ -468,18 +469,19 @@ localPos = new Vector3(-0.0073F, 0.0012F, 0.0048F),
 localAngles = new Vector3(17.7645F, 160.1828F, 242.243F),
 localScale = new Vector3(0.0035F, 0.0035F, 0.0035F)*/
             obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.BeetleGland, "DisplayBeetleGland", "UpperBody", new Vector3(0.0014F, 0.0092F, -0.0077F), new Vector3(0, 270, 0), new Vector3(0.0035f, 0.0035f, 0.0035f)));
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.SprintBonus, "DisplaySoda", "Pelvis", new Vector3(0.004f, 0.002f, -0.005f), new Vector3(270, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.SprintBonus, "DisplaySoda", "Pelvis", new Vector3(0.72736F, 0.258266F, -0.482206F), new Vector3(272.8019F, 53.99409F, 55.91787F), new Vector3(1F, 1F, 1F)));
             obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.StickyBomb, "DisplayStickyBomb", "Pelvis", new Vector3(0.0025f, 0.002f, -0.008f), new Vector3(345, 15, 0), new Vector3(0.01f, 0.01f, 0.01f)));
             /*childName = "Pelvis",
 localPos = new Vector3(0.005F, 0.0064F, -0.0058F),
 localAngles = new Vector3(4.7991F, 60.5039F, 259.4F),
 localScale = new Vector3(0.03F, 0.03F, 0.03F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.TreasureCache, "DisplayKey", "Pelvis", new Vector3(0.005F, 0.0064F, -0.0058F), new Vector3(4.7991F, 60.5039F, 259.4F), new Vector3(0.03f, 0.03f, 0.03f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.TreasureCache, "DisplayKey", "Pelvis", new Vector3(0.622186F, 0.265435F, 0.222264F), new Vector3(3.57456F, 319.2377F, 266.4469F), new Vector3(3F, 3F, 3F)
+));
             /*childName = "Pelvis",
 localPos = new Vector3(0.0008F, 0.0014F, 0.0043F),
 localAngles = new Vector3(90F, 0F, 0F),
 localScale = new Vector3(0.02F, 0.02F, 0.02F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.BossDamageBonus, "DisplayAPRound", "Pelvis", new Vector3(0.0008F, 0.0014F, 0.0043F), new Vector3(90, 0, 0), new Vector3(0.02f, 0.02F, 0.02F)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.BossDamageBonus, "DisplayAPRound", "Pelvis", new Vector3(-0.42113F, 0.167473F, -0.632915F), new Vector3(87.39136F, 286.4641F, 253.5351F), new Vector3(1.33F, 1.5F, 1.66F)));
             /*childName = "UpperBody",
 localPos = new Vector3(-0.0049F, 0.008F, 0.0064F),
 localAngles = new Vector3(356.7661F, 338.3447F, 0.434F),
@@ -510,7 +512,7 @@ localScale = new Vector3(0.0085F, 0.0085F, 0.0085F)*/
 localPos = new Vector3(0.0037F, 0.0047F, 0.0079F),
 localAngles = new Vector3(74.094F, 148.379F, 143.1946F),
 localScale = new Vector3(0.015F, 0.015F, 0.015F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.BarrierOnKill, "DisplayBrooch", "UpperBody", new Vector3(0.0037F, 0.0047F, 0.0079F), new Vector3(74.094F, 148.379F, 143.1946F), new Vector3(0.015f, 0.015f, 0.015f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.BarrierOnKill, "DisplayBrooch", "Head", new Vector3(0.194496F, 0.572236F, 0.932347F), new Vector3(5.009361F, 162.6576F, 25.99005F), new Vector3(1.196984F, 1.196984F, 1.196984F)  ));
             obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.TPHealingNova, "DisplayGlowFlower", "UpperBody", new Vector3(-0.0055f, 0.003f, -0.004f), new Vector3(0, 250, 0), new Vector3(0.01f, 0.01f, 0.01f)));
             //childName = "Pelvis",
             //            localPos = new Vector3(0.0071F, 0.0051F, -0.0029F),
@@ -566,12 +568,12 @@ localScale = new Vector3(0.02F, 0.02F, 0.02F)*/
 localPos = new Vector3(-0.0028F, -0.0026F, 0.0008F),
 localAngles = new Vector3(312.3487F, 109.3963F, 155.8183F),
 localScale = new Vector3(0.05F, 0.05F, 0.05F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.AlienHead, "DisplayAlienHead", "Hand.R", new Vector3(-0.0028F, -0.0026F, 0.0008F), new Vector3(312.3487F, 109.3963F, 155.8183F), new Vector3(0.05f, 0.05f, 0.05f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.AlienHead, "DisplayAlienHead", "Hand.R", new Vector3(-0.0028F, -0.0026F, 0.0008F), new Vector3(312.3487F, 109.3963F, 155.8183F), new Vector3(2, 2, 2)));
             /*childName = "Head",
 localPos = new Vector3(0.0007F, 0.0031F, -0.0019F),
 localAngles = new Vector3(285.5032F, 34.1144F, 136.7536F),
 localScale = new Vector3(0.015F, 0.005F, 0.005F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.HeadHunter, "DisplaySkullCrown", "Head", new Vector3(0.0007F, 0.0031F, -0.0019F), new Vector3(285.5032F, 34.1144F, 136.7536F), new Vector3(0.015f, 0.005f, 0.005f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.HeadHunter, "DisplaySkullCrown", "Head", new Vector3(0.002729F, 0.219027F, 0.831527F), new Vector3(288.2999F, 1.47202F, 178.4848F), new Vector3(1.431602F, 0.592387F, 0.069496F)));
             /*childName = "Pelvis",
 localPos = new Vector3(-0.0059F, 0.0082F, 0.0062F),
 localAngles = new Vector3(16.5019F, 50.1966F, 112.967F),
@@ -641,7 +643,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
         public override void GenerateRenderInfos(List<CharacterModel.RendererInfo> arg1, Transform arg2)
         {
             base.GenerateRenderInfos(arg1, arg2);
-            var broom = arg2.Find("Brom");
+            var broom = arg2.Find("Brom.002");
             var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
             arg1.Add(new CharacterModel.RendererInfo
             {
@@ -651,14 +653,14 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
                 renderer = mat,
             });
 
-            var w = arg2.Find("Wyatt");
-            var wMat = w.GetComponentInChildren<SkinnedMeshRenderer>();
+            var wyatt = arg2.Find("Wyatt.002");
+            var wyattMat = wyatt.GetComponent<SkinnedMeshRenderer>();
             arg1.Add(new CharacterModel.RendererInfo
             {
-                defaultMaterial = wMat.material,
+                defaultMaterial = wyattMat.material,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                 ignoreOverlays = false,
-                renderer = wMat,
+                renderer = wyattMat,
             });
         }
 
@@ -729,13 +731,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
 
         public override void CreatePrimary(SkillLocator skillLocator, SkillFamily skillFamily)
         {
-            //--FIXED--
-            //Alright, here's the problem:
-            //Interrupt priorities are weird, and because they are weird
-            //they cause the primary to not fire off after the secondary is fired.
-            //Obvious problem is obvious, but setting the primary's interrupt priority to PrioritySkill 
-            //makes it so you can't hold it down. Extremely obvious problem is obvious, but I have no idea how's to fix this.
-            //FIX: Apparently I forgot to call base.FixedUpdate(n.k); in its FixedUpdate void, whoops!
+
 
             Loadouts.RegisterEntityState(typeof(FullSwing));
             Loadouts.RegisterEntityState(typeof(WyattBaseMeleeAttack));
@@ -747,13 +743,15 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             primarySkillDef.activationStateMachineName = "Weapon";
             primarySkillDef.baseMaxStock = 1;
             primarySkillDef.baseRechargeInterval = 0f;
-            primarySkillDef.beginSkillCooldownOnSkillEnd = true;
+            primarySkillDef.beginSkillCooldownOnSkillEnd = false;
             primarySkillDef.canceledFromSprinting = false;
+            primarySkillDef.resetStepsOnIdle = true;
             primarySkillDef.fullRestockOnAssign = true;
             primarySkillDef.interruptPriority = InterruptPriority.Any;
             primarySkillDef.isCombatSkill = true;
             primarySkillDef.mustKeyPress = false;
             primarySkillDef.cancelSprintingOnActivation = false;
+            //primarySkillDef.can = false;
             primarySkillDef.rechargeStock = 1;
             primarySkillDef.requiredStock = 1;
             primarySkillDef.stockToConsume = 0;
