@@ -75,7 +75,7 @@ namespace Cloudburst.Cores.Components
                 rotation = Quaternion.identity,
                 origin = hitGroundInfo.position,
             }, true);
-                128
+                
             /*EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleQueenDeathImpact")/*EffectCore.wyattSlam/*Resources.Load<GameObject>("prefabs/effects/impacteffects/BeetleGuardGroundSlam"), new EffectData
             {
                 scale = 1,
