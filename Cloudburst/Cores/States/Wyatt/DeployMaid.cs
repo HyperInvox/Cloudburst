@@ -61,6 +61,8 @@ namespace Cloudburst.Cores.States.Wyatt
 
             yield return new WaitForSeconds(0.5f);
 
+            base.characterMotor.velocity = new Vector3(0, 0, 0);
+
             if (stopped != true)
             {
                 base.characterMotor.velocity = new Vector3(0, 0, 0);

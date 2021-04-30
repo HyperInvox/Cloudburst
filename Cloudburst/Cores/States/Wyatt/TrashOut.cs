@@ -129,7 +129,7 @@ namespace Cloudburst.Cores.States.Wyatt
                                 teamIndex = base.GetTeam(),
                                 baseDamage = (5 + (characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) * .25f)) * this.damageStat,
                                 attackerFiltering = AttackerFiltering.NeverHit,
-                               // bonusForce = new Vector3(0, -3000, 0),
+                                // bonusForce = new Vector3(0, -3000, 0),
                                 damageType = DamageType.Stun1s,// | DamageTypeCore.spiked,
                                 crit = RollCrit(),
                                 damageColorIndex = DamageColorIndex.Default,
@@ -139,14 +139,22 @@ namespace Cloudburst.Cores.States.Wyatt
                                 radius = 5
                             }.Fire();
 
-                            
-                            if (target.healthComponent.HasComponent<CharacterMotor>() && !target.healthComponent.body.characterMotor.isGrounded && !target.healthComponent.HasComponent<SpikingComponent>())
-                            {
-                                SpikingComponent based = target.healthComponent.AddComponent<SpikingComponent>();
-                                based.interval = 1f;
-                                based.originalSpiker = this.gameObject;
-                            }
 
+                            if (target.healthComponent.body && !target.healthComponent.body.isChampion)
+                            {
+                                if ((target.healthComponent.HasComponent<CharacterMotor>() && !target.healthComponent.body.characterMotor.isGrounded) && !target.healthComponent.HasComponent<SpikingComponent>())
+                                {
+                                    SpikingComponent based = target.healthComponent.AddComponent<SpikingComponent>();
+                                    based.interval = 1f;
+                                    based.originalSpiker = this.gameObject;
+                                }
+                                else if (target.healthComponent.HasComponent<RigidbodyMotor>() && !target.healthComponent.HasComponent<SpikingComponent>())
+                                { 
+                                    SpikingComponent based = target.healthComponent.AddComponent<SpikingComponent>();
+                                    based.interval = 1.5f;
+                                    based.originalSpiker = this.gameObject;
+                                }
+                            }
                             //LogCore.LogI("called onhit!!!");
                             CloudburstPlugin.Destroy(_winch);
 
@@ -157,6 +165,8 @@ namespace Cloudburst.Cores.States.Wyatt
                                 //start = base.transform.position,
                                 origin = target.transform.position
                             };
+
+                            //hmm, today, i will stream :]
                             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact"), effectData, true);
                             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/ExplosionSolarFlare"), effectData, true);
 

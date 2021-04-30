@@ -347,6 +347,7 @@ namespace Cloudburst
         [ConCommand(commandName = "gmc", flags = ConVarFlags.ExecuteOnServer, helpText = "Good morning chat.")]
         private static void GMC(ConCommandArgs arg)
         {
+            //how the fuck does this crash the game?
             NetworkManager.singleton.ServerChangeScene("goolake");
             //arg.TryGetSenderBody().inventory.GiveItem(Cores.Items.Red.REDACTED.instance.Index);
             /*foreach (ItemDef i in RoR2.RoR2Content.Items.itemDefs)
@@ -364,7 +365,7 @@ namespace Cloudburst
         {
             //var def = SceneCatalog.GetSceneDefFromScene(arg1);
             //onSceneLoaded(arg0, arg1, def, SceneInfo.instance);
-            if (arg1.name == "title")
+            if (arg1 != default && arg1.name == "title")
             {
                 var menu = GameObject.Find("MainMenu");
                 //LogCore.LogI(menu.name)

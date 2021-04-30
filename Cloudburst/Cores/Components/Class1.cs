@@ -11,11 +11,12 @@ namespace Cloudburst.Cores.Components
 {
     public class SpikingComponent : MonoBehaviour
     {
-        private BasicOwnerInfo spikerInfo;
+        public BasicOwnerInfo spikerInfo;
         private Vector3 direction;
 
         private CharacterMotor characterMotor;
-
+        private RigidbodyMotor rigidMotor;
+        private bool useRigidBody = false;
         public GameObject originalSpiker;
 
         public float interval = 0;
@@ -23,11 +24,19 @@ namespace Cloudburst.Cores.Components
         public void Start()
         {
             characterMotor = base.gameObject.GetComponent<CharacterMotor>();
+            if (characterMotor == null && useRigidBody == false)
+            {
+                useRigidBody = true;
+                rigidMotor = base.gameObject.GetComponent<RigidbodyMotor>();
+            }
             spikerInfo = new BasicOwnerInfo(originalSpiker, "");
-                direction = Vector3.down;
-            characterMotor.disableAirControlUntilCollision = true;
+            direction = Vector3.down;
+            if (characterMotor)
+            {
+                characterMotor.disableAirControlUntilCollision = true;
 
-            characterMotor.onHitGround += Motor_onHitGround;
+                characterMotor.onHitGround += Motor_onHitGround;
+            }
         }
 
         void Motor_onHitGround(ref CharacterMotor.HitGroundInfo hitGroundInfo)
@@ -88,7 +97,10 @@ namespace Cloudburst.Cores.Components
 
         public void OnDestroy()
         {
-            characterMotor.onHitGround -= Motor_onHitGround;
+            if (characterMotor)
+            {
+                characterMotor.onHitGround -= Motor_onHitGround;
+            }
         }
 
         public void FixedUpdate()
@@ -98,7 +110,14 @@ namespace Cloudburst.Cores.Components
             {
                 if (stopwatch >= (interval - 0.001f))
                 {
-                    characterMotor.ApplyForce((direction * 62.5f * Assaulter2.speedCoefficient), true, false);
+                    if (useRigidBody == false)
+                    {
+                        characterMotor.ApplyForce((direction * 62.5f * Assaulter2.speedCoefficient), true, false);
+                    }
+                    else
+                    {
+                        //rigidMotor.rigid.AddForce((direction * 62.5f * Assaulter2.speedCoefficient), ForceMode.VelocityChange);
+                    }
                 }
 
                 if (stopwatch >= interval)
@@ -108,8 +127,13 @@ namespace Cloudburst.Cores.Components
                     //base.PlayCrossfade("Fullbody, Override", "BufferEmpty", 0.5f);
                 }
                 var wow = (direction * 2 * Assaulter2.speedCoefficient) * Time.fixedDeltaTime;
-                characterMotor.rootMotion += wow;
-
+                if (useRigidBody == false)
+                {
+                    characterMotor.rootMotion += wow;
+                }
+                else {
+                    rigidMotor.rootMotion += wow;
+                }
             }
         }
     }

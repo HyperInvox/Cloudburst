@@ -80,6 +80,69 @@ She'll love this, I know.
         {
             base.Hooks();
             On.RoR2.Projectile.SlowDownProjectiles.OnTriggerEnter += SlowDownProjectiles_OnTriggerEnter;
+            On.RoR2.RigidbodyMotor.OnCollisionEnter += RigidbodyMotor_OnCollisionEnter;
+        }
+
+        private void RigidbodyMotor_OnCollisionEnter(On.RoR2.RigidbodyMotor.orig_OnCollisionEnter orig, RigidbodyMotor self, Collision collision)
+        {
+
+            var yeah = self.GetComponent<SpikingComponent>();
+            if (self.canTakeImpactDamage && collision.gameObject.layer == LayerIndex.world.intVal && yeah)
+            {
+                EffectManager.SpawnEffect(EffectCore.tiredOfTheDingDingDing, new EffectData
+                {
+                    scale = 10,
+                    rotation = Quaternion.identity,
+                    origin = self.transform.position,
+                }, true);
+
+                new BlastAttack
+                {
+                    position = self.transform.position,
+                    //baseForce = 3000,
+                    attacker = yeah.originalSpiker,
+                    inflictor = yeah.originalSpiker,
+                    teamIndex = yeah.spikerInfo.characterBody.teamComponent.teamIndex,
+                    baseDamage = yeah.spikerInfo.characterBody.damage * 5,
+                    attackerFiltering = AttackerFiltering.NeverHit,
+                    //bonusForce = new Vector3(0, -3000, 0),
+                    damageType = DamageType.Stun1s, //| DamageTypeCore.spiked,
+                    crit = yeah.spikerInfo.characterBody.RollCrit(),
+                    damageColorIndex = DamageColorIndex.WeakPoint,
+                    falloffModel = BlastAttack.FalloffModel.None,
+                    //impactEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/PulverizedEffect").GetComponent<EffectIndex>(),
+                    procCoefficient = 0,
+                    radius = 15
+                }.Fire();
+
+                var sphere = Physics.OverlapSphere(self.transform.position, 10);
+                foreach (var body in sphere)
+                {
+                    var cb = body.gameObject.GetComponentInParent<CharacterBody>();
+                    if (cb)
+                    {
+                        bool cannotHit = false;
+                        if (cb.isChampion)
+                        {
+                            cannotHit = true;
+                        }
+                        if (cb.baseNameToken == "BROTHER_BODY_NAME")
+                        {
+                            cannotHit = false;
+                        }
+                        if (cb.characterMotor && cannotHit == false && !(cb.gameObject == yeah.originalSpiker))
+                        {
+                            CloudUtils.AddExplosionForce(cb.characterMotor, cb.characterMotor.mass * 25, self.transform.position, 25, 5, false);
+                        }
+                    }
+                }
+                CloudburstPlugin.Destroy(yeah);
+                self.rootMotion = Vector3.zero;
+                self.rigid.velocity = Vector3.zero;
+            }
+            else if (yeah == null) {
+                orig(self, collision);
+            }
         }
 
         public override void GenerateUmbra()
