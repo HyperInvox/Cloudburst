@@ -47,7 +47,7 @@ namespace Cloudburst.Cores.Components
                 procChainMask = default,
                 procCoefficient = 1,
                 //pushAwayForce = 3500,
-                forceVector = direction * 30000,
+                forceVector = direction * 3000,
                 hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxLunge", info.characterBody.modelLocator.modelTransform),
                 teamIndex = info.characterBody.teamComponent.teamIndex
             };
@@ -171,10 +171,10 @@ namespace Cloudburst.Cores.Components
                 if (attack.Fire(victimsStruck))
                 {
                     motor.Motor.ForceUnground();
-                    info.healthComponent.TakeDamageForce(direction * -2000, true, false);
+                    info.healthComponent.TakeDamageForce(direction * -5000, true, false);
                     EffectManager.SpawnEffect(EffectCore.ericAndreMoment, new EffectData
                     {
-                        scale = 10,
+                        scale = 2,
                         rotation = Quaternion.identity,
                         origin = victimsStruck[0].transform.position,
                     }, true);

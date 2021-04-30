@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4275721732
+CRC: 1633720838
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 69076f574812303e8fe2af67c17d0219
+    Hash: e283372f4a28e796f8f8af90ff68e61f
   TypeTreeHash:
     serializedVersion: 2
     Hash: 22895ef903ccb163094672f277ef3dfa
@@ -163,6 +163,7 @@ Assets:
 - Assets/Cloudburst/EliteIcons/rallyingIcon.png
 - Assets/Cloudburst/BuffIcons/WyattVelocity.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/Armature_BroomSwing2.anim
+- Assets/Cloudburst/Effects/WyattSpikeEffect.prefab
 - Assets/Cloudburst/Survivors/ExampleSurvivor/PassiveIcon.png
 - Assets/Cloudburst/Materials/DiaryTexture.mat
 - Assets/Cloudburst/Survivors/Bombardier/Flan/ExecAnimatorMenu.controller
@@ -302,6 +303,7 @@ Assets:
 - Assets/Cloudburst/Survivors/ExampleSurvivorGestureMask.mask
 - Assets/Cloudburst/753network/Crystallize/Ruby2.mat
 - Assets/Cloudburst/Items/FabinhoruDagger/New Animator Controller.controller
+- Assets/Cloudburst/Effects/Bases/Spikes, Small.prefab
 - Assets/Cloudburst/Survivors/Wyatt/utilityicon2.png
 - Assets/Cloudburst/Survivors/Wyatt/mdlWyattAIC.prefab
 - Assets/Cloudburst/Items/FabinhoruDagger/textures/Cloaking_M.jpg
@@ -472,6 +474,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_Maid_Throw.anim
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/animS/Armature_Walk.anim
 - Assets/Cloudburst/753network/Crystallize/Gold.mat
+- Assets/Cloudburst/Effects/Bases/BeetleGuardRock.asset
 - Assets/Cloudburst/Shaders/shaders/fx/hgvertexonly.shader
 - Assets/Cloudburst/Survivors/Wyatt/Materials/specialicon2.mat
 - Assets/Cloudburst/BuffIcons/Charm.png

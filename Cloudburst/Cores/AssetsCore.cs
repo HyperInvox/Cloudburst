@@ -154,6 +154,7 @@ namespace Cloudburst.Cores
                         decal.Material = material;
                         LogCore.LogI(decal.gameObject);
                     }
+                    CloudburstPlugin.Destroy(swap);
                 }
                 /*if (quicKSwap)
                 {

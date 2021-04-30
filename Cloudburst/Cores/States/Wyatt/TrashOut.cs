@@ -139,7 +139,7 @@ namespace Cloudburst.Cores.States.Wyatt
                                 radius = 5
                             }.Fire();
 
-
+                            
                             if (target.healthComponent.HasComponent<CharacterMotor>() && !target.healthComponent.body.characterMotor.isGrounded && !target.healthComponent.HasComponent<SpikingComponent>())
                             {
                                 SpikingComponent based = target.healthComponent.AddComponent<SpikingComponent>();

@@ -63,7 +63,7 @@ namespace Cloudburst.Cores.States.Wyatt
             //this.hitBoxGroupName = "TempHitbox";
             this.hitBoxGroupName = "TempHitboxLarge";
             this.mecanimHitboxActiveParameter = "BroomSwing.Hitbox";
-            this.baseDuration = 0.69f;
+            this.baseDuration = 0.7f;
             this.duration = this.baseDuration / base.attackSpeedStat;
             this.hitPauseDuration = 0.1f;
             this.damageCoefficient = (2f + (characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) * 0.1f));
@@ -102,7 +102,9 @@ namespace Cloudburst.Cores.States.Wyatt
             base.OnEnter();
             base.characterDirection.forward = base.GetAimRay().direction;
             base.characterMotor.ApplyForce(GetAimRay().direction * 100, true, false);
-            this.durationBeforeInterruptable = baseDurationBeforeInterruptable / this.attackSpeedStat;
+            
+            
+            //this.durationBeforeInterruptable = baseDurationBeforeInterruptable / this.attackSpeedStat;
         }
 
 
@@ -160,11 +162,11 @@ namespace Cloudburst.Cores.States.Wyatt
 
             if (!@bool && bool2)
             {
-                base.PlayCrossfade("Gesture, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
+                base.PlayCrossfade("Gesture, Override", this.animationStateName, "BroomSwing.playbackRate", this.duration, 0.05f);
             }
             else
             {
-                base.PlayCrossfade("Gesture, Override", this.animationStateName, "Primary.rate", this.duration, 0.05f);
+                base.PlayCrossfade("Gesture, Override", this.animationStateName, "BroomSwing.playbackRate", this.duration, 0.05f);
             }
 
             //base.PlayCrossfade("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration, 0.05f);

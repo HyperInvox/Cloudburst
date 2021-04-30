@@ -33,7 +33,7 @@ namespace Cloudburst.Cores.Components
         void Motor_onHitGround(ref CharacterMotor.HitGroundInfo hitGroundInfo)
         {
 
-            EffectManager.SpawnEffect(EffectCore.wyattSlam, new EffectData
+            EffectManager.SpawnEffect(EffectCore.tiredOfTheDingDingDing, new EffectData
             {
                 scale = 10,
                 rotation = Quaternion.identity,

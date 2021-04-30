@@ -152,6 +152,7 @@
     <Compile Include="Cores\Components\Blink.cs" />
     <Compile Include="Cores\Components\BasedDepartment.cs" />
     <Compile Include="Cores\Components\Class1.cs" />
+    <Compile Include="Cores\Components\Class2.cs" />
     <Compile Include="Cores\Components\CringeDepartment.cs" />
     <Compile Include="Cores\Components\MaterialControllerComponents.cs" />
     <Compile Include="Cores\Components\SquashedComponent.cs" />
