@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 1633720838
+CRC: 2664512436
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e283372f4a28e796f8f8af90ff68e61f
+    Hash: c93c7baffb00be1d2cb2382fe43bcbfb
   TypeTreeHash:
     serializedVersion: 2
     Hash: 22895ef903ccb163094672f277ef3dfa
@@ -177,6 +177,7 @@ Assets:
 - Assets/Cloudburst/Effects/Bases/ShieldMesh.asset
 - Assets/Cloudburst/Effects/HANDArmor.prefab
 - Assets/Cloudburst/753network/Crystallize/Pink HDR.mat
+- Assets/Cloudburst/Effects/MAIDCleanseTrigger.prefab
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/animS/Armature_CameraAction.anim
 - Assets/Cloudburst/Enemies/FatWisp/GluttedWisp.fbx
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_M.mat
@@ -354,6 +355,7 @@ Assets:
 - Assets/Cloudburst/Shaders/shaders/postprocess/hgscopeshader.shader
 - Assets/Cloudburst/Items/FabinhoruDagger/fab_dagger.fbx
 - Assets/Cloudburst/Items/Grinder/IMDLGrinder.prefab
+- Assets/Cloudburst/Effects/Bases/MAIDTriggerEffect.prefab
 - Assets/Cloudburst/BuffIcons/Redacted.png
 - Assets/Cloudburst/Effects/TracerCaptainDefenseMatrix.prefab
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Ruby.mat

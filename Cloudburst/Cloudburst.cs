@@ -312,7 +312,10 @@ namespace Cloudburst
                 if (EnableWIP.Value)
                 {
                     wipCore = new HuntressCore();
-                    new EventsCore();
+                    //AYO
+                    //DO ME A FAVOR
+                    //FUCK OFF
+                    //new EventsCore();
                 }
 
                 new EventsCore();

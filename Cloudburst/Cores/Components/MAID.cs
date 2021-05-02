@@ -75,6 +75,9 @@ namespace Cloudburst.Cores.Components
                 var cing = controller.AddComponent<CringeDepartment>();
                 cing.maxVelocityMagnitude = 3;
                 cing.antiGravity = 1;
+
+                var effect = controller.AddComponent<ProjectileEffectManager>();
+                effect.effect = AssetsCore.MAIDTriggerEffect;
             }
         }
 

@@ -50,6 +50,8 @@ namespace Cloudburst.Cores
         public static Sprite wyattSpecial;
         public static Sprite wyattSpecial2;
 
+        public static GameObject MAIDTriggerEffect;
+
         public static Material brickWall;
         public AssetsCore()
         {
@@ -96,6 +98,8 @@ namespace Cloudburst.Cores
             wyattUtilityAlt = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/utilityicon2.png");
             wyattSpecial = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon.png");
             wyattSpecial2 = mainAssetBundle.LoadAsset<Sprite>("Assets/Cloudburst/Survivors/Wyatt/specialicon2.png");
+
+            MAIDTriggerEffect = mainAssetBundle.LoadAsset<GameObject>("MAIDTriggerEffect");
         }
 
         private void ContentManager_onContentPacksAssigned(ReadOnlyArray<ReadOnlyContentPack> obj)

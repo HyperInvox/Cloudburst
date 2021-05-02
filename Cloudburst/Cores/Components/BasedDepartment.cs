@@ -150,8 +150,10 @@ namespace Cloudburst.Cores.Components
             stopwatch += Time.fixedDeltaTime;
             if (NetworkServer.active)
             {
-                if (stopwatch >= (interval - 0.001f))
+                if (stopwatch >= (interval - 0.001f) && hit == false)
                 {
+                    hit = true;
+                    LogCore.LogI("force applied at end");
                     motor.ApplyForce((direction * 125 * Assaulter2.speedCoefficient), true, false);
                     characterDirection.forward = motor.rootMotion.normalized;
                 }

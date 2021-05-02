@@ -1,6 +1,8 @@
 ﻿using Cloudburst.Cores.Components.Wyatt;
 using EntityStates;
+using EntityStates.ParentMonster;
 using RoR2;
+using RoR2.Orbs;
 using RoR2.Projectile;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +13,20 @@ namespace Cloudburst.Cores.States.Wyatt
 {
     class YeahDudeIBetterBeOrYouCanFuckinKissMyAssHumanCentipede : BaseSkillState
     {
-        public static float baseDuration = 0.7f;
+        public static float baseDuration = 0.1f;
         private List<CharacterBody> negros;
-
+        private WyattWalkmanBehavior walkman;
         public override void OnEnter()
         {
             base.OnEnter();
 
-            base.GetComponent<WyattWalkmanBehavior>().ActivateFlowAuthority();
 
+
+            walkman = GetComponent<WyattWalkmanBehavior>();
+            if (walkman.flowing == false)
+            {
+                walkman.ActivateFlowAuthority();
+            }
             //EffectManager.SpawnEffect(EffectCore.willIsStillTotallyNotPoggers/*Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfx")*/, new EffectData()
             /*{
                 origin = characterBody.footPosition,
@@ -31,6 +38,41 @@ namespace Cloudburst.Cores.States.Wyatt
             GatherNiggas();
             //base.characterMotor.Motor.ForceUnground();
             //base.characterMotor.ApplyForce(, true, false);*/
+        }
+
+        public void ShockEnemies()
+        {
+            LightningOrb lightningOrb2 = new LightningOrb();
+            lightningOrb2.origin = base.transform.position;
+            lightningOrb2.damageValue = 1f * damageStat;
+            lightningOrb2.isCrit = RollCrit();
+            lightningOrb2.bouncesRemaining = 1;
+            lightningOrb2.teamIndex = GetTeam();
+            lightningOrb2.attacker = gameObject;
+            lightningOrb2.bouncedObjects = new List<HealthComponent>
+                            {
+                                base.healthComponent//.GetComponent<HealthComponent>()
+                            };
+            lightningOrb2.procChainMask = default;
+            lightningOrb2.procCoefficient = 1;
+            lightningOrb2.lightningType = LightningOrb.LightningType.MageLightning;
+            lightningOrb2.damageColorIndex = DamageColorIndex.Default;
+            lightningOrb2.range += 10;
+            lightningOrb2.damageType = (DamageTypeCore.pullEnemies | DamageType.Stun1s);
+            HurtBox hurtBox2 = lightningOrb2.PickNextTarget(transform.position);
+            if (hurtBox2)
+            {
+                lightningOrb2.target = hurtBox2;
+                OrbManager.instance.AddOrb(lightningOrb2);
+            }
+        }
+
+        private void CreateBlinkEffect(Vector3 origin, Vector3 direction)
+        {
+            EffectData effectData = new EffectData();
+            effectData.rotation = Util.QuaternionSafeLookRotation(direction);
+            effectData.origin = origin;
+            EffectManager.SpawnEffect(LoomingPresence.blinkPrefab, effectData, true);
         }
 
         public void GatherNiggas()
@@ -79,19 +121,19 @@ namespace Cloudburst.Cores.States.Wyatt
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            // base.characterMotor.velocity +=
-            // base.characterMotor.velocity.y = 0f;
-            /*if (base.isAuthority)
+            if (base.isAuthority)
             {
-                foreach (CharacterBody niggaBody in negros)
-                {
-                    CharacterMotor niggaMotor = niggaBody.characterMotor;
-                    if (niggaBody && niggaMotor)
-                    {
-                        niggaMotor.ApplyForce(new Vector3(0, niggaMotor.mass, 0), true, true);
-                    }
-                }
-            }*/
+                var a = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
+                //base.inputBank.aimDirection
+                base.characterMotor.rootMotion += base.inputBank.aimDirection * (3 * 35 * Time.fixedDeltaTime);
+
+            }
+
+            if (NetworkServer.active)
+            {
+               // ShockEnemies();
+            }
+
             if (fixedAge >= baseDuration)
             {
                 /*foreach (CharacterBody niggaBody in negros)

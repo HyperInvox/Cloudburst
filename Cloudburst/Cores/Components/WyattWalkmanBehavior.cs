@@ -19,7 +19,7 @@ namespace Cloudburst.Cores.Components.Wyatt
         private float drainTimer = 0;
 
         [SyncVar]
-        private bool flowing = false;
+        public bool flowing = false;
 
         private void Awake()
         {

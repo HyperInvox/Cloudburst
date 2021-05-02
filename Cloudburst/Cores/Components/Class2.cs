@@ -16,9 +16,9 @@ namespace Cloudburst.Cores.Components
 
         public void Start()
         {
-            effectInstance = Instantiate<GameObject>(effect, controller.ghost.transform, true);
+            effectInstance = Instantiate<GameObject>(effect, controller.ghost.transform.position, controller.ghost.transform.rotation, controller.ghost.transform);
+            //effectInstance.transform.localScale = new Vector3(2, 2, 2);
         }
-
         public void OnDestroy() {
             if (effectInstance) {
                 Destroy(effectInstance);

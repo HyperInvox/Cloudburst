@@ -170,7 +170,7 @@ namespace Cloudburst.Cores.States.Wyatt
                             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/MaulingRockImpact"), effectData, true);
                             EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/impacteffects/ExplosionSolarFlare"), effectData, true);
 
-                            base.characterMotor.velocity = Vector3.up * 30f;
+                            base.characterMotor.velocity = Vector3.up * 25f;
                             //characterMotor.ApplyForce(-(GetAimRay().direction * (-characterMotor.mass * 10)), true, false);
                             stage = ActionStage.HitTarget;
 

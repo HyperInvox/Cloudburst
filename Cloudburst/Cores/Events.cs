@@ -84,7 +84,8 @@ namespace Cloudburst.Cores
                 new Vector3(258.3f, -117.5f, 116.8f),
             };
 
-            internal class TarRiverSlow : MonoBehaviour {
+            internal class TarRiverSlow : MonoBehaviour
+            {
                 public static GameObject entryEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact");
                 private List<CharacterBody> bodies = new List<CharacterBody>();
                 private float stopwatch = 0;
@@ -124,7 +125,8 @@ namespace Cloudburst.Cores
                     }
                 }
 
-                public void FixedUpdate() {
+                public void FixedUpdate()
+                {
                     if (NetworkServer.active)
                     {
                         stopwatch += Time.fixedDeltaTime;
@@ -152,7 +154,8 @@ namespace Cloudburst.Cores
                     }
                 }
 
-                public void OnDestroy() {
+                public void OnDestroy()
+                {
                     bodies.Clear();
                 }
             }
@@ -226,7 +229,8 @@ namespace Cloudburst.Cores
                 col.isTrigger = true;
                 goo.AddComponent<TarRiverSlow>();*/
 
-                void AddPPVs() {
+                void AddPPVs()
+                {
                     ppv = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("DEBUFF ZONE: Waterfall").Find("PP Goo").gameObject;
                     //CloudburstPlugin.Instantiate<GameObject>(ppBase, new Vector3(201.7f, -139.5f, 246.2f), Quaternion.Euler(new Vector3(1, 1, 1))).GetComponent<PostProcessVolume>().blendDistance = 20;
                     //CloudburstPlugin.Instantiate<GameObject>(ppBase, new Vector3(307.5f, -135.1f, 174.2f), Quaternion.Euler(new Vector3(1, 1, 1))).GetComponent<PostProcessVolume>().blendDistance = 20;
@@ -238,9 +242,10 @@ namespace Cloudburst.Cores
                 {
                     Transform goo = parent.transform.Find("GooPlane, High");
 
-                    if (NetworkServer.active) {
+                    if (NetworkServer.active)
+                    {
 
-                       LogCore.LogI("hi");
+                        LogCore.LogI("hi");
                         var obj = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarBox"), new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
 
                         obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
@@ -261,15 +266,14 @@ namespace Cloudburst.Cores
                     obj.transform.position = new Vector3(201f, -134.1f, 143f);
                     obj.transform.rotation = Quaternion.Euler(0, -43.019f, 0);
                     obj.transform.localScale = new Vector3(429.2972f, 10, 420.4618f);
-
                     Renderer renderer = obj.AddOrGetComponent<Renderer>();
                     renderer.material = goo.GetComponent<Renderer>().material;
-
                     BoxCollider collider = obj.AddOrGetComponent<BoxCollider>();
                     collider.isTrigger = true;*/
                 }
-                void AddWarnigSigns() {
-                    Transform warningParent =  parent.transform.Find("Warning Signs");
+                void AddWarnigSigns()
+                {
+                    Transform warningParent = parent.transform.Find("Warning Signs");
                     Transform warning = warningParent.Find("GlWarningSign");
                     warning.GetComponent<MeshCollider>().convex = false;
                     warning.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -309,17 +313,17 @@ namespace Cloudburst.Cores
                 /// UpperLimit
                 /// </summary>
                 public abstract float upperLimit { get; }
-
                 public float GetChance() {
                     return rng.RangeFloat(lowerLimit, upperLimit);
                 }
-
             }*/
 
             public abstract float chance { get; }
 
             public bool canBeActivated
-            { get {
+            {
+                get
+                {
                     return CanBeActivated();
                 }
             }
@@ -348,7 +352,7 @@ namespace Cloudburst.Cores
 
             }
 
-            public  abstract bool CanBeActivated();
+            public abstract bool CanBeActivated();
 
         }
         public EventsCore() => FUCK();
@@ -356,7 +360,8 @@ namespace Cloudburst.Cores
         private List<Event> activeEvents = new List<Event>();
         private List<Event> events = new List<Event>();
 
-        public void FUCK() {
+        public void FUCK()
+        {
             //CloudburstPlugin.onFixedUpdate += CloudburstPlugin_onFixedUpdate;
             var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(Event)));
             foreach (var itemType in ItemTypes)
@@ -396,7 +401,7 @@ namespace Cloudburst.Cores
 
         private void CloudburstPlugin_onFixedUpdate()
         {
-            
+
         }
     }
 }
