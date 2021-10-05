@@ -123,9 +123,9 @@ namespace Cloudburst.Cores.States.Wyatt
             base.FixedUpdate();
             if (base.isAuthority)
             {
-                var a = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
-                //base.inputBank.aimDirection
-                base.characterMotor.rootMotion += base.inputBank.aimDirection * (3 * 35 * Time.fixedDeltaTime);
+                //var a = ((base.inputBank.moveVector == Vector3.zero) ? base.characterDirection.forward : base.inputBank.moveVector).normalized;
+                //base.in`putBank.aimDirection
+                //base.characterMotor.rootMotion += base.inputBank.aimDirection * (3 * 35 * Time.fixedDeltaTime);
 
             }
 
