@@ -180,7 +180,7 @@
     <Compile Include="Cores\States\Captain\CallOrbitalLaser.cs" />
     <Compile Include="Cores\States\Emotes\Emotes.cs" />
     <Compile Include="Cores\States\VoidGolems\Shell.cs" />
-    <Compile Include="Cores\States\Wyatt\Class1.cs" />
+    <Compile Include="Cores\States\Wyatt\YeahDudeIBetterBeOrYouCanFuckinKissMyAssHumanCentipede.cs" />
     <Compile Include="Cores\States\Wyatt\Class2.cs" />
     <Compile Include="Cores\States\Wyatt\DRIVEMETOTHEHIGHWAY.cs" />
     <Compile Include="Cores\States\Wyatt\WyattMain.cs" />
@@ -217,7 +217,7 @@
     <Compile Include="Cores\States\MegaMushrum\SporeGrenade.cs" />
     <Compile Include="Cores\States\MegaMushrum\Unplant.cs" />
     <Compile Include="NOMOREACCESSMODIFIERS.cs" />
-    <Compile Include="Cloudburst.cs" />
+    <Compile Include="CloudburstPlugin.cs" />
     <Compile Include="Cores\AchievementCore.cs" />
     <Compile Include="Cores\AncientWispCore.cs" />
     <Compile Include="Cores\ArchaicWispCore.cs" />
@@ -323,7 +323,8 @@
 if "$(Username)" == "kurog" copy /Y "$(TargetPath)" "E:\Steam\steamapps\common\Risk of Rain 2\BepInEx\plugins\"
 if "$(Username)" == "pmble" copy /Y "$(TargetPath)" "D:\Steam\steamapps\common\Risk of Rain 2\BepInEx\plugins"
 if "$(Username)" == "User2" copy /Y "$(TargetPath)" "{RoR2Path}"
-if "$(Username)" == "Erikbir" copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\plugins\TeamCloudburst-Cloudburst\"</PostBuildEvent>
+if "$(Username)" == "Erikbir" copy /Y "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2\r2modman\BepInEx\plugins\TeamCloudburst-Cloudburst\"
+if "$(Username)" == "Erikbir" copy /Y "$(TargetPath)" "$(SolutionDir)\Release\"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if "$(Username)" == "Erikbir" copy /Y "$(SolutionDir)\UnityAssetburst\AssetBundles\StandaloneWindows\assetburst" "$(ProjectDir)"</PreBuildEvent>
