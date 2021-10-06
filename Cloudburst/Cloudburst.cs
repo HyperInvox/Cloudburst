@@ -338,7 +338,7 @@ namespace Cloudburst
                 //i'll follow you home when the night comes
 #if DEBUG
                 //unlock!
-                debugCore = new DebuggingCore();
+                //debugCore = new DebuggingCore();
 #endif
             }
             else

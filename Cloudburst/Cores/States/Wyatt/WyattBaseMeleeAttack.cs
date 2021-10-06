@@ -15,13 +15,13 @@ namespace Cloudburst.Cores.States.Wyatt
 
         public int step = 0;
         public static float recoilAmplitude = 0.7f;
-        public static float baseDurationBeforeInterruptable = 0.55f;
+        public static float baseDurationBeforeInterruptable = 0.5f;
         public float bloom = 1f;
-        /*public static float comboFinisherBaseDuration = 0.5f;
-        public static float comboFinisherhitPauseDuration = 0.15f;
-        public static float comboFinisherBloom = 0.5f;
-        public static float comboFinisherBaseDurationBeforeInterruptable = 0.5f;
-        private string animationStateName;*/
+        //public static float comboFinisherBaseDuration = 0.5f;
+        //public static float comboFinisherhitPauseDuration = 0.15f;
+        //public static float comboFinisherBloom = 0.5f;
+        //public static float comboFinisherBaseDurationBeforeInterruptable = 0.5f;
+        //private string animationStateName;
         private float durationBeforeInterruptable;
 
         private bool isComboFinisher
@@ -62,7 +62,7 @@ namespace Cloudburst.Cores.States.Wyatt
         {
             //this.hitBoxGroupName = "TempHitbox";
             this.hitBoxGroupName = "TempHitboxLarge";
-            this.mecanimHitboxActiveParameter = "BroomSwing.Hitbox";
+            this.mecanimHitboxActiveParameter = "BroomSwing.shittybasicmeleeattackparameter";
             this.baseDuration = 0.7f;
             this.duration = this.baseDuration / base.attackSpeedStat;
             this.hitPauseDuration = 0.1f;
@@ -98,16 +98,16 @@ namespace Cloudburst.Cores.States.Wyatt
                 this.damageCoefficient = 4f;
             }
             //else { LogCore.LogW("not finisher"); }
-
+            
             base.OnEnter();
             base.characterDirection.forward = base.GetAimRay().direction;
             base.characterMotor.ApplyForce(GetAimRay().direction * 100, true, false);
             
             
-            //this.durationBeforeInterruptable = baseDurationBeforeInterruptable / this.attackSpeedStat;
+            this.durationBeforeInterruptable = baseDurationBeforeInterruptable / this.attackSpeedStat;
         }
 
-
+        
         public override void BeginMeleeAttackEffect()
         {
             if (!spawnEffect)
@@ -157,21 +157,17 @@ namespace Cloudburst.Cores.States.Wyatt
                     this.animationStateName = "Swing3";
                     break;
             }
-            bool @bool = this.animator.GetBool("isMoving");
-            bool bool2 = this.animator.GetBool("isGrounded");
+            bool moving = this.animator.GetBool("isMoving");
+            bool grounded = this.animator.GetBool("isGrounded");
 
-            if (!@bool && bool2)
+            if (!moving && grounded)
             {
-                base.PlayCrossfade("Gesture, Override", this.animationStateName, "BroomSwing.playbackRate", this.duration, 0.05f);
-            }
-            else
-            {
-                base.PlayCrossfade("Gesture, Override", this.animationStateName, "BroomSwing.playbackRate", this.duration, 0.05f);
+                base.PlayCrossfade("FullBody, Override", this.animationStateName, "BroomSwing.playbackRate", this.duration, 0.05f);
             }
 
-            //base.PlayCrossfade("Gesture, Override", "BroomSwing", "BroomSwing.playbackRate", this.duration, 0.05f);
+            base.PlayCrossfade("Gesture, Override", this.animationStateName, "BroomSwing.playbackRate", this.duration, 0.05f);
         }
-
+        
         public override void OnMeleeHitAuthority()
         {
             base.OnMeleeHitAuthority();
@@ -184,7 +180,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.OnSerialize(writer);
             writer.Write((byte)this.step);
         }
-
+        
         public override void OnDeserialize(NetworkReader reader)
         {
             base.OnDeserialize(reader);

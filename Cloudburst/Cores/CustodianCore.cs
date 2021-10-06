@@ -71,8 +71,8 @@ She'll love this, I know.
         public override string SurvivorSubtitle => "Lean, Mean, Cleaning Machines";
 
         public override UnlockableDef unlockableDef => null;
-
-        public override float desiredSortPosition => 6;
+        
+        public override float desiredSortPosition => 11.5f;
 
         //public override UnlockableDef MasteryUnlockString => throw new NotImplementedException();
 
@@ -863,7 +863,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             secondarySkillDef.beginSkillCooldownOnSkillEnd = true;
             secondarySkillDef.canceledFromSprinting = false;
             secondarySkillDef.fullRestockOnAssign = false;
-            secondarySkillDef.interruptPriority = InterruptPriority.Skill;
+            secondarySkillDef.interruptPriority = InterruptPriority.Any;
             secondarySkillDef.isCombatSkill = true;
             secondarySkillDef.mustKeyPress = true;
             secondarySkillDef.cancelSprintingOnActivation = false;
