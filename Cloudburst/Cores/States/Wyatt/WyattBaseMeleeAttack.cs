@@ -68,6 +68,7 @@ namespace Cloudburst.Cores.States.Wyatt
             this.hitPauseDuration = 0.1f;
             this.damageCoefficient = (2f + (characterBody.GetBuffCount(BuffCore.instance.wyattCombatIndex) * 0.1f));
             this.procCoefficient = 1f;
+
             spawnEffect = false;
             //swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/GrandparentGroundSwipeTrailEffect");
             hitEffectPrefab = Resources.Load<GameObject>("prefabs/effects/omnieffect/omniimpactvfxmedium");
@@ -104,7 +105,7 @@ namespace Cloudburst.Cores.States.Wyatt
             base.characterMotor.ApplyForce(GetAimRay().direction * 100, true, false);
             
             
-            this.durationBeforeInterruptable = baseDurationBeforeInterruptable / this.attackSpeedStat;
+            this.durationBeforeInterruptable = baseDurationBeforeInterruptable * duration;
         }
 
         
@@ -174,6 +175,15 @@ namespace Cloudburst.Cores.States.Wyatt
             base.characterBody.AddSpreadBloom(this.bloom);
         }
 
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            //why is it interrupting itself lol
+            //if (base.fixedAge >= this.durationBeforeInterruptable)
+            //{
+            //    return InterruptPriority.Any;
+            //}
+            return InterruptPriority.Skill;
+        }
 
         public override void OnSerialize(NetworkWriter writer)
         {
@@ -187,18 +197,10 @@ namespace Cloudburst.Cores.States.Wyatt
             this.step = (int)reader.ReadByte();
         }
 
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            if (base.fixedAge >= this.durationBeforeInterruptable)
-            {
-                return InterruptPriority.Skill;
-            }
-            return InterruptPriority.PrioritySkill;
-        }
-
+        //skip combo shit until animations are fixed
         void SteppedSkillDef.IStepSetter.SetStep(int i)
         {
-            this.step = i;
+            this.step = 0;
         }
     }
 }
