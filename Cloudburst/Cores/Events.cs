@@ -376,6 +376,7 @@ namespace Cloudburst.Cores
 
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
+            /*
             foreach (Event eve in activeEvents)
             {
                 eve.OnDisable();
@@ -395,7 +396,7 @@ namespace Cloudburst.Cores
             foreach (Event eve in activeEvents)
             {
                 eve.OnEnable();
-            }
+            }*/
             //fuck
         }
 
