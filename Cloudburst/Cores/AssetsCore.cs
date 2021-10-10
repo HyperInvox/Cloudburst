@@ -1,10 +1,14 @@
 ﻿
 using HG;
+using R2API;
+using RoR2;
 using RoR2.ContentManagement;
 using System.Linq;
 using System.Reflection;
 using ThreeEyedGames;
 using UnityEngine;
+using UnityEngine.Networking;
+using static Cloudburst.Cores.EventsCore.TarRiver;
 
 namespace Cloudburst.Cores
 {
@@ -50,9 +54,14 @@ namespace Cloudburst.Cores
         public static Sprite wyattSpecial;
         public static Sprite wyattSpecial2;
 
+        public static GameObject tarRiver;
+
         public static GameObject MAIDTriggerEffect;
 
         public static Material brickWall;
+
+        public static GameObject tarRaft;
+
         public AssetsCore()
         {
             CloudburstPlugin.postLoad += CloudburstPlugin_postLoad;
@@ -80,7 +89,33 @@ namespace Cloudburst.Cores
                     //ResourcesAPI.AddProvider(bombProvider);
                 }
             }
-            // gather assets
+
+            var obj = /*CloudburstPlugin.Instantiate<GameObject>(*/AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarBox");//, new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
+
+            LogCore.LogI("h2");
+            //obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
+
+            LogCore.LogI("hi3");
+            obj.AddComponent<TarRiverSlow>();
+            obj.layer = LayerIndex.world.intVal;
+            obj.transform.position = new Vector3(201f, -134.1f, 143f);
+            obj.transform.rotation = Quaternion.Euler(0, -43.019f, 0);
+            obj.transform.localScale = new Vector3(429.2972f, 10, 420.4618f);
+            //obj.GetComponent<Renderer>().material = goo.GetComponent<Renderer>().material;
+            obj.AddComponent<NetworkIdentity>();
+            obj.AddComponent<NetworkTransform>();
+            LogCore.LogI("hi4");
+            PrefabAPI.RegisterNetworkPrefab(obj);
+
+            tarRiver = obj;
+
+            var obj2 = /*CloudburstPlugin.Instantiate<GameObject>(*/AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarRaft");//, new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
+                                                                                                                                // gather assets
+            obj2.AddComponent<NetworkIdentity>();
+            obj2.AddComponent<NetworkTransform>();
+            PrefabAPI.RegisterNetworkPrefab(obj2);
+            tarRaft = obj2;
+
             grinderModel = mainAssetBundle.LoadAsset<GameObject>("Assets/Items/Grinder/MDLGrinder.prefab");
 
             //skill icons

@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2314046325
+CRC: 4256430775
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: a2d690ea476ae23a1bc9d583a09ab9ff
+    Hash: c1e90298ec9a5c761aeed064f2d466d7
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 7b4494e82eac234c6a0a5faaf22b8c65
+    Hash: 7d9dcad7e6f94aaaa872803573eb0b7f
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -44,6 +44,8 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: eb968ea025eecaa49a3b688ed588cc06, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: a3695521163bdd74fa2845bbd3438240, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 91b84fd2a11fecd45bccb3cc77aacc36, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 9658ba6378f201d438a997ea6f5d1a19, type: 3}
@@ -54,11 +56,25 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: ce3a75b5dae03c04a9a9ce242969f469, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 2a358cc53fd8c534187c1257da03945f, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: 6900f1d6280d53a46bc2073e17a88cc5, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: e8e5d7697cfff0749b1701c8f06e50f7, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 40dc170b1051d314797c3f876b8feab7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 17d1008b78cb6e846889b7778282fbef, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b5b20fac9c71fd64183cb7a8f359d73a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: f22bb7fd1d3b56a48bc52f8e407901d6, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e563561e08b6a3642a487177f5cfbb37, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 924ee63e6c016f14d8a1560b288f15a3, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fe12c28eaffbe654b852fa706be753ba, type: 3}
 - Class: 114
@@ -66,25 +82,9 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 0e8b9aff5b1f23c499ac29c068a39060, type: 3}
 - Class: 114
-  Script: {fileID: 11500000, guid: 2a358cc53fd8c534187c1257da03945f, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: a3695521163bdd74fa2845bbd3438240, type: 3}
-- Class: 114
   Script: {fileID: 11500000, guid: 6f0a564b054df1e4795bd5f7ef9bebac, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: fd1139d8af53657418e4496dbae82ed7, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: e563561e08b6a3642a487177f5cfbb37, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 17d1008b78cb6e846889b7778282fbef, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: f22bb7fd1d3b56a48bc52f8e407901d6, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: 924ee63e6c016f14d8a1560b288f15a3, type: 3}
-- Class: 114
-  Script: {fileID: 11500000, guid: b5b20fac9c71fd64183cb7a8f359d73a, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 120
@@ -107,6 +107,7 @@ Assets:
 - Assets/Cloudburst/Icons/Engineer/Impact_Grenades.png
 - Assets/Cloudburst/Shaders/shaders/environment/hggrass.shader
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorRunForward.anim
+- Assets/Cloudburst/Stage Variants/balls.png
 - Assets/Cloudburst/Survivors/Wyatt/lmao/WyattPylonMaid.prefab
 - Assets/Cloudburst/Survivors/Wyatt/animation/Armature_WeightPaintPose.anim
 - Assets/Cloudburst/Shaders/shaders/postprocess/hgoutlinehighlight.shader
@@ -192,6 +193,7 @@ Assets:
 - Assets/Cloudburst/Effects/HANDArmor.prefab
 - Assets/Cloudburst/753network/Crystallize/Pink HDR.mat
 - Assets/Cloudburst/Effects/MAIDCleanseTrigger.prefab
+- Assets/Cloudburst/Stage Variants/woodraft(1).fbx
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/animS/Armature_CameraAction.anim
 - Assets/Cloudburst/Enemies/FatWisp/GluttedWisp.fbx
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_M.mat
@@ -367,6 +369,7 @@ Assets:
 - Assets/Cloudburst/Shaders/shaders/environment/hgwaterfall.shader
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Textures/texExampleSurvivor.png
 - Assets/Cloudburst/Effects/Bases/Matrix, Directional.prefab
+- Assets/Cloudburst/Stage Variants/Materials/balls.mat
 - Assets/Cloudburst/Items/CarePackageRequester/blastboots.png
 - Assets/Cloudburst/Items/FabinhoruDagger/icon.png
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/SurvivorCLR.png
@@ -441,6 +444,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/Materials/Arm2EM.mat
 - Assets/Cloudburst/Survivors/Wyatt/animation/Walk/Armature_Walk.LFT.anim
 - Assets/Cloudburst/Items/Cloak/japes_cloak.png
+- Assets/Cloudburst/Stage Variants/Cylinder.mesh
 - Assets/Cloudburst/Effects/Bases/Particles.prefab
 - Assets/Cloudburst/Survivors/Wyatt/Attempt5.prefab
 - Assets/Cloudburst/Survivors/Wyatt/old/mdlHANDWinchAvatar.asset
@@ -550,6 +554,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/mdlWyattCSS.prefab
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_JogE.anim
 - Assets/Cloudburst/Survivors/OmoriShit/body.png
+- Assets/Cloudburst/Stage Variants/TarRaft.prefab
 - Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear 2.fbx
 - Assets/Cloudburst/Survivors/Wyatt/animation/Walk/Armature_Walk.RHT.anim
 - Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear 4.fbx

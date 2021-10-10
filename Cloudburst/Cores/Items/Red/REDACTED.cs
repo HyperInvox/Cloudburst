@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 using System.Linq;
 using UnityEngine;
@@ -70,6 +70,11 @@ Hold strong, and keep your heads up.
             {
                 body.AddItemBehavior<RedactedBehavior>(GetCount(body));
             }
+        }
+
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        {
+            return new ItemDisplayRuleDict();
         }
     }
     public class RedactedBehavior : CharacterBody.ItemBehavior

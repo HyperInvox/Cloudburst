@@ -1,10 +1,7 @@
 ﻿using RoR2;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using EnigmaticThunder.Modules;
 using UnityEngine;
+using R2API;
 
 namespace Cloudburst.Achievements
 {
@@ -17,7 +14,11 @@ namespace Cloudburst.Achievements
         public override String AchievementDescToken { get; } = "CLOUDBURST_WYATT_MONSOONUNLOCKABLE_ACHIEVEMENT_DESC";
         public override String UnlockableNameToken { get; } = "CLOUDBURST_WYATT_MONSOONUNLOCKABLE_UNLOCKABLE_NAME";
         public override Sprite Sprite { get; } = null;
-        public override bool ForceDisable { get; } = false;
+       // public override bool ForceDisable { get; } = false;
+
+        public override Func<string> GetHowToUnlock => throw new NotImplementedException();
+
+        public override Func<string> GetUnlocked => throw new NotImplementedException();
 
         public override BodyIndex LookUpRequiredBodyIndex()
         {

@@ -301,10 +301,10 @@ protected internal void Void()
     buffDef.eliteIndex = voidElite;
 
     //and finally, add a prefix
-    Languages.Add(eliteDef.modifierToken, "Void {0}");
-    Languages.Add(equipmentDef.nameToken, "Void's Embrace");
-    Languages.Add(equipmentDef.pickupToken, "Become an aspect of Void");
-    Languages.Add(equipmentDef.descriptionToken, "");
+    R2API.LanguageAPI.Add(eliteDef.modifierToken, "Void {0}");
+    R2API.LanguageAPI.Add(equipmentDef.nameToken, "Void's Embrace");
+    R2API.LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of Void");
+    R2API.LanguageAPI.Add(equipmentDef.descriptionToken, "");
 }
 
 protected internal void Lunar()
@@ -348,10 +348,10 @@ protected internal void Lunar()
     equipmentDef.passiveBuff = lunarIndex;
     buffDef.eliteIndex = lunarElite;
 
-    Languages.Add(eliteDef.modifierToken, "Lunar {0}");
-    Languages.Add(equipmentDef.nameToken, "Moon's Embrace");
-    Languages.Add(equipmentDef.pickupToken, "Become an aspect of the Moon");
-    Languages.Add(equipmentDef.descriptionToken, "");
+    R2API.LanguageAPI.Add(eliteDef.modifierToken, "Lunar {0}");
+    R2API.LanguageAPI.Add(equipmentDef.nameToken, "Moon's Embrace");
+    R2API.LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of the Moon");
+    R2API.LanguageAPI.Add(equipmentDef.descriptionToken, "");
 
 }
 
@@ -417,10 +417,10 @@ protected internal void War()
     equipmentDef.passiveBuff = warIndex;
     buffDef.eliteIndex = warElite;
 
-    Languages.Add(eliteDef.modifierToken, "Ruby {0}");
-    Languages.Add(equipmentDef.nameToken, "Ruby Corruption");
-    Languages.Add(equipmentDef.pickupToken, "Become an aspect of Corruption");
-    Languages.Add(equipmentDef.descriptionToken, "");
+    R2API.LanguageAPI.Add(eliteDef.modifierToken, "Ruby {0}");
+    R2API.LanguageAPI.Add(equipmentDef.nameToken, "Ruby Corruption");
+    R2API.LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of Corruption");
+    R2API.LanguageAPI.Add(equipmentDef.descriptionToken, "");
 
     warBubble = Resources.Load<GameObject>("Prefabs/NetworkedObjects/AffixHauntedWard").InstantiateClone("AffixWarWard", true);
     BuffWard ward = warBubble.GetComponent<BuffWard>();
@@ -511,10 +511,10 @@ protected internal void Tar()
     equipmentDef.passiveBuff = tarIndex;
     buffDef.eliteIndex = tarElite;
 
-    Languages.Add(eliteDef.modifierToken, "Tarborne {0}");
-    Languages.Add(equipmentDef.nameToken, "Their Embrace");
-    Languages.Add(equipmentDef.pickupToken, "Become an aspect of Tar");
-    Languages.Add(equipmentDef.descriptionToken, "");
+    R2API.LanguageAPI.Add(eliteDef.modifierToken, "Tarborne {0}");
+    R2API.LanguageAPI.Add(equipmentDef.nameToken, "Their Embrace");
+    R2API.LanguageAPI.Add(equipmentDef.pickupToken, "Become an aspect of Tar");
+    R2API.LanguageAPI.Add(equipmentDef.descriptionToken, "");
 }
 }
 public class AffixWarBehavior : CharacterBody.ItemBehavior

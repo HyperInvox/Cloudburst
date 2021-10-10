@@ -1,4 +1,5 @@
 ﻿
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -29,9 +30,9 @@ namespace Cloudburst.Cores.Items
         public override string ItemIconPath => "Assets/Cloudburst/Items/MechanicalTrinket/Icon.png";
 
 
-        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            var mdl = Resources.Load<GameObject>(ItemModelPath);
+            var mdl = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
             {
     new ItemDisplayRule
@@ -151,7 +152,7 @@ localScale = new Vector3(4F, 4F, 4F)
 
 
             return rules;
-        }*/
+        }
 
 
 

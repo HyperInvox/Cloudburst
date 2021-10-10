@@ -7,7 +7,7 @@ using Cloudburst.Cores.HAND.Skills;
 using Cloudburst.Cores.Skills;
 using Cloudburst.Cores.States.Bombardier;
 using Cloudburst.Cores.States.Wyatt;
-using EnigmaticThunder.Modules;
+
 using EntityStates;
 
 using RoR2;
@@ -40,9 +40,9 @@ namespace Cloudburst.Cores
 
         public override Color survivorDefColor => new Color(0.4862745098f, 0.94901960784f, 0.71764705882f);
 
-        public override Sprite defaultSkinColor => EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+        public override Sprite defaultSkinColor => Cloudburst.Content.ContentHandler.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
 
-        public override Sprite masterySkinColor => EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+        public override Sprite masterySkinColor => Cloudburst.Content.ContentHandler.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
 
         public override string SurvivorSubtitle => "Lean, Mean, Cleaning Machines";
 
@@ -188,12 +188,12 @@ namespace Cloudburst.Cores
                  "KEYWORD_SPIKED",
             };
 
-            Languages.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
-            Languages.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
-            //Languages.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
-            Languages.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
+            R2API.LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
+            R2API.LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
+            //R2API.LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
+            R2API.LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -206,9 +206,9 @@ namespace Cloudburst.Cores
         public override void CreateSecondary(SkillLocator skillLocator, SkillFamily skillFamily)
         {
 
-            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut));
-            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut2));
-            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(TrashOut3));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(TrashOut));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(TrashOut2));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(TrashOut3));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(Uninitialized));
@@ -236,10 +236,10 @@ namespace Cloudburst.Cores
                 "KEYWORD_SPIKED"
              };
 
-            Languages.Add(secondarySkillDef.skillNameToken, "Trash Out");
-            Languages.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
+            R2API.LanguageAPI.Add(secondarySkillDef.skillNameToken, "Trash Out");
+            R2API.LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -329,7 +329,7 @@ namespace Cloudburst.Cores
                  "KEYWORD_WEIGHTLESS"
             };
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(specialSkillDef);
 
             skillLocator.special.skillFamily.variants[0] = new SkillFamily.Variant
             {

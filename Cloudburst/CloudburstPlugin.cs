@@ -1,12 +1,9 @@
 ﻿using BepInEx;
 using BepInEx.Configuration;
 using Cloudburst.Cores;
-using Cloudburst.Cores.Components;
-using Cloudburst.Cores.HAND;
-using EnigmaticThunder;
-using EnigmaticThunder.Modules;
+using R2API;
+using R2API.Utils;
 using RoR2;
-using RoR2.Audio;
 using RoR2.UI;
 using System;
 using System.Collections.Generic;
@@ -17,7 +14,12 @@ using UnityEngine.UI;
 
 namespace Cloudburst
 {
-    [BepInDependency(EnigmaticThunderPlugin.guid, BepInDependency.DependencyFlags.HardDependency)]
+    [BepInDependency(R2API.R2API.PluginGUID, BepInDependency.DependencyFlags.HardDependency)]
+    [R2APISubmoduleDependency(nameof(ItemAPI))]
+    [R2APISubmoduleDependency(nameof(LanguageAPI))]
+    [R2APISubmoduleDependency(nameof(PrefabAPI))]
+    [R2APISubmoduleDependency(nameof(CommandHelper))]
+    [R2APISubmoduleDependency(nameof(UnlockableAPI))]
     [BepInPlugin(guid, modName, version)]
 
     public class CloudburstPlugin : BaseUnityPlugin
@@ -221,6 +223,7 @@ namespace Cloudburst
         {
             if (Enabled.Value)
             {
+                Cloudburst.Content.ContentHandler.Load();
                 //if i allow users to disable these cores they're gonna be stupid
                 //so i can't do that
                 //plus most cores rely on these
@@ -333,7 +336,7 @@ namespace Cloudburst
                 // new DebuggingCore();
                 postLoad?.Invoke();
 
-                EnigmaticThunder.Modules.CommandHelper.AddToConsoleWhenReady();
+                CommandHelper.AddToConsoleWhenReady();
 
                 //i'll follow you home when the night comes
 #if DEBUG

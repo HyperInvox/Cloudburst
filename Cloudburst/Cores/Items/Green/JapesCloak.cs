@@ -1,4 +1,5 @@
 ﻿
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -48,12 +49,12 @@ Addendum: WHO. IN GOD ABOVE’S HOLY NAME. TOOK. MY. CIGARETTES??”""";
 
         public override string ItemIconPath => "Assets/Cloudburst/Items/Cloak/JapeIcon.png";
 
-        /*public override string UnlockString => AchievementCore.GetUnlockableString("GrabOrDie");
+        //public override string UnlockString => AchievementCore.GetUnlockableString("GrabOrDie");
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }*/
+        }
 
         protected override void Initialization()
         {

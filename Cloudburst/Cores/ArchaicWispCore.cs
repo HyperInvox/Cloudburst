@@ -70,7 +70,7 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = archWisp.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                Languages.Add("ARCHAICWISP_BODY_NAME", "Archaic Wisp");
+                R2API.LanguageAPI.Add("ARCHAICWISP_BODY_NAME", "Archaic Wisp");
                 characterBody.baseAcceleration = 14f;
                 characterBody.baseArmor = 0; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -108,8 +108,8 @@ namespace Cloudburst.Cores
             SkillLocator skillLocator = archWisp.GetComponent<SkillLocator>();
             if (skillLocator)
             {
-                //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Summon));
-                //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ChargeSummon));
+                //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Summon));
+                //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(ChargeSummon));
                 SkillFamily skillFamily = skillLocator.primary.skillFamily;
                 SkillDef primary = skillFamily.variants[skillFamily.defaultVariantIndex].skillDef;
 

@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 using Cloudburst.Cores;
-using EnigmaticThunder.Modules;
+
 using RoR2;
 using UnityEngine;
 
@@ -55,10 +55,10 @@ public abstract class EquipmentBuilder
         /// </summary>
         protected virtual void CreateLang()
         {
-            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_NAME", EquipmentName);
-            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_PICKUP", EquipmentPickupDesc);
-            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION", EquipmentFullDescription);
-            Languages.Add("EQUIPMENT_" + EquipmentLangTokenName + "_LORE", EquipmentLore);
+            R2API.LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_NAME", EquipmentName);
+            R2API.LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_PICKUP", EquipmentPickupDesc);
+            R2API.LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_DESCRIPTION", EquipmentFullDescription);
+            R2API.LanguageAPI.Add("EQUIPMENT_" + EquipmentLangTokenName + "_LORE", EquipmentLore);
         }
 
         protected void CreateEquipment()
@@ -80,7 +80,7 @@ public abstract class EquipmentBuilder
         Index.isBoss = IsBoss;
         Index.isLunar = IsLunar;
         //var itemDisplayRules = CreateItemDisplayRules();
-        EnigmaticThunder.Modules.Pickups.RegisterEquipment(Index);
+        //EnigmaticThunder.Modules.Pickups.RegisterEquipment(Index);
         On.RoR2.EquipmentSlot.PerformEquipmentAction += EquipmentSlot_PerformEquipmentAction; ;
     }
 

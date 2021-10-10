@@ -1,6 +1,6 @@
 ﻿using Cloudburst.Cores.Components;
 using Cloudburst.Cores.States.REX;
-using EnigmaticThunder.Modules;
+
 using EntityStates;
 using EntityStates.Treebot.Weapon;
 
@@ -60,8 +60,8 @@ namespace Cloudburst.Cores
             harvest.skillNameToken = "TREEBOT_SPECIAL_ALT1_NAME";
             harvest.stockToConsume = 1;
 
-            //Languages.Add(harvest.skillNameToken, "DIRECTIVE: HARVEST");
-            //Languages.Add(harvest.skillDescriptionToken, "Place a <style=cIsUtility>harvester</style> that deals <style=cIsDamage>250%</style> and <style=cIsDamage>Weakens</style> per attempted harvest.");
+            //R2API.LanguageAPI.Add(harvest.skillNameToken, "DIRECTIVE: HARVEST");
+            //R2API.LanguageAPI.Add(harvest.skillDescriptionToken, "Place a <style=cIsUtility>harvester</style> that deals <style=cIsDamage>250%</style> and <style=cIsDamage>Weakens</style> per attempted harvest.");
 
             var variant = new SkillFamily.Variant()
             {
@@ -84,8 +84,8 @@ namespace Cloudburst.Cores
             collectorObject = Resources.Load<GameObject>("prefabs/projectiles/TreebotPounderProjectile");// this broke shit .InstantiateClone("TreebotCollectorProjectile", true);
             var stateMachine = collectorObject.GetComponent<EntityStateMachine>();
 
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Harvest));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Spawn));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Harvest));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Spawn));
             stateMachine.mainStateType = new SerializableEntityStateType(typeof(Harvest));
             stateMachine.initialStateType = new SerializableEntityStateType(typeof(Spawn));
 

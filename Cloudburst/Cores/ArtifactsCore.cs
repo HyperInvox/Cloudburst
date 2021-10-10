@@ -1,5 +1,4 @@
-﻿using EnigmaticThunder.Modules;
-using KinematicCharacterController;
+﻿using KinematicCharacterController;
 
 using RoR2;
 using System;
@@ -39,8 +38,8 @@ namespace Cloudburst.Cores
             artifactDef.smallIconDeselectedSprite = exampleDef.smallIconDeselectedSprite;
             artifactDef.smallIconSelectedSprite= exampleDef.smallIconSelectedSprite;
 
-            Languages.Add(artifactDef.nameToken, "Artifact of Diminutive");
-            Languages.Add(artifactDef.descriptionToken, "Every character is smaller.");
+            R2API.LanguageAPI.Add(artifactDef.nameToken, "Artifact of Diminutive");
+            R2API.LanguageAPI.Add(artifactDef.descriptionToken, "Every character is smaller.");
 
 
             smallDef = artifactDef;
@@ -57,8 +56,8 @@ namespace Cloudburst.Cores
             artifactDef.smallIconDeselectedSprite = exampleDef.smallIconDeselectedSprite;
             artifactDef.smallIconSelectedSprite = exampleDef.smallIconSelectedSprite;
 
-            Languages.Add(artifactDef.nameToken, "Artifact of Mass");
-            Languages.Add(artifactDef.descriptionToken, "Every character is larger.");
+            R2API.LanguageAPI.Add(artifactDef.nameToken, "Artifact of Mass");
+            R2API.LanguageAPI.Add(artifactDef.descriptionToken, "Every character is larger.");
 
 
             massDef = artifactDef;

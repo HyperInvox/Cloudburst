@@ -1,9 +1,9 @@
 ﻿//using Cloudburst.Cores.States.Huntress;
-using EnigmaticThunder.Modules;
-using EnigmaticThunder.Util;
+
+
 using EntityStates;
-
-
+using R2API;
+using R2API.Utils;
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
@@ -28,7 +28,7 @@ namespace Cloudburst.Cores
         {
             instance = this;
 
-            Languages.Add("OBJECTIVE_INFINITE_ARENA", "Survive until the very end.");
+            R2API.LanguageAPI.Add("OBJECTIVE_INFINITE_ARENA", "Survive until the very end.");
 
             //Cloudburst.onFixedUpdate += ArenaMissionControllerTweaks;
             //On.RoR2.UI.ObjectivePanelController.ClearArena.GenerateString += ClearArena_GenerateString;

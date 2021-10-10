@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 using UnityEngine;
 
@@ -35,7 +35,7 @@ namespace Cloudburst.Cores.Items.Green
 
         }
 
-        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var fabDagMDL = Resources.Load<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
             LogCore.LogI(fabDagMDL);
@@ -149,7 +149,7 @@ namespace Cloudburst.Cores.Items.Green
 
 
             return rules;
-        }*/
+        }
 
         protected override void Initialization()
         {

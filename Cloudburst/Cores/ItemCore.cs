@@ -384,59 +384,59 @@ Hook();
 
 protected internal void RegisterTokens()
 {
-Languages.Add("ITEM_ITEMONCHAMPIONKILL_NAME", "Extractor"); //model
-Languages.Add("ITEM_ITEMONCHAMPIONKILL_DESC", "On boss death, <style=cIsUtility>25% chance <style=cStack>(+10% per stack)</style> for bosses to drop a random boss item when killed.</style> Nearby projectiles are also destroyed, gain 5 <style=cStack>(+5 per stack)</style> for each destroyed projectile. ");
-Languages.Add("ITEM_ITEMONCHAMPIONKILL_PICKUP", "On death, bosses have a chance to drop an item. Nearby projectiles are also destroyed, gain barrier for each destroyed projectile.");
+R2API.LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_NAME", "Extractor"); //model
+R2API.LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_DESC", "On boss death, <style=cIsUtility>25% chance <style=cStack>(+10% per stack)</style> for bosses to drop a random boss item when killed.</style> Nearby projectiles are also destroyed, gain 5 <style=cStack>(+5 per stack)</style> for each destroyed projectile. ");
+R2API.LanguageAPI.Add("ITEM_ITEMONCHAMPIONKILL_PICKUP", "On death, bosses have a chance to drop an item. Nearby projectiles are also destroyed, gain barrier for each destroyed projectile.");
 
-Languages.Add("ITEM_LARGERTELEPORTERRADIUS_NAME", "Mechanical Trinket"); //model
-Languages.Add("ITEM_LARGERTELEPORTERRADIUS_DESC", "");
-Languages.Add("ITEM_LARGERTELEPORTERRADIUS_PICKUP", "Increase teleporter radius.");
+R2API.LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_NAME", "Mechanical Trinket"); //model
+R2API.LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_DESC", "");
+R2API.LanguageAPI.Add("ITEM_LARGERTELEPORTERRADIUS_PICKUP", "Increase teleporter radius.");
 
-Languages.Add("ITEM_CRIPPLEONHIT_NAME", "Fabinhoru's Dagger");
-Languages.Add("ITEM_CRIPPLEONHIT_DESC", "8% Chance to <style=cIsDamage>cripple enemies</style> for 3 <style=cStack>(+3 seconds per stack)</style> seconds.");
-Languages.Add("ITEM_CRIPPLEONHIT_PICKUP", "Chance to cripple enemies on hit.");
+R2API.LanguageAPI.Add("ITEM_CRIPPLEONHIT_NAME", "Fabinhoru's Dagger");
+R2API.LanguageAPI.Add("ITEM_CRIPPLEONHIT_DESC", "8% Chance to <style=cIsDamage>cripple enemies</style> for 3 <style=cStack>(+3 seconds per stack)</style> seconds.");
+R2API.LanguageAPI.Add("ITEM_CRIPPLEONHIT_PICKUP", "Chance to cripple enemies on hit.");
 
 
 //var nArmor = armor + (0.1f + (count * 0.2f));
 //var nRegen = regen + (0.1f + (count * 0.2f));
-Languages.Add("ITEM_CLOAKBUFFONINTERACTION_NAME", "Jape's Cloak");
-Languages.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Gain a buff that grants you <style=cIsUtility>+5 armor</style> and <style=cIsHealing>30% healing</style> when picking up an item. Maximum cap of 3 buffs <style=cStack>(+2 per stack)</style>.");
-Languages.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Gain a buff that grants armor and healing on item pickup.");
-Languages.Add("ITEM_CLOAKBUFFONINTERACTION_LORE", japesLor3);
+R2API.LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_NAME", "Jape's Cloak");
+R2API.LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_DESC", "Gain a buff that grants you <style=cIsUtility>+5 armor</style> and <style=cIsHealing>30% healing</style> when picking up an item. Maximum cap of 3 buffs <style=cStack>(+2 per stack)</style>.");
+R2API.LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_PICKUP", "Gain a buff that grants armor and healing on item pickup.");
+R2API.LanguageAPI.Add("ITEM_CLOAKBUFFONINTERACTION_LORE", japesLor3);
 
-//Languages.Add("ITEM_ITEMONLEVELUP_NAME", "Opportunists Charm");
-//Languages.Add("ITEM_ITEMONLEVELUP_DESC", "For each skill on cooldown, recieve an armor buff that gives you <style=cIsUtility>+10 <style=cStack>+10 chance per stack</style> armor</style>. ");
-//Languages.Add("ITEM_ITEMONLEVELUP_PICKUP", "Recieve armor for each skill on cooldown");
+//R2API.LanguageAPI.Add("ITEM_ITEMONLEVELUP_NAME", "Opportunists Charm");
+//R2API.LanguageAPI.Add("ITEM_ITEMONLEVELUP_DESC", "For each skill on cooldown, recieve an armor buff that gives you <style=cIsUtility>+10 <style=cStack>+10 chance per stack</style> armor</style>. ");
+//R2API.LanguageAPI.Add("ITEM_ITEMONLEVELUP_PICKUP", "Recieve armor for each skill on cooldown");
 
-Languages.Add("ITEM_EXPLOSIONGROUND_NAME", "Blastboot Shell");
-Languages.Add("ITEM_EXPLOSIONGROUND_DESC", "On use of your secondary, if in midair, to <style=cIsDamage>spawn an explosion beneath you</style> that does <style=cIsDamage>100%<style=cStack>+250% chance per stack</style> damage</style> and <style=cIsUtility>boosts you upwards</style>");
-Languages.Add("ITEM_EXPLOSIONGROUND_PICKUP", "");
+R2API.LanguageAPI.Add("ITEM_EXPLOSIONGROUND_NAME", "Blastboot Shell");
+R2API.LanguageAPI.Add("ITEM_EXPLOSIONGROUND_DESC", "On use of your secondary, if in midair, to <style=cIsDamage>spawn an explosion beneath you</style> that does <style=cIsDamage>100%<style=cStack>+250% chance per stack</style> damage</style> and <style=cIsUtility>boosts you upwards</style>");
+R2API.LanguageAPI.Add("ITEM_EXPLOSIONGROUND_PICKUP", "");
 
 
-Languages.Add("ITEM_RANDOMDEBUFFONHIT_NAME", "[REDACTED]");
-Languages.Add("ITEM_RANDOMDEBUFFONHIT_DESC", "In combat, nearby low health enemies have a 5% chance to become <style=cIsDamage>Overwhelmed, slowing them and inflicting them with a strong non-lethal Damage-Over-Time that does 200% damage every three seconds and becomes more potent the lower their health is</style> for 8 <style=cStack>(+3 seconds</style> .");
-Languages.Add("ITEM_RANDOMDEBUFFONHIT_PICKUP", "Nearby enemies with low health have a chance to become overwhelmed, slowing them and inflicting with with a Damage-Over-Time");
-Languages.Add("ITEM_RANDOMDEBUFFONHIT_LORE", redactedLore);
+R2API.LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_NAME", "[REDACTED]");
+R2API.LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_DESC", "In combat, nearby low health enemies have a 5% chance to become <style=cIsDamage>Overwhelmed, slowing them and inflicting them with a strong non-lethal Damage-Over-Time that does 200% damage every three seconds and becomes more potent the lower their health is</style> for 8 <style=cStack>(+3 seconds</style> .");
+R2API.LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_PICKUP", "Nearby enemies with low health have a chance to become overwhelmed, slowing them and inflicting with with a Damage-Over-Time");
+R2API.LanguageAPI.Add("ITEM_RANDOMDEBUFFONHIT_LORE", redactedLore);
 
-Languages.Add("ITEM_MONEYONINTERACTION_NAME", "Enigmatic Keycard");
-Languages.Add("ITEM_MONEYONINTERACTION_DESC", "10% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style>.");
-Languages.Add("ITEM_MONEYONINTERACTION_PICKUP", "Chance to spawn a void orb on hit.");
+R2API.LanguageAPI.Add("ITEM_MONEYONINTERACTION_NAME", "Enigmatic Keycard");
+R2API.LanguageAPI.Add("ITEM_MONEYONINTERACTION_DESC", "10% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style>.");
+R2API.LanguageAPI.Add("ITEM_MONEYONINTERACTION_PICKUP", "Chance to spawn a void orb on hit.");
 
-Languages.Add("ITEM_BARRIERONCRIT_NAME", "Lucky Rabbit Foot");
-Languages.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.");
-Languages.Add("ITEM_BARRIERONCRIT_PICKUP", "Gain barrier on critical hits");
+R2API.LanguageAPI.Add("ITEM_BARRIERONCRIT_NAME", "Lucky Rabbit Foot");
+R2API.LanguageAPI.Add("ITEM_BARRIERONCRIT_DESC", "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.");
+R2API.LanguageAPI.Add("ITEM_BARRIERONCRIT_PICKUP", "Gain barrier on critical hits");
 
-Languages.Add("ITEM_BARRIERONLEVEL_NAME", "Broken Body Armor");
-Languages.Add("ITEM_BARRIERONLEVEL_DESC", "Gain a buff that grants 8 <style=cStack>(+8 per stack)</style> <style=cIsUtility>armor</style> when hurt.");
-Languages.Add("ITEM_BARRIERONLEVEL_PICKUP", "Gain an armor buff when hurt ");
+R2API.LanguageAPI.Add("ITEM_BARRIERONLEVEL_NAME", "Broken Body Armor");
+R2API.LanguageAPI.Add("ITEM_BARRIERONLEVEL_DESC", "Gain a buff that grants 8 <style=cStack>(+8 per stack)</style> <style=cIsUtility>armor</style> when hurt.");
+R2API.LanguageAPI.Add("ITEM_BARRIERONLEVEL_PICKUP", "Gain an armor buff when hurt ");
 
-Languages.Add("ITEM_EXPERIENCEONHIT_NAME", "Glass Harvester");
-Languages.Add("ITEM_EXPERIENCEONHIT_DESC", "Gain 3 <style=cStack>(+2 per stack)</style> <style=cIsUtility>experience</style> on hit.");
-Languages.Add("ITEM_EXPERIENCEONHIT_PICKUP", "");
+R2API.LanguageAPI.Add("ITEM_EXPERIENCEONHIT_NAME", "Glass Harvester");
+R2API.LanguageAPI.Add("ITEM_EXPERIENCEONHIT_DESC", "Gain 3 <style=cStack>(+2 per stack)</style> <style=cIsUtility>experience</style> on hit.");
+R2API.LanguageAPI.Add("ITEM_EXPERIENCEONHIT_PICKUP", "");
 
-Languages.Add("ITEM_LEMDOG_NAME", "Lemdog");
-Languages.Add("ITEM_LEMDOG_DESC", "25% <style=cStack>(+2.5% per stack)</style> chance for <style=cIsUtility>applied debuffs to become beneficial buffs</style>");
-Languages.Add("ITEM_LEMDOG_PICKUP", "Chance for debuffs to become beneficial buffs when applied");
+R2API.LanguageAPI.Add("ITEM_LEMDOG_NAME", "Lemdog");
+R2API.LanguageAPI.Add("ITEM_LEMDOG_DESC", "25% <style=cStack>(+2.5% per stack)</style> chance for <style=cIsUtility>applied debuffs to become beneficial buffs</style>");
+R2API.LanguageAPI.Add("ITEM_LEMDOG_PICKUP", "Chance for debuffs to become beneficial buffs when applied");
 
 /*                    if (self.HasBuff(magicArmor))
         {
@@ -458,16 +458,16 @@ desc = desc + "<style=cIsHealing>20% <style=cStack>(+20% per stack)</style> rege
 desc = desc + "<style=cIsDamage>10% <style=cStack>(+10% per stack)</style> attack speed</style>" + Environment.NewLine + Environment.NewLine;
 desc = desc + "Also extend <style=cIsUtility>positive buff duration</style> by 2 <style=cStack>(+1 per stack)</style> seconds." + Environment.NewLine + Environment.NewLine;
 
-Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME", "Magician's Earrings");
-Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC", desc);//"Every 15 seconds, gain a buff which can grant you one of the following: <style=cIsUtility>+8 <style=cStack>(+8 per stack)</style> armor, <style=cIsHealing>20% <style=cStack>(+20% per stack)</style> regeneration</style>, and <style=cIsDamage>10% <style=cStack>(+10% per stack)</style> attack speed</style>. Also extend <style=cIsUtility>positive buff duration</style> by 2<style=cStack>(+1 per stack)</style> seconds. ");
-Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP", "Every 15 seconds, gain a buff that can grant you armor, or regeneration, or attack speed. Also extend positive buff duration");
-Languages.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_LORE", magicLore);
+R2API.LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_NAME", "Magician's Earrings");
+R2API.LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_DESC", desc);//"Every 15 seconds, gain a buff which can grant you one of the following: <style=cIsUtility>+8 <style=cStack>(+8 per stack)</style> armor, <style=cIsHealing>20% <style=cStack>(+20% per stack)</style> regeneration</style>, and <style=cIsDamage>10% <style=cStack>(+10% per stack)</style> attack speed</style>. Also extend <style=cIsUtility>positive buff duration</style> by 2<style=cStack>(+1 per stack)</style> seconds. ");
+R2API.LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_PICKUP", "Every 15 seconds, gain a buff that can grant you armor, or regeneration, or attack speed. Also extend positive buff duration");
+R2API.LanguageAPI.Add("ITEM_EXTENDEDENEMYBUFFDURATIOM_LORE", magicLore);
 
 
 
-Languages.Add("ITEM_WYATTWALKMAN_NAME", "Walkman");
-Languages.Add("ITEM_WYATTWALKMAN_DESC", "Gain <style=cIsUtility>+x% speed</style> and <style=cIsHealing>+x% regen</style> while in combat every 3 seconds. Maximum 10 stacks <style=cStack>(+1 per stack)</style>");
-Languages.Add("ITEM_WYATTWALKMAN_PICKUP", "Gain speed and regeneration while in combat");
+R2API.LanguageAPI.Add("ITEM_WYATTWALKMAN_NAME", "Walkman");
+R2API.LanguageAPI.Add("ITEM_WYATTWALKMAN_DESC", "Gain <style=cIsUtility>+x% speed</style> and <style=cIsHealing>+x% regen</style> while in combat every 3 seconds. Maximum 10 stacks <style=cStack>(+1 per stack)</style>");
+R2API.LanguageAPI.Add("ITEM_WYATTWALKMAN_PICKUP", "Gain speed and regeneration while in combat");
 
 }
 

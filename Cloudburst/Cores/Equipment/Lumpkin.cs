@@ -9,10 +9,10 @@ namespace Cloudburst.Cores.Equipment
 
     public class ExampleEquipment : EquipmentBuilder
     {
-        /*            Languages.Add("EQUIPMENT_LUMPKIN_NAME", "The Lumpkin");
-            Languages.Add("EQUIPMENT_LUMPKIN_PICKUP", "And his screams were Brazilian...");
-            Languages.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does <style=cIsDamage>500% damage, and twice your maximum health for damage</style>.");
-            Languages.Add("EQUIPMENT_LUMPKIN_LORE", "");
+        /*            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_NAME", "The Lumpkin");
+            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_PICKUP", "And his screams were Brazilian...");
+            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does <style=cIsDamage>500% damage, and twice your maximum health for damage</style>.");
+            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_LORE", "");
 
 */
         public override string EquipmentName => "The Lumpkin";

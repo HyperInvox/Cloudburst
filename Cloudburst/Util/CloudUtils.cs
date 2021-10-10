@@ -1,7 +1,5 @@
 ﻿using Cloudburst.Cores;
 using Cloudburst.Cores.Components;
-using EnigmaticThunder.Modules;
-using EnigmaticThunder.Util;
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Projectile;
@@ -10,8 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using Cloudburst.Content;
 using UnityEngine.Rendering.PostProcessing;
 using static Cloudburst.ErrorListener;
+using R2API;
+using R2API.Utils;
 
 public static class CloudUtils
 {
@@ -27,7 +28,7 @@ public static class CloudUtils
     {
         if (projectileObject.HasComponent<ProjectileController>())
         {
-            EnigmaticThunder.Modules.Projectiles.RegisterProjectile(projectileObject);
+            Cloudburst.Content.ContentHandler.Projectiles.RegisterProjectile(projectileObject);
             LogCore.LogD("Registered projectile " + projectileObject.name + " to the projectile catalog!");
             return true;
         }
@@ -45,7 +46,7 @@ public static class CloudUtils
     {
         if (bodyObject)
         {
-            EnigmaticThunder.Modules.Bodies.RegisterBody(bodyObject);// += list => list.Add(bodyObject);
+            Cloudburst.Content.ContentHandler.Bodies.RegisterBody(bodyObject);// += list => list.Add(bodyObject);
             LogCore.LogD("Registered body " + bodyObject.name + " to the body catalog!");
             return true;
         }
@@ -63,7 +64,7 @@ public static class CloudUtils
     {
         if (master && master.HasComponent<CharacterMaster>())
         {
-            EnigmaticThunder.Modules.Masters.RegisterMaster(master);
+            Cloudburst.Content.ContentHandler.Masters.RegisterMaster(master);
             LogCore.LogD("Registered master " + master.name + " to the master catalog!");
             return true;
         }
@@ -462,6 +463,7 @@ public static class CloudUtils
         PostProcessVolume postProcessVolume = null;
         SceneInfo instance = SceneInfo.instance;
 
+        GameObject.FindObjectOfType<PostProcessVolume>();
         if (instance)
         {
             postProcessVolume = instance.GetComponent<PostProcessVolume>();
@@ -485,6 +487,9 @@ public static class CloudUtils
             {
                 postProcessVolume = null;
             }
+        }
+        if (!postProcessVolume) {
+            postProcessVolume = GameObject.FindObjectOfType<PostProcessVolume>();
         }
         return postProcessVolume;
     }
@@ -735,28 +740,28 @@ public static class CloudUtils
             skillLocator.primary = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.primary.SetFieldValue("_skillFamily", newFamily);
         }
         {
             skillLocator.secondary = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.secondary.SetFieldValue("_skillFamily", newFamily);
         }
         {
             skillLocator.utility = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.utility.SetFieldValue("_skillFamily", newFamily);
         }
         {
             skillLocator.special = survivor.AddComponent<GenericSkill>();
             SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
             newFamily.variants = new SkillFamily.Variant[1];
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillFamily(newFamily);
             skillLocator.special.SetFieldValue("_skillFamily", newFamily);
         }
     }

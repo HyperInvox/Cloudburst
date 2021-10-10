@@ -49,15 +49,13 @@
     <Reference Include="BepInEx.Preloader">
       <HintPath>libs\BepInEx.Preloader.dll</HintPath>
     </Reference>
-    <Reference Include="EnigmaticThunder">
-      <HintPath>E:\Abbas's stuff VII I think\1337 haxx\ror2lol\Chikara ga minegitte kuru\_sln References\compats\EnigmaticThunder.dll</HintPath>
-    </Reference>
     <Reference Include="Facepunch.Steamworks">
       <HintPath>libs\Facepunch.Steamworks.dll</HintPath>
     </Reference>
     <Reference Include="HGCSharpUtils">
       <HintPath>libs\HGCSharpUtils.dll</HintPath>
     </Reference>
+    <Reference Include="HGUnityUtils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="MMHOOK_Assembly-CSharp">
       <HintPath>libs\MMHOOK_Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -81,6 +79,10 @@
     </Reference>
     <Reference Include="MonoMod.Utils">
       <HintPath>libs\MonoMod.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="R2API, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>libs\R2API.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -144,6 +146,7 @@
     <Compile Include="Achievements\GrabOrDie.cs" />
     <Compile Include="Achievements\HitLevelCap.cs" />
     <Compile Include="Achievements\Paradox.cs" />
+    <Compile Include="ContentHandler\ContentHandler.cs" />
     <Compile Include="Cores\CaptainCore.cs" />
     <Compile Include="Cores\Components\Blink.cs" />
     <Compile Include="Cores\Components\BasedDepartment.cs" />
@@ -197,6 +200,7 @@
     <Compile Include="Util\Builders\SurvivorBuilder.cs" />
     <Compile Include="Util\Builders\ItemBuilder.cs" />
     <Compile Include="Util\Builders\EnemyBuilder.cs" />
+    <Compile Include="Util\EnigmaticList.cs" />
     <Compile Include="Util\MaterialSwapper.cs" />
     <Compile Include="Util\Listener.cs" />
     <Compile Include="Util\CloudUtils.cs" />
@@ -327,6 +331,7 @@ if "$(Username)" == "Erikbir" copy /Y "$(TargetPath)" "C:\Program Files (x86)\St
 if "$(Username)" == "Erikbir" copy /Y "$(TargetPath)" "$(SolutionDir)\Release\"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>if "$(Username)" == "Erikbir" copy /Y "$(SolutionDir)\UnityAssetburst\AssetBundles\StandaloneWindows\assetburst" "$(ProjectDir)"</PreBuildEvent>
+    <PreBuildEvent>if "$(Username)" == "Erikbir" copy /Y "$(SolutionDir)\UnityAssetburst\AssetBundles\StandaloneWindows\assetburst" "$(ProjectDir)"
+if "$(Username)" == "kurog" copy /Y "$(SolutionDir)\UnityAssetburst\AssetBundles\StandaloneWindows\assetburst" "$(ProjectDir)"</PreBuildEvent>
   </PropertyGroup>
 </Project>

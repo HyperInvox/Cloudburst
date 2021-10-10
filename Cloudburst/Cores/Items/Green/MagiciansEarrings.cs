@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -91,6 +91,11 @@ Although much of Aleksi's belongings have been collected from his uncovered resi
                     duration += 2 + (1 * earringsCount);
                 }
             }
+        }
+
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        {
+            return new ItemDisplayRuleDict();
         }
     }
     public class MagiciansEarringsBehavior : CharacterBody.ItemBehavior

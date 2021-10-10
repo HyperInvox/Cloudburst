@@ -1,5 +1,5 @@
 ﻿using Cloudburst.Cores.States.Captain;
-using EnigmaticThunder.Modules;
+
 using EntityStates;
 using RoR2;
 using RoR2.Skills;
@@ -31,11 +31,11 @@ namespace Cloudburst.Cores
 
             CloudUtils.CopySkillDefSettings(origDef, newDef);
 
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(CallOrbitalLaser));
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(newDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(CallOrbitalLaser));
+           Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(newDef);
 
-            Languages.Add("CAPTAIN_UTILITY_ALT2_NAME", "Yeah!");
-            Languages.Add("CAPTAIN_UTILITY_ALT2_DESCRIPTION", "Awesome!");
+            R2API.LanguageAPI.Add("CAPTAIN_UTILITY_ALT2_NAME", "Yeah!");
+            R2API.LanguageAPI.Add("CAPTAIN_UTILITY_ALT2_DESCRIPTION", "Awesome!");
 
             newDef.baseRechargeInterval = 15;
             newDef.activationState = new SerializableEntityStateType(typeof(CallOrbitalLaser));

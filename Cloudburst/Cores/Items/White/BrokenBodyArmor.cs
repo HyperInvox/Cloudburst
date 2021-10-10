@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 using UnityEngine;
 
@@ -35,7 +35,7 @@ namespace Cloudburst.Cores.Items.White
 
         }
 
-        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var bbaMDL = Resources.Load<GameObject>(ItemModelPath);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
@@ -52,7 +52,7 @@ namespace Cloudburst.Cores.Items.White
 }
             });
             return rules;
-        }*/
+        }
 
         protected override void Initialization()
         {

@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using R2API;
+using RoR2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
-using EnigmaticThunder.Modules;
+
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.SceneManagement;
 
@@ -160,7 +161,7 @@ namespace Cloudburst.Cores
                 }
             }
 
-            public override float chance => 100;
+            public override float chance => 75;
 
             public static GameObject obj;
             public override void Init()
@@ -246,20 +247,25 @@ namespace Cloudburst.Cores
                     {
 
                         LogCore.LogI("hi");
-                        var obj = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarBox"), new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
+                        var obj = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.tarRiver, new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
 
+                        LogCore.LogI("h2");
                         obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
 
-                        obj.AddComponent<TarRiverSlow>();
-                        obj.layer = LayerIndex.world.intVal;
+                        LogCore.LogI("hi3");
+                        /*obj.AddComponent<TarRiverSlow>();
+                        obj.layer = LayerIndex.world.intVal;*/
                         obj.transform.position = new Vector3(201f, -134.1f, 143f);
                         obj.transform.rotation = Quaternion.Euler(0, -43.019f, 0);
                         obj.transform.localScale = new Vector3(429.2972f, 10, 420.4618f);
                         obj.GetComponent<Renderer>().material = goo.GetComponent<Renderer>().material;
-                        obj.AddComponent<NetworkIdentity>();
-                        obj.AddComponent<NetworkTransform>();
+                        /*obj.AddComponent<NetworkIdentity>();
+                        obj.AddComponent<NetworkTransform>();*/
+                        LogCore.LogI("hi4");
+
 
                         NetworkServer.Spawn(obj);
+                        LogCore.LogI("hi5");
                     }
 
                     /*GameObject obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -280,6 +286,12 @@ namespace Cloudburst.Cores
 
                     CloudburstPlugin.Instantiate<GameObject>(warning.gameObject, new Vector3(50.71f, -117.16f, 105.15f), Quaternion.Euler(new Vector3(1, 1, 1)));
                     CloudburstPlugin.Instantiate<GameObject>(warning.gameObject, new Vector3(16.44f, -122.26f, 108f), Quaternion.Euler(new Vector3(6.082f, 54.268f, -11.764f)));
+
+                    if (NetworkServer.active)
+                    {
+                       // var quirky = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.tarRaft, new Vector3(151.4241f, -129.9794f, 221.6763f), Quaternion.Euler(new Vector3(0, -0, 0)));
+                       // NetworkServer.Spawn(quirky);
+                    }
                 }
             }
 
@@ -291,6 +303,47 @@ namespace Cloudburst.Cores
             public override bool CanBeActivated()
             {
                 return SceneCatalog.GetSceneDefForCurrentScene() && SceneCatalog.GetSceneDefForCurrentScene().nameToken == "MAP_GOOLAKE_TITLE";
+            }
+        }
+
+        internal class DayTimeDelta : Event
+        {
+            public override float chance => 0;
+
+            public override void Init()
+            {
+                base.Init();
+            }
+
+            public override void Start()
+            {
+                base.Start();
+
+            }
+
+            public override void OnEnable()
+            {
+                base.OnEnable();
+                PostProcessProfile[] source = Resources.FindObjectsOfTypeAll<PostProcessProfile>();
+                PostProcessProfile profile = (from p in source
+                                              where p.name == "ppLocalClayBossDeath"//"ppLocalUnderwater"
+                                              select p).FirstOrDefault<PostProcessProfile>();
+                //var thang = profile.settings[0];
+                
+                profile.settings[0] = (from p in source where p.name == "ppLocalRez" select p).FirstOrDefault<PostProcessProfile>().settings[0];
+
+
+                CloudUtils.AlterCurrentPostProcessing(profile);
+            }
+
+            public override void OnDisable()
+            {
+                base.OnDisable();
+            }
+
+            public override bool CanBeActivated()
+            {
+                return SceneCatalog.GetSceneDefForCurrentScene() && SceneCatalog.GetSceneDefForCurrentScene().nameToken == "MAP_FROZENWALL_TITLE";
             }
         }
 
@@ -376,7 +429,7 @@ namespace Cloudburst.Cores
 
         private void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
         {
-            /*
+            
             foreach (Event eve in activeEvents)
             {
                 eve.OnDisable();
@@ -386,7 +439,7 @@ namespace Cloudburst.Cores
             foreach (Event eve in events)
             {
                 float chance = eve.chance;
-                bool isActive = Util.CheckRoll(chance) && eve.canBeActivated;
+                bool isActive = /*Util.CheckRoll(chance) &&*/ eve.canBeActivated;
                 if (isActive)
                 {
                     activeEvents.Add(eve);
@@ -396,7 +449,7 @@ namespace Cloudburst.Cores
             foreach (Event eve in activeEvents)
             {
                 eve.OnEnable();
-            }*/
+            }//*/
             //fuck
         }
 

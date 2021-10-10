@@ -1,10 +1,9 @@
 ﻿using Cloudburst;
-using EnigmaticThunder.Modules;
-using EnigmaticThunder.Util;
+using Cloudburst.Content;
+
 //using Cloudburst.Cores.ClayMan.Skills;
 using EntityStates;
-
-
+using R2API.Utils;
 using RoR2;
 using RoR2.CharacterAI;
 using RoR2.Skills;
@@ -17,7 +16,7 @@ using static RoR2.CharacterAI.AISkillDriver;
 namespace Cloudburst.Cores
 {
     //TODO:
-    //Nothing!
+    //Nothing
     class ClayMenCore
     {
         public static ClayMenCore instance;
@@ -171,7 +170,7 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = clayMan.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                Languages.Add("CLAYMAN_BODY_TOKEN", "Clay Man");
+                R2API.LanguageAPI.Add("CLAYMAN_BODY_TOKEN", "Clay Man");
                 characterBody.baseAcceleration = 80f;
                 characterBody.baseArmor = 10; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -348,14 +347,14 @@ namespace Cloudburst.Cores
                 skillLocator.primary = clayMan.AddComponent<GenericSkill>();
                 SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
                 newFamily.variants = new SkillFamily.Variant[1];
-                EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
+                Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillFamily(newFamily);
                 skillLocator.primary.SetFieldValue("_skillFamily", newFamily);
             }
             {
                 skillLocator.secondary = clayMan.AddComponent<GenericSkill>();
                 SkillFamily newFamily = ScriptableObject.CreateInstance<SkillFamily>();
                 newFamily.variants = new SkillFamily.Variant[1];
-                EnigmaticThunder.Modules.Loadouts.RegisterSkillFamily(newFamily);
+                Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillFamily(newFamily);
                 skillLocator.secondary.SetFieldValue("_skillFamily", newFamily);
             }
         }
@@ -382,7 +381,7 @@ namespace Cloudburst.Cores
             primarySkillDef.skillName = "aaa";
             primarySkillDef.skillNameToken = "aa";
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -417,7 +416,7 @@ namespace Cloudburst.Cores
             secondarySkillDef.skillName = "aaa";
             secondarySkillDef.skillNameToken = "aa";
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant

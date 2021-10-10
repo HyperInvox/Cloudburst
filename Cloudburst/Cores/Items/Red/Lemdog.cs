@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,9 +32,9 @@ namespace Cloudburst.Cores.Items.Red
 
         }
 
-        /* public override ItemDisplayRuleDict CreateItemDisplayRules()
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            var lemdogMDL = Resources.Load<GameObject>(ItemModelPath);
+            var lemdogMDL = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
 {
     new ItemDisplayRule
@@ -147,7 +147,7 @@ namespace Cloudburst.Cores.Items.Red
             });
 
             return rules;
-        }*/
+        }
 
 
         protected override void Initialization()

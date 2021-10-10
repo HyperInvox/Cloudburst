@@ -3,9 +3,10 @@
 using RoR2;
 using TMPro;
 using RoR2.UI;
-using EnigmaticThunder.Modules;
+
 using UnityEngine.Rendering.PostProcessing;
 using System.Linq;
+using R2API;
 
 namespace Cloudburst.Cores
 {
@@ -180,7 +181,7 @@ namespace Cloudburst.Cores
             debris2.gameObject.SetActive(false);
             sphere.gameObject.SetActive(false);
 
-            Effects.RegisterEffect(Effects.CreateGenericEffectDef(orbitalImpact));
+            Content.ContentHandler.Effects.RegisterEffect(Content.ContentHandler.Effects.CreateGenericEffectDef(orbitalImpact));
         }
 
         private void CreateUnknownEliteEffect()
@@ -209,17 +210,17 @@ namespace Cloudburst.Cores
                 LogCore.LogI("hi3");
                 magicArmor.transform.Find("Fluff").gameObject.SetActive(false);
                 LogCore.LogI("hi4");
-               // Languages.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
+               // R2API.LanguageAPI.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
                 LogCore.LogI("hi5");
 
                 tmp.text = "+Armor!";
                 LogCore.LogI("hi6");
-                Languages.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
+                R2API.LanguageAPI.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
 
                 langMeshController.token = "MAGIC_ARMOR_EFFECT";
                 LogCore.LogI("hi7");
 
-                EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
+                Content.ContentHandler.Effects.RegisterEffect(new EffectDef()
                 {
 
                     prefab = magicArmor,
@@ -235,12 +236,12 @@ namespace Cloudburst.Cores
 
                 magicRegen.transform.Find("Fluff").gameObject.SetActive(false);
 
-                Languages.Add("MAGIC_REGEN_EFFECT", "+Regeneration!");
+                R2API.LanguageAPI.Add("MAGIC_REGEN_EFFECT", "+Regeneration!");
 
                 tmp.text = "+Regeneration!";
                 langMeshController.token = "MAGIC_REGEN_EFFECT";
 
-                EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
+                Content.ContentHandler.Effects.RegisterEffect(new EffectDef()
                 {
 
                     prefab = magicRegen,
@@ -256,12 +257,12 @@ namespace Cloudburst.Cores
 
                 magicAttackSpeed.transform.Find("Fluff").gameObject.SetActive(false);
 
-                Languages.Add("MAGIC_ATKSPEED_EFFECT", "+Attack Speed!");
+                R2API.LanguageAPI.Add("MAGIC_ATKSPEED_EFFECT", "+Attack Speed!");
 
                 tmp.text = "+Attack Speed!";
                 langMeshController.token = "MAGIC_ATKSPEED_EFFECT";
 
-                EnigmaticThunder.Modules.Effects.RegisterEffect(new EffectDef()
+                Content.ContentHandler.Effects.RegisterEffect(new EffectDef()
                 {
 
                     prefab = magicAttackSpeed,
@@ -275,7 +276,7 @@ namespace Cloudburst.Cores
         public static GameObject CreateEffect(string name) { 
             GameObject obj = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(name);
 
-            Effects.RegisterEffect(new EffectDef()
+            Content.ContentHandler.Effects.RegisterEffect(new EffectDef()
             {
                 prefab = obj,
             });
@@ -299,7 +300,7 @@ namespace Cloudburst.Cores
             attributes.vfxPriority = priority;
 
 
-            Effects.RegisterEffect(new EffectDef()
+            Content.ContentHandler.Effects.RegisterEffect(new EffectDef()
             {
 
                 prefab = obj,
@@ -409,7 +410,7 @@ namespace Cloudburst.Cores
                 ringRenderer.material = CommonAssets.parentSwingEffectMaterial;
             }
 
-            Effects.RegisterEffect(Effects.CreateGenericEffectDef(wyattSwingTrail));
+            Content.ContentHandler.Effects.RegisterEffect(Content.ContentHandler.Effects.CreateGenericEffectDef(wyattSwingTrail));
         }
         private void RepairWyattEPICSwingEffect()
         {
@@ -424,7 +425,7 @@ namespace Cloudburst.Cores
                 HANDrenderer.material = CommonAssets.lemurianSwingEffectMaterial;
             }
 
-            Effects.RegisterEffect(Effects.CreateGenericEffectDef(wyatt2SwingTrail));
+            Content.ContentHandler.Effects.RegisterEffect(Content.ContentHandler.Effects.CreateGenericEffectDef(wyatt2SwingTrail));
         }
         #endregion
         #region AncientWisp

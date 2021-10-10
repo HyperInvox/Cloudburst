@@ -120,7 +120,7 @@ namespace Cloudburst.Cores
                 }
 
                 //add again
-                EnigmaticThunder.Modules.Buffs.RegisterBuff(buff);
+                Cloudburst.Content.ContentHandler.Buffs.RegisterBuff(buff);
                 //add buff
                 /*BuffCatalog.modHelper.getAdditionalEntries += ModHelper_getAdditionalEntries;
 

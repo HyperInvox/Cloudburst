@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 
 namespace Cloudburst.Cores.Items.White
@@ -34,10 +34,10 @@ namespace Cloudburst.Cores.Items.White
 
         }
 
-        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }*/
+        }
 
         protected override void Initialization()
         {

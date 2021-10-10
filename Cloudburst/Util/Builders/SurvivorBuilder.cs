@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 using Cloudburst;
-using EnigmaticThunder.Modules;
+
 using RoR2;
 using RoR2.Skills;
 using System;
@@ -180,11 +180,11 @@ public abstract class SurvivorCreator
 
     protected virtual void CreateLang()
     {
-        Languages.Add(SurvivorInternalName + "_BODY_NAME", SurvivorName);
-        Languages.Add(SurvivorInternalName + "_DESCRIPTION", SurvivorDescription);
-        Languages.Add(SurvivorInternalName + "_OUTRO_FLAVOR", SurvivorOutro);
-        Languages.Add(SurvivorInternalName + "_BODY_LORE", SurvivorLore);
-        Languages.Add(SurvivorInternalName + "_BODY_SUBTITLE", SurvivorSubtitle);
+        R2API.LanguageAPI.Add(SurvivorInternalName + "_BODY_NAME", SurvivorName);
+        R2API.LanguageAPI.Add(SurvivorInternalName + "_DESCRIPTION", SurvivorDescription);
+        R2API.LanguageAPI.Add(SurvivorInternalName + "_OUTRO_FLAVOR", SurvivorOutro);
+        R2API.LanguageAPI.Add(SurvivorInternalName + "_BODY_LORE", SurvivorLore);
+        R2API.LanguageAPI.Add(SurvivorInternalName + "_BODY_SUBTITLE", SurvivorSubtitle);
     }
 
     protected void CreateSurvivorDef()
@@ -201,7 +201,7 @@ public abstract class SurvivorCreator
         def.unlockableDef = unlockableDef;
         def.desiredSortPosition = desiredSortPosition;
 
-        EnigmaticThunder.Modules.Loadouts.RegisterSurvivorDef(def);
+        Cloudburst.Content.ContentHandler.Loadouts.RegisterSurvivorDef(def);
     }
 
     public virtual void Hooks() { }

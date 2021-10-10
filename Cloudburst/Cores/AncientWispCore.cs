@@ -1,5 +1,5 @@
-﻿using Cloudburst.Cores.States.AncientWisp;
-using EnigmaticThunder.Modules;
+﻿using Cloudburst.Content;
+using Cloudburst.Cores.States.AncientWisp;
 using EntityStates;
 
 using RoR2;
@@ -89,7 +89,8 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = body.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                Languages.Add("ANCIENTWISP_BODY_NAME", "Ancient Wisp");
+
+                R2API.LanguageAPI.Add("ANCIENTWISP_BODY_NAME", "Ancient Wisp");
                 characterBody.baseAcceleration = 14f;
                 characterBody.baseArmor = 0; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -126,8 +127,8 @@ namespace Cloudburst.Cores
 
         private void CreatePrimary()
         {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ChargeCannon));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FireCannon));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(ChargeCannon));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireCannon));
 
             SkillDef primarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
 
@@ -153,7 +154,7 @@ namespace Cloudburst.Cores
             primarySkillDef.icon = null;
             primarySkillDef.keywordTokens = Array.Empty<string>();
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -167,7 +168,7 @@ namespace Cloudburst.Cores
 
         private void CreateSecondary()
         {
-            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ChargeHomeRun));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(ChargeHomeRun));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(ChargeCannon));
@@ -192,7 +193,7 @@ namespace Cloudburst.Cores
             secondarySkillDef.icon = null;
             secondarySkillDef.keywordTokens = Array.Empty<string>();
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -206,9 +207,9 @@ namespace Cloudburst.Cores
 
         private void CreateUtility()
         {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(StartRain));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(RAIN));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(EndRain));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(StartRain));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(RAIN));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(EndRain));
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(StartRain));
@@ -233,7 +234,7 @@ namespace Cloudburst.Cores
             utilitySkillDef.icon = null;
             utilitySkillDef.keywordTokens = Array.Empty<string>();
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(utilitySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(utilitySkillDef);
             SkillFamily utilitySkillFamily = skillLocator.utility.skillFamily;
 
             utilitySkillFamily.variants[0] = new SkillFamily.Variant
@@ -246,7 +247,7 @@ namespace Cloudburst.Cores
 
         private void CreateSpecial()
         {
-            //EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Drone));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Drone));
 
             SkillDef specialSkillDef = ScriptableObject.CreateInstance<SkillDef>();
             specialSkillDef.activationState = new SerializableEntityStateType(typeof(ChargeCannon));
@@ -271,7 +272,7 @@ namespace Cloudburst.Cores
             specialSkillDef.icon = null; 
             specialSkillDef.keywordTokens = Array.Empty<string>(); 
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(specialSkillDef);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant

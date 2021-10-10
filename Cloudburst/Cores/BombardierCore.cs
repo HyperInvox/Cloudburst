@@ -72,10 +72,10 @@ namespace Cloudburst.Cores
             {
                 ModelSkinController skinController = model.AddOrGetComponent<ModelSkinController>();
 
-                EnigmaticThunder.Modules.Loadouts.SkinDefInfo defaultSkinInfo = default(EnigmaticThunder.Modules.Loadouts.SkinDefInfo);
+                Cloudburst.Content.ContentHandler.Loadouts.SkinDefInfo defaultSkinInfo = default(Cloudburst.Content.ContentHandler.Loadouts.SkinDefInfo);
                 defaultSkinInfo.BaseSkins = Array.Empty<SkinDef>();
                 defaultSkinInfo.GameObjectActivations = Array.Empty<SkinDef.GameObjectActivation>();
-                defaultSkinInfo.Icon = EnigmaticThunder.Modules.Loadouts.CreateSkinIcon(
+                defaultSkinInfo.Icon = Cloudburst.Content.ContentHandler.CreateSkinIcon(
                     //top - filled
                     new Color(250f / 255f, 234f / 255f, 202f / 255f),
                     //right 
@@ -102,7 +102,7 @@ namespace Cloudburst.Cores
 
                 //, ));
 
-                SkinDef defaultSkin = EnigmaticThunder.Modules.Loadouts.CreateNewSkinDef(defaultSkinInfo);
+                SkinDef defaultSkin = Cloudburst.Content.ContentHandler.Loadouts.CreateNewSkinDef(defaultSkinInfo);
 
                 skinController.skins = new SkinDef[1]
                 {
@@ -366,9 +366,9 @@ namespace Cloudburst.Cores
             desc = desc + "< ! > Concussive Blast is an excellent escape and mobility tool, but it also pulls enemies towards you when used. Jump away and shoot straight down to quickly dispose of a crowd" + Environment.NewLine + Environment.NewLine;
             desc = desc + "< ! > The key to success is realizing all of the Bombardier's abilities propel him into the air. Try to gain as much height as possible when using Grand Slam to annihilate your enemies." + Environment.NewLine + Environment.NewLine;
 
-            Languages.Add("BOMBARDIER_BASENAMETOKEN", "Bomber");
-            Languages.Add("BOMBARDIER_DESCRIPTION", desc);
-            Languages.Add("BOMBARDIER_FLAVORTOKEN", "...and so he left, lighting the fuse for a new adventure.");
+            R2API.LanguageAPI.Add("BOMBARDIER_BASENAMETOKEN", "Bomber");
+            R2API.LanguageAPI.Add("BOMBARDIER_DESCRIPTION", desc);
+            R2API.LanguageAPI.Add("BOMBARDIER_FLAVORTOKEN", "...and so he left, lighting the fuse for a new adventure.");
 
             SurvivorDef def = new SurvivorDef() {
                 bodyPrefab = characterPrefab,
@@ -417,8 +417,8 @@ namespace Cloudburst.Cores
             characterBody.levelMoveSpeed = 0; //Move speed gained when leveling up. 
             characterBody.levelRegen = 0.2f; //Regen gained when leveling up. 
 
-            Languages.Add(characterBody.subtitleNameToken, "Stranded Fuse Lighter");
-            Languages.Add(characterBody.baseNameToken, "Bomber");
+            R2API.LanguageAPI.Add(characterBody.subtitleNameToken, "Stranded Fuse Lighter");
+            R2API.LanguageAPI.Add(characterBody.baseNameToken, "Bomber");
 
             //fuck you moffein no credit
             //characterBody.portraitIcon = AssetsCore.mainAssetBundle.LoadAsset<Texture>("Assets/Cloudburst/Survivors/Bombardier/icon.png"); ; //The portrait icon, shows up in multiplayer and the death UI
@@ -450,8 +450,8 @@ namespace Cloudburst.Cores
             passive.icon = null;
             skillLocator.passiveSkill = passive;
 
-            Languages.Add("BOMBARDIER_PASSIVE_DESC", "You are <style=cIsUtility>immune</style> to fall damage.");
-            Languages.Add("BOMBARDIER_PASSIVE_NAME", "Lessons Learned");
+            R2API.LanguageAPI.Add("BOMBARDIER_PASSIVE_DESC", "You are <style=cIsUtility>immune</style> to fall damage.");
+            R2API.LanguageAPI.Add("BOMBARDIER_PASSIVE_NAME", "Lessons Learned");
 
             
 
@@ -463,7 +463,7 @@ namespace Cloudburst.Cores
         }
 
         private void CreatePassive() {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(BombardierMain));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(BombardierMain));
 
             //var stateMachine = body.GetComponent<EntityStateMachine>();
             //stateMachine.mainStateType = new SerializableEntityStateType(typeof(BombardierMain));
@@ -476,7 +476,7 @@ namespace Cloudburst.Cores
 
         private void CreatePrimary()
         {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FireRocket));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireRocket));
 
             SkillDef primarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
 
@@ -502,10 +502,10 @@ namespace Cloudburst.Cores
             primarySkillDef.icon = null;
             primarySkillDef.keywordTokens = Array.Empty<String>();
 
-            Languages.Add(primarySkillDef.skillDescriptionToken, "Fire a rocket that does <style=cIsDamage>385%</style> damage and <style=cIsDamage>explodes on contact</style>.");
-            Languages.Add(primarySkillDef.skillNameToken, "Rocket Blast");
+            R2API.LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "Fire a rocket that does <style=cIsDamage>385%</style> damage and <style=cIsDamage>explodes on contact</style>.");
+            R2API.LanguageAPI.Add(primarySkillDef.skillNameToken, "Rocket Blast");
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
+           Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -518,9 +518,9 @@ namespace Cloudburst.Cores
         }
 
         private void CreateSecondary() {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FireFlameRocket));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ThrowSticky));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ThrowStickySimple));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireFlameRocket));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(ThrowSticky));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(ThrowStickySimple));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<BombardierStickySkillDef>();
             secondarySkillDef.activationState = new EntityStates.SerializableEntityStateType(typeof(ThrowStickySimple));
@@ -569,10 +569,10 @@ namespace Cloudburst.Cores
                  "KEYWORD_STUNNING",
              };
 
-            Languages.Add(secondarySkillDef.skillDescriptionToken, "Toss a satchel charge that deals <style=cIsDamage>450% damage</style>. <style=cIsDamage>Detonate all deployed charges</style> <style=cIsUtility>by using while on cooldown.</style>");
-            Languages.Add(secondarySkillDef.skillNameToken, "Satchel Charge");
+            R2API.LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "Toss a satchel charge that deals <style=cIsDamage>450% damage</style>. <style=cIsDamage>Detonate all deployed charges</style> <style=cIsUtility>by using while on cooldown.</style>");
+            R2API.LanguageAPI.Add(secondarySkillDef.skillNameToken, "Satchel Charge");
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
+           Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -586,9 +586,9 @@ namespace Cloudburst.Cores
 
         private void CreateUtility()
         {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(UpwardsBlast));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(RocketJump));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FireRocketInThrees));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(UpwardsBlast));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(RocketJump));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireRocketInThrees));
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(RocketJump));
@@ -615,16 +615,16 @@ namespace Cloudburst.Cores
                  "KEYWORD_WHIFF",
             };
 
-            Languages.Add("KEYWORD_FORCEFUL", "<style=cKeywordName>Forceful</style><style=cSub>This skill applies the Forceful debuff, which doubles force applied to enemies.</style>");
-            Languages.Add("KEYWORD_WHIFF", "<style=cKeywordName>Whiffing</style><style=cSub>This skill does 200% more damage when you are in mid-air.</style>");
+            R2API.LanguageAPI.Add("KEYWORD_FORCEFUL", "<style=cKeywordName>Forceful</style><style=cSub>This skill applies the Forceful debuff, which doubles force applied to enemies.</style>");
+            R2API.LanguageAPI.Add("KEYWORD_WHIFF", "<style=cKeywordName>Whiffing</style><style=cSub>This skill does 200% more damage when you are in mid-air.</style>");
 
-            //Languages.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Forceful</style>. Pull enemies towards you for <style=cIsDamage>500%</style> damage and <style=cIsUtility>boost yourself upwards</style>.");
-            //Languages.Add(utilitySkillDef.skillNameToken, "Plan B");
+            //R2API.LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Forceful</style>. Pull enemies towards you for <style=cIsDamage>500%</style> damage and <style=cIsUtility>boost yourself upwards</style>.");
+            //R2API.LanguageAPI.Add(utilitySkillDef.skillNameToken, "Plan B");
 
-            Languages.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Stunning</style>. <style=cIsDamage>Whiffing</style>. Fire a powerful rocket that does <style=cIsDamage>500%</style> damage and <style=cIsDamage>explodes in a large radius on contact</style>.");
-            Languages.Add(utilitySkillDef.skillNameToken, "Concussive Payload");
+            R2API.LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "<style=cIsDamage>Stunning</style>. <style=cIsDamage>Whiffing</style>. Fire a powerful rocket that does <style=cIsDamage>500%</style> damage and <style=cIsDamage>explodes in a large radius on contact</style>.");
+            R2API.LanguageAPI.Add(utilitySkillDef.skillNameToken, "Concussive Payload");
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(utilitySkillDef);
+           Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(utilitySkillDef);
             SkillFamily utilitySkillFamily = skillLocator.utility.skillFamily;
 
             utilitySkillFamily.variants[0] = new SkillFamily.Variant
@@ -636,9 +636,9 @@ namespace Cloudburst.Cores
         }
 
         private void CreateSpecial() {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Mortar));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(GrandSlam));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(ThrowTesla));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Mortar));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(GrandSlam));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(ThrowTesla));
 
             SkillDef specialSkillDef = ScriptableObject.CreateInstance<SkillDef>();
             specialSkillDef.activationState = new SerializableEntityStateType(typeof(ThrowTesla));
@@ -663,10 +663,10 @@ namespace Cloudburst.Cores
             specialSkillDef.skillNameToken = "BOMBARDIER_SPECIAL_NAME";
             specialSkillDef.icon = null;
 
-            Languages.Add(specialSkillDef.skillDescriptionToken, "This content is filler.");
-            Languages.Add(specialSkillDef.skillNameToken, "FILLER");
+            R2API.LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "This content is filler.");
+            R2API.LanguageAPI.Add(specialSkillDef.skillNameToken, "FILLER");
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
+           Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(specialSkillDef);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant

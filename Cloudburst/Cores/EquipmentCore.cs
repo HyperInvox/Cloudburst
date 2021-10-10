@@ -210,15 +210,15 @@ namespace Cloudburst.Cores
 
         protected internal void RegisterTokens()
         {
-            Languages.Add("EQUIPMENT_LUMPKIN_NAME", "The Lumpkin");
-            Languages.Add("EQUIPMENT_LUMPKIN_PICKUP", "And his screams were Brazilian...");
-            Languages.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does <style=cIsDamage>500% damage, and twice your maximum health for damage</style>.");
-            Languages.Add("EQUIPMENT_LUMPKIN_LORE", "\"Lumpkin, one of the many commanders in the War of 2019 possessed a scream that could deafen his oppenents. For many battles, it was a mystery how he his scream was so powerful. Until he was impaled in the final battle of WW19, and had his lungs ripped from his chest. \r\n\r\nHis lungs, pictured above, allowed him to scream loudly without injuring himself.\"\r\n\r\n-Exhibit at The National WW19 Museum");
+            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_NAME", "The Lumpkin");
+            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_PICKUP", "And his screams were Brazilian...");
+            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_DESC", "Release a Brazilian scream that does <style=cIsDamage>500% damage, and twice your maximum health for damage</style>.");
+            R2API.LanguageAPI.Add("EQUIPMENT_LUMPKIN_LORE", "\"Lumpkin, one of the many commanders in the War of 2019 possessed a scream that could deafen his oppenents. For many battles, it was a mystery how he his scream was so powerful. Until he was impaled in the final battle of WW19, and had his lungs ripped from his chest. \r\n\r\nHis lungs, pictured above, allowed him to scream loudly without injuring himself.\"\r\n\r\n-Exhibit at The National WW19 Museum");
 
-            Languages.Add("EQUIPMENT_REACTOR_NAME", "Unstable Quantum Reactor");
-            Languages.Add("EQUIPMENT_REACTOR_PICKUP", "Fire a random projectile on use.");
-            Languages.Add("EQUIPMENT_REACTOR_DESC", "Fire a random projectile.");
-            //Languages.Add("EQUIPMENT_PRINTER_LORE", "Order: \u201CGreater Warbanner\u201D\r\nTracking Number: 72******\r\nEstimated Delivery: 08\\25\\2057\\\r\nShipping Method: High Priority\r\nShipping Address: 836 Lane, Lab [42], Mars\r\nShipping Details:\r\n\r\nI got this thing off of my dead grandmother, it's a relic from the great war of 2019. It  gives this aura of energy and motivation to do whatever someone desires! Anyways -- I'm passing it onto you, since I am dying to this cancer and I'd like you to have it before I go six feet under. Much love, Uncle Abe.\n");
+            R2API.LanguageAPI.Add("EQUIPMENT_REACTOR_NAME", "Unstable Quantum Reactor");
+            R2API.LanguageAPI.Add("EQUIPMENT_REACTOR_PICKUP", "Fire a random projectile on use.");
+            R2API.LanguageAPI.Add("EQUIPMENT_REACTOR_DESC", "Fire a random projectile.");
+            //R2API.LanguageAPI.Add("EQUIPMENT_PRINTER_LORE", "Order: \u201CGreater Warbanner\u201D\r\nTracking Number: 72******\r\nEstimated Delivery: 08\\25\\2057\\\r\nShipping Method: High Priority\r\nShipping Address: 836 Lane, Lab [42], Mars\r\nShipping Details:\r\n\r\nI got this thing off of my dead grandmother, it's a relic from the great war of 2019. It  gives this aura of energy and motivation to do whatever someone desires! Anyways -- I'm passing it onto you, since I am dying to this cancer and I'd like you to have it before I go six feet under. Much love, Uncle Abe.\n");
         }
 
         protected internal void RegisterNewEquip(EquipmentDef equipmentDef)

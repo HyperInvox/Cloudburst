@@ -49,7 +49,7 @@ namespace Cloudburst.Cores
             body.levelArmor = 0;*/
             //I wanted to do a rebalance but decided against it
 
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(CommandoGrenade));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(CommandoGrenade));
 
             var locator = commandoBody.GetComponent<SkillLocator>();
 

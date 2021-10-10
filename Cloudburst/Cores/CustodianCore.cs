@@ -7,9 +7,9 @@ using Cloudburst.Cores.HAND.Skills;
 using Cloudburst.Cores.Skills;
 using Cloudburst.Cores.States.Bombardier;
 using Cloudburst.Cores.States.Wyatt;
-using EnigmaticThunder.Modules;
-using EntityStates;
 
+using EntityStates;
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Skills;
@@ -56,7 +56,7 @@ She'll love this, I know.
 
         public override string UnlockableString => "";
 
-        public override UnlockableDef MasteryUnlockString => AchievementCore.WyattMastery;
+        public override UnlockableDef MasteryUnlockString => null;//AchievementCore.WyattMastery;
 
         public override GameObject survivorDisplay => AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattCSS");
 
@@ -64,9 +64,9 @@ She'll love this, I know.
 
         public override Color survivorDefColor => new Color(0.4862745098f, 0.94901960784f, 0.71764705882f);
 
-        public override Sprite defaultSkinColor => Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+        public override Sprite defaultSkinColor => Cloudburst.Content.ContentHandler.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
 
-        public override Sprite masterySkinColor => Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
+        public override Sprite masterySkinColor => Cloudburst.Content.ContentHandler.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
 
         public override string SurvivorSubtitle => "Lean, Mean, Cleaning Machines";
 
@@ -734,9 +734,9 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
         public override void CreateMainState(EntityStateMachine machine)
         {
             base.CreateMainState(machine);
-            Loadouts.RegisterEntityState(typeof(BaseEmote.CustodianSickness));
-            Loadouts.RegisterEntityState(typeof(BaseEmote));
-            Loadouts.RegisterEntityState(typeof(WyattMain));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(BaseEmote.CustodianSickness));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(BaseEmote));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(WyattMain));
             machine.mainStateType = new SerializableEntityStateType(typeof(WyattMain));
         }
 
@@ -750,9 +750,9 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             passive.keywordToken = "KEYWORD_VELOCITY";
             passive.icon = AssetsCore.wyattPassive;
 
-            Languages.Add(passive.keywordToken, "<style=cKeywordName>Groove</style><style=cSub>Increases movement speed by X%.</style>");
-            Languages.Add(passive.skillNameToken, "Walkman");
-            Languages.Add(passive.skillDescriptionToken, "On hit, gain a stack Groove. Lose 2 stacks of Groove every 0.5 seconds after being out of combat for 3 seconds. Groove grants 30% move speed.");
+            R2API.LanguageAPI.Add(passive.keywordToken, "<style=cKeywordName>Groove</style><style=cSub>Increases movement speed by X%.</style>");
+            R2API.LanguageAPI.Add(passive.skillNameToken, "Walkman");
+            R2API.LanguageAPI.Add(passive.skillDescriptionToken, "On hit, gain a stack Groove. Lose 2 stacks of Groove every 0.5 seconds after being out of combat for 3 seconds. Groove grants 30% move speed.");
 
             skillLocator.passiveSkill = passive;
 
@@ -801,8 +801,8 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
         {
 
 
-            Loadouts.RegisterEntityState(typeof(FullSwing));
-            Loadouts.RegisterEntityState(typeof(WyattBaseMeleeAttack));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FullSwing));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(WyattBaseMeleeAttack));
 
             SteppedSkillDef primarySkillDef = ScriptableObject.CreateInstance<SteppedSkillDef>();
 
@@ -833,12 +833,12 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
                  "KEYWORD_SPIKED",
             };  
 
-            Languages.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
-            Languages.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
-            //Languages.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
-            Languages.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spiking</style><style=cSub>Forces an enemy to travel downwards, causing a shockwave if they impact terrain.</style>");
+            R2API.LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
+            R2API.LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
+            //R2API.LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
+            R2API.LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spiking</style><style=cSub>Forces an enemy to travel downwards, causing a shockwave if they impact terrain.</style>");
 
-            Loadouts.RegisterSkillDef(primarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -851,9 +851,9 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
         public override void CreateSecondary(SkillLocator skillLocator, SkillFamily skillFamily)
         {
 
-            Loadouts.RegisterEntityState(typeof(TrashOut));
-            Loadouts.RegisterEntityState(typeof(TrashOut2));
-            //Loadouts.RegisterEntityState(typeof(TrashOut3));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(TrashOut));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(TrashOut2));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(TrashOut3));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<HANDDroneSkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(TrashOut));
@@ -881,10 +881,10 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
                 "KEYWORD_SPIKED"
              };
 
-            Languages.Add(secondarySkillDef.skillNameToken, "Trash Out");
-            Languages.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
+            R2API.LanguageAPI.Add(secondarySkillDef.skillNameToken, "Trash Out");
+            R2API.LanguageAPI.Add(secondarySkillDef.skillDescriptionToken, "Deploy a winch that reels you towards an enemy, and <style=cIsDamage>Spike</style> for <style=cIsDamage>X%</style>.");
 
-            Loadouts.RegisterSkillDef(secondarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -896,13 +896,13 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
         }
         public override void CreateUtility(SkillLocator skillLocator, SkillFamily skillFamily)
         {
-            Loadouts.RegisterEntityState(typeof(FireWinch));
-            Loadouts.RegisterEntityState(typeof(DeepClean));
-            Loadouts.RegisterEntityState(typeof(DeeperClean));
-            Loadouts.RegisterEntityState(typeof(SS2Dies));
-            Loadouts.RegisterEntityState(typeof(DRIVEMETOTHEHIGHWAY));
-            Loadouts.RegisterEntityState(typeof(YeahDudeIBetterBeOrYouCanFuckinKissMyAssHumanCentipede));
-            Loadouts.RegisterEntityState(typeof(FireRocket));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireWinch));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(DeepClean));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(DeeperClean));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(SS2Dies));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(DRIVEMETOTHEHIGHWAY));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(YeahDudeIBetterBeOrYouCanFuckinKissMyAssHumanCentipede));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireRocket));
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(YeahDudeIBetterBeOrYouCanFuckinKissMyAssHumanCentipede));
@@ -948,15 +948,15 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             utilitySkillDef2.icon = AssetsCore.wyattUtilityAlt;
             utilitySkillDef2.keywordTokens = Array.Empty<string>();
 
-            Languages.Add(utilitySkillDef.skillNameToken, "Flow");
-            Languages.Add(utilitySkillDef.skillDescriptionToken, "Idk if this even works rn tbh.\nActivate Flow for 4 seconds (0.4s for each stack of Groove, max 8 seconds). During flow, you are unable to lose or gain Groove. After Flow ends, lose all stacks groove.");
-            Languages.Add("KEYWORD_RUPTURE", "<style=cKeywordName>Flow</style><style=cSub> Gives you a double jump. +30% cooldown reduction.</style>");
+            R2API.LanguageAPI.Add(utilitySkillDef.skillNameToken, "Flow");
+            R2API.LanguageAPI.Add(utilitySkillDef.skillDescriptionToken, "Idk if this even works rn tbh.\nActivate Flow for 4 seconds (0.4s for each stack of Groove, max 8 seconds). During flow, you are unable to lose or gain Groove. After Flow ends, lose all stacks groove.");
+            R2API.LanguageAPI.Add("KEYWORD_RUPTURE", "<style=cKeywordName>Flow</style><style=cSub> Gives you a double jump. +30% cooldown reduction.</style>");
 
 
-            Languages.Add(utilitySkillDef2.skillNameToken, "G22 WINCH");
-            Languages.Add(utilitySkillDef2.skillDescriptionToken, "Fire a winch that deals <style=cIsDamage>500%</style> damage and <style=cIsUtility>pulls you</style> towards the target.");
+            R2API.LanguageAPI.Add(utilitySkillDef2.skillNameToken, "G22 WINCH");
+            R2API.LanguageAPI.Add(utilitySkillDef2.skillDescriptionToken, "Fire a winch that deals <style=cIsDamage>500%</style> damage and <style=cIsUtility>pulls you</style> towards the target.");
 
-            Loadouts.RegisterSkillDef(utilitySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(utilitySkillDef);
             SkillFamily utilitySkillFamily = skillLocator.utility.skillFamily;
 
             utilitySkillFamily.variants[0] = new SkillFamily.Variant
@@ -967,9 +967,9 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
         }
         public override void CreateSpecial(SkillLocator skillLocator, SkillFamily skillFamily)
         {
-            //Loadouts.RegisterEntityState(typeof(Drone));
-            Loadouts.RegisterEntityState(typeof(DeployMaid));
-            Loadouts.RegisterEntityState(typeof(RetrieveMaid));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Drone));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(DeployMaid));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(RetrieveMaid));
 
             SkillDef specialSkillDef = ScriptableObject.CreateInstance<WyattMAIDSkillDef>();
             CloudUtils.CopySkillDefSettings(Resources.Load<SkillDef>("skilldefs/loaderbody/FireYankHook"), specialSkillDef);
@@ -993,14 +993,14 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
 
             // /   retrievePrimary = specialSkillDef2;
 
-            Languages.Add(specialSkillDef.skillNameToken, "M88 MAID");
-            Languages.Add(specialSkillDef.skillDescriptionToken, "Send your MAID unit barreling through enemies for X% damage before stopping briefly and returning to you, able to hit enemies on the way back. Using this skill again while MAID is deployed reels you to the MAID and rebounds you off of her, bashing into an enemy for X% damage.");
-            //   Languages.Add(specialSkillDef2.skillNameToken, "Retrival");
-            //     Languages.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
+            R2API.LanguageAPI.Add(specialSkillDef.skillNameToken, "M88 MAID");
+            R2API.LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Send your MAID unit barreling through enemies for X% damage before stopping briefly and returning to you, able to hit enemies on the way back. Using this skill again while MAID is deployed reels you to the MAID and rebounds you off of her, bashing into an enemy for X% damage.");
+            //   R2API.LanguageAPI.Add(specialSkillDef2.skillNameToken, "Retrival");
+            //     R2API.LanguageAPI.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
 
 
-            Loadouts.RegisterSkillDef(specialSkillDef);
-            //    Loadouts.RegisterSkillDef(specialSkillDef2);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(specialSkillDef);
+            //    Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(specialSkillDef2);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
             specialSkillFamily.variants[0] = new SkillFamily.Variant
@@ -1018,7 +1018,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             HANDDroneTracker tracker = survivorBody.AddComponent<HANDDroneTracker>();
             survivorBody.AddComponent<WyattWalkmanBehavior>();
             //kil
-            //Loadouts.RegisterEntityState(typeof(DeathState));
+            //Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(DeathState));
             //characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(DeathState));
 
             //sfx

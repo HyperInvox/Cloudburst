@@ -1,4 +1,5 @@
 ﻿
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -76,6 +77,11 @@ namespace Cloudburst.Cores.Items
                 };
                 ProjectileManager.instance.FireProjectile(_info);
             }
+        }
+
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        {
+            return new ItemDisplayRuleDict();
         }
     }
 }

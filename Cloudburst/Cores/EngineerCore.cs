@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using Cloudburst.Cores.Engineer;
 using Cloudburst.Cores.Engineer.ETStates;
-using EnigmaticThunder.Modules;
+
 using EntityStates;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-
-
+using R2API;
 using RoR2;
 using RoR2.Navigation;
 using RoR2.Projectile;
@@ -69,7 +68,7 @@ namespace Cloudburst.Cores
             {
                 base.OverrideSkills();
                 //KILL
-                EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(DeathState));
+                Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(DeathState));
 
                 var characterDeathBehavior = enemyBody.GetComponent<CharacterDeathBehavior>();
                 characterDeathBehavior.deathState = new SerializableEntityStateType(typeof(DeathState));
@@ -83,11 +82,11 @@ namespace Cloudburst.Cores
                 SkillDef def = ScriptableObject.CreateInstance<SkillDef>();
                 CloudUtils.CopySkillDefSettings(origDef, def);
 
-                EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FireFlameThrower));
+                Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireFlameThrower));
 
                 def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
 
-                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
+               Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(def);
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
@@ -107,7 +106,7 @@ namespace Cloudburst.Cores
 
                 def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
 
-                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
+               Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(def);
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
@@ -126,7 +125,7 @@ namespace Cloudburst.Cores
 
                 def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
 
-                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
+               Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(def);
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
@@ -145,7 +144,7 @@ namespace Cloudburst.Cores
 
                 def.activationState = new SerializableEntityStateType(typeof(FireFlameThrower));
 
-                EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(def);
+               Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(def);
 
                 skillFamily.variants[0] = new SkillFamily.Variant
                 {
@@ -276,11 +275,11 @@ namespace Cloudburst.Cores
 
             CloudUtils.CopySkillDefSettings(origDef, newDef);
 
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(PlaceFlameTurret));
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(newDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(PlaceFlameTurret));
+           Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(newDef);
 
-            Languages.Add("ENGI_SPECIAL_ALT2_NAME", "TR27 Immolator Turret");
-            Languages.Add("ENGI_SPECIAL_ALT2_DESCRIPTION", "Place a <style=cIsUtility>mobile</style> turret that <style=cIsUtility>inherits all your items.</style> Fires a plume of flame for <style=cIsDamage>100% damage per second</style> that <style=cIsDamage>ignites enemies</style>. <style=cIsDamage>Explodes on death for 3x</style> maximum health. Can place up to 4.");
+            R2API.LanguageAPI.Add("ENGI_SPECIAL_ALT2_NAME", "TR27 Immolator Turret");
+            R2API.LanguageAPI.Add("ENGI_SPECIAL_ALT2_DESCRIPTION", "Place a <style=cIsUtility>mobile</style> turret that <style=cIsUtility>inherits all your items.</style> Fires a plume of flame for <style=cIsDamage>100% damage per second</style> that <style=cIsDamage>ignites enemies</style>. <style=cIsDamage>Explodes on death for 3x</style> maximum health. Can place up to 4.");
 
             newDef.baseRechargeInterval = 15;
             newDef.activationState = new SerializableEntityStateType(typeof(PlaceFlameTurret));
@@ -311,11 +310,11 @@ namespace Cloudburst.Cores
 
             CloudUtils.CopySkillDefSettings(origDef, newDef);
 
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(FireVolley));
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(newDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FireVolley));
+           Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(newDef);
 
-            Languages.Add("ENGINEER_PRIMARY_ALT_NAME", "Impact Grenades");
-            Languages.Add("ENGINEER_PRIMARY_ALT_DESCRIPTION", "Shoot 3 impact grenades from each cannon that deal <style=cIsDamage>100%</style>");
+            R2API.LanguageAPI.Add("ENGINEER_PRIMARY_ALT_NAME", "Impact Grenades");
+            R2API.LanguageAPI.Add("ENGINEER_PRIMARY_ALT_DESCRIPTION", "Shoot 3 impact grenades from each cannon that deal <style=cIsDamage>100%</style>");
 
             newDef.activationState = new SerializableEntityStateType(typeof(FireVolley));
             newDef.skillName = "GrenadeVolley";

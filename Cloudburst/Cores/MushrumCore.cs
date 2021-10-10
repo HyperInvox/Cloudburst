@@ -12,7 +12,7 @@ using System;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using EntityStates.AI.Walker;
-using EnigmaticThunder.Modules;
+using R2API;
 
 namespace Cloudburst.Cores
 {
@@ -144,7 +144,7 @@ namespace Cloudburst.Cores
             CharacterBody characterBody = megaMushrum.GetComponent<CharacterBody>();
             if (characterBody)
             {
-                Languages.Add("MEGAMUSHRUM_BODY_NAME", "Mega Mushrum");
+                R2API.LanguageAPI.Add("MEGAMUSHRUM_BODY_NAME", "Mega Mushrum");
                 characterBody.baseAcceleration = 70f;
                 characterBody.baseArmor = 0; //Base armor this character has, set to 20 if this character is melee 
                 characterBody.baseAttackSpeed = 1; //Base attack speed, usually 1
@@ -386,7 +386,7 @@ namespace Cloudburst.Cores
 
         private void CreatePrimary()
         {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(SporeGrenades));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(SporeGrenades));
 
             SkillDef primarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             primarySkillDef.activationState = new SerializableEntityStateType(typeof(SporeGrenades));
@@ -409,7 +409,7 @@ namespace Cloudburst.Cores
             primarySkillDef.skillName = "aaa";
             primarySkillDef.skillNameToken = "aa";
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(primarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
             primarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -422,8 +422,8 @@ namespace Cloudburst.Cores
         }
         private void CreateSecondary()
         {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Smashin));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Planting));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Smashin));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Planting));
 
             SkillDef secondarySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             secondarySkillDef.activationState = new SerializableEntityStateType(typeof(Planting));
@@ -446,7 +446,7 @@ namespace Cloudburst.Cores
             secondarySkillDef.skillName = "aaa";
             secondarySkillDef.skillNameToken = "aa";
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(secondarySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(secondarySkillDef);
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             secondarySkillFamily.variants[0] = new SkillFamily.Variant
@@ -460,9 +460,9 @@ namespace Cloudburst.Cores
 
         private void CreateUtility()
         {
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Implant));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Planted));
-            EnigmaticThunder.Modules.Loadouts.RegisterEntityState(typeof(Unplant));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Implant));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Planted));
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Unplant));
 
             SkillDef utilitySkillDef = ScriptableObject.CreateInstance<SkillDef>();
             utilitySkillDef.activationState = new SerializableEntityStateType(typeof(Implant));
@@ -485,7 +485,7 @@ namespace Cloudburst.Cores
             utilitySkillDef.skillName = "AAAAAAAAAAAAAA";
             utilitySkillDef.skillNameToken = "AAAAAAAAAAAA";
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(utilitySkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(utilitySkillDef);
             SkillFamily utilitySkillFamily = skillLocator.utility.skillFamily;
 
             utilitySkillFamily.variants[0] = new SkillFamily.Variant
@@ -521,7 +521,7 @@ namespace Cloudburst.Cores
             specialSkillDef.skillName = "AAAAAAAAAAAAA";
             specialSkillDef.skillNameToken = "AAAAAAAAAAAAAA";
 
-            EnigmaticThunder.Modules.Loadouts.RegisterSkillDef(specialSkillDef);
+            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(specialSkillDef);
             SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
 

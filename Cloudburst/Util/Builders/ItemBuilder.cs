@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using Cloudburst.Cores;
-using EnigmaticThunder.Modules;
+
+using R2API;
 
 public abstract class ItemBuilder<T> : ItemBuilder where T : ItemBuilder<T>
 {
@@ -59,13 +60,13 @@ public abstract class ItemBuilder
 
     protected virtual void CreateLang()
     {
-        Languages.Add("ITEM_" + ItemLangTokenName + "_NAME", ItemName);
-        Languages.Add("ITEM_" + ItemLangTokenName + "_PICKUP", ItemPickupDesc);
-        Languages.Add("ITEM_" + ItemLangTokenName + "_DESCRIPTION", ItemFullDescription);
-        Languages.Add("ITEM_" + ItemLangTokenName + "_LORE", ItemLore);
+        R2API.LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_NAME", ItemName);
+        R2API.LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_PICKUP", ItemPickupDesc);
+        R2API.LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_DESCRIPTION", ItemFullDescription);
+        R2API.LanguageAPI.Add("ITEM_" + ItemLangTokenName + "_LORE", ItemLore);
     }
 
-    //public abstract ItemDisplayRuleDict CreateItemDisplayRules();
+    public abstract ItemDisplayRuleDict CreateItemDisplayRules();
     protected void CreateItem()
     {
         if (AIBlacklisted)
@@ -92,8 +93,8 @@ public abstract class ItemBuilder
         {
             Index.unlockableDef= UnlockDef;
         }
-        //var itemDisplayRules = CreateItemDisplayRules();
-        EnigmaticThunder.Modules.Pickups.RegisterItem(Index);
+        var itemDisplayRules = CreateItemDisplayRules();
+        R2API.ItemAPI.Add(new CustomItem(Index, itemDisplayRules));
     }
 
     public virtual void Hooks() { }

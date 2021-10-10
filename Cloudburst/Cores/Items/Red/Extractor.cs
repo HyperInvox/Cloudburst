@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using System.Collections.Generic;
@@ -69,10 +69,10 @@ namespace Cloudburst.Cores.Items.Red
 
         }
 
-        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }*/
+        }
 
 
         protected override void Initialization()

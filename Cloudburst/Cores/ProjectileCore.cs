@@ -1,8 +1,8 @@
 ﻿using BepInEx;
 using Cloudburst.Cores.Components;
-using EnigmaticThunder.Modules;
-using Moonstorm.Cores.Components;
 
+using Moonstorm.Cores.Components;
+using R2API;
 using RoR2;
 using RoR2.Projectile;
 using System;
@@ -741,7 +741,7 @@ namespace Cloudburst.Cores
                 //var rotate = visualsObject.AddComponent<Rewired.ComponentControls.Effects.RotateAroundAxis>
             }*/
 
-            EnigmaticThunder.Modules.Prefabs.RegisterNetworkPrefab(wyattMaidBubble);
+            PrefabAPI.RegisterNetworkPrefab(wyattMaidBubble);
             CloudUtils.RegisterNewProjectile(wyattMaidBubble);
             //var registered = API.RegisterNewProjectile(wyattMaidBubble);
             //if (registered)
