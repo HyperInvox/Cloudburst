@@ -51,8 +51,8 @@ namespace Cloudburst
         /// Called when the mod is enabled
         /// </summary>
         public static event Action onEnable;
-        /// <summary>
-        /// Called when the mod is disabled
+        /// <summary> 
+        /// Called when the mod is disabled sand parso
         /// </summary>
         public static event Action onDisable;
         /// <summary>
