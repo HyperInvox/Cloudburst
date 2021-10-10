@@ -12,7 +12,6 @@ namespace Cloudburst.Cores.Components.Wyatt
         private ParticleSystem grooveEffect;
         private ParticleSystem grooveEffect2;
         private ChildLocator childLocator;
-        private ParticleSystem flowEffect;
         private bool loseStacks { get { return stopwatch >= 3 && !flowing; } }
 
         private float stopwatch = 0;
@@ -26,11 +25,11 @@ namespace Cloudburst.Cores.Components.Wyatt
         {
             characterBody = base.GetComponent<CharacterBody>();
             childLocator = base.gameObject.GetComponentInChildren<ChildLocator>();
-            
+
             grooveEffect = childLocator.FindChild("MusicEffect1").GetComponent<ParticleSystem>();
             grooveEffect2 = childLocator.FindChild("MusicEffect2").GetComponent<ParticleSystem>();
 
-            flowEffect = childLocator.FindChild("MusicEffect3").GetComponent<ParticleSystem>();
+            //.GetComponent<ParticleSystem>();
         }
 
         private void Start() {
@@ -43,8 +42,6 @@ namespace Cloudburst.Cores.Components.Wyatt
                 //flowing has stopped
                 CloudUtils.SafeRemoveAllOfBuff(BuffCore.instance.wyattCombatIndex, characterBody);
                 flowing = false;
-
-                flowEffect.Stop();
             }
         }
 
@@ -136,8 +133,6 @@ namespace Cloudburst.Cores.Components.Wyatt
 
             characterBody.AddTimedBuff(BuffCore.instance.wyattFlow, duration);
             flowing = true;
-
-            flowEffect.Play();
         }
 
         public void OnDamageDealtServer(DamageReport damageReport)

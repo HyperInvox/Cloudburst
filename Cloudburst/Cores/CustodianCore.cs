@@ -949,7 +949,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             utilitySkillDef2.keywordTokens = Array.Empty<string>();
 
             Languages.Add(utilitySkillDef.skillNameToken, "Flow");
-            Languages.Add(utilitySkillDef.skillDescriptionToken, "Idk if this even works rn tbh.\nActivate Flow for 4 seconds (0.4s for each stack of Groove, max 8 seconds). During flow, you are unable to lose or gain Groove. After Flow ends, lose all stacks groove.");
+            Languages.Add(utilitySkillDef.skillDescriptionToken, "Become unable to lose or gain Groove to activate Flow for 4 seconds. After Flow ends, lose all stacks groove. A stack of Groove increases the duration of Flow by 10%. Flow duration is maxed out at 8 seconds. ");
             Languages.Add("KEYWORD_RUPTURE", "<style=cKeywordName>Flow</style><style=cSub> Gives you a double jump. +30% cooldown reduction.</style>");
 
 
