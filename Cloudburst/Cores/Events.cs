@@ -289,8 +289,8 @@ namespace Cloudburst.Cores
 
                     if (NetworkServer.active)
                     {
-                       // var quirky = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.tarRaft, new Vector3(151.4241f, -129.9794f, 221.6763f), Quaternion.Euler(new Vector3(0, -0, 0)));
-                       // NetworkServer.Spawn(quirky);
+                       var quirky = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.tarRaft, new Vector3(151.4241f, -129.9794f, 221.6763f), Quaternion.Euler(new Vector3(0, -0, 0)));
+                       NetworkServer.Spawn(quirky);
                     }
                 }
             }
