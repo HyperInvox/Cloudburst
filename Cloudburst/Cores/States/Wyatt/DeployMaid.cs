@@ -10,6 +10,7 @@ namespace Cloudburst.Cores.States.Wyatt
 {
     class DeployMaid : BaseSkillState
     {
+        //it's a timer. love u nigma
         private float theDevilHasSomeHardToReadFinePrint = 0;
         private bool unstable = false;
         private MAIDManager blaseball = null;
