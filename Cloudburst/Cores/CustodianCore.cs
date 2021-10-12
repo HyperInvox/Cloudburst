@@ -710,7 +710,25 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
         public override void GenerateRenderInfos(List<CharacterModel.RendererInfo> arg1, Transform arg2)
         {
             base.GenerateRenderInfos(arg1, arg2);
-            var broom = arg2.Find("Brom.002");
+            /*var broom = arg2.Find("Wyatt.002");
+            var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
+            arg1.Add(new CharacterModel.RendererInfo
+            {
+                defaultMaterial = mat.material,
+                defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                ignoreOverlays = false,
+                renderer = mat,
+            });
+
+            var wyatt = arg2.Find("Cube");
+            var wyattMat = wyatt.GetComponent<SkinnedMeshRenderer>();
+            arg1.Add(new CharacterModel.RendererInfo
+            {
+                defaultMaterial = wyattMat.material,
+                defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
+                ignoreOverlays = false,
+                renderer = wyattMat,
+            }); */var broom = arg2.Find("Brom.002");
             var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
             arg1.Add(new CharacterModel.RendererInfo
             {
@@ -728,7 +746,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                 ignoreOverlays = false,
                 renderer = wyattMat,
-            });
+            });//*/
         }
 
         public override void CreateMainState(EntityStateMachine machine)
