@@ -37,7 +37,6 @@ namespace Cloudburst.Cores.Components
                 attackerFiltering = AttackerFiltering.Default,
                 damage = 8 * info.characterBody.damage,
                 damageColorIndex = DamageColorIndex.Default,
-                damageType = DamageTypeCore.antiGrav, //overclock.GetDamageType(),
                                                       //forceVector = new Vector3(0, force, 0),
                                                       //hitEffectPrefab = hitEffectPrefab,
                 impactSound = RoR2.Audio.NetworkSoundEventIndex.Invalid,
@@ -51,6 +50,7 @@ namespace Cloudburst.Cores.Components
                 hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxLunge", info.characterBody.modelLocator.modelTransform),
                 teamIndex = info.characterBody.teamComponent.teamIndex
             };
+            R2API.DamageAPI.AddModdedDamageType(attack, DamageTypeCore.antiGrav);
 
             motor.onHitGround += Motor_onHitGround;
 

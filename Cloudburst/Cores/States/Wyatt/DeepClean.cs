@@ -28,7 +28,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 attackerFiltering = AttackerFiltering.Default,
                 damage = 5f * damageStat,
                 damageColorIndex = DamageColorIndex.Item,
-                damageType = DamageTypeCore.pullEnemies,
+                //damageType = DamageTypeCore.pullEnemies,
                 forceVector = base.inputBank.aimDirection * (7 * 35 * Time.fixedDeltaTime),
                 hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxFAT", base.GetModelTransform()),
                 inflictor = base.gameObject,
@@ -37,6 +37,8 @@ namespace Cloudburst.Cores.States.Wyatt
                 procCoefficient = 1,
                 teamIndex = GetTeam(),
                 };
+
+            R2API.DamageAPI.AddModdedDamageType(attack, DamageTypeCore.pullEnemies);
 
             if (base.isAuthority)
             {
@@ -109,13 +111,15 @@ namespace Cloudburst.Cores.States.Wyatt
             lightningOrb2.lightningType = LightningOrb.LightningType.Tesla;
             lightningOrb2.damageColorIndex = DamageColorIndex.Default;
             lightningOrb2.range += 10;
-            lightningOrb2.damageType = (DamageTypeCore.pullEnemies | DamageType.Stun1s);
+            lightningOrb2.damageType = (DamageType.Stun1s);
             HurtBox hurtBox2 = lightningOrb2.PickNextTarget(transform.position);
             if (hurtBox2)
             {
                 lightningOrb2.target = hurtBox2;
                 OrbManager.instance.AddOrb(lightningOrb2);
             }
+            R2API.DamageAPI.AddModdedDamageType(lightningOrb2, DamageTypeCore.antiGrav);
+
         }
 
         private void CreateBlinkEffect(Vector3 origin, Vector3 direction)

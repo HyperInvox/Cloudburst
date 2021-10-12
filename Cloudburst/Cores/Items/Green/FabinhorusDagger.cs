@@ -37,10 +37,12 @@ namespace Cloudburst.Cores.Items.Green
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            var fabDagMDL = Resources.Load<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
-            LogCore.LogI(fabDagMDL);
-            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
-            {
+            var fabDagMDL = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
+            //LogCore.LogI(fabDagMDL);
+            //fabDagMDL..SetTexture("_NormalTex", texturehere);
+            //material.SetFloat("_NormalStrength", normalstrengthhere);
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(//new ItemDisplayRule[]
+            /*{
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
@@ -48,7 +50,7 @@ namespace Cloudburst.Cores.Items.Green
         childName = "Chest",
         localPos = new Vector3(0, 0.2f, 0.3f),
         localAngles = new Vector3(-180f, 0, -0),
-        localScale = new Vector3(5, 2, 3)
+        localScale = new Vector3(5/2, 2/2, 3/2)
 
 }
             });
@@ -61,7 +63,7 @@ namespace Cloudburst.Cores.Items.Green
         childName = "Chest",
         localPos = new Vector3(0, 0.2f, 0.3f),
         localAngles = new Vector3(-180f, 0, -0),
-        localScale = new Vector3(3, 2, 3)
+        localScale = new Vector3(3/2, 2/2, 3/2)
 }
             }); rules.Add("mdlToolbot", new ItemDisplayRule[]
             {
@@ -145,7 +147,7 @@ namespace Cloudburst.Cores.Items.Green
         localAngles = new Vector3(-180f, 0, -0),
         localScale = new Vector3(3, 2, 3)
     }
-            });
+            }*/);
 
 
             return rules;

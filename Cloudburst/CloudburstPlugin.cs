@@ -18,6 +18,7 @@ namespace Cloudburst
     [R2APISubmoduleDependency(nameof(ItemAPI))]
     [R2APISubmoduleDependency(nameof(LanguageAPI))]
     [R2APISubmoduleDependency(nameof(PrefabAPI))]
+    [R2APISubmoduleDependency(nameof(DamageAPI))]
     [R2APISubmoduleDependency(nameof(CommandHelper))]
     [R2APISubmoduleDependency(nameof(UnlockableAPI))]
     [BepInPlugin(guid, modName, version)]

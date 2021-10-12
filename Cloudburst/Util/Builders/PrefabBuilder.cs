@@ -59,7 +59,7 @@ public class PrefabBuilder
     public GameObject CreatePrefab()
     {
         if (prefabName == "")
-        { 
+        {
             LogCore.LogW("Prefab name has not been set.");
             prefabName = "RandomAssSurvivorBody";
         }

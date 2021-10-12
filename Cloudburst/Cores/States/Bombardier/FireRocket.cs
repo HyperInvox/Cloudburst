@@ -42,7 +42,7 @@ namespace Cloudburst.Cores.States.Bombardier
                 attackerFiltering = AttackerFiltering.Default,
                 damage = 2 * base.damageStat,
                 damageColorIndex = DamageColorIndex.Default,
-                damageType = DamageTypeCore.spiked, //overclock.GetDamageType(),
+                //damageType = DamageTypeCore.spiked, //overclock.GetDamageType(),
                 forceVector = new Vector3(0, -1000, 0),
                 hitEffectPrefab = null,
                 impactSound = RoR2.Audio.NetworkSoundEventIndex.Invalid,
@@ -55,6 +55,7 @@ namespace Cloudburst.Cores.States.Bombardier
                 teamIndex = base.characterBody.teamComponent.teamIndex,
                 hitBoxGroup = CloudUtils.FindHitBoxGroup("TempHitboxLarge", base.GetModelTransform()),
             };
+            R2API.DamageAPI.AddModdedDamageType(attack, DamageTypeCore.spiked);
 
             if (base.isAuthority)
             {

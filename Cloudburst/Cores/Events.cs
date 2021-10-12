@@ -437,7 +437,7 @@ namespace Cloudburst.Cores
             activeEvents.Clear();
 
             foreach (Event eve in events)
-            {
+            { 
                 float chance = eve.chance;
                 bool isActive = /*Util.CheckRoll(chance) &&*/ eve.canBeActivated;
                 if (isActive)

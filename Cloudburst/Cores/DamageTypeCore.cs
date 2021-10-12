@@ -11,9 +11,9 @@ namespace Cloudburst.Cores
 
         public static DamageTypeCore instance;
 
-        public static DamageType antiGrav;
-        public static DamageType pullEnemies;
-        public static DamageType spiked;
+        public static R2API.DamageAPI.ModdedDamageType antiGrav;
+        public static R2API.DamageAPI.ModdedDamageType pullEnemies;
+        public static R2API.DamageAPI.ModdedDamageType spiked;
 
         public DamageTypeCore() {
             instance = this;
@@ -37,10 +37,10 @@ namespace Cloudburst.Cores
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            bool antiGravType = (damageInfo.damageType & antiGrav) != DamageType.Generic;
-            bool spikedType = (damageInfo.damageType & spiked) != DamageType.Generic;
+            bool antiGravType = R2API.DamageAPI.HasModdedDamageType(damageInfo, antiGrav);
+            bool spikedType = R2API.DamageAPI.HasModdedDamageType(damageInfo, spiked);
             bool falldmgType = (damageInfo.damageType & DamageType.FallDamage) != DamageType.Generic;
-            bool pullType = (damageInfo.damageType & pullEnemies) != DamageType.Generic;
+            bool pullType = R2API.DamageAPI.HasModdedDamageType(damageInfo, pullEnemies);
             //bool isOsp2 = (damageInfo.damageType & DamageType.AOE) != DamageType.Generic;
 
             var rigid = self.body.rigidbody;
@@ -111,17 +111,9 @@ namespace Cloudburst.Cores
         }
 
         protected void AddDamageTypes() {
-            antiGrav = AddDamageType();
-            spiked = AddDamageType();
-            pullEnemies = AddDamageType();
-        }
-
-        protected DamageType AddDamageType() {
-            currentMax *= 2;
-            var damageType = (RoR2.DamageType)currentMax;
-
-            LogCore.LogI("Added DamageType:" + damageType.ToString());
-            return damageType;
+            antiGrav = R2API.DamageAPI.ReserveDamageType();
+            spiked = R2API.DamageAPI.ReserveDamageType();
+            pullEnemies = R2API.DamageAPI.ReserveDamageType();
         }
     }
 }

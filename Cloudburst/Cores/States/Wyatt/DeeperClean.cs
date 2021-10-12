@@ -95,13 +95,14 @@ namespace Cloudburst.Cores.States.Wyatt
             lightningOrb2.lightningType = LightningOrb.LightningType.Ukulele;
             lightningOrb2.damageColorIndex = DamageColorIndex.Default;
             lightningOrb2.range += 10;
-            lightningOrb2.damageType = (DamageTypeCore.antiGrav | DamageType.Stun1s);
+            lightningOrb2.damageType =  DamageType.Stun1s;
             HurtBox hurtBox2 = lightningOrb2.PickNextTarget(transform.position);
             if (hurtBox2)
             {
                 lightningOrb2.target = hurtBox2;
                 OrbManager.instance.AddOrb(lightningOrb2);
             }
+            R2API.DamageAPI.AddModdedDamageType(lightningOrb2, DamageTypeCore.antiGrav);
 
         }
 

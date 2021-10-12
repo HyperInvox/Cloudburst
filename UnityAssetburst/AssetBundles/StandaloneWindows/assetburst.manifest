@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4256430775
+CRC: 713914859
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c1e90298ec9a5c761aeed064f2d466d7
+    Hash: d2e45463f8ac9901649ae77bc6ad7832
   TypeTreeHash:
     serializedVersion: 2
     Hash: 7d9dcad7e6f94aaaa872803573eb0b7f
@@ -159,6 +159,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_BombardierM2_color.mat
 - Assets/Cloudburst/Survivors/OmoriShit/Materials/bg.mat
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Armature_Idle.anim
+- Assets/Cloudburst/Items/FabinhoruDagger/Materials/fabindagger_Diffuse.mat
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color.mat
 - Assets/Cloudburst/Survivors/Wyatt/fbx/WyattMDL.fbx
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/fab_dagger.mat
@@ -333,6 +334,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Bombardier/ExecAnimsupdate(Updated)2.blend
 - Assets/Cloudburst/Items/Harvester/GLASSNormals.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorFallDown.anim
+- Assets/Cloudburst/Items/FabinhoruDagger/123.png
 - Assets/Cloudburst/Effects/ShaderTest.prefab
 - Assets/Cloudburst/Equipment/Lumpkin/Metal_Lung_Model.FBX
 - Assets/Cloudburst/Items/Dummies/texHuntressDiffuse.png
@@ -448,6 +450,7 @@ Assets:
 - Assets/Cloudburst/Effects/Bases/Particles.prefab
 - Assets/Cloudburst/Survivors/Wyatt/Attempt5.prefab
 - Assets/Cloudburst/Survivors/Wyatt/old/mdlHANDWinchAvatar.asset
+- Assets/Cloudburst/Items/FabinhoruDagger/Plane.007.mesh
 - Assets/Cloudburst/Effects/Bases/Stars.prefab
 - Assets/Cloudburst/Materials/Ice_Tool_Tex.mat
 - Assets/Cloudburst/Shaders/Metal.shader
@@ -486,6 +489,7 @@ Assets:
 - Assets/Cloudburst/Items/MechanicalTrinket/icon.png
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_gloss.png
 - Assets/Cloudburst/Items/BrokenBodyArmor/Materials/broken armor.mat
+- Assets/Cloudburst/Items/FabinhoruDagger/file.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_M1Swing02.anim
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Sapphire.mat
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Emissive2.mat
@@ -519,6 +523,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_Jump_Start.anim
 - Assets/Cloudburst/Items/UESKeycard/textures/keycard_normals.png
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking.mat
+- Assets/Cloudburst/Items/FabinhoruDagger/fabindagger.blend
 - Assets/Cloudburst/Survivors/Bombardier/Animations/Armature_WalkLFT.anim
 - Assets/Cloudburst/Items/BrokenBodyArmor/admn.mat
 - Assets/Cloudburst/Items/Dummies/mdlHuntress.prefab
@@ -560,6 +565,7 @@ Assets:
 - Assets/Cloudburst/Survivors/Wyatt/fbx/wyattRIGGED_RIGSmear 4.fbx
 - Assets/Cloudburst/Survivors/Wyatt/GrappleCollider.prefab
 - Assets/Cloudburst/Shaders/shaders/ui/hguiblur.shader
+- Assets/Cloudburst/Items/FabinhoruDagger/fabindagger_Diffuse.png
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_Jump_End.anim
 - Assets/Cloudburst/Survivors/Bombardier/Materials/T_Bombardier_Color 3.mat
 - Assets/Cloudburst/Items/TopazLense/mat.png

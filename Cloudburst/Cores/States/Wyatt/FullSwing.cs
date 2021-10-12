@@ -60,7 +60,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 attackerFiltering = AttackerFiltering.Default,
                 damage = damageCoefficient * base.damageStat,
                 damageColorIndex = DamageColorIndex.Default,
-                damageType = DamageTypeCore.antiGrav, //overclock.GetDamageType(),
+                //damageType = DamageTypeCore.antiGrav, //overclock.GetDamageType(),
                 forceVector = new Vector3(0, force, 0),
                 hitEffectPrefab = hitEffectPrefab,
                 impactSound = RoR2.Audio.NetworkSoundEventIndex.Invalid,
@@ -72,6 +72,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 pushAwayForce = forceMagnitude,
                 teamIndex = base.characterBody.teamComponent.teamIndex
             };
+            R2API.DamageAPI.AddModdedDamageType(attack, DamageTypeCore.antiGrav);
 
             if (base.GetModelTransform())
             {

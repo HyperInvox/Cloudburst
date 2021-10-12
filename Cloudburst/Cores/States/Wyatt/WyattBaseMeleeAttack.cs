@@ -133,7 +133,8 @@ namespace Cloudburst.Cores.States.Wyatt
             base.AuthorityModifyOverlapAttack(overlapAttack);
             if (this.isComboFinisher)
             {
-                overlapAttack.damageType = DamageTypeCore.antiGrav | DamageType.Generic;
+                //overlapAttack.damageType = DamageTypeCore.antiGrav | DamageType.Generic;
+                R2API.DamageAPI.AddModdedDamageType(overlapAttack, DamageTypeCore.antiGrav);
             }
         }
 

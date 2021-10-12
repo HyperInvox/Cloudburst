@@ -829,7 +829,7 @@ namespace Cloudburst.Content
                 //Create instance.
                 Module item = (Module)Activator.CreateInstance(module);
                 //Log
-                LogCore.LogI("Enabling module: " + item);
+                //LogCore.LogI("Enabling module: " + item);
                 //Fire
                 item.Load();
                 //Add to collection
