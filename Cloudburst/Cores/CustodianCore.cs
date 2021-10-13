@@ -707,9 +707,9 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             });
         }
 
-        public override void GenerateRenderInfos(List<CharacterModel.RendererInfo> arg1, Transform arg2)
+        public override void GenerateRenderInfos(List<CharacterModel.RendererInfo> infos, Transform transform)
         {
-            base.GenerateRenderInfos(arg1, arg2);
+            base.GenerateRenderInfos(infos, transform);
             /*var broom = arg2.Find("Wyatt.002");
             var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
             arg1.Add(new CharacterModel.RendererInfo
@@ -728,19 +728,19 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                 ignoreOverlays = false,
                 renderer = wyattMat,
-            }); */var broom = arg2.Find("Brom.002");
-            var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
-            arg1.Add(new CharacterModel.RendererInfo
+            }); */
+
+            //fuck you and your vars and args god
+            SkinnedMeshRenderer broomMat = transform.Find("Brom.002").GetComponentInChildren<SkinnedMeshRenderer>();
+            infos.Add(new CharacterModel.RendererInfo
             {
-                defaultMaterial = mat.material,
+                defaultMaterial = broomMat.material,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
                 ignoreOverlays = false,
-                renderer = mat,
+                renderer = broomMat,
             });
-
-            var wyatt = arg2.Find("Wyatt.002");
-            var wyattMat = wyatt.GetComponent<SkinnedMeshRenderer>();
-            arg1.Add(new CharacterModel.RendererInfo
+            SkinnedMeshRenderer wyattMat = transform.Find("Wyatt.002").GetComponent<SkinnedMeshRenderer>();
+            infos.Add(new CharacterModel.RendererInfo
             {
                 defaultMaterial = wyattMat.material,
                 defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
