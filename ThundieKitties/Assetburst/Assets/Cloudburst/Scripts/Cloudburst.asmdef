@@ -1,0 +1,29 @@
+{
+    "name": "Cloudburst",
+    "references": [],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "R2API.dll",
+        "BepInEx.dll",
+        "HGUnityUtils.dll",
+        "HGCSharpUtils.dll",
+        "MMHOOK_Assembly-CSharp.dll",
+        "Rewired_Core.dll",
+        "Assembly-CSharpStubbed.dll",
+        "Mono.Cecil.dll",
+        "Mono.Cecil.Mdb.dll",
+        "MonoMod.RuntimeDetour.dll",
+        "Mono.Cecil.Pdb.dll",
+        "MonoMod.Utils.dll",
+        "Unity.Postprocessing.Runtime.dll",
+        "Mono.Cecil.Rocks.dll",
+        "Wwise.dll",
+        "ProBuilderMeshOps.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
