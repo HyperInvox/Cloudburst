@@ -20,7 +20,7 @@ namespace Cloudburst.Cores
         protected GameObject collectorObject;
             protected void REX()
             {
-            instance = this;
+            /*instance = this;
 
 
             var healingProjectile = Resources.Load<GameObject>("prefabs/projectiles/SyringeProjectileHealing");

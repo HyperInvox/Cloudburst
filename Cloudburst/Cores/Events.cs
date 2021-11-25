@@ -87,7 +87,7 @@ namespace Cloudburst.Cores
 
             internal class TarRiverSlow : MonoBehaviour
             {
-                public static GameObject entryEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact");
+                public static GameObject entryEffect;
                 private List<CharacterBody> bodies = new List<CharacterBody>();
                 private float stopwatch = 0;
                 public void OnTriggerEnter(Collider collider)
@@ -167,6 +167,7 @@ namespace Cloudburst.Cores
             public override void Init()
             {
                 base.Init();
+                TarRiverSlow.entryEffect = Resources.Load<GameObject>("prefabs/effects/impacteffects/ClayGooOrbImpact");
                 var asyncStageLoad = SceneManager.LoadSceneAsync("goolake", LoadSceneMode.Additive);
                 asyncStageLoad.allowSceneActivation = false;
                 GameObject yo = null;

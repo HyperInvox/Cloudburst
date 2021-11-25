@@ -819,10 +819,10 @@ namespace Cloudburst.Cores
                                           where p.name == "ppSceneArenaSick"//"ppLocalUnderwater"
                                           select p).FirstOrDefault<PostProcessProfile>();
             CloudUtils.PostProcessingOverlay(profile);
-            if (SceneCatalog.mostRecentSceneDef == SceneCatalog.GetSceneDefFromSceneName("moon"))
+            if (SceneCatalog.mostRecentSceneDef == SceneCatalog.GetSceneDefFromSceneName("moon2"))
             {
                 CloudUtils.PostProcessingOverlay(profile);
-            }
+            } 
             else
             {
                 CloudUtils.AlterCurrentPostProcessing(profile);

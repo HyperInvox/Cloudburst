@@ -30,7 +30,7 @@ namespace Cloudburst
 
         public const string guid = "com.TeamCloudburst.Cloudburst";
         public const string modName = "Cloudburst";
-        public const string version = "0.1.8";
+        public const string version = "0.2.4";
 
         public static CloudburstPlugin instance;
 
@@ -187,7 +187,6 @@ namespace Cloudburst
             //not super important!!
 
             DefineConfig();
-            InitializeCores();
 
             LogCore.LogM("Cloudburst loaded!");
         }
@@ -226,6 +225,7 @@ namespace Cloudburst
 
         private void InitializeCores()
         {
+            //LogCore.LogM("DEBUG VERSION.");
             if (Enabled.Value)
             {
                 Cloudburst.Content.ContentHandler.Load();
@@ -258,6 +258,11 @@ namespace Cloudburst
                             materials[i].shader = Resources.Load<Shader>("shaders/fx/hgcloudremap");
                             LogCore.LogI(materials[i].shader.name);
                             break;
+                    }
+
+                    if (materials[i].shader.name.StartsWith("StubbedShader"))
+                    {
+                        materials[i].shader = Resources.Load<Shader>("shaders/" + materials[i].shader.name.Substring(13));
                     }
                 }
 
@@ -408,6 +413,8 @@ namespace Cloudburst
 
         public void Awake()
         {
+            InitializeCores();
+
             Action awake = CloudburstPlugin.awake;
             if (awake == null)
             {

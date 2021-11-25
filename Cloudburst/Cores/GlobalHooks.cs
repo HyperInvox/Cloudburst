@@ -37,9 +37,13 @@ namespace Cloudburst.Cores
         public static event CharacterBodyCloudGate recalculateStats;
         public static event FinalBuffStackLostCloudGate onFinalBuffStackLost;
 
+        public static bool requiresTakeDamage;
+
         public static void Init()
         {
+
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+
             On.RoR2.GlobalEventManager.OnHitEnemy += GlobalEventManager_OnHitEnemy;
             On.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
             On.RoR2.GlobalEventManager.OnCrit += GlobalEventManager_OnCrit;
@@ -57,14 +61,14 @@ namespace Cloudburst.Cores
 
         private static void CharacterBody_OnBuffFinalStackLost(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
         {
-            onFinalBuffStackLost.Invoke(self, buffDef);
+            onFinalBuffStackLost?.Invoke(self, buffDef);
             orig(self, buffDef);
                 
         }
 
         private static void CharacterBody_AddTimedBuff_BuffDef_float(On.RoR2.CharacterBody.orig_AddTimedBuff_BuffDef_float orig, CharacterBody self, BuffDef buffDef, float duration)
         {
-            onAddTimedBuff.Invoke(self, ref buffDef, ref duration);
+            onAddTimedBuff?.Invoke(self, ref buffDef, ref duration);
             orig(self, buffDef, duration);
         }
 
@@ -72,20 +76,23 @@ namespace Cloudburst.Cores
         {
             if (body && procCoefficient > 0f && body && master && master.inventory)
             {
-                onCrit.Invoke(body, master, procCoefficient, procChainMask);
+                onCrit?.Invoke(body, master, procCoefficient, procChainMask);
             }
             orig(self, body, master, procCoefficient, procChainMask );
         }
 
         private static void CharacterBody_OnInventoryChanged(On.RoR2.CharacterBody.orig_OnInventoryChanged orig, CharacterBody self)
         {
-            onInventoryChanged.Invoke(self);
+            if (self)
+            {
+                onInventoryChanged?.Invoke(self);
+            }
             orig(self);
         }
 
         private static void GlobalEventManager_OnHitEnemy(On.RoR2.GlobalEventManager.orig_OnHitEnemy orig, GlobalEventManager self, DamageInfo damageInfo, GameObject victim)
         {
-            onHitEnemy.Invoke(ref damageInfo, victim, new OnHitEnemy(victim, damageInfo.attacker));
+            onHitEnemy?.Invoke(ref damageInfo, victim, new OnHitEnemy(victim, damageInfo.attacker));
             orig(self, damageInfo, victim);
         }
 
