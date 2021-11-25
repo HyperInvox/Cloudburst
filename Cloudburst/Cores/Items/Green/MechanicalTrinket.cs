@@ -16,7 +16,7 @@ namespace Cloudburst.Cores.Items
             "MECHANICALTRINKET_ITEM";
 
         public override string ItemPickupDesc =>
-            "Increase teleporter radius.";
+            "Increase teleporter radius and summon drones when the teleporter is activated. ";
 
         public override string ItemFullDescription =>
             "Summon 1 </style=cStack>(+1 per stack, up to 4) drone that has <style=cIsDamage>100% <style=cStack>(+50% per stack)</style> damage</style> and <style=cIsHealing>100% <style=cStack>(+100% per stack)</style> health</style>. Also <style=cIsUtility>increase teleporter radius by 5m</style> <style=cStack>(+5m per stack)</style>. ";

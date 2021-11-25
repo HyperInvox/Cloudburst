@@ -97,8 +97,9 @@ namespace Cloudburst.Cores
 
         public static void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            takeDamage.Invoke(ref damageInfo, self.gameObject, new OnHitEnemy(self.gameObject, damageInfo.attacker));
+            takeDamage?.Invoke(ref damageInfo, self.gameObject, new OnHitEnemy(self.gameObject, damageInfo.attacker));
             orig(self, damageInfo);
+
         }
     }
 }

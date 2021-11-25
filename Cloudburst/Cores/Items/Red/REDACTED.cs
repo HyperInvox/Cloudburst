@@ -1,4 +1,4 @@
-﻿using BepInEx.Configuration;
+﻿/*using BepInEx.Configuration;
 using R2API;
 using RoR2;
 using System.Linq;
@@ -52,7 +52,7 @@ Hold strong, and keep your heads up.
         /*public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             return new ItemDisplayRuleDict();
-        }*/
+        }
 
         protected override void Initialization()
         {
@@ -106,7 +106,7 @@ Hold strong, and keep your heads up.
                         hasDot = dot.HasDotActive(DoTCore.redactedIndex);
                     }
 
-                    LogCore.LogI("Does not have DoT: "+ hasDot);*/
+                    LogCore.LogI("Does not have DoT: "+ hasDot);
 
                     if (hasDot == false && !isFullHealth)
                     {   
@@ -151,5 +151,4 @@ Hold strong, and keep your heads up.
             }
         }
     }
-}
-
+}*/

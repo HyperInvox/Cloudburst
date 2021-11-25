@@ -203,22 +203,22 @@ namespace Cloudburst.Cores
             AttackSpeed();
             void Armor() {
                 magicArmor = Resources.Load<GameObject>("Prefabs/Effects/BearProc").InstantiateClone("MagicEffectArmor", false);
-                LogCore.LogI("hi1");
+                //LogCore.LogI("hi1");
                 var tmp = magicArmor.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<TextMeshPro>();
-                LogCore.LogI("hi2");
+                //LogCore.LogI("hi2");
                 var langMeshController = magicArmor.transform.Find("TextCamScaler/TextRiser/TextMeshPro").GetComponent<LanguageTextMeshController>();
-                LogCore.LogI("hi3");
+                //LogCore.LogI("hi3");
                 magicArmor.transform.Find("Fluff").gameObject.SetActive(false);
-                LogCore.LogI("hi4");
-               // R2API.LanguageAPI.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
-                LogCore.LogI("hi5");
+                //LogCore.LogI("hi4");
+                R2API.LanguageAPI.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
+                //LogCore.LogI("hi5");
 
                 tmp.text = "+Armor!";
-                LogCore.LogI("hi6");
+                //LogCore.LogI("hi6");
                 R2API.LanguageAPI.Add("MAGIC_ARMOR_EFFECT", "+Armor!");
 
                 langMeshController.token = "MAGIC_ARMOR_EFFECT";
-                LogCore.LogI("hi7");
+                //LogCore.LogI("hi7");
 
                 Content.ContentHandler.Effects.RegisterEffect(new EffectDef()
                 {

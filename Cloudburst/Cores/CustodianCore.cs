@@ -47,7 +47,7 @@ She'll love this, I know.
         public override string SurvivorDescription => "The Custodian is a master of janitorial warfare who uses his MAID to control the battle field<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine
         + "< ! > Send enemies upwards with the MAID, and spike them downwads with Trash Out for major damage." + Environment.NewLine + Environment.NewLine
       + "< ! > The MAID slows projectiles within her radius, use this to your advantage in combat!" + Environment.NewLine + Environment.NewLine
-+ "< ! > Direct strikes with Rub and Scrub help you stay in the air longer -- use this to avoid crowds!" + Environment.NewLine + Environment.NewLine
++ "< ! > this skill no longer exists" + Environment.NewLine + Environment.NewLine
         + "< ! > The key to success is realizing that staying away from the ground helps you stay alive longer." + Environment.NewLine + Environment.NewLine;
 
         public override string SurvivorInternalName => "WYATT";
@@ -758,7 +758,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             machine.mainStateType = new SerializableEntityStateType(typeof(WyattMain));
         }
 
-        public override void CreatePassive(SkillLocator skillLocator)
+        public override void CreatePassive(SkillLocator skillLocator)   
         {
             var passive = skillLocator.passiveSkill;
 
@@ -770,7 +770,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
 
             R2API.LanguageAPI.Add(passive.keywordToken, "<style=cKeywordName>Groove</style><style=cSub>Increases movement speed by X%.</style>");
             R2API.LanguageAPI.Add(passive.skillNameToken, "Walkman");
-            R2API.LanguageAPI.Add(passive.skillDescriptionToken, "On hit, gain a stack Groove. Lose 2 stacks of Groove every 0.5 seconds after being out of combat for 3 seconds. Groove grants 30% move speed.");
+            R2API.LanguageAPI.Add(passive.skillDescriptionToken, "On hit, gain a stack Groove. Lose 2 stacks of Groove every 0.5 seconds after being out of combat for 3 seconds. Groove grants 30% move speed and 25% damage.");
 
             skillLocator.passiveSkill = passive;
 
@@ -1012,7 +1012,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             // /   retrievePrimary = specialSkillDef2;
 
             R2API.LanguageAPI.Add(specialSkillDef.skillNameToken, "M88 MAID");
-            R2API.LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Send your MAID unit barreling through enemies for X% damage before stopping briefly and returning to you, able to hit enemies on the way back. Using this skill again while MAID is deployed reels you to the MAID and rebounds you off of her, bashing into an enemy for X% damage.");
+            R2API.LanguageAPI.Add(specialSkillDef.skillDescriptionToken, "Send your MAID unit barreling through enemies for 500% damage before stopping briefly and returning to you, able to hit enemies on the way back. Using this skill again while MAID is deployed reels you to the MAID and rebounds you off of her, bashing into an enemy for X% damage.");
             //   R2API.LanguageAPI.Add(specialSkillDef2.skillNameToken, "Retrival");
             //     R2API.LanguageAPI.Add(specialSkillDef2.skillDescriptionToken, "Throw a winch towards the deployed MAID unit, bringing her back.");
 

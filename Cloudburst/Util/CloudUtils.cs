@@ -129,6 +129,7 @@ public static class CloudUtils
         orb.enabled = false;
 
         prefab.GetComponent<ProjectileController>().ghostPrefab = projectile;
+        prefab.GetComponent<ProjectileController>().procCoefficient = 1;
         prefab.GetComponent<ProjectileDotZone>().fireFrequency = 0.5f; ;
         prefab.GetComponent<BoomerangProjectile>().distanceMultiplier = 0.2f;
         prefab.AddComponent<MAID>();

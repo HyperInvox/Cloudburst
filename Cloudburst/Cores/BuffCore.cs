@@ -367,7 +367,7 @@ namespace Cloudburst.Cores
                             self.crit += 5;
                         }
                     }
-                    if (BrokenBodyArmor.Enabled) {
+                    /*if (BrokenBodyArmor.Enabled) {
                         if (self && self.HasBuff(charm))
                         {
                             var vount = 0;
@@ -377,7 +377,7 @@ namespace Cloudburst.Cores
                                 self.armor = armor + (vount * 10);
                             }
                         }
-                    }
+                    }*/
                 }
                 if (self && self.HasBuff(REDACTED)) {
                     self.moveSpeed -= (moveSpeed / 2);

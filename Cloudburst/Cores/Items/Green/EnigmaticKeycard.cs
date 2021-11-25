@@ -15,9 +15,9 @@ namespace Cloudburst.Cores.Items
             "ENIGMATICKEYCARD";
 
         public override string ItemPickupDesc =>
-            "Chance to spawn a void orb on hit.";
+            "Chance to spawn an orb on hit that follows and shocks enemies.";
 
-        public override string ItemFullDescription => "8% chance on hit to spawn a <style=cIsDamage>void orb</style> that does <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> on impact. Shocks nearby enemies for <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> damage.";
+        public override string ItemFullDescription => "8% chance on hit to spawn a seeking <style=cIsDamage>orb</style> that does shocks nearby enemies for <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> on impact. Shocks nearby enemies for <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> damage.";
 
         public override string ItemLore => "";
 

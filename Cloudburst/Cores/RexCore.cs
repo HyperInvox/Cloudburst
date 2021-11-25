@@ -76,7 +76,7 @@ namespace Cloudburst.Cores
 
             healingComponent.fractionOfDamage = 0.3f;
 
-            CreateCollector();
+            CreateCollector();*/
         }
 
         protected void CreateCollector()

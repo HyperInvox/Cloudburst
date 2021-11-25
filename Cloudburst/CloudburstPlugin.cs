@@ -142,7 +142,7 @@ namespace Cloudburst
         public static ConfigEntry<bool> EnableElites;
         public static ConfigEntry<bool> EnableCommando;
         public static ConfigEntry<bool> EnableEngineer;
-        public static ConfigEntry<bool> EnableRex;
+        //public static ConfigEntry<bool> EnableRex;
         public static ConfigEntry<bool> EnableItems;
         public static ConfigEntry<bool> EnableEquipment;
 
@@ -154,6 +154,8 @@ namespace Cloudburst
         public static ConfigEntry<bool> EnableWIP;
         public static ConfigEntry<bool> EnableUnlockAll;
         public static ConfigEntry<bool> Enabled;
+
+        public static ConfigEntry<bool> EnableTarRiverVariant;
         #endregion
 
         private static int vanillaErrors = 0;
@@ -211,7 +213,7 @@ namespace Cloudburst
             EnableWyatt = Config.Bind("Cloudburst :: Custodian", "Enabled", true, "Enables Custodian as a survivor. Set to false to disable Custodian.");
             EnableSipSip = Config.Bind("Cloudburst :: SipSip", "Enabled", true, "Enables SipSip as a potential 5th lunar scavenger. Set to false to disable SipSip.");
             EnableElites = Config.Bind("Cloudburst :: Elites", "Enabled", true, "Enables custom elites. Set to false to disable Cloudburst's elites.");
-            EnableRex = Config.Bind("Cloudburst :: REX", "Enabled", true, "Enables Cloudburst's modifications to REX. Set to false to disable Cloudburst's modifications to REX.");
+            //EnableRex = Config.Bind("Cloudburst :: REX", "Enabled", true, "Enables Cloudburst's modifications to REX. Set to false to disable Cloudburst's modifications to REX.");
             EnableCommando = Config.Bind("Cloudburst :: Commando", "Enabled", true, "Enables Cloudburst's modifications to Commando. Set to false to disable Cloudburst's modifications to Commando.");
             EnableEngineer = Config.Bind("Cloudburst :: Engineer", "Enabled", true, "Enables Cloudburst's modifications to Engineer. Set to false to disable Cloudburst's modifications to Engineer.");
             EnableItems = Config.Bind("Cloudburst :: Items", "Enabled", true, "Enables Cloudburst's items. Set to false to disable  's items.");
@@ -219,6 +221,7 @@ namespace Cloudburst
             EnableWIP = Config.Bind("Cloudburst :: WIP", "Enabled", false, "[WARNING]: CONTENT ADDED BY THIS MODULE MAY NOT BE STABLE. ENABLE AT YOUR OWN RISK! Enables Cloudburst's WIP (work in progress) content. Set to false to disable Cloudburst's WIP content.");
             EnableUnlockAll = Config.Bind("Cloudburst :: Achievements", "Enabled", false, "Enables Cloudburst's unlocks for unlockable content. Set to false to unlock all of Cloudburst's unlockable content.");
             Enabled = Config.Bind("Cloudburst", "Enabled", true, "THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS. Enables the mod. Set to false to disable the mod entirely. THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS.");
+            EnableTarRiverVariant = Config.Bind("Cloudburst :: Flooded Abandon Aquaducts", "Enabled", true, "Enables Cloudburst's tar river variant.");
         }
 
         private void InitializeCores()
@@ -310,10 +313,10 @@ namespace Cloudburst
                 {
                     new VoidCore();
                 }
-                if (EnableRex.Value)
+                /*if (EnableRex.Value)
                 {
                     rexCore = new RexCore();
-                }
+                }*/
                 if (EnableWIP.Value)
                 {
                     wipCore = new HuntressCore();
@@ -323,8 +326,10 @@ namespace Cloudburst
                     //new EventsCore();
                 }
 
-                new EventsCore();
-
+                if (EnableTarRiverVariant.Value)
+                {
+                    new EventsCore();
+                }
                 //On.RoR2.CharacterBody.AddTimedBuff += GlobalHooks.CharacterBody_AddTimedBuff;
                 //On.RoR2.HealthComponent.TakeDamage += GlobalHooks.HealthComponent_TakeDamage;
 

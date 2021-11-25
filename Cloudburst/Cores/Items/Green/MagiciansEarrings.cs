@@ -19,7 +19,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override string ItemLangTokenName => "JAZZANDAWOL";
 
-        public override string ItemPickupDesc => "Every 15 seconds, gain a buff that can grant you armor, or regeneration, or attack speed. Also extend positive buff duration";
+        public override string ItemPickupDesc => "Every 15 seconds, gain a buff that can grant you armor, or regeneration, or attack speed. Also extend the duration of positive buffs.";
 
         public override string ItemFullDescription => @"""Every 15 seconds, gain a buff which can grant you one of the following:" + Environment.NewLine + Environment.NewLine
 + "<style=cIsUtility>+8 <style=cStack>(+8 per stack)</style> armor" + Environment.NewLine + Environment.NewLine

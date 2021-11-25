@@ -246,13 +246,13 @@ namespace Cloudburst.Cores
                     if (NetworkServer.active)
                     {
 
-                        LogCore.LogI("hi");
+                        //LogCore.LogI("hi");
                         var obj = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.tarRiver, new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
 
-                        LogCore.LogI("h2");
+                        //LogCore.LogI("h2");
                         obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
 
-                        LogCore.LogI("hi3");
+                        //LogCore.LogI("hi3");
                         /*obj.AddComponent<TarRiverSlow>();
                         obj.layer = LayerIndex.world.intVal;*/
                         obj.transform.position = new Vector3(201f, -134.1f, 143f);
@@ -261,7 +261,7 @@ namespace Cloudburst.Cores
                         obj.GetComponent<Renderer>().material = goo.GetComponent<Renderer>().material;
                         /*obj.AddComponent<NetworkIdentity>();
                         obj.AddComponent<NetworkTransform>();*/
-                        LogCore.LogI("hi4");
+                        //LogCore.LogI("hi4");
 
 
                         NetworkServer.Spawn(obj);
@@ -287,11 +287,11 @@ namespace Cloudburst.Cores
                     CloudburstPlugin.Instantiate<GameObject>(warning.gameObject, new Vector3(50.71f, -117.16f, 105.15f), Quaternion.Euler(new Vector3(1, 1, 1)));
                     CloudburstPlugin.Instantiate<GameObject>(warning.gameObject, new Vector3(16.44f, -122.26f, 108f), Quaternion.Euler(new Vector3(6.082f, 54.268f, -11.764f)));
 
-                    if (NetworkServer.active)
+                    /*if (NetworkServer.active)
                     {
                        var quirky = CloudburstPlugin.Instantiate<GameObject>(AssetsCore.tarRaft, new Vector3(151.4241f, -129.9794f, 221.6763f), Quaternion.Euler(new Vector3(0, -0, 0)));
                        NetworkServer.Spawn(quirky);
-                    }
+                    }*/
                 }
             }
 
@@ -306,7 +306,7 @@ namespace Cloudburst.Cores
             }
         }
 
-        internal class DayTimeDelta : Event
+        /*internal class DayTimeDelta : Event
         {
             public override float chance => 0;
 
@@ -345,7 +345,7 @@ namespace Cloudburst.Cores
             {
                 return SceneCatalog.GetSceneDefForCurrentScene() && SceneCatalog.GetSceneDefForCurrentScene().nameToken == "MAP_FROZENWALL_TITLE";
             }
-        }
+        }*/
 
         internal abstract class Event
         {
@@ -435,20 +435,21 @@ namespace Cloudburst.Cores
                 eve.OnDisable();
             }
             activeEvents.Clear();
-
+            if (NetworkServer.active) { 
             foreach (Event eve in events)
             { 
                 float chance = eve.chance;
-                bool isActive = /*Util.CheckRoll(chance) &&*/ eve.canBeActivated;
+                bool isActive = Util.CheckRoll(chance) && eve.canBeActivated;
                 if (isActive)
                 {
                     activeEvents.Add(eve);
                 }
 
             }
-            foreach (Event eve in activeEvents)
-            {
-                eve.OnEnable();
+                foreach (Event eve in activeEvents)
+                {
+                    eve.OnEnable();
+                }
             }//*/
             //fuck
         }

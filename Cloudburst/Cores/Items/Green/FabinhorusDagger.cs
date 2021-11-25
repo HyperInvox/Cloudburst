@@ -25,7 +25,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override ItemTier Tier => ItemTier.Tier2;
 
-        public override string ItemModelPath => "Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab";
+        public override string ItemModelPath => "Assets/Cloudburst/Items/FabinhoruDagger/IMDLCloak 1.prefab";
 
         public override string ItemIconPath => "Assets/Cloudburst/Items/FabinhoruDagger/icon.png";
 
@@ -37,7 +37,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            var fabDagMDL = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
+            var fabDagMDL = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger 1.prefab");
             //LogCore.LogI(fabDagMDL);
             //fabDagMDL..SetTexture("_NormalTex", texturehere);
             //material.SetFloat("_NormalStrength", normalstrengthhere);
