@@ -1,4 +1,5 @@
 ﻿
+using BepInEx.Configuration;
 using R2API;
 using RoR2;
 using RoR2.Projectile;
@@ -12,12 +13,12 @@ namespace Cloudburst.Cores.Items
             "Enigmatic Keycard";
 
         public override string ItemLangTokenName =>
-            "ENIGMATICKEYCARD";
+            "ENIGMACARD";
 
         public override string ItemPickupDesc =>
             "Chance to spawn an orb on hit that follows and shocks enemies.";
 
-        public override string ItemFullDescription => "8% chance on hit to spawn a seeking <style=cIsDamage>orb</style> that does shocks nearby enemies for <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> on impact. Shocks nearby enemies for <style=cIsDamage>100% <style=cStack>(+100% per stack)</style></style> damage.";
+        public override string ItemFullDescription => Chance.Value + "% chance on hit to spawn a seeking <style=cIsDamage>orb</style> that does shocks nearby enemies for <style=cIsDamage>" + (BaseDamage.Value * 100) + "% <style=cStack>(+"+ StackingDamage.Value + "% per stack)</style></style> on impact.";
 
         public override string ItemLore => "";
 
@@ -27,6 +28,17 @@ namespace Cloudburst.Cores.Items
 
         public override string ItemIconPath => "Assets/Cloudburst/Items/UESKeycard/icon.png";
 
+        public ConfigEntry<float> BaseDamage;
+        public ConfigEntry<float> StackingDamage;
+        public ConfigEntry<float> Chance;
+
+        public override void CreateConfig(ConfigFile file)
+        {
+            base.CreateConfig(file);
+            BaseDamage = file.Bind<float>(ConfigName, "Base Damage", 1, "How much base damage the orb does. Multiply this by 100 to get the true value. e.x: 1 is 100% damage, 2.4 is 240% damage, and so on.");
+            StackingDamage = file.Bind<float>(ConfigName, "Damage Stack", 1, "How much extra damage is added per stack. Multiply this by 100 to get the true value. e.x: 1 is 100% damage, 2.4 is 240% damage, and so on.");
+            Chance = file.Bind<float>(ConfigName, "Spawning Chance", 8, "The chance of whether or not an orb spawns.");
+        }
 
         protected override void Initialization()
         {
@@ -45,7 +57,7 @@ namespace Cloudburst.Cores.Items
             var attackerBody = info.attackerBody;
             var attackerMaster = info.attackerMaster;
 
-            if (count > 0 && Util.CheckRoll(8 * damageInfo.procCoefficient, attackerMaster) && victimBody && !damageInfo.procChainMask.HasProc(ProcType.AACannon))
+            if (count > 0 && Util.CheckRoll(4 * damageInfo.procCoefficient, attackerMaster) && victimBody && !damageInfo.procChainMask.HasProc(ProcType.AACannon))
             {
                 var pos = CloudUtils.FindBestPosition(victimBody.mainHurtBox);
 
@@ -56,9 +68,9 @@ namespace Cloudburst.Cores.Items
                     scale = 1,
                     origin = pos,
                 };
-                var ddamage = count * 1f;
+                var ddamage = count + (StackingDamage.Value * count);
                 EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/NullifierSpawnEffect"), data, true);
-                FireProjectileInfo _info = new FireProjectileInfo()
+                FireProjectileInfo _info = new FireProjectileInfo() 
                 {
                     crit = false,
                     damage = ddamage * attackerBody.damage,

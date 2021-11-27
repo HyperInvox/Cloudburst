@@ -28,10 +28,13 @@ namespace Cloudburst.Cores.Items.White
 
         public override string ItemIconPath => "Assets/Cloudburst/Items/Harvester/icon.png";
 
+        public ConfigEntry<float> BaseExp;
+        public ConfigEntry<float> StackingExp;
 
         public override void CreateConfig(ConfigFile config)
         {
-
+            BaseExp = config.Bind<float>(ConfigName, "Base Experience", 3, "How much experience you get from a single stack of this item.");
+            StackingExp = config.Bind<float>(ConfigName, "Stacking Experience", 2, "How much extra experience you get from extra stacks of this item.");
         }
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
@@ -51,9 +54,18 @@ namespace Cloudburst.Cores.Items.White
 
         private void GlobalHooks_onHitEnemy(ref DamageInfo info, UnityEngine.GameObject victim, GlobalHooks.OnHitEnemy onHitInfo)
         {
-            if (GetCount(onHitInfo.attackerBody) > 0)
+            int count = GetCount(onHitInfo.attackerBody);
+            if (count > 0)
             {
-                float exp = 1 + (GetCount(onHitInfo.attackerBody) * 2);
+
+                float exp = BaseExp.Value;
+                if (count > 1) {
+                    exp += (StackingExp.Value * count);
+                }
+
+                //this stacking is probably awful, but it shall suffice
+                //11/26/21  
+
                 TeamManager.instance.GiveTeamExperience(TeamComponent.GetObjectTeam(onHitInfo.attackerBody.gameObject), (uint)exp);
             }
         }

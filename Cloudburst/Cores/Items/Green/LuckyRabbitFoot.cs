@@ -17,7 +17,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override string ItemPickupDesc => "Gain barrier on critical hits";
 
-        public override string ItemFullDescription => "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>5 health</style> <style=cStack>(+3 per stack)</style>.";
+        public override string ItemFullDescription => "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>"+ BaseBarrier.Value + " health</style> <style=cStack>(+"+ StackingBarrier.Value+ " per stack)</style>. Also gain 5% critical hit chance.";
 
         public override string ItemLore => "";
 
@@ -27,9 +27,13 @@ namespace Cloudburst.Cores.Items.Green
 
         public override string ItemIconPath => "Assets/Cloudburst/Items/TopazLense/icon.png";
 
+        public ConfigEntry<float> BaseBarrier;
+        public ConfigEntry<float> StackingBarrier;
 
         public override void CreateConfig(ConfigFile config)
         {
+            BaseBarrier = config.Bind<float>(ConfigName, "Base Barrier", 5, "How much barrier a single stack of this item gives you.");
+            StackingBarrier = config.Bind<float>(ConfigName, "Stacking Barrier", 3, "How much extra barrier stacks of this item gives you.");
 
         }
 
@@ -46,7 +50,16 @@ namespace Cloudburst.Cores.Items.Green
 
         public override void Hooks()
         {
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             GlobalHooks.onCrit += GlobalHooks_onCrit;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (GetCount(sender) > 0)
+            {
+                args.critAdd += 5;
+            }
         }
 
         private void GlobalHooks_onCrit(CharacterBody attackerBody, CharacterMaster attackerMaster, float procCoeff, ProcChainMask procMask)
@@ -58,7 +71,7 @@ namespace Cloudburst.Cores.Items.Green
             if (topazLense > 0 && healthComponent)
             {
                 //oddly, this doesn't null reference
-                healthComponent.AddBarrier(5f + (topazLense * 3f));
+                healthComponent.AddBarrier(BaseBarrier.Value + (topazLense * StackingBarrier.Value));
             }
         }
     }

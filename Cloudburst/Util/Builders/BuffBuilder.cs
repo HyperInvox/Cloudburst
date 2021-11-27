@@ -1,4 +1,4 @@
-﻿
+﻿/*
 using RoR2;
 using UnityEngine;
 
@@ -35,4 +35,4 @@ public abstract class BuffBuilder
 
         return body.GetBuffCount(buffIndex);
     }
-}
+}*/

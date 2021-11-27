@@ -66,7 +66,7 @@ namespace Cloudburst.Cores
             {
                 ItemBuilder item = (ItemBuilder)System.Activator.CreateInstance(itemType);
 
-                LogCore.LogI(item.ItemName);
+                //LogCore.LogI(item.ItemName);
                 if (CloudburstPlugin.instance.ValidateItem(item, Items))
                 {
                     item.Init(CloudburstPlugin.instance.GetConfig());

@@ -429,11 +429,11 @@ public class PrefabBuilder
 
         Action<List<ItemDisplayRuleSet.KeyAssetRuleGroup>> action2 = this.GetAdditionalItemDisplays;
 
-        LogCore.LogI(itemRules.Count);
+        //LogCore.LogI(itemRules.Count);
 
         action2?.Invoke(itemRules);
 
-        LogCore.LogI(itemRules.Count);
+        //LogCore.LogI(itemRules.Count);
 
         itemDisplayRuleSet.keyAssetRuleGroups = itemRules.ToArray();
         charModel.itemDisplayRuleSet = itemDisplayRuleSet;

@@ -409,19 +409,19 @@ namespace Cloudburst.Cores
             public abstract bool CanBeActivated();
 
         }
-        public EventsCore() => FUCK();
+        public EventsCore() => Init();
 
         private List<Event> activeEvents = new List<Event>();
         private List<Event> events = new List<Event>();
 
-        public void FUCK()
+        public void Init()
         {
             //CloudburstPlugin.onFixedUpdate += CloudburstPlugin_onFixedUpdate;
             var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(Event)));
             foreach (var itemType in ItemTypes)
             {
                 Event item = (Event)Activator.CreateInstance(itemType);
-                LogCore.LogI(item);
+                //LogCore.LogI(item);
                 item.Init();
                 events.Add(item);
             }

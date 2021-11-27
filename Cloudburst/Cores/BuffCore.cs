@@ -62,7 +62,48 @@ namespace Cloudburst.Cores
             }
         }
     }
+    public class BuffBuilder
+    {
 
+        public Sprite iconSprite;
+
+        public Color buffColor = Color.white;
+
+        public bool canStack;
+
+        public EliteDef eliteDef;
+
+        public bool isDebuff;
+
+        public NetworkSoundEventDef startSfx;
+        public BuffDef BuildBuff()
+        {
+            //create buff
+            var buff = ScriptableObject.CreateInstance<BuffDef>();
+            buff.canStack = canStack;
+            buff.isDebuff = isDebuff;
+            buff.iconSprite = iconSprite; // AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Charm");
+            buff.buffColor = buffColor;
+            if (startSfx)
+            {
+                buff.startSfx = startSfx;
+            }
+            if (eliteDef)
+            {
+                buff.eliteDef = eliteDef;
+            }
+
+            //add again
+            Cloudburst.Content.ContentHandler.Buffs.RegisterBuff(buff);
+            //add buff
+            /*BuffCatalog.modHelper.getAdditionalEntries += ModHelper_getAdditionalEntries;
+
+            void ModHelper_getAdditionalEntries(List<BuffDef> defs) {
+                defs.Add(buff);
+            }*/
+            return buff;
+        }
+    }
     public class BuffCore
     {
         public static BuffCore instance;
@@ -75,9 +116,9 @@ namespace Cloudburst.Cores
         protected internal BuffDef engageLunarShell;
         protected internal BuffDef REDACTED;
 
-        protected internal BuffDef magicArmor;
-        protected internal BuffDef magicRegen;
-        protected internal BuffDef magicAttackSpeed;
+       // protected internal BuffDef magicArmor;
+       // protected internal BuffDef magicRegen;
+      //  protected internal BuffDef magicAttackSpeed;
 
         protected internal BuffDef wyattSuspension;
         protected internal BuffDef wyattFlow;
@@ -85,51 +126,12 @@ namespace Cloudburst.Cores
         protected internal BuffDef glassMithrix;
 
         protected internal BuffDef riverGoo;
+
+        protected internal BuffDef fabinhoru;
         internal bool Loaded { get; private set; } = false;
         public BuffCore() => RegisterBuffs();
 
-        internal class BuffBuilder
-        {
 
-            public Sprite iconSprite;
-
-            public Color buffColor = Color.white;
-
-            public bool canStack;
-
-            public EliteDef eliteDef;
-
-            public bool isDebuff;
-
-            public NetworkSoundEventDef startSfx;
-            public BuffDef BuildBuff()
-            {
-                //create buff
-                var buff = ScriptableObject.CreateInstance<BuffDef>();
-                buff.canStack = canStack;
-                buff.isDebuff = isDebuff;
-                buff.iconSprite = iconSprite; // AssetsCore.mainAssetBundle.LoadAsset<Sprite>("Charm");
-                buff.buffColor = buffColor;
-                if (startSfx)
-                {
-                    buff.startSfx = startSfx;
-                }
-                if (eliteDef)
-                {
-                    buff.eliteDef = eliteDef;
-                }
-
-                //add again
-                Cloudburst.Content.ContentHandler.Buffs.RegisterBuff(buff);
-                //add buff
-                /*BuffCatalog.modHelper.getAdditionalEntries += ModHelper_getAdditionalEntries;
-
-                void ModHelper_getAdditionalEntries(List<BuffDef> defs) {
-                    defs.Add(buff);
-                }*/
-                return buff;
-            }
-        }
         protected void RegisterBuffs()
         {
             LogCore.LogI("Initializing Core: " + base.ToString());
@@ -194,7 +196,7 @@ namespace Cloudburst.Cores
                 buffColor = CloudUtils.HexToColor("#50b8e7"),
             }.BuildBuff();
 
-            this.magicRegen = new BuffBuilder()
+            /*this.magicRegen = new BuffBuilder()
             {
                 canStack = false,
                 isDebuff = false,
@@ -216,7 +218,7 @@ namespace Cloudburst.Cores
                 isDebuff = false,
                 iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("BaseMagicIcon"),
                 buffColor = CloudUtils.HexToColor("#4D516D"),
-            }.BuildBuff();
+            }.BuildBuff();*/
 
             //I LOVE YOU
             //ACTUALLY I DON'T
@@ -228,6 +230,7 @@ namespace Cloudburst.Cores
                 iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texBuffPulverizeIcon"),
                 buffColor = CloudUtils.HexToColor("#37323e"),
             }.BuildBuff();
+
 
             this.riverGoo = new BuffBuilder()
             {
@@ -257,7 +260,10 @@ namespace Cloudburst.Cores
             //On.RoR2.CharacterBody.AddBuff += CharacterBody_AddBuff;
             On.RoR2.CharacterMotor.OnDeathStart += CharacterMotor_OnDeathStart;
             IL.RoR2.CharacterBody.RecalculateStats += CharacterBody_RecalculateStats1;
+
+          //  R2API.RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
         }
+
 
         private void CharacterBody_RecalculateStats1(MonoMod.Cil.ILContext il)
         {
@@ -345,28 +351,16 @@ namespace Cloudburst.Cores
                 var inv = self.inventory;
 
                 if (inv) {
-                    if (MagiciansEarrings.Enabled) {
-                        int magicCount = inv.GetItemCount(MagiciansEarrings.instance.Index);
-                        if (self && self.HasBuff(magicArmor))
-                        {
-                            self.armor += (8f * magicCount);
-                        }
-                        if (self && self.HasBuff(magicAttackSpeed))
-                        {
-                            self.attackSpeed += (0.1f * magicCount);
-                        }
-                        if (self && self.HasBuff(magicRegen))
-                        {
-                            self.regen += (0.2f * magicCount);
-                        }
-                    }
-                    if (LuckyRabbitFoot.Enabled)
+                    //if (MagiciansEarrings.Enabled) {
+
+                    //}
+                    /*if (LuckyRabbitFoot.Enabled)
                     {
                         if (inv.GetItemCount(LuckyRabbitFoot.instance.Index) > 0)
                         {
                             self.crit += 5;
                         }
-                    }
+                    }*/
                     /*if (BrokenBodyArmor.Enabled) {
                         if (self && self.HasBuff(charm))
                         {

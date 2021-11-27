@@ -276,8 +276,8 @@ namespace Cloudburst.Cores
             missile.maxSeekDistance = float.MaxValue;
             missile.deathTimer = float.MaxValue;
 
-            LogCore.LogI(-(float.MaxValue * 2));
-            //missile.maxVelocity = float.MaxValue;
+            //LogCore.LogI(-(float.MaxValue * 2));
+            missile.maxVelocity = float.MaxValue;
 
             impact.impactEffect = EffectCore.orbitalImpact;
 
@@ -337,7 +337,7 @@ namespace Cloudburst.Cores
             missile.maxSeekDistance = float.MaxValue;
             missile.deathTimer = float.MaxValue;
 
-            LogCore.LogI(-(float.MaxValue * 2));
+            //LogCore.LogI(-(float.MaxValue * 2));
             //missile.maxVelocity = float.MaxValue;
 
             impact.impactEffect = EffectCore.orbitalImpact;

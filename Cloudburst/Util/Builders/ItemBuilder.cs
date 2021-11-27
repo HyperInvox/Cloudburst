@@ -41,6 +41,8 @@ public abstract class ItemBuilder
 
     public virtual UnlockableDef UnlockDef { get; set; } = null;
 
+    public string ConfigName = "Item: ";
+
     protected abstract void Initialization();
 
     /// <summary>
@@ -49,6 +51,7 @@ public abstract class ItemBuilder
     /// <param name="config"></param>
     internal virtual void Init(ConfigFile file)
     {
+        ConfigName = ConfigName + ItemName;
         CreateConfig(file);
         CreateLang();
         CreateItem();

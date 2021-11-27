@@ -167,7 +167,7 @@ namespace Cloudburst
             BepInEx.Logging.Logger.Listeners.Add(new ErrorListener());
 
             SingletonHelper.Assign<CloudburstPlugin>(ref CloudburstPlugin.instance, this);
-            LogCore.LogI("Cloudburst instance assigned.");
+            //LogCore.LogI("Cloudburst instance assigned.");
             //On.RoR2.Networking.GameNetworkManager.OnClientConnect += (self, user, t) => { };
 
             /*var state = Resources.Load<GameObject>("prefabs/characterbodies/LoaderBody").GetComponent<SetStateOnHurt>();
@@ -187,8 +187,6 @@ namespace Cloudburst
             //not super important!!
 
             DefineConfig();
-
-            LogCore.LogM("Cloudburst loaded!");
         }
 
 
@@ -224,8 +222,11 @@ namespace Cloudburst
         }
 
         private void InitializeCores()
-        {
-            //LogCore.LogM("DEBUG VERSION.");
+        {       
+            #if DEBUG
+            LogCore.LogM("DEBUG VERSION.");
+            #endif
+
             if (Enabled.Value)
             {
                 Cloudburst.Content.ContentHandler.Load();
@@ -254,15 +255,15 @@ namespace Cloudburst
                     {
 
                         case "Hopoo Games/FX/Cloud Remap Proxy":
-                            LogCore.LogI("material");
+                            //LogCore.LogI("material");
                             materials[i].shader = Resources.Load<Shader>("shaders/fx/hgcloudremap");
-                            LogCore.LogI(materials[i].shader.name);
+                            //LogCore.LogI(materials[i].shader.name);
                             break;
                     }
 
-                    if (materials[i].shader.name.StartsWith("StubbedShader"))
-                    {
-                        materials[i].shader = Resources.Load<Shader>("shaders/" + materials[i].shader.name.Substring(13));
+                    if (materials[i].shader.name == "stubbed_Hopoo Games/Deferred/Standard Proxy" || materials[i].shader.name == "Hopoo Games/Deferred/Standard Proxy")
+                    {   
+                        materials[i].shader = Resources.Load<Shader>("shaders/deferred/hgstandard");
                     }
                 }
 
@@ -353,13 +354,15 @@ namespace Cloudburst
                 //i'll follow you home when the night comes
 #if DEBUG
                 //unlock!
-                //debugCore = new DebuggingCore();
+                debugCore = new DebuggingCore();
 #endif
             }
             else
             {
                 LogCore.LogW("You have disabled ALL of Cloudburst. If this was not desired, you can re-enable it in Cloudburst's config file.");
             }
+            LogCore.LogM("Cloudburst loaded!");
+
         }
 
         [ConCommand(commandName = "gmc", flags = ConVarFlags.ExecuteOnServer, helpText = "Good morning chat.")]

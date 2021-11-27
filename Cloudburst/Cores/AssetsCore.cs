@@ -92,10 +92,10 @@ namespace Cloudburst.Cores
 
             var obj = /*CloudburstPlugin.Instantiate<GameObject>(*/AssetsCore.mainAssetBundle.LoadAsset<GameObject>("TarBox");//, new Vector3(201f, -128.8f, 143f), Quaternion.Euler(new Vector3(0, -43.019f, 0)));
 
-            LogCore.LogI("h2");
+            //LogCore.LogI("h2");
             //obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
 
-            LogCore.LogI("hi3");
+            //ogCore.LogI("hi3");
             obj.AddComponent<TarRiverSlow>();
             obj.layer = LayerIndex.world.intVal;
             obj.transform.position = new Vector3(201f, -134.1f, 143f);
@@ -104,7 +104,7 @@ namespace Cloudburst.Cores
             //obj.GetComponent<Renderer>().material = goo.GetComponent<Renderer>().material;
             obj.AddComponent<NetworkIdentity>();
             obj.AddComponent<NetworkTransform>();
-            LogCore.LogI("hi4");
+            //LogCore.LogI("hi4");
             PrefabAPI.RegisterNetworkPrefab(obj);
 
             tarRiver = obj;
@@ -197,7 +197,7 @@ namespace Cloudburst.Cores
                     }
                     else {
                         decal.Material = material;
-                        LogCore.LogI(decal.gameObject);
+                        //LogCore.LogI(decal.gameObject);
                     }
                     CloudburstPlugin.Destroy(swap);
                 }
