@@ -1,5 +1,5 @@
 ﻿using BepInEx.Configuration;
-
+using R2API;
 using RoR2;
 using UnityEngine;
 
@@ -35,9 +35,9 @@ namespace Cloudburst.Cores.Equipment
 
         }
 
-        /*public override ItemDisplayRuleDict CreateItemDisplayRules()
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            var mdl = Resources.Load<GameObject>(EquipmentModelPath);
+            var mdl = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(EquipmentModelPath);
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
             {
     new ItemDisplayRule
@@ -160,7 +160,7 @@ localScale = new Vector3(1F, 1F, 1F)
 
 
             return rules;
-        }*/
+        }
 
         protected override void Initialization()
         {

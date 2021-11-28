@@ -1,6 +1,6 @@
 ﻿using BepInEx.Configuration;
 using Cloudburst.Cores;
-
+using R2API;
 using RoR2;
 using UnityEngine;
 
@@ -31,7 +31,7 @@ public abstract class EquipmentBuilder
 
         public EquipmentDef Index;
 
-        //public abstract ItemDisplayRuleDict CreateItemDisplayRules();
+        public abstract ItemDisplayRuleDict CreateItemDisplayRules();
 
         protected abstract void Initialization();
 
@@ -79,7 +79,9 @@ public abstract class EquipmentBuilder
         Index.enigmaCompatible = EnigmaCompatible;
         Index.isBoss = IsBoss;
         Index.isLunar = IsLunar;
-        //var itemDisplayRules = CreateItemDisplayRules();
+        var itemDisplayRules = CreateItemDisplayRules();
+        R2API.ItemAPI.Add(new R2API.CustomEquipment(Index, itemDisplayRules));
+
         //EnigmaticThunder.Modules.Pickups.RegisterEquipment(Index);
         On.RoR2.EquipmentSlot.PerformEquipmentAction += EquipmentSlot_PerformEquipmentAction; ;
     }

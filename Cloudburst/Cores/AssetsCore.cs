@@ -3,6 +3,7 @@ using HG;
 using R2API;
 using RoR2;
 using RoR2.ContentManagement;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using ThreeEyedGames;
@@ -195,25 +196,70 @@ namespace Cloudburst.Cores
                             }
                         }
                     }
-                    else {
+                    else
+                    {
                         decal.Material = material;
                         //LogCore.LogI(decal.gameObject);
                     }
                     CloudburstPlugin.Destroy(swap);
                 }
-                /*if (quicKSwap)
-                {
-                    LogCore.LogI(gameObject.name + " has a MaterialSwapper component attached.");
-
-                    LogCore.LogI(quicKSwap.materialName);
-                }
-                else {
-                    LogCore.LogI(gameObject.name + " does not have a MaterialSwapper component attached.");
-                }*/
             }
-        }
 
-        private void CloudburstPlugin_start()
+            foreach (GameObject gameObject in mainAssetBundle.LoadAllAssets<GameObject>())
+            {
+                MaterialArraySwapper[] quickSwaps = gameObject.GetComponentsInChildren<MaterialArraySwapper>();
+                
+                foreach (MaterialArraySwapper swap in quickSwaps)
+                {
+                    //LogCore.LogI("swap");
+                    Renderer renderer = swap.gameObject.GetComponent<Renderer>();
+                    if (renderer && swap.materialName != null)
+                    {
+                        //LogCore.LogI("renderer");
+                        //LogCore.LogI("materialname");
+                        //gonna treat it as an extra thing 
+
+
+
+                        Material material = (from p in source
+                                             where p.name == swap.materialName
+                                             select p).FirstOrDefault<Material>();
+                        Material secondMaterial = (from p in source
+                                             where p.name == swap.secondMaterialName
+                                             select p).FirstOrDefault<Material>();
+
+                        if (material)
+                        {
+
+                            List<Material> newMats = new List<Material>() {
+                            renderer.material,
+                            material
+                            };
+
+                            if (secondMaterial) { 
+                                newMats.Add(secondMaterial);
+                            }
+
+                            //LogCore.LogI("FETCHED MATERIAL:" + material);
+
+                            //LogCore.LogI("BEFORE: " + renderer.materials[swap.position]);
+
+                            renderer.materials = newMats.ToArray();
+                            renderer.sharedMaterials = newMats.ToArray();
+
+
+
+                            //LogCore.LogI("AFTER MATERIALS: " + renderer.materials[swap.position]);
+                            //LogCore.LogI("AFTER SHAREDMATERIALS: " + renderer.sharedMaterials[swap.position]);
+
+                        }       
+                    }
+                    CloudburstPlugin.Destroy(swap);
+                }
+            }
+        }   
+
+            private void CloudburstPlugin_start()
         {
 
         }

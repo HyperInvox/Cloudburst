@@ -990,7 +990,7 @@ namespace Cloudburst.Cores
             spawnInfection = true;
         }
 
-        [ConCommand(commandName = "ttrigger_infection", flags = ConVarFlags.ExecuteOnServer, helpText = "Triggers the true infection. God help you.")]
+        [ConCommand(commandName = "ttrigger_infection", flags = ConVarFlags.ExecuteOnServer, helpText = "Triggers the infection, bypassing the infection bubble entirely.")]
         private static void TTriggerInfection(ConCommandArgs arg)
         {
             triggeredTrueInfection = true;

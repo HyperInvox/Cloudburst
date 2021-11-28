@@ -59,6 +59,10 @@ public abstract class ItemBuilder
         Hooks();
     }
 
+    public GameObject Load() {
+        return AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
+    }
+
     public virtual void CreateConfig(ConfigFile file) { }
 
     protected virtual void CreateLang()

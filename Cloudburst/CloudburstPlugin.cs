@@ -214,7 +214,7 @@ namespace Cloudburst
             EnableCommando = Config.Bind("Cloudburst :: Commando", "Enabled", true, "Enables Cloudburst's modifications to Commando. Set to false to disable Cloudburst's modifications to Commando.");
             EnableEngineer = Config.Bind("Cloudburst :: Engineer", "Enabled", true, "Enables Cloudburst's modifications to Engineer. Set to false to disable Cloudburst's modifications to Engineer.");
             EnableItems = Config.Bind("Cloudburst :: Items", "Enabled", true, "Enables Cloudburst's items. Set to false to disable  's items.");
-            EnableEquipment = Config.Bind("Cloudburst :: Equipment", "Enabled", false, "Enables Cloudburst's equipment. Set to false to disable Cloudburst's equipment.");
+            EnableEquipment = Config.Bind("Cloudburst :: Equipment", "Enabled", true, "Enables Cloudburst's equipment. Set to false to disable Cloudburst's equipment.");
             EnableWIP = Config.Bind("Cloudburst :: WIP", "Enabled", false, "[WARNING]: CONTENT ADDED BY THIS MODULE MAY NOT BE STABLE. ENABLE AT YOUR OWN RISK! Enables Cloudburst's WIP (work in progress) content. Set to false to disable Cloudburst's WIP content.");
             EnableUnlockAll = Config.Bind("Cloudburst :: Achievements", "Enabled", false, "Enables Cloudburst's unlocks for unlockable content. Set to false to unlock all of Cloudburst's unlockable content.");
             Enabled = Config.Bind("Cloudburst", "Enabled", true, "THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS. Enables the mod. Set to false to disable the mod entirely. THIS WILL NOT MAKE YOUR GAME COMPATIBLE WITH UNMODDED CLEINTS.");

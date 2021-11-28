@@ -89,7 +89,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4f9f541f03643914780772664f9b2eb4, type: 2}
+  - {fileID: 2100000, guid: ea68dca5382743c49b4db600e63449b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -166,7 +166,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2da7a0693b08da42b45c2e13062f61e, type: 2}
+  - {fileID: 2100000, guid: 45e06710e0a613943a1d1796805da573, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -196,7 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7921728660634286875}
   m_Layer: 0
-  m_Name: IMDLLumpkin
+  m_Name: IMDLLumpkinIMDLLumpkin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

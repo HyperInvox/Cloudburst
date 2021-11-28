@@ -21,7 +21,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override string ItemPickupDesc => "Striking bleeding enemies reduces their armor.";
 
-        public override string ItemFullDescription => "Striking enemies while they are bleeding <style=cIsDamage>reduces their armor by "+ BaseArmorReduction.Value + " <style=cStack>(+" + StackArmorReduction.Value + " per stack)</style>. Also gain 5% chance to <style=cIsDamage>bleed</style> an enemy on hit.";
+        public override string ItemFullDescription => $"Striking enemies while they are bleeding <style=cIsDamage>reduces their armor by {BaseArmorReduction.Value} <style=cStack>(+{StackArmorReduction.Value} per stack)</style>. Also gain 5% chance to <style=cIsDamage>bleed</style> an enemy on hit.";
 
 
         public override string ItemLore => "";
@@ -43,7 +43,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
-            var fabDagMDL = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
+            var MDL = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("Assets/Cloudburst/Items/FabinhoruDagger/IMDLDagger.prefab");
             //LogCore.LogI(fabDagMDL);
             //fabDagMDL..SetTexture("_NormalTex", texturehere);
             //material.SetFloat("_NormalStrength", normalstrengthhere);
@@ -53,7 +53,7 @@ namespace Cloudburst.Cores.Items.Green
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Chest",
 localPos = new Vector3(0.04441F, 0.16476F, 0.33355F),
 localAngles = new Vector3(358.6258F, 184.9319F, 213.4237F),
@@ -66,7 +66,7 @@ localScale = new Vector3(1F, 1F, 1F)
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Chest",
 localPos = new Vector3(0F, 0.2F, 0.3F),
 localAngles = new Vector3(14.83532F, 172.032F, 194.775F),
@@ -77,11 +77,11 @@ localScale = new Vector3(1F, 1F, 1F)
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Head",
 localPos = new Vector3(0.42043F, 4.11931F, -1.94511F),
 localAngles = new Vector3(48.77712F, 16.26471F, 13.63895F),
-localScale = new Vector3(10F, 10F, 10F) 
+localScale = new Vector3(10F, 10F, 10F)
     }
             });
 
@@ -90,7 +90,7 @@ localScale = new Vector3(10F, 10F, 10F)
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Chest",
 localPos = new Vector3(0.23695F, 0.38017F, 0.14407F),
 localAngles = new Vector3(26.38515F, 179.2051F, 179.8132F),
@@ -101,7 +101,7 @@ localScale = new Vector3(1F, 1F, 1F)          }
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Chest",
 localPos = new Vector3(-0.11532F, 0.21924F, 0.2006F),
 localAngles = new Vector3(2.75933F, 149.7382F, 185.504F),
@@ -112,7 +112,7 @@ localScale = new Vector3(1F, 1F, 1F)             }
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Chest",
 localPos = new Vector3(-0.21217F, 0.196F, 0.17159F),
 localAngles = new Vector3(359.0273F, 121.4077F, 178.183F),
@@ -124,7 +124,7 @@ localScale = new Vector3(1F, 1F, 1F)
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Chest",
 localPos = new Vector3(-0.01377F, 0.17163F, 0.25114F),
 localAngles = new Vector3(359.5154F, 177.2092F, 153.7225F),
@@ -136,7 +136,7 @@ localScale = new Vector3(1F, 1F, 1F)
     new ItemDisplayRule
     {
         ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL,
+        followerPrefab = MDL,
 childName = "Head",
 localPos = new Vector3(-0.61853F, 3.66017F, -0.13073F),
 localAngles = new Vector3(345.0883F, 96.6255F, 105.5187F),
@@ -148,7 +148,7 @@ localScale = new Vector3(10F, 10F, 10F)
     new ItemDisplayRule
         {
             ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL  ,
+        followerPrefab = MDL  ,
 childName = "Chest",
 localPos = new Vector3(0.00241F, 0.20137F, 0.25038F),
 localAngles = new Vector3(343.6854F, 182.3367F, 92.10435F),
@@ -159,7 +159,7 @@ localScale = new Vector3(1F, 1F, 1F)
     new ItemDisplayRule
         {
             ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL  ,
+        followerPrefab = MDL  ,
 childName = "Chest",
 localPos = new Vector3(0.00241F, 0.20137F, 0.25038F),
 localAngles = new Vector3(343.6854F, 182.3367F, 92.10435F),
@@ -170,7 +170,7 @@ localScale = new Vector3(1F, 1F, 1F)
     new ItemDisplayRule
         {
             ruleType = ItemDisplayRuleType.ParentedPrefab,
-        followerPrefab = fabDagMDL  ,
+        followerPrefab = MDL  ,
 childName = "MainWeapon",
 localPos = new Vector3(-0.01747F, 1.11235F, -0.01368F),
 localAngles = new Vector3(279.0793F, 356.7184F, 284.2909F),

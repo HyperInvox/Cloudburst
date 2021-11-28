@@ -59,9 +59,9 @@ namespace Cloudburst.Cores.Items
 
             if (count > 0 && Util.CheckRoll(4 * damageInfo.procCoefficient, attackerMaster) && victimBody && !damageInfo.procChainMask.HasProc(ProcType.AACannon))
             {
+                damageInfo.procChainMask.AddProc(ProcType.AACannon);
                 var pos = CloudUtils.FindBestPosition(victimBody.mainHurtBox);
 
-                damageInfo.procChainMask.AddProc(ProcType.AACannon);
                 EffectData data = new EffectData()
                 {
                     rotation = Quaternion.Euler(victimBody.transform.forward),
