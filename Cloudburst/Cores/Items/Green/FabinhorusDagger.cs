@@ -21,7 +21,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override string ItemPickupDesc => "Striking bleeding enemies reduces their armor.";
 
-        public override string ItemFullDescription => $"Striking enemies while they are bleeding <style=cIsDamage>reduces their armor by {BaseArmorReduction.Value} <style=cStack>(+{StackArmorReduction.Value} per stack)</style>. Also gain 5% chance to <style=cIsDamage>bleed</style> an enemy on hit.";
+        public override string ItemFullDescription => $"Striking enemies while they are bleeding <style=cIsDamage>reduces their armor by {BaseArmorReduction.Value} <style=cStack>(+{StackArmorReduction.Value} per stack)</style>. Also gain 5% chance to <style=cIsDamage>bleed</style> an enemy on hit   .";
 
 
         public override string ItemLore => "";
