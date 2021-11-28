@@ -34,10 +34,7 @@ namespace Cloudburst.Cores
         public static event DamageInfoCloudGate takeDamage;
         public static event CharacterBodyCloudGate onInventoryChanged;
         public static event CharacterBodyAddTimedBuffCloudGate onAddTimedBuff;
-        public static event CharacterBodyCloudGate recalculateStats;
         public static event FinalBuffStackLostCloudGate onFinalBuffStackLost;
-
-        public static bool requiresTakeDamage;
 
         public static void Init()
         {

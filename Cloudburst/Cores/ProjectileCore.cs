@@ -55,7 +55,7 @@ namespace Cloudburst.Cores
 
             LogCore.LogI("Initializing Core: " + base.ToString());
 
-            CreateBombardierProjectiles();
+            //CreateBombardierProjectiles();
             CreateWyattMaidBubble();
             CreateOrbitalOrbs();
             CreateWinchGhost();
@@ -778,7 +778,7 @@ namespace Cloudburst.Cores
         private protected void CreateBombardierPayloadProjectile()
         {
             bombardierSeekerBombProjectile = Resources.Load<GameObject>("prefabs/projectiles/MissileProjectile").InstantiateClone("BombardierSeekerRocketProjectile", true);
-            var registered = CloudUtils.RegisterNewProjectile(bombardierFireBombProjectile);
+            var registered = CloudUtils.RegisterNewProjectile(bombardierSeekerBombProjectile);
             if (registered)
             {
                 var controller = bombardierSeekerBombProjectile.GetComponent<ProjectileController>();

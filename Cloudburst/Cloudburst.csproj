@@ -171,7 +171,7 @@
     <Compile Include="Cores\Items\Green\EnigmaticKeycard.cs" />
     <Compile Include="Cores\Items\Green\JapesCloak.cs" />
     <Compile Include="Cores\Items\Green\LuckyRabbitFoot.cs" />
-    <Compile Include="Cores\Items\Green\MagiciansEarrings.cs" />
+    <Compile Include="Cores\Items\Green\RestlessRings.cs" />
     <Compile Include="Cores\Items\Green\MechanicalTrinket.cs" />
     <Compile Include="Cores\Items\Red\Extractor.cs" />
     <Compile Include="Cores\Items\Red\Lemdog.cs" />
@@ -200,6 +200,7 @@
     <Compile Include="Util\Builders\SurvivorBuilder.cs" />
     <Compile Include="Util\Builders\ItemBuilder.cs" />
     <Compile Include="Util\Builders\EnemyBuilder.cs" />
+    <Compile Include="Util\ItemFollowerSmooth.cs" />
     <Compile Include="Util\MaterialArraySwapper.cs" />
     <Compile Include="Util\EnigmaticList.cs" />
     <Compile Include="Util\MaterialSwapper.cs" />
