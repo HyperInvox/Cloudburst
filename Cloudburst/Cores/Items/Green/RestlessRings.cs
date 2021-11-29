@@ -14,6 +14,11 @@ namespace Cloudburst.Cores.Items.Green
     {
         public static RestlessRings instance;
 
+        public static Material heal;
+        public static Material armor;
+        public static Material attack;
+        public static Material basic;
+
         public override string ItemName => "Restless Rings";
 
         public override string ItemLangTokenName => "RESTLESSRINGS";
@@ -24,7 +29,7 @@ namespace Cloudburst.Cores.Items.Green
 + "<style=cIsUtility>+8 <style=cStack>(+8 per stack)</style> armor" + Environment.NewLine
  + "<style=cIsHealing>20% <style=cStack>(+20% per stack)</style> regeneration</style>" + Environment.NewLine
 + "<style=cIsDamage>10% <style=cStack>(+10% per stack)</style> attack speed</style>";
-        //Also extend <style=cIsUtility>positive buff duration</style> by 2 <style=cStack>(+1 per stack)</style> seconds.
+        //
 
         public override string ItemLore => @"A pantheon of siblings. 
 A celestial mystery. 
@@ -76,15 +81,11 @@ Far did he fall.
         public BuffDef magicRegen;
         public BuffDef magicAttackSpeed;
 
-        public static List<BuffDef> blackList = new List<BuffDef> {
-            RoR2Content.Buffs.MedkitHeal,
-            RoR2.RoR2Content.Buffs.HiddenInvincibility,
-            RoR2Content.Buffs.ElementalRingsCooldown,
-            RoR2Content.Buffs.EngiShield
-        };
+        public static ConfigEntry<float> TimeInbetweenBuffs;
 
         public override void CreateConfig(ConfigFile config)
         {
+            TimeInbetweenBuffs = config.Bind<float>(ConfigName, "Buff Duration", 10, "How long a buff lasts.");
 
         }
         /*public override ItemDisplayRuleDict CreateItemDisplayRules()
@@ -97,6 +98,11 @@ Far did he fall.
             instance = this;
 
             BuildBuffs();
+
+            heal = AssetsCore.mainAssetBundle.LoadAsset<Material>("matRestlessRingHeal");
+            armor = AssetsCore.mainAssetBundle.LoadAsset<Material>("matRestlessRingArmor");
+            basic = AssetsCore.mainAssetBundle.LoadAsset<Material>("matRestfulRing");
+            attack = AssetsCore.mainAssetBundle.LoadAsset<Material>("matRestlessRingAttack");
 
         }
 
@@ -131,7 +137,6 @@ Far did he fall.
         }
         public override void Hooks()
         {
-            GlobalHooks.onAddTimedBuff += GlobalHooks_onAddTimedBuff;
             GlobalHooks.onInventoryChanged += GlobalHooks_onInventoryChanged;
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
         }
@@ -157,39 +162,27 @@ Far did he fall.
         {
             if (NetworkServer.active)
             {
-                body.AddItemBehavior<MagiciansEarringsBehavior>(GetCount(body));
+                body.AddItemBehavior<RestlessRingsBehavior>(GetCount(body));
             }
         }
 
-        private void GlobalHooks_onAddTimedBuff(CharacterBody body, ref BuffDef buffType, ref float duration)
-        {
-            var inv = body.inventory;
-            if (inv)
-            {
-                var earringsCount = GetCount(inv);
-
-                bool blackListed = blackList.Contains(buffType) || buffType.isDebuff;
-                if (earringsCount > 0 && blackListed == false) 
-                {
-                    //do thing???
-                    duration += 2 + (1 * earringsCount);
-                }
-            }
-        }
 
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var ItemBodyModelPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("RestlessFollowerDummy.prefab");
-            var ItemFollowerPrefab = Load();
+            var ItemFollowerPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("RestlessFollower.prefab"); ;
             var ItemFollower = ItemBodyModelPrefab.AddComponent<ItemFollowerSmooth>();
+
             ItemFollower.itemDisplay = ItemBodyModelPrefab.AddComponent<ItemDisplay>();
             ItemFollower.itemDisplay.rendererInfos = CloudUtils.GatherRenderInfos(ItemBodyModelPrefab);
             ItemFollower.followerPrefab = ItemFollowerPrefab;
             ItemFollower.targetObject = ItemBodyModelPrefab;
-            ItemFollower.distanceDampTime = 0.25f;
-            ItemFollower.distanceMaxSpeed = 100;
-            ItemFollower.SmoothingNumber = 0.25f;
+            ItemFollower.distanceDampTime = 0.3f;
+            ItemFollower.distanceMaxSpeed = 50;
+            ItemFollower.SmoothingNumber = 0.1f;
+            ItemFollower.AddComponent<RestlessRingsGlow>();
 
+            
             ItemDisplayRuleDict rules = new ItemDisplayRuleDict();
 
             rules.Add("mdlCommandoDualies", new RoR2.ItemDisplayRule[]
@@ -328,10 +321,103 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
             return rules;
         }
     }
-    public class MagiciansEarringsBehavior : CharacterBody.ItemBehavior
+
+    public class RestlessRingsGlow : NetworkBehaviour
+    {
+        [SyncVar]
+        public int currentRing;
+
+        private CharacterBody body;
+        private RestlessRingsBehavior restlessRings;
+
+        private Renderer renderer;
+
+        public void Start() {
+            SetFields();
+        }
+        void SetFields()
+        {
+            var display = GetComponentInParent<ItemDisplay>();
+            var follower = GetComponentInParent<ItemFollowerSmooth>();
+            if (display)
+            {
+                var mdl = display.GetComponentInParent<RoR2.CharacterModel>();
+                if (mdl)
+                {
+                    body = mdl.body;
+                    restlessRings = body.GetComponent<RestlessRingsBehavior>();
+                    restlessRings.OnBuffChanged += RestlessRings_OnBuffChanged;
+                }
+            }
+            else { Destroy(this); }
+            if (follower)
+            {
+                var instance = follower.followerInstance;
+                if (instance)
+                {
+                    renderer = instance.transform.Find("RINGSNEW/Cube").GetComponent<Renderer>();
+                }
+            }
+            else { Destroy(this); }
+        }
+
+        public void FixedUpdate() {
+            if (!body || !renderer || !restlessRings)
+            {
+                SetFields();
+            }
+        }
+
+        private void RestlessRings_OnBuffChanged(object sender, int e)
+        {
+            currentRing = e;
+            switch (e)
+            {
+                case 0:
+                    if (renderer)
+                    {
+                        renderer.materials = new Material[2] { RestlessRings.armor, RestlessRings.basic };
+                    }
+                    break;
+                case 1:
+                    if (renderer)
+                    {
+                        renderer.materials = new Material[2] { RestlessRings.armor, RestlessRings.basic };
+                    }  break;
+                case 2:
+                    if (renderer)
+                    {
+                        renderer.materials = new Material[2] { RestlessRings.attack, RestlessRings.basic };
+                    }
+                    break;
+                case 3:
+                    if (renderer)
+                    {
+                        renderer.materials = new Material[2] { RestlessRings.heal, RestlessRings.basic };
+                    }
+                    break;
+                case 4:
+                    if (renderer)
+                    {
+                        renderer.materials = new Material[2] { RestlessRings.heal, RestlessRings.basic };
+                    }
+                    break;
+                default:
+                    throw new NullReferenceException("THIS CAN'T FUCKING HAPPEN");
+            }
+            //mat.Add(RestlessRings.basic);
+            //LogCore.LogI("hi");
+
+            // this is utterly fucking retarded
+            // but i HAVE to do this or the thing fucking breaks  
+            //var there = mat.ToArray();
+
+        }
+    }
+
+    public class RestlessRingsBehavior : CharacterBody.ItemBehavior
     { 
         private float timer = 0;
-        private float oldCount;
         private Xoroshiro128Plus rng;
         private EffectData effectData = new EffectData
         {
@@ -339,11 +425,14 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
             rotation = Quaternion.identity,
             scale = 20,
         };
+        private int oldCount;
+
+        public event EventHandler<int> OnBuffChanged;
 
         public void Start()
         {
             rng = new Xoroshiro128Plus((ulong)DateTime.UtcNow.Ticks);
-            AddBuff(rng.RangeInt(1, 3));
+            AddBuff(rng.RangeInt(1, 4));
         }
         void AddBuff(int count)
         {
@@ -351,61 +440,75 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
             switch (count)
             {
                 case 1:
-                    EffectManager.SpawnEffect(EffectCore.magicArmor, effectData, true);
+/*                    EffectManager.SpawnEffect(EffectCore.magicArmor, effectData, true);
                     // Util.PlaySound("Play_item_use_gainArmor", base.gameObject);
                     EffectManager.SpawnEffect(EffectCore.reallyCoolEffect, new EffectData()
                     {
                         origin = base.transform.position,
                         scale = 10,
                         rotation = Quaternion.identity,
-                    }, false);
+                    }, false);*/
                     body.AddBuff(RestlessRings.instance.magicArmor);
                     break;
                 case 2:
-                    EffectManager.SpawnEffect(EffectCore.magicAttackSpeed, effectData, true);
+                    //EffectManager.SpawnEffect(EffectCore.magicAttackSpeed, effectData, true);
                     Util.PlaySound("Play_item_proc_crit_attack_speed1", base.gameObject);
-                    EffectManager.SpawnEffect(EffectCore.trulyCoolEffect, new EffectData()
+                    /*EffectManager.SpawnEffect(EffectCore.trulyCoolEffect, new EffectData()
                     {
                         origin = base.transform.position,
                         scale = 10,
                         rotation = Quaternion.identity,
-                    }, false);
+                    }, false);*/
                     body.AddBuff(RestlessRings.instance.magicAttackSpeed);
                     break;
                 case 3:
-                    EffectManager.SpawnEffect(EffectCore.coolEffect, new EffectData()
-                    {
-                        origin = base.transform.position,
-                        scale = 10,
-                        rotation = Quaternion.identity,
-                    }, false);
-                    EffectManager.SpawnEffect(EffectCore.magicRegen, effectData, true);
-                    EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/FruitHealEffect"), effectData, true);
+                    /*  EffectManager.SpawnEffect(EffectCore.coolEffect, new EffectData()
+                      {
+                          origin = base.transform.position,
+                          scale = 10,
+                          rotation = Quaternion.identity,
+                      }, false);
+                    //  EffectManager.SpawnEffect(EffectCore.magicRegen, effectData, true);
+                     // EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/FruitHealEffect"), effectData, true);*/
                     Util.PlaySound("char_healing_drone_heal_02", base.gameObject);
                     body.AddBuff(RestlessRings.instance.magicRegen);
                     break;
-
+                case 4:
+                    /*  EffectManager.SpawnEffect(EffectCore.coolEffect, new EffectData()
+                      {
+                          origin = base.transform.position,
+                          scale = 10,
+                          rotation = Quaternion.identity,
+                      }, false);
+                    //  EffectManager.SpawnEffect(EffectCore.magicRegen, effectData, true);
+                     // EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/FruitHealEffect"), effectData, true);*/
+                    Util.PlaySound("char_healing_drone_heal_02", base.gameObject);
+                    body.AddBuff(RestlessRings.instance.magicRegen);
+                    break;
             }
+            OnBuffChanged?.Invoke(this, count);
         }
         public void FixedUpdate()
         {
             if (body)
             {
                 timer += Time.deltaTime;
-                if (timer >= 15)
+                if (timer >= RestlessRings.TimeInbetweenBuffs.Value)
                 {
                     CloudUtils.SafeRemoveBuff(RestlessRings.instance.magicArmor, body);
                     CloudUtils.SafeRemoveBuff(RestlessRings.instance.magicAttackSpeed, body);
                     CloudUtils.SafeRemoveBuff(RestlessRings.instance.magicRegen, body);
 
-                    int count = rng.RangeInt(1, 3);
-                    AddBuff(count);
-                    //roll me a new number you Worthless Fucking Number Generator 128+
+                    int count = rng.RangeInt(1, 4);
+                    LogCore.LogI("restless ring: " + count);
                     if (count == oldCount)
                     {
-                        count = rng.RangeInt(1, 3);
+                        count = rng.RangeInt(1, 4);
                     }
                     oldCount = count;
+                    AddBuff(count);
+                    //roll me a new number you Worthless Fucking Number Generator 128+
+                    /**/
                     timer = 0;
                 }
             }

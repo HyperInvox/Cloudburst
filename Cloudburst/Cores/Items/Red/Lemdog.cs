@@ -14,9 +14,9 @@ namespace Cloudburst.Cores.Items.Red
 
         public override string ItemLangTokenName => "LEMMYDOGS";
 
-        public override string ItemPickupDesc => "Chance for debuffs to become beneficial buffs when applied";
+        public override string ItemPickupDesc => "Chance for debuffs to become buffs when applied. Also extend the duration of buffs.";
         //
-        public override string ItemFullDescription => "25% <style=cStack>(+2.5% per stack)</style> chance for <style=cIsUtility>applied debuffs to become beneficial buffs</style>";
+        public override string ItemFullDescription => "25% <style=cStack>(+2.5% per stack)</style> chance for <style=cIsUtility>applied debuffs to become beneficial buffs</style>. Also extend <style=cIsUtility>positive buff duration</style> by 2 <style=cStack>(+1 per stack)</style> seconds.";
 
         public override string ItemLore => "";
 
@@ -32,6 +32,8 @@ namespace Cloudburst.Cores.Items.Red
 
         }
 
+
+        public static List<BuffDef> blackList;
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var lemdogMDL = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
@@ -166,6 +168,12 @@ namespace Cloudburst.Cores.Items.Red
             RoR2Content.Buffs.WhipBoost,
             RoR2Content.Buffs.TeamWarCry,
         };
+            blackList = new List<BuffDef> {
+            RoR2Content.Buffs.MedkitHeal,
+            RoR2.RoR2Content.Buffs.HiddenInvincibility,
+            RoR2Content.Buffs.ElementalRingsCooldown,
+            RoR2Content.Buffs.EngiShield
+        };
         }
 
         public override void Hooks()
@@ -187,6 +195,14 @@ namespace Cloudburst.Cores.Items.Red
                         var buff = lemdogList[random];
                         buffType = buff;
                     }
+                }
+                var earringsCount = GetCount(inv);
+
+                bool blackListed = blackList.Contains(buffType) || buffType.isDebuff;
+                if (earringsCount > 0 && blackListed == false)
+                {
+                    //do thing???
+                    duration += 2 + (1 * earringsCount);
                 }
             }
         }

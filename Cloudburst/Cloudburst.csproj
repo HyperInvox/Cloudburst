@@ -170,7 +170,7 @@
     <Compile Include="Cores\Items\Green\FabinhorusDagger.cs" />
     <Compile Include="Cores\Items\Green\EnigmaticKeycard.cs" />
     <Compile Include="Cores\Items\Green\JapesCloak.cs" />
-    <Compile Include="Cores\Items\Green\LuckyRabbitFoot.cs" />
+    <Compile Include="Cores\Items\Green\BismuthRings.cs" />
     <Compile Include="Cores\Items\Green\RestlessRings.cs" />
     <Compile Include="Cores\Items\Green\MechanicalTrinket.cs" />
     <Compile Include="Cores\Items\Red\Extractor.cs" />
