@@ -21,7 +21,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override string ItemPickupDesc => "Gain barrier on critical hits";
 
-        public override string ItemFullDescription => "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>"+ BaseBarrier.Value + " health</style> <style=cStack>(+"+ StackingBarrier.Value+ " per stack)</style>. Also gain 5% critical hit chance.";
+        public override string ItemFullDescription => "Gain a <style=cIsHealing>temporary barrier</style> on critical hits for <style=cIsHealing>"+ BaseBarrier.Value + " health</style> <style=cStack>(+"+ StackingBarrier.Value+ " per stack)</style>. Also gain <style=cIsDamage>5% critical hit chance</style>.";
 
         public override string ItemLore => "";
 

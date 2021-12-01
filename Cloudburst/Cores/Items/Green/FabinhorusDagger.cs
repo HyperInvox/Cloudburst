@@ -188,13 +188,13 @@ localScale = new Vector3(1F, 1F, 1F)
         }
 
         public void AddBuffs()
-        {
+        {   
             this.fabinhoru = new BuffBuilder()
             {
                 canStack = false,
                 isDebuff = true,
                 iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texBuffPulverizeIcon"),
-                buffColor = CloudUtils.HexToColor("#37323e"),
+                buffColor = CloudUtils.HexToColor("#590005"),
             }.BuildBuff();
         }
 
@@ -206,9 +206,12 @@ localScale = new Vector3(1F, 1F, 1F)
 
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (sender.HasBuff(fabinhoru)) {
+            if (sender.HasBuff(fabinhoru))
+            {
                 int count = Util.GetItemCountForTeam(TeamIndex.Player, Index.itemIndex, false);
+
                 args.armorAdd -= BaseArmorReduction.Value + (count * StackArmorReduction.Value);
+
             }
         }
 
@@ -227,11 +230,13 @@ localScale = new Vector3(1F, 1F, 1F)
                         DotController.InflictDot(victim, damageInfo.attacker, DotController.DotIndex.Bleed, 3f * damageInfo.procCoefficient, 1f);
                     }
                 }
-            }
 
-            DotController dControl = DotController.FindDotController(victim);
-            if (dControl && dControl.HasDotActive(DotController.DotIndex.Bleed)) {
-                onHitInfo.victimBody.AddTimedBuff(fabinhoru, 3);
+                DotController dControl = DotController.FindDotController(victim);
+                if (dControl && dControl.HasDotActive(DotController.DotIndex.Bleed) && itemCount > 0)
+                {
+                    onHitInfo.victimBody.AddTimedBuff(fabinhoru, 3);
+                }
+
             }
 
         }

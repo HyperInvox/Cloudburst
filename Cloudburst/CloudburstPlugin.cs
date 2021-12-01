@@ -262,8 +262,16 @@ namespace Cloudburst
                     }
 
                     if (materials[i].shader.name == "stubbed_Hopoo Games/Deferred/Standard Proxy" || materials[i].shader.name == "Hopoo Games/Deferred/Standard Proxy")
-                    {   
+                    {
                         materials[i].shader = Resources.Load<Shader>("shaders/deferred/hgstandard");
+                    }
+                    if (materials[i].shader.name == "Hopoo Games/FX/Cloud Remap Proxy" || materials[i].shader.name == "stubbed_Hopoo Games/FX/Cloud Remap Proxy")
+                    {
+                        materials[i].shader = Resources.Load<Shader>("shaders/fx/hgcloudremap");
+                    }
+                    if (materials[i].shader.name == "stubbed_Hopoo Games/FX/Solid Parallax Proxy")
+                    {
+                        materials[i].shader = Resources.Load<Shader>("shaders/fx/hgsolidparallax");
                     }
                 }
 

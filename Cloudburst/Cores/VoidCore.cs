@@ -342,6 +342,8 @@ namespace Cloudburst.Cores
 
         private void CloudburstPlugin_start()
         {
+
+            LogCore.LogI(voidMat);
             skyLeap = EntityStates.BrotherMonster.HoldSkyLeap.duration;
         }
 
