@@ -19,7 +19,7 @@ namespace Cloudburst.Cores.Items.Green
 
         public override string ItemLangTokenName => "FABINDAGGER";
 
-        public override string ItemPickupDesc => "Striking bleeding enemies reduces their armor.";
+        public override string ItemPickupDesc => "Striking bleeding enemies reduces their armor. Also gain chance to bleed.";
 
         public override string ItemFullDescription => $"Striking enemies while they are bleeding <style=cIsDamage>reduces their armor by {BaseArmorReduction.Value} <style=cStack>(+{StackArmorReduction.Value} per stack)</style>. Also gain 5% chance to <style=cIsDamage>bleed</style> an enemy on hit   .";
 
@@ -193,8 +193,8 @@ localScale = new Vector3(1F, 1F, 1F)
             {
                 canStack = false,
                 isDebuff = true,
-                iconSprite = Resources.Load<Sprite>("Textures/BuffIcons/texBuffPulverizeIcon"),
-                buffColor = CloudUtils.HexToColor("#590005"),
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("RoR2BuffTemplateUpdateDark"),
+               // buffColor = CloudUtils.HexToColor("#590005"),
             }.BuildBuff();
         }
 
@@ -220,6 +220,7 @@ localScale = new Vector3(1F, 1F, 1F)
             if (onHitInfo.attackerInventory && onHitInfo.attackerBody)
             {
                 int itemCount = GetCount(onHitInfo.attackerBody);
+             
                 if (!damageInfo.procChainMask.HasProc(ProcType.BleedOnHit))
                 {
                     bool alreadyBleed = (damageInfo.damageType & DamageType.BleedOnHit) > DamageType.Generic;

@@ -371,6 +371,7 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
         private void RestlessRings_OnBuffChanged(object sender, int e)
         {
             currentRing = e;
+            
             switch (e)
             {
                 case 0:
@@ -418,14 +419,9 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
     public class RestlessRingsBehavior : CharacterBody.ItemBehavior
     { 
         private float timer = 0;
-        private Xoroshiro128Plus rng;
-        private EffectData effectData = new EffectData
-        {
-            //origin = body.transform.position,
-            rotation = Quaternion.identity,
-            scale = 20,
-        };
         private int oldCount;
+        private Xoroshiro128Plus rng;
+
 
         public event EventHandler<int> OnBuffChanged;
 
@@ -435,56 +431,31 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
             AddBuff(rng.RangeInt(1, 4));
         }
         void AddBuff(int count)
-        {
-            effectData.origin = body.transform.position;
-            switch (count)
+        {            
+            //the count is networked, as on all clients it SHOULD be the same
+            //only the buff spawning part should be on the host
+            //which means that the material switching should be networked
+            
+            if (NetworkServer.active)
             {
-                case 1:
-/*                    EffectManager.SpawnEffect(EffectCore.magicArmor, effectData, true);
-                    // Util.PlaySound("Play_item_use_gainArmor", base.gameObject);
-                    EffectManager.SpawnEffect(EffectCore.reallyCoolEffect, new EffectData()
-                    {
-                        origin = base.transform.position,
-                        scale = 10,
-                        rotation = Quaternion.identity,
-                    }, false);*/
-                    body.AddBuff(RestlessRings.instance.magicArmor);
-                    break;
-                case 2:
-                    //EffectManager.SpawnEffect(EffectCore.magicAttackSpeed, effectData, true);
-                    Util.PlaySound("Play_item_proc_crit_attack_speed1", base.gameObject);
-                    /*EffectManager.SpawnEffect(EffectCore.trulyCoolEffect, new EffectData()
-                    {
-                        origin = base.transform.position,
-                        scale = 10,
-                        rotation = Quaternion.identity,
-                    }, false);*/
-                    body.AddBuff(RestlessRings.instance.magicAttackSpeed);
-                    break;
-                case 3:
-                    /*  EffectManager.SpawnEffect(EffectCore.coolEffect, new EffectData()
-                      {
-                          origin = base.transform.position,
-                          scale = 10,
-                          rotation = Quaternion.identity,
-                      }, false);
-                    //  EffectManager.SpawnEffect(EffectCore.magicRegen, effectData, true);
-                     // EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/FruitHealEffect"), effectData, true);*/
-                    Util.PlaySound("char_healing_drone_heal_02", base.gameObject);
-                    body.AddBuff(RestlessRings.instance.magicRegen);
-                    break;
-                case 4:
-                    /*  EffectManager.SpawnEffect(EffectCore.coolEffect, new EffectData()
-                      {
-                          origin = base.transform.position,
-                          scale = 10,
-                          rotation = Quaternion.identity,
-                      }, false);
-                    //  EffectManager.SpawnEffect(EffectCore.magicRegen, effectData, true);
-                     // EffectManager.SpawnEffect(Resources.Load<GameObject>("prefabs/effects/FruitHealEffect"), effectData, true);*/
-                    Util.PlaySound("char_healing_drone_heal_02", base.gameObject);
-                    body.AddBuff(RestlessRings.instance.magicRegen);
-                    break;
+                switch (count)
+                {
+                    case 1:
+                        body.AddBuff(RestlessRings.instance.magicArmor);
+                        break;
+                    case 2:
+                        Util.PlaySound("Play_item_proc_crit_attack_speed1", base.gameObject);
+                        body.AddBuff(RestlessRings.instance.magicAttackSpeed);
+                        break;
+                    case 3:
+                        Util.PlaySound("char_healing_drone_heal_02", base.gameObject);
+                        body.AddBuff(RestlessRings.instance.magicRegen);
+                        break;
+                    case 4:
+                        Util.PlaySound("char_healing_drone_heal_02", base.gameObject);
+                        body.AddBuff(RestlessRings.instance.magicRegen);
+                        break;
+                }
             }
             OnBuffChanged?.Invoke(this, count);
         }
@@ -500,15 +471,13 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
                     CloudUtils.SafeRemoveBuff(RestlessRings.instance.magicRegen, body);
 
                     int count = rng.RangeInt(1, 4);
-                    LogCore.LogI("restless ring: " + count);
+                    //roll me a new number you Worthless Fucking Number Generator 128+
                     if (count == oldCount)
                     {
                         count = rng.RangeInt(1, 4);
                     }
                     oldCount = count;
                     AddBuff(count);
-                    //roll me a new number you Worthless Fucking Number Generator 128+
-                    /**/
                     timer = 0;
                 }
             }

@@ -273,6 +273,10 @@ namespace Cloudburst
                     {
                         materials[i].shader = Resources.Load<Shader>("shaders/fx/hgsolidparallax");
                     }
+                    if (materials[i].shader.name == "stubbed_Hopoo Games/Environment/Distant Water Proxy")
+                    {
+                        materials[i].shader = Resources.Load<Shader>("shaders/environment/hgdistantwater");
+                    }
                 }
 
                 SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;

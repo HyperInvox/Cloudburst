@@ -397,14 +397,6 @@ namespace Cloudburst.Cores
                 }
 
 
-                if (self && self.HasBuff(japesCloak)) {
-                    var buffCount = self.GetBuffCount(japesCloak);
-                    for (int i = 0; i < buffCount; i++)
-                    {
-                        self.armor = armor + 5;
-                        self.regen = regen + 0.1f;
-                    }
-                }
                 if (self && self.HasBuff(antiGrav) || self.HasBuff(wyattSuspension)) 
                 {
                     if (self.characterMotor)

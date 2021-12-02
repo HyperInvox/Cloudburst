@@ -39,7 +39,6 @@ namespace Cloudburst.Cores
 
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
             On.EntityStates.NewtMonster.KickFromShop.OnExit += KickFromShop_OnExit;
-            On.RoR2.BazaarController.CommentOnAnnoy += BazaarController_CommentOnAnnoy;
         }
         private void KickFromShop_OnExit(On.EntityStates.NewtMonster.KickFromShop.orig_OnExit orig, EntityStates.NewtMonster.KickFromShop self)
         {
@@ -53,28 +52,26 @@ namespace Cloudburst.Cores
             });
         }
 
-        private void BazaarController_CommentOnAnnoy(On.RoR2.BazaarController.orig_CommentOnAnnoy orig, BazaarController self)
-        {
-            if (Util.CheckRoll(5, 0f, null))
-            {
-                Chat.SendBroadcastChat(new Chat.NpcChatMessage
-                {
-                    baseToken = "NEWT_ANNOY_" + UnityEngine.Random.Range(0, list.Count),
-                    formatStringToken = "NEWT_DIALOGUE_FORMAT",
-                    sender = self.gameObject,
-                    sound = self.gameObject.GetComponent<SfxLocator>().barkSound
-                });
-            }
-        }
-
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
             if (self && damageInfo != null)
             {
+                //LogCore.LogI("1");
                 var go = self.gameObject;
                 if (go && go.name == "ShopkeeperBody(Clone)")
                 {
-                    BazaarController.instance.CommentOnAnnoy();
+                //    LogCore.LogI("2");
+                    if (Util.CheckRoll(5, 0f, null))
+                    {
+                //        LogCore.LogI("3");
+                        Chat.SendBroadcastChat(new Chat.NpcChatMessage
+                        {
+                            baseToken = "NEWT_ANNOY_" + UnityEngine.Random.Range(0, list.Count),
+                            formatStringToken = "NEWT_DIALOGUE_FORMAT",
+                            sender = self.gameObject,
+                            sound = self.gameObject.GetComponent<SfxLocator>().barkSound
+                        });
+                    }
                 }
             }
             orig(self, damageInfo);

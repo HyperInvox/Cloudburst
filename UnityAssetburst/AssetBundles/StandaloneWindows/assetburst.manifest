@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 488567026
+CRC: 2866720837
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 3f18ffb7508d7b45906d52aceffb57e7
+    Hash: b88ad7e838e7adc4783ce321d1492188
   TypeTreeHash:
     serializedVersion: 2
     Hash: 52c08dd4fa11e750ac9a991feac4dbb3
@@ -232,6 +232,7 @@ Assets:
 - Assets/Cloudburst/Items/FabinhoruDagger/New/horudagger_Normal.png
 - Assets/Cloudburst/Survivors/Wyatt/TheSurvivor/animS/Armature_CameraAction.anim
 - Assets/Cloudburst/Enemies/FatWisp/GluttedWisp.fbx
+- Assets/Cloudburst/StageVariants/texGooWaterfallFoam.png
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_M.mat
 - Assets/Cloudburst/Shaders/shaders/deferred/hgwavycloth.shader
 - Assets/Cloudburst/Items/StubbedShaders/stubbed_tmp_sdf.shader
@@ -379,6 +380,7 @@ Assets:
 - Assets/Cloudburst/753network/Crystallize/Materials/Ramp Pink.mat
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_M1Swing01.anim
 - Assets/Cloudburst/Items/Harvester/Materials/GLASSInfusionGlass.mat
+- Assets/Cloudburst/BuffIcons/RoR2BuffTemplateUpdateDark.png
 - Assets/Cloudburst/Items/MechanicalTrinket/Materials/Icon.mat
 - Assets/Cloudburst/Survivors/Wyatt/animation/wyattRIGGED_RIGSmear.blend
 - Assets/Cloudburst/Effects/MAIDCleanEffect.prefab
@@ -479,6 +481,7 @@ Assets:
 - Assets/Cloudburst/Items/FabinhoruDagger/Materials/Cloaking_r.mat
 - Assets/Cloudburst/Items/Dummies/ModelBase.prefab
 - Assets/Cloudburst/Items/FabinhoruDagger/New/matDagger 1.mat
+- Assets/Cloudburst/StageVariants/matGenericGoolake.mat
 - Assets/Cloudburst/Effects/UniversalIncison.prefab
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorRunRight.anim
 - Assets/Cloudburst/Survivors/Wyatt/old/mdlHANDWinch (1).fbx
@@ -572,6 +575,7 @@ Assets:
 - Assets/Cloudburst/Items/Lemdog/Materials/LemDog_Tex.mat
 - Assets/Cloudburst/Shaders/source/keycard.fbx
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_M2_Idle.anim
+- Assets/Cloudburst/StageVariants/texCloudOrganicNormal.png
 - Assets/Cloudburst/Effects/Bases/Dust 1.prefab
 - Assets/Cloudburst/Survivors/Bombardier/icon.png
 - Assets/Cloudburst/Survivors/ExampleSurvivor/Animations/ExampleSurvivorSprint.anim

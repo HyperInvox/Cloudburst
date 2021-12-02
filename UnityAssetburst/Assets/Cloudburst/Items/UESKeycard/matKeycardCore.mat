@@ -55,7 +55,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
-    - _Parallax: 2.8
+    - _Parallax: 34.15
     - _RampInfo: 0
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0

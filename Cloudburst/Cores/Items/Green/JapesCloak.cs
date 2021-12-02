@@ -45,6 +45,8 @@ Addendum: WHO. IN GOD ABOVE’S HOLY NAME. TOOK. MY. CIGARETTES??”""";
 
         public override ItemTier Tier => ItemTier.Tier2;
 
+        public BuffDef japesCloak;
+
         public override string ItemModelPath => "Assets/Cloudburst/Items/Cloak/IMDLCloak.prefab";
 
         public override string ItemIconPath => "Assets/Cloudburst/Items/Cloak/JapeIcon.png";
@@ -59,11 +61,33 @@ Addendum: WHO. IN GOD ABOVE’S HOLY NAME. TOOK. MY. CIGARETTES??”""";
         protected override void Initialization()
         {
 
+            this.japesCloak = new BuffBuilder()
+            {
+                canStack = true,
+                isDebuff = false,
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("JapesCloakBuff"),
+                buffColor = new Color(1f, 0.7882353f, 0.05490196f)
+            }.BuildBuff();
+
         }
 
         public override void Hooks()
         {
+            RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
             On.RoR2.GenericPickupController.GrantItem += GrantItem;
+        }
+
+        private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+
+            if (sender && sender.HasBuff(japesCloak))
+            {
+                var buffCount = sender.GetBuffCount(japesCloak);
+
+                args.armorAdd += (5 * buffCount);
+                args.baseRegenAdd += (0.1f * buffCount);
+
+            }
         }
 
         public void GrantItem(On.RoR2.GenericPickupController.orig_GrantItem orig, GenericPickupController self, CharacterBody body, Inventory inventory)

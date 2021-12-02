@@ -9,6 +9,7 @@ using System.Reflection;
 using ThreeEyedGames;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.Rendering.PostProcessing;
 using static Cloudburst.Cores.EventsCore.TarRiver;
 
 namespace Cloudburst.Cores
@@ -97,6 +98,17 @@ namespace Cloudburst.Cores
             //obj.transform.Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material = particles.transform.Find("Terrain").Find("mdlGlDam").Find("mdlGlAqueductPartial").Find("GooWaterfall").Find("Single Floating Particle").GetComponent<ParticleSystemRenderer>().material;
 
             //ogCore.LogI("hi3");
+
+            obj.transform.Find("PPV").gameObject.layer = LayerIndex.postProcess.intVal;
+            var ppv = obj.transform.Find("PPV").AddComponent<PostProcessVolume>();
+
+
+            ppv.isGlobal = false;
+            ppv.blendDistance = 1.94f;
+            ppv.weight = 1;
+            ppv.priority = 5;
+            
+            
             obj.AddComponent<TarRiverSlow>();
             obj.layer = LayerIndex.world.intVal;
             obj.transform.position = new Vector3(201f, -134.1f, 143f);

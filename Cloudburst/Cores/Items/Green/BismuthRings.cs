@@ -15,7 +15,7 @@ namespace Cloudburst.Cores.Items.Green
             ItemTag.Healing,
         };
 
-        public override string ItemName => "Bismuth Rings";
+        public override string ItemName => "Bismuth Earrings";
 
         public override string ItemLangTokenName => "BARRIERONCRIT";
 
