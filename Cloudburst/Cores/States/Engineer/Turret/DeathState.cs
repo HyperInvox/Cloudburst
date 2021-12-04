@@ -38,7 +38,7 @@ namespace Cloudburst.Cores.Engineer.ETStates {
             base.FixedUpdate();
             if (base.fixedAge > this.deathDuration && NetworkServer.active && this.deathExplosion)
             {
-                float radius = characterBody.maxHealth * 0.2f;
+                float radius = healthComponent.fullCombinedHealth * 0.2f;
                 EffectManager.SpawnEffect(this.deathExplosion, new EffectData
                 {
                     origin = base.transform.position,
@@ -48,7 +48,7 @@ namespace Cloudburst.Cores.Engineer.ETStates {
                 {
                     attacker = gameObject,
                     attackerFiltering = AttackerFiltering.Default,
-                    baseDamage = characterBody.maxHealth * 3,
+                    baseDamage = healthComponent.fullCombinedHealth * 3,
                     baseForce = 0,
                     crit = RollCrit(),
                     damageColorIndex = DamageColorIndex.WeakPoint,

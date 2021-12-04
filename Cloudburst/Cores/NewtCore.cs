@@ -23,7 +23,7 @@ namespace Cloudburst.Cores
             R2API.LanguageAPI.Add("NEWT_ANNOY_4", "Cease. Do not bother");
             R2API.LanguageAPI.Add("NEWT_ANNOY_5", "Reshape. Out of forever.");
             R2API.LanguageAPI.Add("NEWT_ANNOY_6", "Again again. Everytime.");
-            R2API.LanguageAPI.Add("NEWT_KICK", "  Come. When reshape.");
+            R2API.LanguageAPI.Add("NEWT_KICK", "Come. When reshape.");
 
             //    R2API.LanguageAPI.Add("NEWT_KICK", "<color=#ff6961>[NEWT] Come. When reshape.</style>");
             R2API.LanguageAPI.Add("NEWT_DIALOGUE_FORMAT", "<color=#50b8e7><size=120%>Newt: {0}</color></size>");

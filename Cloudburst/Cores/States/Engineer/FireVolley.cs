@@ -8,9 +8,7 @@ namespace Cloudburst.Cores.Engineer
 {
     public class FireVolley : BaseSkillState
     {
-        public static GameObject effectPrefab = FireGrenades.effectPrefab;
-        public static GameObject projectilePrefab = FireGrenades.projectilePrefab;
-        public int grenadeCountMax = 3;
+        public int grenadeCountMax = 1;
         public static float damageCoefficient = 1;
         public static float fireDuration = 2f;
         public static float arcAngle = 5f;
@@ -56,11 +54,9 @@ namespace Cloudburst.Cores.Engineer
                 float angle = Mathf.Atan2(vector.z, vector.x) * 57.29578f - 90f;
                 float angle2 = Mathf.Atan2(y, vector.magnitude) * 57.29578f + FireGrenades.arcAngle;
                 Vector3 forward = Quaternion.AngleAxis(angle, up) * (Quaternion.AngleAxis(angle2, axis) * this.projectileRay.direction);
+                forward *= 2;
+                ProjectileManager.instance.FireProjectile(EngineerCore.projectileGameObject, this.projectileRay.origin, Util.QuaternionSafeLookRotation(forward), base.gameObject, this.damageStat * FireGrenades.damageCoefficient, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
 
-                for (int i = 0; i < 2; i++) {
-                    forward *= 2;
-                    ProjectileManager.instance.FireProjectile(EngineerCore.projectileGameObject, this.projectileRay.origin, Util.QuaternionSafeLookRotation(forward), base.gameObject, this.damageStat * FireGrenades.damageCoefficient, 0f, Util.CheckRoll(this.critStat, base.characterBody.master), DamageColorIndex.Default, null, -1f);
-                }
             }
             base.characterBody.AddSpreadBloom(FireGrenades.spreadBloomValue);
         }
@@ -80,15 +76,12 @@ namespace Cloudburst.Cores.Engineer
             if (this.fireTimer <= 0f && this.grenadeCount < grenadeCountMax)
             {
                 fireTimer += num;
-                if (grenadeCount % 2 == 0) {
-                    FireGrenade("MuzzleLeft");
-                    PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
-                }
-                else
-                {
-                    FireGrenade("MuzzleRight");
-                    PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
-                }
+
+                FireGrenade("MuzzleLeft");
+                PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
+                FireGrenade("MuzzleRight");
+                PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
+
                 grenadeCount++;
             }
             if (isAuthority && fixedAge >= duration)

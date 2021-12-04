@@ -12,7 +12,7 @@ namespace Cloudburst.Cores.Items.Red
         public List<BuffDef> lemdogList;
         public override string ItemName => "Lemdog";
 
-        public override string ItemLangTokenName => "LEMMYDOGS";
+        public override string ItemLangTokenName => "LEMDOG";
 
         public override string ItemPickupDesc => "Chance for debuffs to become buffs when applied. Also extend the duration of buffs.";
         //

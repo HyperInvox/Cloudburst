@@ -178,7 +178,20 @@ namespace Cloudburst.Cores
             ProjectileImpactExplosion impact = projectileGameObject.GetComponent<ProjectileImpactExplosion>();
             impact.destroyOnWorld = true;
             UnityEngine.Object.Destroy(projectileGameObject.GetComponent<ProjectileStickOnImpact>());
-            
+
+            var mdlSkinController = engineerObject.GetComponentInChildren<ModelSkinController>();
+            var skins = mdlSkinController.skins[1];
+
+            SkinDef.ProjectileGhostReplacement replace = new SkinDef.ProjectileGhostReplacement()
+            {
+                projectilePrefab = projectileGameObject,
+                projectileGhostReplacementPrefab = skins.projectileGhostReplacements[0].projectileGhostReplacementPrefab
+            };
+
+            int old = skins.projectileGhostReplacements.Length;
+            Array.Resize<SkinDef.ProjectileGhostReplacement>(ref skins.projectileGhostReplacements, old + 1);
+            skins.projectileGhostReplacements[old] = replace;
+
         }
         private int CharacterMaster_GetDeployableSameSlotLimit(On.RoR2.CharacterMaster.orig_GetDeployableSameSlotLimit orig, CharacterMaster self, DeployableSlot slot)
         {
@@ -197,68 +210,6 @@ namespace Cloudburst.Cores
             }
         }
 
-        private void ILCharacterMaster_GetDeployableSameSlotLimit(ILContext il)
-        {
-            //FUCK THIS I'M GOING THE DESTRUCTIVE ROUTE
-            ILCursor c = new ILCursor(il);
-            int AAAA = 2;
-            int otherAA = 0;
-            c.GotoNext(
-                //IL_0067: ldc.i4.2
-                x => x.MatchLdcI4(0),
-                //IL_0068: stloc.0   
-                x => x.MatchStloc(out otherAA)
-                );
-            c.Index += 0;
-
-
-            c.GotoNext(
-                //IL_0067: ldc.i4.2
-                x => x.MatchLdcI4(2),
-                //IL_0068: stloc.0   
-                x => x.MatchStloc(out AAAA)
-                //x => x.MatchBrtrue(out ILLabel a)
-                //x => x.MatchStloc(0)
-                //we don't talk about this one
-                //x => x.Next.Operand = (object)4,
-                );
-            c.Index += 16;
-            
-            c.Emit(OpCodes.Ldarg_0);
-            c.Emit(OpCodes.Ldloc, AAAA);
-            c.Emit(OpCodes.Ldloc, otherAA);
-
-
-
-            c.EmitDelegate<Func<CharacterMaster, int>>((cm) =>
-            {
-                return 2;
-            });
-
-            /*c.Remove();
-            c.Emit(OpCodes.Ldarg_0);
-            c.EmitDelegate<Func<CharacterMaster, int>>((cm) =>
-            {
-                return 2;
-            });*/
-
-            //LogCore.LogI(c);
-            //c.Emit(OpCodes.Stloc_0);
-
-            //c.Next.Operand = 100;
-            /*c.GotoNext(
-                //BEFORE CALLVIRT
-                x => x.MatchLdarg(0),
-                x => x.MatchCall<CharacterMaster>("get_bodyInstanceObject"),
-                //do later - done at 10:44am 
-               x => x.MatchCallvirt<GameObject>("GetComponent"),
-                x => x.MatchLdfld<GenericSkill>("secondary"),
-                //another callvirt. boy oh boy.
-                x => x.MatchCallvirt<GenericSkill>("get_maxStock"),
-                x => x.MatchStloc(4)
-                );
-            c.Index += 4;*/
-        }
 
         protected void RegisterNewTurret() {
             turrets = new FlameTurrets();
@@ -270,6 +221,22 @@ namespace Cloudburst.Cores
         }
         protected void AddNewSpecial()
         {
+            var mdlSkinController = engineerObject.GetComponentInChildren<ModelSkinController>();
+            var skins = mdlSkinController.skins;
+
+            SkinDef.MinionSkinReplacement replace = new SkinDef.MinionSkinReplacement()
+            {
+                minionBodyPrefab = flameTurret,
+                minionSkin = skins[1].minionSkinReplacements[1].minionSkin,
+
+            };
+
+            int old = mdlSkinController.skins[1].minionSkinReplacements.Length;
+            Array.Resize<SkinDef.MinionSkinReplacement>(ref mdlSkinController.skins[1].minionSkinReplacements, old + 1);
+            mdlSkinController.skins[1].minionSkinReplacements[old] = replace;
+
+            //skins[1].minionSkinReplacements;
+
             SkillDef origDef = Resources.Load<SkillDef>("skilldefs/engibody/EngiBodyPlaceWalkerTurret");
             var newDef = ScriptableObject.CreateInstance<SkillDef>();
 

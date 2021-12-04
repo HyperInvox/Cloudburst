@@ -166,7 +166,7 @@
     <Compile Include="Cores\Components\EmitVoidBrother.cs" />
     <Compile Include="Cores\Components\InfestationTrigger.cs" />
     <Compile Include="Cores\Components\EmitVoid.cs" />
-    <Compile Include="Cores\Items\Green\BlastBoots.cs" />
+    <Compile Include="Cores\Items\White\BlastBoots.cs" />
     <Compile Include="Cores\Items\Green\FabinhorusDagger.cs" />
     <Compile Include="Cores\Items\Green\EnigmaticKeycard.cs" />
     <Compile Include="Cores\Items\Green\JapesCloak.cs" />

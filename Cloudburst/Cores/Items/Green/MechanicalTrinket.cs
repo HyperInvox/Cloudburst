@@ -9,6 +9,7 @@ namespace Cloudburst.Cores.Items
 {
     public class MechanicalTrinket : ItemBuilder
     {
+        public static MechanicalTrinket instance;
         public override string ItemName =>
             "Mechanical Trinket";
 
@@ -16,12 +17,18 @@ namespace Cloudburst.Cores.Items
             "MECHANICALTRINKET_ITEM";
 
         public override string ItemPickupDesc =>
-            "Increase teleporter radius and summon drones when the teleporter is activated. ";
+            "Increase the radius of any holdout zones and summon drones when the teleporter is activated.";
 
         public override string ItemFullDescription =>
             "Summon 1 <style=cStack>(+1 per stack, up to 4) drone that has <style=cIsDamage>100% <style=cStack>(+50% per stack)</style> damage</style> and <style=cIsHealing>100% <style=cStack>(+100% per stack)</style> health</style>. Also <style=cIsUtility>increase teleporter radius by 5m</style> <style=cStack>(+5m per stack)</style>. ";
 
         public override string ItemLore => "";
+
+        public override ItemTag[] ItemTags => new ItemTag[3] {
+            ItemTag.AIBlacklist,
+            ItemTag.Utility,
+            ItemTag.Damage
+        };
 
         public override ItemTier Tier => ItemTier.Tier2;
 
@@ -33,7 +40,8 @@ namespace Cloudburst.Cores.Items
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var mdl = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
-            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict();
+            rules.Add("mdlCommandoDualies", new ItemDisplayRule[]
             {
     new ItemDisplayRule
     {
@@ -44,8 +52,7 @@ localPos = new Vector3(0.1122F, 0.3168F, 0.212F),
 localAngles = new Vector3(350.1537F, 0.0057F, 359.9348F),
 localScale = new Vector3(4F, 4F, 4F)
 
-}
-            });
+    } });
             rules.Add("mdlHuntress", new ItemDisplayRule[]
             {
     new ItemDisplayRule
@@ -159,21 +166,29 @@ localScale = new Vector3(4F, 4F, 4F)
 
         protected override void Initialization()
         {
-
+            instance = this;
         }
 
 
 
         public override void Hooks()
         {
+            On.RoR2.HoldoutZoneController.Start += HoldoutZoneController_Start;
             TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteractionOnTeleporterBeginChargingGlobal;
         }
+
+        private void HoldoutZoneController_Start(On.RoR2.HoldoutZoneController.orig_Start orig, HoldoutZoneController self)
+        {
+            self.gameObject.AddComponent<MechanicalTrinketController>();
+            orig(self);
+        }
+
         public void TeleporterInteractionOnTeleporterBeginChargingGlobal(TeleporterInteraction obj)
         {
             int count = Util.GetItemCountForTeam(TeamIndex.Player, Index.itemIndex, false, true);
             if (count > 0)
             {
-                obj.holdoutZoneController.baseRadius +=(count * 5);
+                //obj.holdoutZoneController.baseRadius +=(count * 5);
                 if (NetworkServer.active)
                 {
                     for (int i = 0; i < count; i++) {
@@ -212,5 +227,46 @@ localScale = new Vector3(4F, 4F, 4F)
                     
             }
         }
+        private class MechanicalTrinketController : MonoBehaviour
+        {
+            private HoldoutZoneController holdoutZoneController;
+            private int stackCount;
+            private Run.FixedTimeStamp enabledTime;
+        
+            private void Awake()
+            {
+                this.holdoutZoneController = base.GetComponent<HoldoutZoneController>();
+            }
+
+            private void OnEnable()
+            {
+                this.enabledTime = Run.FixedTimeStamp.now;
+                this.holdoutZoneController.calcRadius += this.ApplyRadius;
+            }
+
+            private void OnDisable()
+            {
+                this.holdoutZoneController.calcRadius -= this.ApplyRadius;
+            }
+
+            private void ApplyRadius(ref float radius)
+            {
+                if (this.stackCount > 0)
+                {
+                    // this line of code sucks -- LogCore.LogI("Applied Radius!");
+                    radius += (stackCount * 5);
+                }
+            }
+
+            private void FixedUpdate()
+            {
+                this.stackCount = Util.GetItemCountForTeam(this.holdoutZoneController.chargingTeam, MechanicalTrinket.instance.Index.itemIndex, true, false);
+                /*if (this.enabledTime.timeSince < HoldoutZoneController.FocusConvergenceController.startupDelay)
+                {
+                    this.stackCount = 0;
+                }*/
+            }
+        }
     }
 }
+

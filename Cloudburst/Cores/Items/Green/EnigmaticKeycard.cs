@@ -18,7 +18,7 @@ namespace Cloudburst.Cores.Items
         public override string ItemPickupDesc =>
             "Chance to spawn an orb on hit that follows and shocks enemies.";
 
-        public override string ItemFullDescription => Chance.Value + "% chance on hit to spawn a seeking <style=cIsDamage>orb</style> that does shocks nearby enemies for <style=cIsDamage>" + (BaseDamage.Value * 100) + "% base damage <style=cStack>(+"+ (StackingDamage.Value * 100)+ "% per stack)</style></style> on impact.";
+        public override string ItemFullDescription => Chance.Value + "% chance on hit to spawn a <style=cIsDamage>seeking orb</style> that does shocks nearby enemies for <style=cIsDamage>" + (BaseDamage.Value * 100) + "% base damage <style=cStack>(+" + (StackingDamage.Value * 100)+ "% per stack)</style></style> on impact.";
 
         public override string ItemLore => "";
 

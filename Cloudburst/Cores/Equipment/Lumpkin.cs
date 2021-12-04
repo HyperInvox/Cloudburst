@@ -38,7 +38,9 @@ namespace Cloudburst.Cores.Equipment
         public override ItemDisplayRuleDict CreateItemDisplayRules()
         {
             var mdl = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(EquipmentModelPath);
-            ItemDisplayRuleDict rules = new ItemDisplayRuleDict(new ItemDisplayRule[]
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict();
+
+            rules.Add("mdlCommandoDualies", new ItemDisplayRule[]
             {
     new ItemDisplayRule
     {
@@ -48,7 +50,6 @@ childName = "Chest",
 localPos = new Vector3(-0.1546F, 0.2269F, 0.3945F),
 localAngles = new Vector3(2.1125F, 264.9913F, 92.1811F),
 localScale = new Vector3(1F, 1F, 1F)
-
 }
             });
             rules.Add("mdlHuntress", new ItemDisplayRule[]

@@ -35,7 +35,8 @@ namespace Cloudburst.Cores.Items.Green
 A celestial mystery. 
 A throne awaiting a heir. 
 
-The one with the most brilliant mind among them had found the thread that connects them. Born of grand divinity and the arcane, it was of his nature to peel back the skin of existence and seek the shimmering, guiding light underneath. 
+The one with the most brilliant mind among them had found the thread that connects them. Born of grand divinity and the arcane, it was of his nature to peel back the 
+of existence and seek the shimmering, guiding light underneath. 
 So close he came to touching the source of said light, but in his hubris he had wronged so many. The scythe of death had fell upon him before, and had condemned him until the earth had revolved about the sun one hundred times. In his freedom, derrangement and fervor proliferated within him, and soon enough he would make a fatal mistake. 
 He had tried to sacrifice the blood of his nemesis' next of kin. With this folly, he would die thrice more. Each at the hand of malice itself.
 
@@ -115,24 +116,24 @@ Far did he fall.
             {
                 canStack = false,
                 isDebuff = false,
-                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("BaseMagicIcon"),
-                buffColor = CloudUtils.HexToColor("#3CB043"),
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("RestlessCircle"),
+               // buffColor = CloudUtils.HexToColor("#3CB043"),
             }.BuildBuff();
 
             this.magicAttackSpeed = new BuffBuilder()
             {
                 canStack = false,
                 isDebuff = false,
-                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("BaseMagicIcon"),
-                buffColor = CloudUtils.HexToColor("#FFA500"),
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("RestlessTriangle"),
+               // buffColor = CloudUtils.HexToColor("#FFA500"),
             }.BuildBuff();
 
             this.magicArmor = new BuffBuilder()
             {
                 canStack = false,
                 isDebuff = false,
-                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("BaseMagicIcon"),
-                buffColor = CloudUtils.HexToColor("#4D516D"),
+                iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("RestlessSquare"),
+              //  buffColor = CloudUtils.HexToColor("#4D516D"),
             }.BuildBuff();
         }
         public override void Hooks()
@@ -332,12 +333,17 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
 
         private Renderer renderer;
 
+        private ParticleSystem sys;
+        private ItemDisplay display;
+
+
         public void Start() {
             SetFields();
         }
         void SetFields()
         {
-            var display = GetComponentInParent<ItemDisplay>();
+
+            display = GetComponentInParent<ItemDisplay>();
             var follower = GetComponentInParent<ItemFollowerSmooth>();
             if (display)
             {
@@ -356,13 +362,20 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
                 if (instance)
                 {
                     renderer = instance.transform.Find("RINGSNEW/Cube").GetComponent<Renderer>();
+                    sys = instance.transform.Find("RINGSNEW/Cube/HealthEmitter").GetComponent<ParticleSystem>();
                 }
             }
             else { Destroy(this); }
+
+            if (!body.healthComponent.alive)
+            {
+                Destroy(this);
+            }
+
         }
 
         public void FixedUpdate() {
-            if (!body || !renderer || !restlessRings)
+            if (!body || !renderer || !restlessRings || !sys)
             {
                 SetFields();
             }
@@ -371,40 +384,46 @@ localScale = new Vector3(0.1F, 0.1F, 0.1F)
         private void RestlessRings_OnBuffChanged(object sender, int e)
         {
             currentRing = e;
-            
-            switch (e)
+
+            if (!(display.visibilityLevel == VisibilityLevel.Invisible))
             {
-                case 0:
-                    if (renderer)
-                    {
-                        renderer.materials = new Material[2] { RestlessRings.armor, RestlessRings.basic };
-                    }
-                    break;
-                case 1:
-                    if (renderer)
-                    {
-                        renderer.materials = new Material[2] { RestlessRings.armor, RestlessRings.basic };
-                    }  break;
-                case 2:
-                    if (renderer)
-                    {
-                        renderer.materials = new Material[2] { RestlessRings.attack, RestlessRings.basic };
-                    }
-                    break;
-                case 3:
-                    if (renderer)
-                    {
-                        renderer.materials = new Material[2] { RestlessRings.heal, RestlessRings.basic };
-                    }
-                    break;
-                case 4:
-                    if (renderer)
-                    {
-                        renderer.materials = new Material[2] { RestlessRings.heal, RestlessRings.basic };
-                    }
-                    break;
-                default:
-                    throw new NullReferenceException("THIS CAN'T FUCKING HAPPEN");
+                switch (e)
+                {
+                    case 0:
+                        if (renderer)
+                        {
+                            renderer.materials = new Material[2] { RestlessRings.armor, RestlessRings.basic };
+                        }
+                        break;
+                    case 1:
+                        if (renderer)
+                        {
+                            renderer.materials = new Material[2] { RestlessRings.armor, RestlessRings.basic };
+                        }
+                        break;
+                    case 2:
+                        if (renderer)
+                        {
+                            renderer.materials = new Material[2] { RestlessRings.attack, RestlessRings.basic };
+                        }
+                        break;
+                    case 3:
+                        if (renderer)
+                        {
+                            renderer.materials = new Material[2] { RestlessRings.heal, RestlessRings.basic };
+                            sys.Emit(5);
+                        }
+                        break;
+                    case 4:
+                        if (renderer)
+                        {
+                            sys.Emit(5);
+                            renderer.materials = new Material[2] { RestlessRings.heal, RestlessRings.basic };
+                        }
+                        break;
+                    default:
+                        throw new NullReferenceException("THIS CAN'T FUCKING HAPPEN");
+                }
             }
             //mat.Add(RestlessRings.basic);
             //LogCore.LogI("hi");

@@ -88,6 +88,19 @@ public static class CloudUtils
     #region R2API Expanded
     #endregion
     #region Projectiles
+
+    public static T CopyComponent<T>(T original, GameObject destination) where T : Component
+    {
+        System.Type type = original.GetType();
+        Component copy = destination.AddComponent(type);
+        System.Reflection.FieldInfo[] fields = type.GetFields();
+        foreach (System.Reflection.FieldInfo field in fields)
+        {
+            field.SetValue(copy, field.GetValue(original));
+        }
+        return copy as T;
+    }
+
     public static GameObject CreateMAIDProjectile(GameObject projectile)
     {
         GameObject prefab = Resources.Load<GameObject>("prefabs/projectiles/Sawmerang").InstantiateClone("MAIDProjectile");
