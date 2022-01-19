@@ -81,7 +81,7 @@ namespace Cloudburst.Cores.Items.White
                 int count = GetCount(victimBody);
                 if (count > 0)
                 {
-                    victimBody.AddTimedBuff(BuffCore.instance.skin, 5);
+                    victimBody.AddTimedBuff(BuffCore.instance.skinb, 5);
                 }
             }
 
