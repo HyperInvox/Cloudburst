@@ -72,7 +72,6 @@ namespace Cloudburst.Cores.States.Wyatt
                 pushAwayForce = forceMagnitude,
                 teamIndex = base.characterBody.teamComponent.teamIndex
             };
-            R2API.DamageAPI.AddModdedDamageType(attack, DamageTypeCore.antiGrav);
 
             if (base.GetModelTransform())
             {
@@ -80,12 +79,12 @@ namespace Cloudburst.Cores.States.Wyatt
                 this.attack.hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Hammer");
                 if (modelTransform.HasComponent<ChildLocator>())
                 {
-                    // this.hammerChildTransform = modelTransform.GetComponent<ChildLocator>().FindChild("SwingCenter");
+                    this.hammerChildTransform = modelTransform.GetComponent<ChildLocator>().FindChild("SwingCenter");
                 }
             }
             if (this.modelAnimator)
             {
-                /*int layerIndex = this.modelAnimator.GetLayerIndex("Gesture");
+                int layerIndex = this.modelAnimator.GetLayerIndex("Gesture");
                 var animatorStateInfo = this.modelAnimator.GetCurrentAnimatorStateInfo(layerIndex);
 
                 if (this.modelAnimator.GetCurrentAnimatorStateInfo(layerIndex).IsName("FullSwing3") || this.modelAnimator.GetCurrentAnimatorStateInfo(layerIndex).IsName("FullSwing1"))
@@ -99,7 +98,7 @@ namespace Cloudburst.Cores.States.Wyatt
                 else
                 {
                     base.PlayCrossfade("Gesture", "FullSwing1", "FullSwing.playbackRate", this.duration / (1f - returnToIdlePercentage), 0.2f);
-                }*/
+                }
             }
             if (base.characterBody)
             {
@@ -117,7 +116,6 @@ namespace Cloudburst.Cores.States.Wyatt
                     //EffectManager.SimpleMuzzleFlash(swingEffectPrefab, base.gameObject, "SwingCenter", true);
                     Util.PlaySound("Play_MULT_shift_hit", base.gameObject);
                     this.hasSwung = true;
-                    script.AddCombo(1);
                     //LogCore.LogD(script.count);
                     //EffectManager.SimpleMuzzleFlash(swingEffectPrefab, base.gameObject, "SwingCenter", true);
                     //if (droneComponent && characterBody.HasBuff(Main.overclock)) {

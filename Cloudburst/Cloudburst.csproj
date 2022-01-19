@@ -148,6 +148,7 @@
     <Compile Include="Achievements\Paradox.cs" />
     <Compile Include="ContentHandler\ContentHandler.cs" />
     <Compile Include="Cores\CaptainCore.cs" />
+    <Compile Include="Cores\Bruiser.cs" />
     <Compile Include="Cores\Components\Blink.cs" />
     <Compile Include="Cores\Components\BasedDepartment.cs" />
     <Compile Include="Cores\Components\Class1.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Cores\Components\MaterialControllerComponents.cs" />
     <Compile Include="Cores\Components\SquashedComponent.cs" />
     <Compile Include="Cores\Components\WyattMAIDSkillDef.cs" />
+    <Compile Include="Cores\Equipment\Steampunk.cs" />
     <Compile Include="Cores\Equipment\Lumpkin.cs" />
     <Compile Include="Cores\Events.cs" />
     <Compile Include="Cores\Components\WyattSoap.cs" />
@@ -166,6 +168,7 @@
     <Compile Include="Cores\Components\EmitVoidBrother.cs" />
     <Compile Include="Cores\Components\InfestationTrigger.cs" />
     <Compile Include="Cores\Components\EmitVoid.cs" />
+    <Compile Include="Cores\Items\White\RiftBubble.cs" />
     <Compile Include="Cores\Items\White\BlastBoots.cs" />
     <Compile Include="Cores\Items\Green\FabinhorusDagger.cs" />
     <Compile Include="Cores\Items\Green\EnigmaticKeycard.cs" />
@@ -180,6 +183,8 @@
     <Compile Include="Cores\Items\White\GlassHarvester.cs" />
     <Compile Include="Cores\Lui.cs" />
     <Compile Include="Cores\NewtCore.cs" />
+    <Compile Include="Cores\States\Brusier\Swing.cs" />
+    <Compile Include="Cores\States\Brusier\Stomp.cs" />
     <Compile Include="Cores\States\Captain\CallOrbitalLaser.cs" />
     <Compile Include="Cores\States\Emotes\Emotes.cs" />
     <Compile Include="Cores\States\VoidGolems\Shell.cs" />
@@ -195,11 +200,12 @@
     <Compile Include="Cores\States\Wyatt\WyattBaseMeleeAttack.cs" />
     <Compile Include="Cores\States\Wyatt\Cleanup.cs" />
     <Compile Include="Util\Builders\BuffBuilder.cs" />
+    <Compile Include="Util\Builders\EnemyCreator.cs" />
     <Compile Include="Util\Builders\EquipmentBuilder.cs" />
     <Compile Include="Util\Builders\FlierBuilder.cs" />
     <Compile Include="Util\Builders\SurvivorBuilder.cs" />
     <Compile Include="Util\Builders\ItemBuilder.cs" />
-    <Compile Include="Util\Builders\EnemyBuilder.cs" />
+    <Compile Include="Util\Builders\ModifiedEnemyBuilder.cs" />
     <Compile Include="Util\ItemFollowerSmooth.cs" />
     <Compile Include="Util\MaterialArraySwapper.cs" />
     <Compile Include="Util\EnigmaticList.cs" />

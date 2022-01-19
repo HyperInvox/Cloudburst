@@ -55,7 +55,7 @@ namespace Cloudburst.Cores
         /// <summary>
         /// https://cdn.discordapp.com/attachments/739717122229403740/804910319029321728/IMG_20210129_112137.jpg
         /// </summary>
-        internal class VoidGolems : EnemyBuilder {
+        internal class VoidGolems : ModifiedEnemyBuilder {
 
             protected override string resourceMasterPath => "prefabs/charactermasters/LunarGolemMaster";
 

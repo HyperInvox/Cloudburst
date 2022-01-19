@@ -1,4 +1,4 @@
-﻿/*using Cloudburst.Cores.HAND.Components;
+﻿using Cloudburst.Cores.HAND.Components;
 using EntityStates;
 using RoR2;
 using System;
@@ -20,9 +20,9 @@ namespace Cloudburst.Cores.States.HAND
         public static float forceMagnitude;
         #endregion
         #region BlastAttack floats
-        public static float blastDamageCoefficient;
-        public static float blastForce;
-        public static float blastRadius;
+        public static float blastDamageCoefficient = 6;
+        public static float blastForce = 400;
+        public static float blastRadius = 20;
         #endregion
         #region Effects
         public static GameObject swingEffectPrefab = Resources.Load<GameObject>("prefabs/effects/handslamtrail");
@@ -42,7 +42,6 @@ namespace Cloudburst.Cores.States.HAND
         private DroneComponent drone;
         //private OverclockComponent overclock;
         private Animator modelAnimator;
-        public float charge;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -94,26 +93,16 @@ namespace Cloudburst.Cores.States.HAND
             {
                 if (!hasSwung)
                 {
-                    float radius = characterBody.HasBuff(BuffCore.instance.overclockIndex) ? blastRadius : blastRadius * 2;
-                    float force = characterBody.HasBuff(BuffCore.instance.overclockIndex) ? blastForce : blastForce * 2;
-                    float dmg = blastDamageCoefficient + charge;
-                    bool fullyCharged = charge == 3;
                     hasSwung = true;
-                    /*if (drone && characterBody.HasBuff(BuffCore.instance.overclockIndex)) {
-                        drone.ConsumeDroneStackAuthority(2);
-                    }
 
-                    GameObject effect = fullyCharged ? overclockRumbleEffectPrefab : rumbleEffectPrefab;
                     BlastAttack attack = new BlastAttack()
                     {
                         attacker = base.gameObject,
                         attackerFiltering = AttackerFiltering.Default,
-                        baseDamage = dmg * base.damageStat,
-                        baseForce = force,
+                        baseDamage = blastDamageCoefficient * base.damageStat,
                         bonusForce = new Vector3(0, 0, 0),
                         crit = base.RollCrit(),
                         damageColorIndex = DamageColorIndex.Default,
-                        damageType = overclock.GetDamageType(),
                         falloffModel = BlastAttack.FalloffModel.None,
                         impactEffect = EffectIndex.Invalid,
                         inflictor = base.gameObject,
@@ -121,20 +110,17 @@ namespace Cloudburst.Cores.States.HAND
                         position = base.transform.position,
                         procChainMask = default,
                         procCoefficient = 0.5f,
-                        radius = radius,
+                        radius = blastRadius,
                         teamIndex = characterBody.teamComponent.teamIndex,
                     };
                     attack.Fire();
-                    EffectManager.SpawnEffect(effect, new EffectData
+                    EffectManager.SpawnEffect(rumbleEffectPrefab, new EffectData
                     {
                         origin = hammerChildTransform.position,
-                        scale = radius
+                        scale = blastRadius
                     }, true);
                     EffectManager.SimpleMuzzleFlash(swingEffectPrefab, base.gameObject, "SwingCenter", true);
-                    if (fullyCharged)
-                    {
-                        characterMotor.ApplyForce(new Vector3(characterMotor.moveDirection.x, characterMotor.mass * 35, characterMotor.moveDirection.z), true, false);
-                    }
+
                 }
                 attack.forceVector = hammerChildTransform.right;
                 bool hit = attack.Fire(null);
@@ -213,4 +199,3 @@ namespace Cloudburst.Cores.States.HAND
         }
     }
 }
-*/

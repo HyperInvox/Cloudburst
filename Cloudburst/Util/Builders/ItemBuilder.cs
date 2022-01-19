@@ -59,7 +59,8 @@ public abstract class ItemBuilder
         Hooks();
     }
 
-    public GameObject Load() {
+    public GameObject Load()
+    {
         return AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
     }
 
@@ -81,24 +82,24 @@ public abstract class ItemBuilder
             ItemTags = new List<ItemTag>(ItemTags) { ItemTag.AIBlacklist }.ToArray();
         }
         Index = ScriptableObject.CreateInstance<ItemDef>();
-       
-            Index.name = "ITEM_" + ItemLangTokenName;
-            Index.nameToken = "ITEM_" + ItemLangTokenName + "_NAME";
-            Index.pickupToken = "ITEM_" + ItemLangTokenName + "_PICKUP";
-            Index.descriptionToken = "ITEM_" + ItemLangTokenName + "_DESCRIPTION";
-            Index.loreToken = "ITEM_" + ItemLangTokenName + "_LORE";
-            Index.pickupModelPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
-            Index.pickupIconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>(ItemIconPath);
-            Index.hidden = false;
-            Index.canRemove = CanRemove;
-            Index.tier = Tier;
+
+        Index.name = "ITEM_" + ItemLangTokenName;
+        Index.nameToken = "ITEM_" + ItemLangTokenName + "_NAME";
+        Index.pickupToken = "ITEM_" + ItemLangTokenName + "_PICKUP";
+        Index.descriptionToken = "ITEM_" + ItemLangTokenName + "_DESCRIPTION";
+        Index.loreToken = "ITEM_" + ItemLangTokenName + "_LORE";
+        Index.pickupModelPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(ItemModelPath);
+        Index.pickupIconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>(ItemIconPath);
+        Index.hidden = false;
+        Index.canRemove = CanRemove;
+        Index.tier = Tier;
         if (ItemTags.Length > 0)
         {
             Index.tags = ItemTags;
         }
         if (UnlockDef != null)
         {
-            Index.unlockableDef= UnlockDef;
+            Index.unlockableDef = UnlockDef;
         }
         var itemDisplayRules = CreateItemDisplayRules();
         R2API.ItemAPI.Add(new CustomItem(Index, itemDisplayRules));

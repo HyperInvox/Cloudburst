@@ -4,7 +4,7 @@ using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 
-internal abstract class EnemyBuilder
+internal abstract class ModifiedEnemyBuilder
 {
     /// <summary>
     /// The body of the enemy

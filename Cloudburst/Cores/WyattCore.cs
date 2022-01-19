@@ -1,4 +1,4 @@
-﻿    /*using EntityStates;
+﻿using EntityStates;
 
 
 using RoR2;
@@ -17,6 +17,8 @@ using Cloudburst.Cores.Components;
 using System.Collections.Generic;
 using Cloudburst.Cores.Skills;
 using Cloudburst.Cores.States.Bombardier;
+using R2API;
+using R2API.Utils;
 
 namespace Cloudburst.Cores.HAND
 {
@@ -87,13 +89,11 @@ She'll love this, I know.
         private void CreateWYATT()
         {
             CreateTokens();
-            CreateWYATTPrefab();
+         //   CreateWYATTPrefab();
             CreateSunderPrefab();
             //CreateWinchPrefab();
             SetComponents();
             SetSkills();
-            CreateSurvivorDef();
-            Hook();
             CreateUmbra();
 
             On.RoR2.Projectile.SlowDownProjectiles.OnTriggerEnter += SlowDownProjectiles_OnTriggerEnter;
@@ -221,7 +221,7 @@ She'll love this, I know.
             projectileDamage.damageType = DamageType.BypassArmor | DamageType.Stun1s;
 
             CloudUtils.RegisterNewProjectile(winch);
-            /*ProjectileProximityBeamController beamController = winch.AddComponent<ProjectileProximityBeamController>();
+            ProjectileProximityBeamController beamController = winch.AddComponent<ProjectileProximityBeamController>();
 
             ProjectileDamage damage = winch.GetComponent<ProjectileDamage>();
 
@@ -248,61 +248,10 @@ She'll love this, I know.
             missile.giveupTimer = 4;
             missile.giveupTimer = 25;
 
-            API.RegisterNewProjectile(this.winch);
+         //   API.RegisterNewProjectile(this.winch);
             #region Old
             #endregion
         }
-        private void CreateWYATTPrefab()
-        {
-            if (!wyattBody)
-            {
-                PrefabBuilder builder = new PrefabBuilder();
-                builder.prefabName = "WyattBody";
-                builder.masteryAchievementUnlockable = AchievementCore.GetUnlockableString("WyattMastery");
-                builder.model = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyatt");
-                builder.defaultSkinIcon = Cloudburst.Content.ContentHandler.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
-                builder.masterySkinIcon = Cloudburst.Content.ContentHandler.Loadouts.CreateSkinIcon(CloudUtils.HexToColor("00A86B"), CloudUtils.HexToColor("E56717"), CloudUtils.HexToColor("D9DDDC"), CloudUtils.HexToColor("43464B"));
-                builder.masterySkinDelegate = material;
-                builder.GetAdditionalRenderInfos += Builder_getAdditionalEntries; ;
-                builder.GetAdditionalItemDisplays += Builder_GetAdditionalItemDisplays;
-                builder.GetAdditionalEquipmentDisplays += Builder_GetAdditionalEquipmentDisplays;
-
-                //On.RoR2.BuffWard.BuffTeam += BuffWard_BuffTeam;
-
-                wyattBody = builder.CreatePrefab();
-                Material material()
-                {
-                    return Resources.Load<GameObject>("Prefabs/CharacterBodies/BrotherGlassBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial;
-
-                }
-                //this code will break if we change the name of the broom model
-                void Builder_getAdditionalEntries(List<CharacterModel.RendererInfo> arg1, Transform arg2)
-                {
-                    var broom = arg2.Find("Brom");
-                    var mat = broom.GetComponentInChildren<SkinnedMeshRenderer>();
-                    arg1.Add(new CharacterModel.RendererInfo
-                    {
-                        defaultMaterial = mat.material,
-                        defaultShadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On,
-                        ignoreOverlays = false,
-                        renderer = mat,
-                    });
-                }
-            }
-        }
-        private void Builder_GetAdditionalEquipmentDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
-        {
-            //LogCore.LogI("SETUP DISPLAY");
-            obj.Add(CloudUtils.CreateGenericDisplayRule("CritOnUse", "DisplayNeuralImplant", "Head_end", new Vector3(-0.008f, 0.006f, 0), new Vector3(0, 90, 0), new Vector3(0.01f, 0.01f, 0.01f)));
-        }
-
-        private void Builder_GetAdditionalItemDisplays(List<ItemDisplayRuleSet.NamedRuleGroup> obj)
-        {
-
-        }
-
-
-
 
         #endregion
         #region Components
@@ -357,7 +306,7 @@ She'll love this, I know.
 
             foreach (EntityStateMachine esm in wyattBody.GetComponentsInChildren<EntityStateMachine>())
             {
-               // LogCore.LogI(esm.gameObject.name);
+                // LogCore.LogI(esm.gameObject.name);
                 //LogCore.LogI(esm.customName);
                 switch (esm.customName)
                 {
@@ -373,7 +322,7 @@ She'll love this, I know.
                         break;
                 }
             }
-            
+
             esmr[2] = mach;
             hurtState.idleStateMachine = esmr;
         }
@@ -424,7 +373,7 @@ She'll love this, I know.
             CloudUtils.CreateEmptySkills(wyattBody);
             FixSkin();
             RegisterDamageTypes();
-            CreatePassives();
+         //   CreatePassives();
             CreatePrimary();
             CreateSecondary();
             CreateUtility();
@@ -434,7 +383,7 @@ She'll love this, I know.
 
         private void FixSkin()
         {
-            /*GameObject model = wyattBody.GetComponentInChildren<ModelLocator>().modelTransform.gameObject;
+            GameObject model = wyattBody.GetComponentInChildren<ModelLocator>().modelTransform.gameObject;
             CharacterModel characterModel = model.GetComponent<CharacterModel>();
 
             SkinnedMeshRenderer FixRenderInfo()
@@ -499,91 +448,14 @@ She'll love this, I know.
             CreateSkinInfo(FixRenderInfo());
         }
 
-
-        private void CreatePassives()
-        {
-            var passive = skillLocator.passiveSkill;
-
-            passive.enabled = true;
-            passive.skillNameToken = "WYATT_PASSIVE_NAME";
-            passive.skillDescriptionToken = "WYATT_PASSIVE_DESCRIPTION";
-            passive.keywordToken = "KEYWORD_VELOCITY";
-            passive.icon = AssetsCore.wyattPassive;
-
-            R2API.LanguageAPI.Add(passive.skillNameToken, "Walkman");
-            R2API.LanguageAPI.Add(passive.skillDescriptionToken, "On hit, gain a stack of <style=cIsUtility>Velocity</style>, up to 10. <style=cIsHealth>Lose two stacks every two seconds</style>");
-
-            skillLocator.passiveSkill = passive;
-
-            R2API.LanguageAPI.Add(passive.keywordToken, "<style=cKeywordName>Velocity</style><style=cSub>Increases movement speed by X% and health regeneration by X; all stacks lost when out of combat.</style>");
-
-            /*var passiveFamily = ScriptableObject.CreateInstance<SkillFamily>();
-
-            var skillSlot = wyattBody.AddComponent<GenericSkill>();
-
-            var armorDef = ScriptableObject.CreateInstance<SkillDef>();
-
-            armorDef.activationState = new SerializableEntityStateType(typeof(Uninitialized));
-            armorDef.activationStateMachineName = "Weapon";
-            armorDef.baseMaxStock = 1;
-            armorDef.baseRechargeInterval = 0f;
-            armorDef.beginSkillCooldownOnSkillEnd = true;
-            armorDef.canceledFromSprinting = false;
-            armorDef.fullRestockOnAssign = true;
-            armorDef.interruptPriority = InterruptPriority.Any;
-            armorDef.isBullets = false;
-            armorDef.isCombatSkill = true;
-            armorDef.mustKeyPress = false;
-            armorDef.cancelSprintingOnActivation = false;
-            armorDef.rechargeStock = 1;
-            armorDef.requiredStock = 1;
-            armorDef.shootDelay = 0.1f;
-            armorDef.stockToConsume = 0;
-            armorDef.skillDescriptionToken = "FILLMEOUTDADDY";
-            armorDef.skillName = "Armor";
-            armorDef.skillNameToken = "UWU";
-            armorDef.icon = AssetsCore.overclockIcon;
-            armorDef.keywordTokens = Array.Empty<string>();
-            armorDef.skillDescriptionToken = "OWO WHAT's";
-            armorDef.icon = AssetsCore.overclockIcon;
-            armorDef.skillNameToken = "WYATT_PASSIVE_NAME";
-
-            passiveFamily.variants = new SkillFamily.Variant[1] {
-                new SkillFamily.Variant {
-                    skillDef = armorDef,
-                    unlockableName = ""
-                },
-            };
-
-            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(armorDef);
-            Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillFamily(passiveFamily);
-
-            skillSlot.SetFieldValue("_skillFamily", passiveFamily);
-
-            passiveContoller.armorDef = armorDef;
-            passiveContoller.regenDef = regenDef;
-            passiveContoller.speedDef = speedDef;
-            passiveContoller.passiveSkillSlot = skillSlot;
-        }
-
         private void CreatePrimary()
         {
-            //--FIXED--
-            //Alright, here's the problem:
-            //Interrupt priorities are weird, and because they are weird
-            //they cause the primary to not fire off after the secondary is fired.
-            //Obvious problem is obvious, but setting the primary's interrupt priority to PrioritySkill 
-            //makes it so you can't hold it down. Extremely obvious problem is obvious, but I have no idea how's to fix this.
-            //FIX: Apparently I forgot to call base.FixedUpdate(n.k); in its FixedUpdate void, whoops!
 
             Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FullSwing));
-            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(FullSwing2));
-            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(Cleanup));
-            Cloudburst.Content.ContentHandler.Loadouts.RegisterEntityState(typeof(WyattBaseMeleeAttack));
 
             SteppedSkillDef primarySkillDef = ScriptableObject.CreateInstance<SteppedSkillDef>();
 
-            primarySkillDef.activationState = new SerializableEntityStateType(typeof(WyattBaseMeleeAttack));
+            primarySkillDef.activationState = new SerializableEntityStateType(typeof(FullSwing));
             primarySkillDef.stepCount = 3;
             primarySkillDef.activationStateMachineName = "Weapon";
             primarySkillDef.baseMaxStock = 1;
@@ -600,21 +472,8 @@ She'll love this, I know.
             primarySkillDef.requiredStock = 1;
 
             primarySkillDef.stockToConsume = 0;
-            primarySkillDef.skillDescriptionToken = "WYATT_PRIMARY_DESCRIPTION";
-            primarySkillDef.skillName = "WYATT_PRIMARY_NAME";
-            primarySkillDef.skillNameToken = "WYATT_PRIMARY_NAME";
+
             primarySkillDef.icon = AssetsCore.wyattPrimary;
-            primarySkillDef.keywordTokens = new string[] {
-                 "KEYWORD_AGILE",
-                 "KEYWORD_WEIGHTLESS",
-                 "KEYWORD_SPIKED",
-            };
-
-            R2API.LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
-            R2API.LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
-            //R2API.LanguageAPI.Add(primarySkillDef.keywordTokens[1], "<style=cKeywordName>Weightless</style><style=cSub>Slows and removes gravity from target.</style>");
-            R2API.LanguageAPI.Add(primarySkillDef.keywordTokens[2], "<style=cKeywordName>Spikes</style><style=cSub>Knocks an enemy directly toward the ground at dangerous speeds.</style>");
-
             Cloudburst.Content.ContentHandler.Loadouts.RegisterSkillDef(primarySkillDef);
             SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
 
@@ -681,16 +540,6 @@ She'll love this, I know.
 
         private void CreateUtility()
         {
-
-
-            /*SkillFamily.Variant variant = new SkillFamily.Variant();
-
-            variant.skillDef = utilitySkillDef2;
-            variant.unlockableName = "";
-
-            int prevLength = utilitySkillFamily.variants.Length;
-            Array.Resize<SkillFamily.Variant>(ref utilitySkillFamily.variants, prevLength + 1);
-            utilitySkillFamily.variants[prevLength] = variant;
         }
 
         private void CreateSpecial()
@@ -734,13 +583,11 @@ She'll love this, I know.
             specialSkillDef2.canceledFromSprinting = false;
             specialSkillDef2.fullRestockOnAssign = true;
             specialSkillDef2.interruptPriority = InterruptPriority.Any;
-            specialSkillDef2.isBullets = false;
             specialSkillDef2.isCombatSkill = false;
             specialSkillDef2.mustKeyPress = true;
             specialSkillDef2.cancelSprintingOnActivation = false;
             specialSkillDef2.rechargeStock = 1;
             specialSkillDef2.requiredStock = 1;
-            specialSkillDef2.shootDelay = 0.5f;
             specialSkillDef2.stockToConsume = 1;
             specialSkillDef2.skillDescriptionToken = "WYATT_SPECIAL2_DESCRIPTION";
             specialSkillDef2.skillName = "aaa";
@@ -801,55 +648,6 @@ She'll love this, I know.
 
         }
 
-        private void CreateSurvivorDef()
-        {
-            string desc = "The Custodian is a master of janitorial warfare who uses his MAID to control the battle field<color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Send enemies upwards with the MAID, and spike them downwads with Trash Out for major damage." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > The MAID slows projectiles within her radius, use this to your advantage in combat!" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > Direct strikes with Rub and Scrub help you stay in the air longer -- use this to avoid crowds!" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > The key to success is realizing that staying away from the ground helps you stay alive longer." + Environment.NewLine + Environment.NewLine;
-
-
-
-            /*string desc = "AYO HOL' UP <color=#CCD3E0>" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *SMACKS LIPS*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > SO WHAT YOU BE SAYIN' IS" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *CANCELS MOONFALL*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > HOL' UP" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *DIVERTS ALL RESOURCES TO STARSTORM 2*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > SO WHAT YOU BE SAYIN' IS....." + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *NO CODERS ON MOONFALL*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > AYO" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *DEATH*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > FINNA REALLY" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *NEVER RELEASES*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > WE GONNA FINNA" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *NO WORK ON MOONFALL*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > SO WHATCHOO SAYIN' IS" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *FINISHES NOTHING*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > WE GONNA" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *ALMOST CANCELS MOD OVER GENO NOT GETTING INTO SMASH*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > FINNA" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *NAMEDROPS*" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > MAKE A MOD? SHIEEEEEEEEETTTTTTTTT" + Environment.NewLine + Environment.NewLine;
-            desc = desc + "< ! > *DIES*" + Environment.NewLine + Environment.NewLine;
-
-            R2API.LanguageAPI.Add("WYATT_DESCRIPTION", desc);
-            R2API.LanguageAPI.Add("WYATT_OUTRO_FLAVOR", "...and so they left, a job well done.");
-
-            SurvivorDef def = new SurvivorDef()
-            {
-                bodyPrefab = this.wyattBody,
-                descriptionToken = "WYATT_DESCRIPTION",
-                displayNameToken = "WYATT_BODY_NAME",
-                displayPrefab = AssetsCore.mainAssetBundle.LoadAsset<GameObject>("mdlWyattCSS"),
-                name = "AAAAAAAAA",
-                outroFlavorToken = "WYATT_OUTRO_FLAVOR",
-                primaryColor = new Color(0.4862745098f, 0.94901960784f, 0.71764705882f),
-
-            };
-            SurvivorAPI.AddSurvivor(def);
-        }
-        #endregion
     }
-}*/
+}
+#endregion

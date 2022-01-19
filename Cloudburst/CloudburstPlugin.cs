@@ -46,7 +46,7 @@ namespace Cloudburst
         /// <summary>
         /// Called on the first frame of the game.
         /// </summary>
-        public static event Action start;
+        public static event Action start;   
         /// <summary>
         /// Called after the first frame of the game.
         /// </summary>
@@ -240,6 +240,7 @@ namespace Cloudburst
 
                 RoR2.SplashScreenController.cvSplashSkip.defaultValue = "1";
 
+                //this code is quite retarded, i should redo it
                 var materials = AssetsCore.mainAssetBundle.LoadAllAssets<Material>();
                 for (int i = 0; i < materials.Length; i++)
                 {
@@ -276,6 +277,10 @@ namespace Cloudburst
                     if (materials[i].shader.name == "stubbed_Hopoo Games/Environment/Distant Water Proxy")
                     {
                         materials[i].shader = Resources.Load<Shader>("shaders/environment/hgdistantwater");
+                    }
+                    if (materials[i].shader.name == "Hopoo Games/FX/Cloud Intersection Remap Proxy")
+                    {
+                        materials[i].shader = Resources.Load<Shader>("shaders/fx/hgintersectioncloudremap");
                     }
                 }
 
@@ -327,6 +332,7 @@ namespace Cloudburst
                     new Custodian().Init(Config);
                     //wyattCore = new WyattCore();
                 }
+                new Bruiser().Init(Config);
                 if (EnableVoid.Value)
                 {
                     new VoidCore();
@@ -428,7 +434,7 @@ namespace Cloudburst
 
         public void Awake()
         {
-            InitializeCores();
+             InitializeCores();
 
             Action awake = CloudburstPlugin.awake;
             if (awake == null)

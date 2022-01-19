@@ -95,12 +95,6 @@ namespace Cloudburst.Cores
 
             //add again
             Cloudburst.Content.ContentHandler.Buffs.RegisterBuff(buff);
-            //add buff
-            /*BuffCatalog.modHelper.getAdditionalEntries += ModHelper_getAdditionalEntries;
-
-            void ModHelper_getAdditionalEntries(List<BuffDef> defs) {
-                defs.Add(buff);
-            }*/
             return buff;
         }
     }

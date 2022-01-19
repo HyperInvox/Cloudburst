@@ -71,7 +71,7 @@ She'll love this, I know.
         public override string SurvivorSubtitle => "Lean, Mean, Cleaning Machines";
 
         public override UnlockableDef unlockableDef => null;
-        
+
         public override float desiredSortPosition => 11.5f;
 
         //public override UnlockableDef MasteryUnlockString => throw new NotImplementedException();
@@ -140,7 +140,8 @@ She'll love this, I know.
                 self.rootMotion = Vector3.zero;
                 self.rigid.velocity = Vector3.zero;
             }
-            else if (yeah == null) {
+            else if (yeah == null)
+            {
                 orig(self, collision);
             }
         }
@@ -515,7 +516,7 @@ localScale = new Vector3(1F, 1F, 1F)*/
 localPos = new Vector3(0.0054F, 0.0055F, 0.0039F),
 localAngles = new Vector3(87.3338F, 214.1456F, 111.7661F),
 localScale = new Vector3(0.02F, 0.02F, 0.02F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.IgniteOnKill, "DisplayGasoline", "Pelvis", new Vector3(0.0054F, 0.0055F, 0.0039F), new Vector3(87.3338F, 214.1456F, 111.7661F)    , new Vector3(0.02f, 0.02f, 0.02f)));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.IgniteOnKill, "DisplayGasoline", "Pelvis", new Vector3(0.0054F, 0.0055F, 0.0039F), new Vector3(87.3338F, 214.1456F, 111.7661F), new Vector3(0.02f, 0.02f, 0.02f)));
             /*childName = "Pelvis",
 localPos = new Vector3(-0.006F, -0.0027F, 0.0034F),
 localAngles = new Vector3(90F, 0F, 0F),
@@ -575,7 +576,7 @@ localScale = new Vector3(0.0085F, 0.0085F, 0.0085F)*/
 localPos = new Vector3(0.0037F, 0.0047F, 0.0079F),
 localAngles = new Vector3(74.094F, 148.379F, 143.1946F),
 localScale = new Vector3(0.015F, 0.015F, 0.015F)*/
-            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.BarrierOnKill, "DisplayBrooch", "Head", new Vector3(0.194496F, 0.572236F, 0.932347F), new Vector3(5.009361F, 162.6576F, 25.99005F), new Vector3(1.196984F, 1.196984F, 1.196984F)  ));
+            obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.BarrierOnKill, "DisplayBrooch", "Head", new Vector3(0.194496F, 0.572236F, 0.932347F), new Vector3(5.009361F, 162.6576F, 25.99005F), new Vector3(1.196984F, 1.196984F, 1.196984F)));
             obj.Add(CloudUtils.CreateGenericItemDisplayRule(RoR2Content.Items.TPHealingNova, "DisplayGlowFlower", "UpperBody", new Vector3(-0.0055f, 0.003f, -0.004f), new Vector3(0, 250, 0), new Vector3(0.01f, 0.01f, 0.01f)));
             //childName = "Pelvis",
             //            localPos = new Vector3(0.0071F, 0.0051F, -0.0029F),
@@ -758,7 +759,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             machine.mainStateType = new SerializableEntityStateType(typeof(WyattMain));
         }
 
-        public override void CreatePassive(SkillLocator skillLocator)   
+        public override void CreatePassive(SkillLocator skillLocator)
         {
             var passive = skillLocator.passiveSkill;
 
@@ -849,7 +850,7 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
                  "KEYWORD_AGILE",
                  "KEYWORD_WEIGHTLESS",
                  "KEYWORD_SPIKED",
-            };  
+            };
 
             R2API.LanguageAPI.Add(primarySkillDef.skillNameToken, "G22 Grav-Broom");
             R2API.LanguageAPI.Add(primarySkillDef.skillDescriptionToken, "<style=cIsUtility>Agile</style>. Swing in front for X% damage. [NOT IMPLEMENTED] Every 4th hit <style=cIsDamage>Spikes</style>.");
@@ -1052,52 +1053,6 @@ localScale = new Vector3(0.015F, 0.015F, 0.015F),
             tracker.trackerUpdateFrequency = 5;
             tracker.indicatorPrefab = Resources.Load<GameObject>("Prefabs/EngiShieldRetractIndicator");
         }
-        /*private void CharacterBody_Update(On.RoR2.CharacterBody.orig_Update orig, CharacterBody self)
-        {
-            CharacterModel GetCharacterModelFromCharacterBody(CharacterBody body)
-            {
-                var modelLocator = body.modelLocator;
-                if (modelLocator)
-                {
-                    var modelTransform = body.modelLocator.modelTransform;
-                    if (modelTransform)
-                    {
-                        var model = modelTransform.GetComponent<CharacterModel>();
-                        if (model)
-                        {
-                            return model;
-                        }
-                    }
-
-                }
-                return null;
-            }
-
-            if (self && self.inventory)
-            {
-                CharacterModel model = GetCharacterModelFromCharacterBody(self);
-
-                //LogCore.LogI(elite);
-                //spawn_ai beetle 1 6 0 2
-                if (self.HasBuff(myBuff) && !self.gameObject.GetComponent<DestroyEffectOnBuffEnd>() && model)
-                {
-                    //LogCore.LogI("war elite");
-                    var tracker = self.gameObject.AddComponent<DestroyEffectOnBuffEnd>();
-                    tracker.body = self;
-                    tracker.buff = myBuff;
-
-                    TemporaryOverlay overlay = model.gameObject.AddComponent<TemporaryOverlay>();
-                    overlay.duration = float.PositiveInfinity;
-                    overlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
-                    overlay.animateShaderAlpha = true;
-                    overlay.destroyComponentOnEnd = true;
-                    overlay.originalMaterial = putYourEffectPrefabHere;
-                    overlay.AddToCharacerModel(model);
-                    tracker.effect = overlay;
-                }
-            }
-        }
-*/
 
         //every fiber of my being hates you with a passion that burns brighter than the hottest star in the universe
     }

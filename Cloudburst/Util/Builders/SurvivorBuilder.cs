@@ -94,21 +94,24 @@ public abstract class SurvivorCreator
         CloudburstPlugin.start += Start;
     }
 
-    public virtual void Start() {
+    public virtual void Start()
+    {
         LogCore.LogD("this might not work");
         builder.GetAdditionalItemDisplays += GenerateItemDisplays;
         builder.GetAdditionalItemDisplays += GenerateEquipmentDisplays;
     }
 
-    public virtual void GenerateUmbra() {
+    public virtual void GenerateUmbra()
+    {
 
     }
 
-    public virtual void AlterStatemachines(SetStateOnHurt hurt, NetworkStateMachine network) {
+    public virtual void AlterStatemachines(SetStateOnHurt hurt, NetworkStateMachine network)
+    {
 
     }
 
-    public virtual void SetupCharacterBody(CharacterBody characterBody) { characterBody.bodyColor = survivorDefColor;  }
+    public virtual void SetupCharacterBody(CharacterBody characterBody) { characterBody.bodyColor = survivorDefColor; }
 
     public abstract Material GetMasteryMat();
     #region Skills 
@@ -190,14 +193,14 @@ public abstract class SurvivorCreator
     protected void CreateSurvivorDef()
     {
         SurvivorDef def = ScriptableObject.CreateInstance<SurvivorDef>();
- 
-            def.bodyPrefab = survivorBody;
-            def.descriptionToken = SurvivorInternalName + "_DESCRIPTION";
-            def.displayNameToken = SurvivorInternalName + "_BODY_NAME";
-            def.displayPrefab = survivorDisplay;
-            def.outroFlavorToken = SurvivorInternalName + "_OUTRO_FLAVOR";
-            def.primaryColor = survivorDefColor;
-            def.unlockableName = UnlockableString;
+
+        def.bodyPrefab = survivorBody;
+        def.descriptionToken = SurvivorInternalName + "_DESCRIPTION";
+        def.displayNameToken = SurvivorInternalName + "_BODY_NAME";
+        def.displayPrefab = survivorDisplay;
+        def.outroFlavorToken = SurvivorInternalName + "_OUTRO_FLAVOR";
+        def.primaryColor = survivorDefColor;
+        def.unlockableName = UnlockableString;
         def.unlockableDef = unlockableDef;
         def.desiredSortPosition = desiredSortPosition;
 

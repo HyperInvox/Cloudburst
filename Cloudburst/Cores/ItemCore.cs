@@ -54,6 +54,7 @@ namespace Cloudburst.Cores
         {
             LogCore.LogI("Initializing Core: " + base.ToString());
             var ItemTypes = Assembly.GetExecutingAssembly().GetTypes().Where(type => !type.IsAbstract && type.IsSubclassOf(typeof(ItemBuilder)));
+
             foreach (var mdl in AssetsCore.mainAssetBundle.LoadAllAssets<GameObject>())
             {
                 if (mdl.name.Contains("IMDL"))
@@ -65,7 +66,7 @@ namespace Cloudburst.Cores
             foreach (var itemType in ItemTypes)
             {
                 ItemBuilder item = (ItemBuilder)System.Activator.CreateInstance(itemType);
-
+                
                 //LogCore.LogI(item.ItemName);
                 if (CloudburstPlugin.instance.ValidateItem(item, Items))
                 {

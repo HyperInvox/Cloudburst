@@ -34,7 +34,7 @@ namespace Cloudburst.Cores
         protected GameObject engineerObject;
 
         private FlameTurrets turrets;
-        public class FlameTurrets : EnemyBuilder
+        public class FlameTurrets : ModifiedEnemyBuilder
         {
             protected override string resourceMasterPath => "prefabs/charactermasters/EngiWalkerTurretMaster";
 

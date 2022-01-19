@@ -39,7 +39,7 @@ public class PrefabBuilder
     public ItemDisplayRuleSet itemDisplayRuleSet;
 
     public delegate Material MasterySkinMaterial();
-
+    
     public MasterySkinMaterial masterySkinDelegate;
 
     public UnlockableDef masteryAchievementUnlockable;

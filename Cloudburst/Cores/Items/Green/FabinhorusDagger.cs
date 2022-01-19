@@ -188,13 +188,13 @@ localScale = new Vector3(1F, 1F, 1F)
         }
 
         public void AddBuffs()
-        {   
+        {
             this.fabinhoru = new BuffBuilder()
             {
                 canStack = false,
                 isDebuff = true,
                 iconSprite = AssetsCore.mainAssetBundle.LoadAsset<Sprite>("RoR2BuffTemplateUpdateDark"),
-               // buffColor = CloudUtils.HexToColor("#590005"),
+                // buffColor = CloudUtils.HexToColor("#590005"),
             }.BuildBuff();
         }
 

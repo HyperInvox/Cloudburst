@@ -20,5 +20,5 @@ Shader "Hopoo Games/FX/Cloud Intersection Remap Proxy" {
 		[Toggle(IGNORE_VERTEX_COLORS)] _VertexColorsOn ("Ignore Vertex Colors", Float) = 0
 		[Toggle(TRIPLANAR)] _TriplanarOn ("Enable Triplanar Projections for Clouds", Float) = 0
 	}
-	
+	Fallback "Transparent/VertexLit"
 }

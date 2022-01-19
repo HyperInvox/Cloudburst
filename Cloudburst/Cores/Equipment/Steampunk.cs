@@ -1,0 +1,50 @@
+﻿using BepInEx.Configuration;
+using R2API;
+using RoR2;
+using UnityEngine;
+
+namespace Cloudburst.Cores.Equipment
+{
+    public class Steampunk : EquipmentBuilder
+    {
+
+        public override string EquipmentName => "another equip";
+
+        public override string EquipmentLangTokenName => "STEAMPUNKITEM";
+
+        public override string EquipmentPickupDesc => "e";
+
+        public override string EquipmentFullDescription => "e";
+
+        public override string EquipmentLore => "e";
+
+        public override string EquipmentModelPath => "Assets/Cloudburst/Equipment/Gear/IMDLGear.prefab";
+
+        public override string EquipmentIconPath => "Assets/Cloudburst/Equipment/Gear/icon.png";
+
+
+        protected override void CreateConfig(ConfigFile config)
+        {
+
+        }
+
+        public override ItemDisplayRuleDict CreateItemDisplayRules()
+        {
+            var mdl = AssetsCore.mainAssetBundle.LoadAsset<GameObject>(EquipmentModelPath);
+            ItemDisplayRuleDict rules = new ItemDisplayRuleDict();
+
+            return rules;
+        }
+
+        protected override void Initialization()
+        {
+
+        }
+
+
+        protected override bool ActivateEquipment(EquipmentSlot slot)
+        {
+            return true;
+        }
+       }
+}

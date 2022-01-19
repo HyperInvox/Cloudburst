@@ -732,20 +732,6 @@ namespace Cloudburst.Content
                 //IL.RoR2.BuffCatalog.Init += FixBuffCatalog;
             }
 
-            /*Credits to Aaron on the RoR2 modding discord.
-            internal static void FixBuffCatalog(ILContext il)
-            {
-                ILCursor c = new ILCursor(il);
-
-                if (!c.Next.MatchLdsfld(typeof(RoR2Content.Buffs), nameof(RoR2Content.Buffs.buffDefs)))
-                {
-                    LogCore.LogW("Another mod has already fixed BuffCatalog or the game has updated, skipping...");
-                    return;
-                }
-
-                c.Remove();
-                c.Emit(OpCodes.Ldsfld, typeof(ContentManager).GetField(nameof(ContentManager.buffDefs)));
-            }*/
 
             /// <summary>
             /// Registers a buff def to the buff catalog

@@ -197,7 +197,8 @@ localScale = new Vector3(0.2F, 0.2F, 0.2F)
             {
 
                 float exp = BaseExp.Value;
-                if (count > 1) {
+                if (count > 1)
+                {
                     exp += (StackingExp.Value * count);
                 }
 
