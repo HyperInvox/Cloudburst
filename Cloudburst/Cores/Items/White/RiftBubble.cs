@@ -103,8 +103,8 @@ namespace Cloudburst.Cores.Items.Green
         private void RecalculateStatsAPI_GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             if (sender.HasBuff(slow)) {
-                args.attackSpeedMultAdd -= 0.8f ;
-                args.moveSpeedMultAdd -= 0.8f ;
+                args.attackSpeedMultAdd -= 0.5f ;
+                args.moveSpeedMultAdd -= 0.5f ;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Cloudburst.Cores.Items.Green
                     this.indicator = UnityEngine.Object.Instantiate<GameObject>(RiftBubble.rift);
                     this.indicator.GetComponent<TeamFilter>().teamIndex = this.body.teamComponent.teamIndex;
                     ward = indicator.GetComponent<BuffWard>();
-                    ward.radius = 15 + (stack * 3) + this.body.radius;
+                    ward.radius = 7 + (stack * 3) + this.body.radius;
                     this.indicator.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(this.body.gameObject);
                     return;
                 }
@@ -137,7 +137,7 @@ namespace Cloudburst.Cores.Items.Green
                 this.indicator = null;
             }
             if (indicator) {
-                ward.radius = 15 + (stack * 3) + this.body.radius;
+                ward.radius = 7 + (stack * 3) + this.body.radius;
             }
         }
 
