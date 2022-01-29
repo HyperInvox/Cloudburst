@@ -319,6 +319,18 @@ localAngles = new Vector3(347.6326F, 269.9879F, 89.96059F),
 localScale = new Vector3(0.1F, 0.1F, 0.1F)
                 }
             });
+            rules.Add("mdlScav", new RoR2.ItemDisplayRule[]
+{
+                new RoR2.ItemDisplayRule
+                {
+                    ruleType = ItemDisplayRuleType.ParentedPrefab,  
+                    followerPrefab = ItemBodyModelPrefab,
+childName = "Base",
+localPos = new Vector3(-13.53619F, -4.10502F, 14.88354F),
+localAngles = new Vector3(282.4766F, 84.02295F, 277.8279F),
+localScale = new Vector3(0.5F, 0.5F, 0.5F)
+                }
+});
             return rules;
         }
     }

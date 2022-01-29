@@ -978,7 +978,7 @@ namespace Cloudburst.Cores
             R2API.LanguageAPI.Add("BROTHER_BODY_SUBTITLE", "Slave to Eternity.");
 
             R2API.LanguageAPI.Add("BROTHER_DEATH_1", "FUTILITY...");
-            R2API.LanguageAPI.Add("BROTHER_DEATH_2", "WE ARE NUMBERLESS...");
+            R2API.LanguageAPI.Add("BROTHER_DEATH_2", "WE ARE NUMBERLESS..."); 
             R2API.LanguageAPI.Add("BROTHER_DEATH_3", "THIS MATTERS NOT...!");
             R2API.LanguageAPI.Add("BROTHER_DEATH_4", "YOU SHALL BE PURSUED, MY DEATH MEANS NOTH—");
             R2API.LanguageAPI.Add("BROTHER_DEATH_5", "EXECUTE THEM, EXECUTE TH—");

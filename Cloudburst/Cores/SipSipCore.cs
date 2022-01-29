@@ -91,7 +91,7 @@ namespace Cloudburst.Cores
             ghor.itemString = "BonusGoldPackOnKill";
 
             ItemInfo teddie = new ItemInfo();
-            teddie.count = 5;
+            teddie.count = 3;
             teddie.itemString = "Bear";
                 
             ItemInfo brittle = new ItemInfo();
@@ -103,20 +103,27 @@ namespace Cloudburst.Cores
             backup.itemString = "SecondarySkillMagazine";
 
             ItemInfo medkit = new ItemInfo();
-            medkit.count = 8;
+            medkit.count = 3;
             medkit.itemString = "Medkit";
 
             ItemInfo bloodTester = new ItemInfo();
             bloodTester.count = 2;
             bloodTester.itemString = "RegenOnKill";
 
+            ItemInfo ITEM_RESTLESSRINGS = new ItemInfo();
+            ITEM_RESTLESSRINGS.count = 3;
+            ITEM_RESTLESSRINGS.itemString = "ITEM_RESTLESSRINGS";
+
+            //DAVID GAMING
+            //ITEM_RESTLESSRINGS
             ItemInfo[] array = new ItemInfo[] {
                 ghor,
                 teddie,
                 brittle,
                 backup,
                 medkit,
-                bloodTester
+                bloodTester,
+                ITEM_RESTLESSRINGS
             };
 
             foreach (GivePickupsOnStart component in sipSipMaster.GetComponents<GivePickupsOnStart>()) {
@@ -135,11 +142,12 @@ namespace Cloudburst.Cores
         }
         private void CreateSpawnCard() {
             MultiCharacterSpawnCard spawnCard = Resources.Load<MultiCharacterSpawnCard>("SpawnCards/CharacterSpawnCards/cscScavLunar");
-            
-            int AAAAAAAAAAAAA = spawnCard.masterPrefabs.Length;
+            spawnCard.masterPrefabs = new GameObject[] { sipSipMaster };
 
-            Array.Resize<GameObject>(ref spawnCard.masterPrefabs, AAAAAAAAAAAAA + 1);
-            spawnCard.masterPrefabs[AAAAAAAAAAAAA] = sipSipMaster;
+            //         int AAAAAAAAAAAAA = spawnCard.masterPrefabs.Length;
+
+            //          Array.Resize<GameObject>(ref spawnCard.masterPrefabs, AAAAAAAAAAAAA + 1);
+            //        spawnCard.masterPrefabs[AAAAAAAAAAAAA] = sipSipMaster;
         }
     }
 }

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 405133519
+CRC: 1459057243
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f28f5b4d9b8d918a5a302702b5bed176
+    Hash: e713e567031f5e9c7c5cb2bad8b15a22
   TypeTreeHash:
     serializedVersion: 2
     Hash: 0b6484268cf101de2880c223fe0b6d4d
@@ -668,6 +668,7 @@ Assets:
 - Assets/Cloudburst/Effects/Bases/CleanseEffect.prefab
 - Assets/Cloudburst/Survivors/Bombardier/Flan/Executioner_Emissive.png
 - Assets/Cloudburst/Items/UESKeycard/texNullifierEmission.png
+- Assets/Cloudburst/Equipment/RiskyTravels/matRestfulRing 3.mat
 - Assets/Cloudburst/Items/CarePackageRequester/Materials/blastboots.mat
 - Assets/Cloudburst/Survivors/Wyatt/animation/b/Cube.006_PointAction.anim
 - Assets/Cloudburst/Survivors/Wyatt/animation/NEW/Armature.004_Maid_Throw.anim

@@ -2,15 +2,15 @@
 using R2API;
 using RoR2;
 using UnityEngine;
-
+/*
 namespace Cloudburst.Cores.Equipment
 {
-    public class Steampunk : EquipmentBuilder
+    public class RiskyTravels : EquipmentBuilder
     {
 
         public override string EquipmentName => "another equip";
 
-        public override string EquipmentLangTokenName => "STEAMPUNKITEM";
+        public override string EquipmentLangTokenName => "SUMMONMULT";
 
         public override string EquipmentPickupDesc => "e";
 
@@ -18,7 +18,7 @@ namespace Cloudburst.Cores.Equipment
 
         public override string EquipmentLore => "e";
 
-        public override string EquipmentModelPath => "Assets/Cloudburst/Equipment/Gear/IMDLGear.prefab";
+        public override string EquipmentModelPath => "Assets/Cloudburst/Equipment/RiskyTravels/IMDLRiskyTravels.prefab";
 
         public override string EquipmentIconPath => "Assets/Cloudburst/Equipment/Gear/icon.png";
 
@@ -45,6 +45,11 @@ namespace Cloudburst.Cores.Equipment
         protected override bool ActivateEquipment(EquipmentSlot slot)
         {
             return true;
-        }
+        }   
        }
+    public class MULTRTComponent : MonoBehaviour { 
+    
+    
+    }
 }
+*/
