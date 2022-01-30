@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{C756EB59-BDAE-4DEE-96F8-1FF1A539CBF5}" SchemaVersion="89">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{C756EB59-BDAE-4DEE-96F8-1FF1A539CBF5}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="Cloudburst" ID="{8B45017C-2B47-4DE1-9177-7427987EF840}">
+					<ObjectInclusionList/>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>
